@@ -1,0 +1,22 @@
+{
+  "name": "chain-reaction-backend",
+  "version": "1.0.0",
+  "description": "WebSocket server for the Chain Reaction multiplayer word game (WordArcade)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node --test gameLogic.test.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "cors": "^2.8.5",
+    "ws": "^8.18.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": ["websocket", "multiplayer", "word-game"],
+  "author": "",
+  "license": "ISC"
+}
