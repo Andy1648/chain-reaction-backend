@@ -10,13 +10,12 @@
 // here. The room manager owns the wall-clock round timer; this file is just
 // the pure rules operating on a plain game object.
 
-// The category judge is injected (like gameLogic injects the dictionary) so
-// a test suite can substitute a stub and run offline without hitting Gemini.
-let { validateCategoryAnswer } = require('./gemini');
-
-function _setValidatorForTesting(mockModule) {
-  validateCategoryAnswer = mockModule.validateCategoryAnswer;
-}
+// Answers are validated against pre-generated accept-lists (a Set of valid
+// lowercase answers per category) rather than a live AI call. This makes
+// validation a fast, free, deterministic, offline Set lookup. gemini.js is
+// intentionally no longer imported here - it stays in the repo for possible
+// future use but is never called during gameplay.
+const CATEGORY_ANSWERS = require('./categoryAnswers');
 
 const TOTAL_ROUNDS = 3;
 const DEFAULT_ROUND_TIME = 45;
@@ -105,13 +104,16 @@ function createGame(players, difficultyKey) {
 /**
  * Applies an answer from ANY player at any time during an active round -
  * there is no turn checking. Validates length, per-player-per-round
- * uniqueness, then defers to the AI judge. On success the answer is recorded
- * and the player's score goes up by 1.
+ * uniqueness, then checks the answer against the category's pre-generated
+ * accept-list. On success the answer is recorded and the player's score
+ * goes up by 1.
  *
  * Returns { accepted: true, answer, playerId } or
  *         { accepted: false, reason, playerId }.
  */
 async function submitAnswer(game, playerId, rawAnswer) {
+  // Normalize for lookup: trim, then lowercase. Accept-list entries are all
+  // stored lowercase, so this is a case-insensitive match.
   const answer = rawAnswer.trim();
   const normalized = answer.toLowerCase();
   const player = game.players.find((p) => p.id === playerId);
@@ -133,8 +135,9 @@ async function submitAnswer(game, playerId, rawAnswer) {
     return { accepted: false, reason: 'already_said', playerId };
   }
 
-  const fits = await validateCategoryAnswer(game.currentCategory, answer);
-  if (!fits) {
+  // Validate against the pre-generated accept-list for the current category.
+  const validAnswers = CATEGORY_ANSWERS[game.currentCategory];
+  if (!validAnswers || !validAnswers.has(normalized)) {
     return { accepted: false, reason: 'not_in_category', playerId };
   }
 
@@ -213,5 +216,4 @@ module.exports = {
   startNextRound,
   getScoreboard,
   pickRandomCategory,
-  _setValidatorForTesting,
 };
