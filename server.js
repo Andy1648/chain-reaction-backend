@@ -20,6 +20,9 @@ const {
   removePlayer,
   broadcastToRoom,
   buildRoomUpdatePayload,
+  buildTurnUpdatePayload,
+  clearTurnTimer,
+  startTurnTimer,
 } = require('./roomManager');
 
 // Pre-warm the dictionary cache with our starter words so the very first
@@ -129,7 +132,29 @@ wss.on('connection', (ws) => {
           }
           break;
         }
-
+case 'skip_turn': {
+          const room = getRoomForConnection(ws);
+          if (!room) return;
+          if (!room.game || room.game.status !== 'in_progress') {
+            sendError(ws, 'No active game.', 'skip_turn');
+            return;
+          }
+          const { getCurrentPlayerId, handleTimeout } = require('./gameLogic');
+          if (getCurrentPlayerId(room.game) !== ws.id) {
+            sendError(ws, "It's not your turn.", 'skip_turn');
+            return;
+          }
+          clearTurnTimer(room);
+          const { eliminatedPlayerId } = handleTimeout(room.game);
+          broadcastToRoom(room, { type: 'turn_skipped', payload: { eliminatedPlayerId } });
+          if (room.game.status === 'finished') {
+            broadcastToRoom(room, { type: 'game_over', payload: { winnerId: room.game.winnerId, chain: room.game.chain } });
+          } else {
+            broadcastToRoom(room, buildTurnUpdatePayload(room));
+            startTurnTimer(room);
+          }
+          break;
+        }
         case 'submit_word': {
           const room = getRoomForConnection(ws);
           if (!room) return;
