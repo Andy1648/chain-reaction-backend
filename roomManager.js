@@ -113,7 +113,7 @@ function buildGameOverPayload(room) {
     type: 'game_over',
     payload: {
       winnerId: room.game.winnerId,
-      chain: room.game.chain,
+      usedWords: Array.from(room.game.usedWords),
     },
   };
 }

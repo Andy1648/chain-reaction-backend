@@ -148,7 +148,7 @@ case 'skip_turn': {
           const { eliminatedPlayerId } = handleTimeout(room.game);
           broadcastToRoom(room, { type: 'turn_skipped', payload: { eliminatedPlayerId } });
           if (room.game.status === 'finished') {
-            broadcastToRoom(room, { type: 'game_over', payload: { winnerId: room.game.winnerId, chain: room.game.chain } });
+            broadcastToRoom(room, { type: 'game_over', payload: { winnerId: room.game.winnerId, usedWords: Array.from(room.game.usedWords) } });
           } else {
             broadcastToRoom(room, buildTurnUpdatePayload(room));
             startTurnTimer(room);
