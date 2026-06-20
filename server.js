@@ -55,6 +55,12 @@ function sendError(ws, message, context) {
 wss.on('connection', (ws) => {
   ws.id = crypto.randomUUID();
 
+  // The client has no other way to learn its own connection id - room
+  // broadcasts include every player's id but never single out "which one
+  // is me". Sending this immediately means the frontend can determine
+  // host status, whose turn it is, etc. by simple comparison.
+  send(ws, 'connected', { id: ws.id });
+
   ws.on('message', async (raw) => {
     let message;
     try {
