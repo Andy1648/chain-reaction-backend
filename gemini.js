@@ -13,7 +13,7 @@ async function validateCategoryAnswer(category, answer) {
     return true; // fail open like dictionary.js does
   }
 
-  const prompt = `You are a game judge. The category is: "${category}". The player's answer is: "${answer}". Does this answer reasonably fit the category? Reply with ONLY "YES" or "NO", nothing else.`;
+  const prompt = `You are a strict game judge for a word game. The category is: "${category}". The player's answer is: "${answer}". Rules: The answer must be a specific, real thing that clearly and directly fits the category. Reject generic words, jokes, random text, abbreviations, slang that doesn't fit, or anything that requires a stretch to connect to the category. Reply with ONLY "YES" or "NO", nothing else.`;
 
   try {
     const response = await fetch(GEMINI_API_URL + '?key=' + apiKey, {
