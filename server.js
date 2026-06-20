@@ -173,13 +173,18 @@ case 'skip_turn': {
           }
           break;
         }
-        case 'submit_word': {
+        // submit_answer is an alias of submit_word so the frontend can use
+        // either message type; both route through handleWordSubmission, which
+        // dispatches to the right game mode internally. Word Bomb sends
+        // { word }, Category Blitz sends { answer } - accept whichever.
+        case 'submit_word':
+        case 'submit_answer': {
           const room = getRoomForConnection(ws);
           if (!room) return;
-          const word = (payload?.word || '').toString();
-          const result = await handleWordSubmission(room, ws.id, word);
+          const text = (payload?.word ?? payload?.answer ?? '').toString();
+          const result = await handleWordSubmission(room, ws.id, text);
           if (result.error) {
-            sendError(ws, humanizeError(result.error), 'submit_word');
+            sendError(ws, humanizeError(result.error), type);
           }
           break;
         }
@@ -232,6 +237,7 @@ function humanizeError(code) {
     not_enough_players: 'You need at least 2 players to start.',
     no_active_game: 'There is no active game in this room.',
     not_your_turn: "It's not your turn.",
+    round_not_active: 'The round is not currently active.',
   };
   return messages[code] || 'Something went wrong.';
 }

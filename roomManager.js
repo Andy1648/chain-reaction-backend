@@ -57,8 +57,14 @@ function createRoom(hostConnection, hostName) {
     game: null,
     difficultyKey: 'medium',
     gameType: 'word-bomb', // 'word-bomb' | 'category-blitz'
+    // Word Bomb uses a per-turn timer; Category Blitz uses a per-round timer
+    // plus a between-rounds pause. They are mutually exclusive per game, but
+    // both slots live on the room so cleanup is uniform.
     turnTimerInterval: null,
     turnDeadline: null,
+    roundTimerInterval: null,
+    roundPauseTimeout: null,
+    roundDeadline: null,
   };
   rooms.set(code, room);
   return room;
@@ -105,44 +111,36 @@ function buildRoomUpdatePayload(room) {
   };
 }
 
+// These two builders are Word Bomb-only. Category Blitz is round-based and
+// simultaneous, so it broadcasts its own round_start / round_end / game_over
+// payloads (built inline in startRoundTimer) rather than turn updates.
 function buildTurnUpdatePayload(room) {
   const { game } = room;
-  const payload = {
-    currentPlayerId: getCurrentPlayerId(game),
-    timerSeconds: game.currentTimerSeconds,
-    players: game.players.map((p) => ({
-      id: p.id,
-      name: room.players.find((rp) => rp.id === p.id)?.name || 'Unknown',
-      lives: p.lives,
-      eliminated: p.eliminated,
-    })),
+  return {
+    type: 'turn_update',
+    payload: {
+      currentPlayerId: getCurrentPlayerId(game),
+      timerSeconds: game.currentTimerSeconds,
+      combo: game.currentCombo,
+      usedWords: Array.from(game.usedWords),
+      players: game.players.map((p) => ({
+        id: p.id,
+        name: room.players.find((rp) => rp.id === p.id)?.name || 'Unknown',
+        lives: p.lives,
+        eliminated: p.eliminated,
+      })),
+    },
   };
-
-  // Each mode advertises its own prompt + history fields.
-  if (game.gameType === 'category-blitz') {
-    payload.category = game.currentCategory;
-    payload.usedAnswers = Array.from(game.usedAnswers);
-  } else {
-    payload.combo = game.currentCombo;
-    payload.usedWords = Array.from(game.usedWords);
-  }
-
-  return { type: 'turn_update', payload };
 }
 
 function buildGameOverPayload(room) {
-  const { game } = room;
-  const payload = { winnerId: game.winnerId };
-
-  // Surface the right "everything that was played" list for the mode, so
-  // building game_over never touches a field the other mode doesn't have.
-  if (game.gameType === 'category-blitz') {
-    payload.usedAnswers = Array.from(game.usedAnswers);
-  } else {
-    payload.usedWords = Array.from(game.usedWords);
-  }
-
-  return { type: 'game_over', payload };
+  return {
+    type: 'game_over',
+    payload: {
+      winnerId: room.game.winnerId,
+      usedWords: Array.from(room.game.usedWords),
+    },
+  };
 }
 
 /**
@@ -190,6 +188,68 @@ function clearTurnTimer(room) {
   }
 }
 
+/**
+ * Category Blitz round timer. Counts down game.roundTimeSeconds, broadcasting
+ * a timer_tick every second (same shape as the Word Bomb turn timer). When
+ * time runs out it ends the round, broadcasts round_end with everyone's
+ * results, then after a 5-second intermission either advances to the next
+ * round (round_start + a fresh round timer) or, if all rounds are done,
+ * broadcasts game_over with the final scoreboard.
+ */
+function startRoundTimer(room) {
+  clearRoundTimer(room);
+
+  const { game } = room;
+  let remaining = game.roundTimeSeconds;
+  room.roundDeadline = Date.now() + remaining * 1000;
+
+  room.roundTimerInterval = setInterval(() => {
+    remaining -= 1;
+
+    if (remaining <= 0) {
+      clearRoundTimer(room);
+
+      const results = categoryBlitzLogic.endRound(game);
+      broadcastToRoom(room, { type: 'round_end', payload: results });
+
+      // Intermission so players can read the round results before the next
+      // category drops (or the game ends).
+      room.roundPauseTimeout = setTimeout(() => {
+        room.roundPauseTimeout = null;
+
+        const next = categoryBlitzLogic.startNextRound(game);
+        if (next === null) {
+          broadcastToRoom(room, {
+            type: 'game_over',
+            payload: {
+              winnerId: game.winnerId,
+              finalScores: categoryBlitzLogic.getScoreboard(game),
+            },
+          });
+        } else {
+          broadcastToRoom(room, { type: 'round_start', payload: next });
+          startRoundTimer(room);
+        }
+      }, 5000);
+
+      return;
+    }
+
+    broadcastToRoom(room, { type: 'timer_tick', payload: { secondsRemaining: remaining } });
+  }, 1000);
+}
+
+function clearRoundTimer(room) {
+  if (room.roundTimerInterval) {
+    clearInterval(room.roundTimerInterval);
+    room.roundTimerInterval = null;
+  }
+  if (room.roundPauseTimeout) {
+    clearTimeout(room.roundPauseTimeout);
+    room.roundPauseTimeout = null;
+  }
+}
+
 function startGame(room) {
   if (room.players.length < MIN_PLAYERS_TO_START) {
     return { error: 'not_enough_players' };
@@ -206,8 +266,24 @@ function startGame(room) {
     type: 'game_started',
     payload: { difficultyKey: room.difficultyKey, gameType: room.gameType },
   });
-  broadcastToRoom(room, buildTurnUpdatePayload(room));
-  startTurnTimer(room);
+
+  if (room.gameType === 'category-blitz') {
+    // Simultaneous, round-based: kick off round 1 and its timer.
+    broadcastToRoom(room, {
+      type: 'round_start',
+      payload: {
+        round: room.game.currentRound,
+        category: room.game.currentCategory,
+        timerSeconds: room.game.roundTimeSeconds,
+      },
+    });
+    startRoundTimer(room);
+  } else {
+    // Turn-based Word Bomb.
+    broadcastToRoom(room, buildTurnUpdatePayload(room));
+    startTurnTimer(room);
+  }
+
   return { room };
 }
 
@@ -219,7 +295,17 @@ function startGame(room) {
  */
 async function handleWordSubmission(room, connectionId, word) {
   const { game } = room;
-  if (!game || game.status !== 'in_progress') {
+  if (!game) {
+    return { error: 'no_active_game' };
+  }
+
+  // Category Blitz is simultaneous - no turns - so it routes to its own
+  // handler instead of the turn-validated Word Bomb path below.
+  if (game.gameType === 'category-blitz') {
+    return handleCategoryAnswer(room, connectionId, word);
+  }
+
+  if (game.status !== 'in_progress') {
     return { error: 'no_active_game' };
   }
   if (getCurrentPlayerId(game) !== connectionId) {
@@ -253,11 +339,51 @@ async function handleWordSubmission(room, connectionId, word) {
   return { result };
 }
 
+/**
+ * Handles a Category Blitz answer. Unlike Word Bomb there's no turn check -
+ * any player can submit any time the round is active. The accept/reject
+ * result goes ONLY to the submitter (opponents must not see your answers
+ * mid-round), while a privacy-safe player_progress (just a count) is
+ * broadcast to everyone so the UI can show how each player is doing.
+ */
+async function handleCategoryAnswer(room, connectionId, answer) {
+  const { game } = room;
+  if (!game || game.gameType !== 'category-blitz') {
+    return { error: 'no_active_game' };
+  }
+  // Answers are only accepted while a round is actively running (not during
+  // the between-rounds intermission or after the game ends).
+  if (game.status !== 'in_progress') {
+    return { error: 'round_not_active' };
+  }
+
+  const result = await categoryBlitzLogic.submitAnswer(game, connectionId, answer);
+
+  // Private result back to the submitter only.
+  const connection = room.players.find((p) => p.id === connectionId)?.connection;
+  if (connection && connection.readyState === 1) {
+    connection.send(JSON.stringify({ type: 'answer_result', payload: result }));
+  }
+
+  // Public progress (count only) when the answer actually landed - the count
+  // is the only thing that changes, and it reveals nothing about the answer.
+  if (result.accepted) {
+    const player = game.players.find((p) => p.id === connectionId);
+    broadcastToRoom(room, {
+      type: 'player_progress',
+      payload: { playerId: connectionId, answerCount: player ? player.answers.length : 0 },
+    });
+  }
+
+  return { result };
+}
+
 function removePlayer(room, connectionId) {
   room.players = room.players.filter((p) => p.id !== connectionId);
 
   if (room.players.length === 0) {
     clearTurnTimer(room);
+    clearRoundTimer(room);
     rooms.delete(room.code);
     return;
   }
@@ -267,19 +393,26 @@ function removePlayer(room, connectionId) {
     room.hostId = room.players[0].id;
   }
 
-  // If a game is in progress, treat the disconnect like the player
-  // timing out repeatedly until eliminated, so the game doesn't hang
-  // waiting forever on someone who left.
-  if (room.game && room.game.status === 'in_progress') {
-    const player = room.game.players.find((p) => p.id === connectionId);
+  const game = room.game;
+  if (game && game.gameType === 'category-blitz') {
+    // Simultaneous mode has no turns to advance - the round timer keeps
+    // running for everyone else. Just drop the leaver from the live roster
+    // so progress broadcasts and the final scoreboard reflect who's still in.
+    if (Array.isArray(game.players)) {
+      game.players = game.players.filter((p) => p.id !== connectionId);
+    }
+  } else if (game && game.status === 'in_progress') {
+    // Word Bomb: treat the disconnect like the player timing out until
+    // eliminated, so the game doesn't hang waiting on someone who left.
+    const player = game.players.find((p) => p.id === connectionId);
     if (player) {
       player.eliminated = true;
       player.lives = 0;
     }
-    if (getCurrentPlayerId(room.game) === connectionId) {
+    if (getCurrentPlayerId(game) === connectionId) {
       clearTurnTimer(room);
-      advanceTurn(room.game);
-      if (room.game.status === 'finished') {
+      advanceTurn(game);
+      if (game.status === 'finished') {
         broadcastToRoom(room, buildGameOverPayload(room));
       } else {
         broadcastToRoom(room, buildTurnUpdatePayload(room));
@@ -297,6 +430,7 @@ module.exports = {
   getRoom,
   startGame,
   handleWordSubmission,
+  handleCategoryAnswer,
   removePlayer,
   broadcastToRoom,
   buildRoomUpdatePayload,
@@ -304,4 +438,6 @@ module.exports = {
   buildGameOverPayload,
   clearTurnTimer,
   startTurnTimer,
+  startRoundTimer,
+  clearRoundTimer,
 };

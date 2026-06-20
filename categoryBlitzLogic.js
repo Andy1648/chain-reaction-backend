@@ -1,26 +1,14 @@
 // categoryBlitzLogic.js
-// Pure game-state logic for Category Blitz - the second game mode. It shares
-// the exact same turn/timer/lives/elimination machinery as Word Bomb (those
-// functions operate only on fields common to both game shapes), so rather
-// than duplicate them we import them from gameLogic.js and re-export them.
-// Only the two mode-specific pieces differ:
+// Pure game-state logic for Category Blitz - a SIMULTANEOUS, round-based
+// party mode. There are no turns, no lives, and no elimination: every player
+// races to type as many valid answers to the same category as they can
+// during a timed round. After a fixed number of rounds, the highest
+// cumulative score wins.
 //
-//   createGame    - seeds a random CATEGORY and an empty usedAnswers set
-//                   (instead of a combo + usedWords)
-//   submitWord    - accepts any answer the Gemini judge says fits the
-//                   current category (instead of a dictionary word match)
-//
-// gameLogic.js is intentionally NOT modified - it stays pure Word Bomb.
-
-const {
-  DIFFICULTY_PRESETS,
-  MIN_PLAYERS_TO_START,
-  getCurrentPlayerId,
-  getActivePlayers,
-  computeTimerForTurn,
-  advanceTurn,
-  handleTimeout,
-} = require('./gameLogic');
+// This module is completely standalone - it deliberately does NOT import
+// turn/timer/lives helpers from gameLogic.js, because none of that applies
+// here. The room manager owns the wall-clock round timer; this file is just
+// the pure rules operating on a plain game object.
 
 // The category judge is injected (like gameLogic injects the dictionary) so
 // a test suite can substitute a stub and run offline without hitting Gemini.
@@ -30,9 +18,17 @@ function _setValidatorForTesting(mockModule) {
   validateCategoryAnswer = mockModule.validateCategoryAnswer;
 }
 
-// Lives mirrors Word Bomb. Defined locally rather than imported because
-// gameLogic doesn't export it; the value is intentionally the same.
-const STARTING_LIVES = 3;
+const TOTAL_ROUNDS = 3;
+const DEFAULT_ROUND_TIME = 45;
+const MIN_PLAYERS_TO_START = 2;
+
+// Round length per difficulty (seconds): harder difficulties give less time
+// to think. Falls back to DEFAULT_ROUND_TIME for an unknown key.
+const ROUND_TIME_BY_DIFFICULTY = {
+  easy: 60,
+  medium: 45,
+  hard: 30,
+};
 
 // Fun, broad categories that most players can answer quickly. Kept broad on
 // purpose so the AI judge has an easy yes/no call and the game stays fast.
@@ -50,94 +46,172 @@ const CATEGORIES = [
 ];
 
 /**
- * Picks a random category from the list. If `excludeCategory` is given, the
- * result is guaranteed to differ from it, so the prompt visibly changes
- * from one turn to the next rather than (rarely) repeating.
+ * Picks a random category. If `excludeSet` (a Set of already-played
+ * categories) is given, the result is guaranteed not to be one of them, so
+ * categories never repeat across rounds. Falls back to the full list in the
+ * impossible case that every category has been used.
  */
-function pickRandomCategory(excludeCategory) {
-  const pool = excludeCategory
-    ? CATEGORIES.filter((c) => c !== excludeCategory)
+function pickRandomCategory(excludeSet) {
+  const pool = excludeSet
+    ? CATEGORIES.filter((c) => !excludeSet.has(c))
     : CATEGORIES;
-  return pool[Math.floor(Math.random() * pool.length)];
+  const choices = pool.length ? pool : CATEGORIES;
+  return choices[Math.floor(Math.random() * choices.length)];
 }
 
 /**
- * Creates a fresh Category Blitz game object. Same shape as a Word Bomb game
- * except for the prompt fields: currentCategory + usedAnswers instead of
- * currentCombo + usedWords.
+ * Highest cumulative score wins. On a tie, the first player reaching that
+ * score (by player order) is the winner. Returns null only if there are no
+ * players at all.
+ */
+function determineWinner(game) {
+  let winnerId = null;
+  let best = -1;
+  game.players.forEach((p) => {
+    if (p.score > best) {
+      best = p.score;
+      winnerId = p.id;
+    }
+  });
+  return winnerId;
+}
+
+/**
+ * Creates a fresh Category Blitz game. Each player tracks their OWN answers
+ * (for the current round) and a cumulative score across all rounds.
  */
 function createGame(players, difficultyKey) {
-  const difficulty = DIFFICULTY_PRESETS[difficultyKey] || DIFFICULTY_PRESETS.medium;
+  const roundTimeSeconds = ROUND_TIME_BY_DIFFICULTY[difficultyKey] || DEFAULT_ROUND_TIME;
+  const firstCategory = pickRandomCategory();
 
   return {
-    status: 'in_progress', // 'in_progress' | 'finished'
-    difficultyKey: DIFFICULTY_PRESETS[difficultyKey] ? difficultyKey : 'medium',
-    difficulty,
+    status: 'in_progress', // 'in_progress' | 'between_rounds' | 'finished'
+    difficultyKey: ROUND_TIME_BY_DIFFICULTY[difficultyKey] ? difficultyKey : 'medium',
+    rounds: TOTAL_ROUNDS,
+    currentRound: 1,
+    currentCategory: firstCategory,
+    roundTimeSeconds,
     players: players.map((p) => ({
       id: p.id,
       name: p.name,
-      lives: STARTING_LIVES,
-      eliminated: false,
+      answers: [], // answers for the CURRENT round only (cleared each round)
+      score: 0, // cumulative across all rounds
     })),
-    turnOrder: players.map((p) => p.id),
-    currentPlayerIndex: 0,
-    currentCategory: pickRandomCategory(), // the category this turn's answer must fit
-    usedAnswers: new Set(), // every answer accepted so far, so none can be reused
-    completedTurnCount: 0,
-    currentTimerSeconds: difficulty.startSeconds,
+    usedCategories: new Set([firstCategory]), // so categories never repeat
     winnerId: null,
   };
 }
 
 /**
- * Validates and applies an answer submission for the current player. Named
- * submitWord (not submitAnswer) so it's a drop-in match for gameLogic's
- * interface - the room manager calls the same function name for both modes.
+ * Applies an answer from ANY player at any time during an active round -
+ * there is no turn checking. Validates length, per-player-per-round
+ * uniqueness, then defers to the AI judge. On success the answer is recorded
+ * and the player's score goes up by 1.
  *
- * Does NOT check whose turn it is; that's the caller's job (it needs the
- * connection id, which lives in the networking layer).
+ * Returns { accepted: true, answer, playerId } or
+ *         { accepted: false, reason, playerId }.
  */
-async function submitWord(game, rawAnswer) {
+async function submitAnswer(game, playerId, rawAnswer) {
   const answer = rawAnswer.trim();
   const normalized = answer.toLowerCase();
-  const category = game.currentCategory;
+  const player = game.players.find((p) => p.id === playerId);
 
-  // Category answers can legitimately be short ("pie", "ox"), so the floor
-  // is 2 characters rather than Word Bomb's 3.
+  if (!player) {
+    return { accepted: false, reason: 'not_in_game', playerId };
+  }
+
+  // Category answers can legitimately be short ("ox", "pie"), so the floor
+  // is just 2 characters.
   if (answer.length < 2) {
-    return { accepted: false, reason: 'too_short' };
+    return { accepted: false, reason: 'too_short', playerId };
   }
 
-  if (game.usedAnswers.has(normalized)) {
-    return { accepted: false, reason: 'already_used' };
+  // Only THIS player's answers for THIS round block a resubmission - two
+  // different players naming the same thing both score (they're racing
+  // independently), and the same word is fair game again next round.
+  if (player.answers.some((a) => a.toLowerCase() === normalized)) {
+    return { accepted: false, reason: 'already_said', playerId };
   }
 
-  const fits = await validateCategoryAnswer(category, answer);
+  const fits = await validateCategoryAnswer(game.currentCategory, answer);
   if (!fits) {
-    return { accepted: false, reason: 'not_in_category', category };
+    return { accepted: false, reason: 'not_in_category', playerId };
   }
 
-  // Accepted - record the answer and roll a fresh category for the next
-  // player (guaranteed different from the one just solved).
-  game.usedAnswers.add(normalized);
-  game.completedTurnCount += 1;
-  game.currentCategory = pickRandomCategory(category);
-  advanceTurn(game);
+  player.answers.push(answer);
+  player.score += 1;
 
-  return { accepted: true, word: answer, category: game.currentCategory };
+  return { accepted: true, answer, playerId };
+}
+
+/**
+ * Closes the current round. Flips status to 'between_rounds' and returns a
+ * snapshot of what everyone scored this round (with their actual answers
+ * revealed, now that the round is over).
+ */
+function endRound(game) {
+  game.status = 'between_rounds';
+  return {
+    round: game.currentRound,
+    category: game.currentCategory,
+    playerResults: game.players.map((p) => ({
+      id: p.id,
+      name: p.name,
+      answers: [...p.answers],
+      roundScore: p.answers.length,
+    })),
+  };
+}
+
+/**
+ * Advances to the next round, or ends the game if the last round just
+ * finished. When advancing: bumps the round counter, picks a fresh
+ * (non-repeating) category, clears everyone's per-round answers, and flips
+ * status back to 'in_progress'. Returns the new round info, or null when the
+ * game is over (status set to 'finished' and winnerId resolved).
+ */
+function startNextRound(game) {
+  if (game.currentRound >= game.rounds) {
+    game.status = 'finished';
+    game.winnerId = determineWinner(game);
+    return null;
+  }
+
+  game.currentRound += 1;
+  const category = pickRandomCategory(game.usedCategories);
+  game.currentCategory = category;
+  game.usedCategories.add(category);
+  game.players.forEach((p) => {
+    p.answers = [];
+  });
+  game.status = 'in_progress';
+
+  return {
+    round: game.currentRound,
+    category,
+    timerSeconds: game.roundTimeSeconds,
+  };
+}
+
+/**
+ * Returns the scoreboard sorted by cumulative score, highest first.
+ */
+function getScoreboard(game) {
+  return game.players
+    .map((p) => ({ id: p.id, name: p.name, score: p.score }))
+    .sort((a, b) => b.score - a.score);
 }
 
 module.exports = {
-  DIFFICULTY_PRESETS,
-  MIN_PLAYERS_TO_START,
   CATEGORIES,
+  TOTAL_ROUNDS,
+  MIN_PLAYERS_TO_START,
+  ROUND_TIME_BY_DIFFICULTY,
   createGame,
-  getCurrentPlayerId,
-  getActivePlayers,
-  computeTimerForTurn,
-  advanceTurn,
-  handleTimeout,
-  submitWord,
+  submitAnswer,
+  endRound,
+  startNextRound,
+  getScoreboard,
   pickRandomCategory,
   _setValidatorForTesting,
 };
