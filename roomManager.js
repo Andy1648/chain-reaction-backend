@@ -30,6 +30,12 @@ function logicForGameType(gameType) {
 const ROOM_CODE_LENGTH = 5;
 const ROOM_CODE_CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // no 0/O/1/I to avoid ambiguity
 
+// Delay before a game/round timer actually starts ticking, so the frontend's
+// 3-2-1-GO countdown (~2.8s) can finish first. Slightly longer than the
+// countdown to be safe. The round_start / turn_update message is still sent
+// immediately so the countdown can play; only the timer waits.
+const COUNTDOWN_DELAY_MS = 3000;
+
 const rooms = new Map(); // roomCode -> room object
 
 function generateRoomCode() {
@@ -65,6 +71,8 @@ function createRoom(hostConnection, hostName) {
     roundTimerInterval: null,
     roundPauseTimeout: null,
     roundDeadline: null,
+    // Pending "start the timer after the countdown" setTimeout, if any.
+    countdownTimeout: null,
   };
   rooms.set(code, room);
   return room;
@@ -186,6 +194,31 @@ function clearTurnTimer(room) {
     clearInterval(room.turnTimerInterval);
     room.turnTimerInterval = null;
   }
+  clearCountdownTimeout(room);
+}
+
+/**
+ * Clears a pending countdown-delay timeout (the gap between sending
+ * round_start / turn_update and actually starting the timer).
+ */
+function clearCountdownTimeout(room) {
+  if (room.countdownTimeout) {
+    clearTimeout(room.countdownTimeout);
+    room.countdownTimeout = null;
+  }
+}
+
+/**
+ * Schedules a timer-start function to run after the countdown delay, so the
+ * timer doesn't begin until the frontend's 3-2-1-GO countdown has finished.
+ * Any previously pending countdown is cleared first.
+ */
+function scheduleTimerAfterCountdown(room, startFn) {
+  clearCountdownTimeout(room);
+  room.countdownTimeout = setTimeout(() => {
+    room.countdownTimeout = null;
+    startFn(room);
+  }, COUNTDOWN_DELAY_MS);
 }
 
 /**
@@ -227,8 +260,10 @@ function startRoundTimer(room) {
             },
           });
         } else {
+          // Announce the next round immediately so its countdown can play,
+          // then delay the round timer until the countdown finishes.
           broadcastToRoom(room, { type: 'round_start', payload: next });
-          startRoundTimer(room);
+          scheduleTimerAfterCountdown(room, startRoundTimer);
         }
       }, 5000);
 
@@ -248,6 +283,7 @@ function clearRoundTimer(room) {
     clearTimeout(room.roundPauseTimeout);
     room.roundPauseTimeout = null;
   }
+  clearCountdownTimeout(room);
 }
 
 function startGame(room) {
@@ -268,7 +304,8 @@ function startGame(room) {
   });
 
   if (room.gameType === 'category-blitz') {
-    // Simultaneous, round-based: kick off round 1 and its timer.
+    // Simultaneous, round-based: announce round 1 immediately (so the
+    // countdown can play), but delay the round timer until it finishes.
     broadcastToRoom(room, {
       type: 'round_start',
       payload: {
@@ -277,11 +314,11 @@ function startGame(room) {
         timerSeconds: room.game.roundTimeSeconds,
       },
     });
-    startRoundTimer(room);
+    scheduleTimerAfterCountdown(room, startRoundTimer);
   } else {
-    // Turn-based Word Bomb.
+    // Turn-based Word Bomb: send the first turn immediately, delay its timer.
     broadcastToRoom(room, buildTurnUpdatePayload(room));
-    startTurnTimer(room);
+    scheduleTimerAfterCountdown(room, startTurnTimer);
   }
 
   return { room };
@@ -384,6 +421,7 @@ function removePlayer(room, connectionId) {
   if (room.players.length === 0) {
     clearTurnTimer(room);
     clearRoundTimer(room);
+    clearCountdownTimeout(room);
     rooms.delete(room.code);
     return;
   }
