@@ -1,8 +1,13 @@
 // gameLogic.js
-// Pure game-state logic for Chain Reaction, kept separate from networking
-// so it can be unit-tested and reasoned about without a WebSocket in the
-// loop. A "game" object here is plain data - the room manager owns the
-// timers and broadcasting.
+// Pure game-state logic for Word Bomb, kept separate from networking so it
+// can be unit-tested and reasoned about without a WebSocket in the loop. A
+// "game" object here is plain data - the room manager owns the timers and
+// broadcasting.
+//
+// Word Bomb rules: each turn the server picks a random 2-3 letter "combo"
+// (a common English letter sequence). The current player must type any real
+// word that *contains* that combo, isn't too short, and hasn't been used
+// yet. A fresh combo is rolled after every accepted word.
 
 // The dictionary dependency is injected rather than hard-required so the
 // test suite can substitute dictionary.mock.js (no network needed) while
@@ -28,22 +33,26 @@ const DIFFICULTY_PRESETS = {
 const STARTING_LIVES = 3;
 const MIN_PLAYERS_TO_START = 2;
 
-// A small seed list of starting words so the first word in a chain isn't
-// chosen by a player (which could let them pick something obscure on
-// purpose). All of these are pre-marked valid in dictionary.js's cache
-// at server startup so we never waste an API call confirming our own
-// seed list.
-const STARTER_WORDS = [
-  'garden', 'planet', 'window', 'castle', 'rocket', 'forest',
-  'bridge', 'pencil', 'guitar', 'mirror', 'jacket', 'turtle',
+// Curated list of common English letter sequences. A good combo appears in
+// lots of words so it's almost always solvable, but still forces the player
+// to think. Deliberately a mix of 2- and 3-letter sequences to vary the
+// difficulty turn to turn.
+const COMBOS = [
+  'an', 'er', 'in', 'th', 'ou', 'en', 're', 'on', 'at', 'es',
+  'or', 'ti', 'al', 'ar', 'te', 'ne', 'de',
+  'ion', 'ing', 'tion', 'ent', 'ant', 'all', 'igh', 'ous', 'ard',
+  'age', 'ack', 'ain', 'ast', 'and', 'ill', 'ore', 'ine', 'ate',
+  'ide', 'ung', 'ump', 'ock',
 ];
 
-function pickStarterWord() {
-  return STARTER_WORDS[Math.floor(Math.random() * STARTER_WORDS.length)];
-}
-
-function lastTwoLetters(word) {
-  return word.slice(-2).toLowerCase();
+/**
+ * Picks a random combo from the list. If `excludeCombo` is given, the
+ * result is guaranteed to differ from it, so the prompt visibly changes
+ * from one turn to the next rather than (rarely) repeating.
+ */
+function pickRandomCombo(excludeCombo) {
+  const pool = excludeCombo ? COMBOS.filter((c) => c !== excludeCombo) : COMBOS;
+  return pool[Math.floor(Math.random() * pool.length)];
 }
 
 /**
@@ -53,7 +62,6 @@ function lastTwoLetters(word) {
  */
 function createGame(players, difficultyKey) {
   const difficulty = DIFFICULTY_PRESETS[difficultyKey] || DIFFICULTY_PRESETS.medium;
-  const starterWord = pickStarterWord();
 
   return {
     status: 'in_progress', // 'in_progress' | 'finished'
@@ -67,8 +75,8 @@ function createGame(players, difficultyKey) {
     })),
     turnOrder: players.map((p) => p.id),
     currentPlayerIndex: 0,
-    chain: [starterWord], // full history of accepted words
-    usedWords: new Set([starterWord.toLowerCase()]),
+    currentCombo: pickRandomCombo(), // the letter sequence this turn's word must contain
+    usedWords: new Set(), // every word accepted so far, so none can be reused
     completedTurnCount: 0,
     currentTimerSeconds: difficulty.startSeconds,
     winnerId: null,
@@ -158,15 +166,16 @@ function handleTimeout(game) {
  */
 async function submitWord(game, rawWord) {
   const word = rawWord.trim().toLowerCase();
-  const lastWord = game.chain[game.chain.length - 1];
-  const requiredPrefix = lastTwoLetters(lastWord);
+  const combo = game.currentCombo;
 
   if (word.length < 3) {
     return { accepted: false, reason: 'too_short' };
   }
 
-  if (!word.startsWith(requiredPrefix)) {
-    return { accepted: false, reason: 'wrong_prefix', requiredPrefix };
+  // The core Word Bomb rule: the word must contain the combo anywhere.
+  // Both are already lowercased, so this is a case-insensitive match.
+  if (!word.includes(combo)) {
+    return { accepted: false, reason: 'missing_combo', combo };
   }
 
   if (game.usedWords.has(word)) {
@@ -178,18 +187,20 @@ async function submitWord(game, rawWord) {
     return { accepted: false, reason: 'not_a_word' };
   }
 
-  // All checks passed - commit the word to the chain.
-  game.chain.push(word);
+  // All checks passed - record the word and roll a fresh combo for the
+  // next player (guaranteed different from the one just solved).
   game.usedWords.add(word);
   game.completedTurnCount += 1;
+  game.currentCombo = pickRandomCombo(combo);
   advanceTurn(game);
 
-  return { accepted: true, word };
+  return { accepted: true, word, combo: game.currentCombo };
 }
 
 module.exports = {
   DIFFICULTY_PRESETS,
   MIN_PLAYERS_TO_START,
+  COMBOS,
   createGame,
   getCurrentPlayerId,
   getActivePlayers,
@@ -197,6 +208,6 @@ module.exports = {
   advanceTurn,
   handleTimeout,
   submitWord,
-  lastTwoLetters,
+  pickRandomCombo,
   _setDictionaryForTesting,
 };

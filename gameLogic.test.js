@@ -16,7 +16,15 @@ const mockDictionary = require('./dictionary.mock');
 // is testing gameLogic in isolation.
 gameLogic._setDictionaryForTesting(mockDictionary);
 
-const { createGame, submitWord, getCurrentPlayerId, lastTwoLetters, computeTimerForTurn, handleTimeout, DIFFICULTY_PRESETS } = gameLogic;
+const {
+  createGame,
+  submitWord,
+  getCurrentPlayerId,
+  computeTimerForTurn,
+  handleTimeout,
+  COMBOS,
+  DIFFICULTY_PRESETS,
+} = gameLogic;
 
 function makeTwoPlayerGame(difficulty = 'medium') {
   return createGame([{ id: 'p1', name: 'Alice' }, { id: 'p2', name: 'Bob' }], difficulty);
@@ -28,53 +36,56 @@ test('createGame sets up correct initial state', () => {
   assert.equal(game.players.length, 2);
   assert.equal(game.players[0].lives, 3);
   assert.equal(game.players[1].lives, 3);
-  assert.equal(game.chain.length, 1, 'should start with exactly one seed word');
+  assert.equal(game.usedWords.size, 0, 'should start with no used words');
+  assert.ok(COMBOS.includes(game.currentCombo), 'should start with a combo from the list');
+  assert.equal(game.chain, undefined, 'Word Bomb has no chain');
   assert.equal(game.currentPlayerIndex, 0);
 });
 
-test('lastTwoLetters extracts correctly, including short edge cases', () => {
-  assert.equal(lastTwoLetters('garden'), 'en');
-  assert.equal(lastTwoLetters('it'), 'it');
-  assert.equal(lastTwoLetters('GARDEN'), 'en', 'should lowercase');
-});
-
-test('submitWord accepts a valid word matching the prefix rule', async () => {
+test('submitWord accepts a valid word that contains the combo', async () => {
   const game = makeTwoPlayerGame();
-  game.chain = ['garden'];
-  game.usedWords = new Set(['garden']);
+  game.currentCombo = 'en';
 
-  const result = await submitWord(game, 'enter'); // 'garden' -> 'en' -> 'enter'
+  const result = await submitWord(game, 'enter'); // 'enter' contains 'en'
   assert.equal(result.accepted, true);
   assert.equal(result.word, 'enter');
-  assert.equal(game.chain[game.chain.length - 1], 'enter');
+  assert.ok(game.usedWords.has('enter'), 'accepted word should be recorded as used');
 });
 
-test('submitWord rejects a word with the wrong prefix', async () => {
+test('submitWord accepts when the combo is in the middle of the word', async () => {
   const game = makeTwoPlayerGame();
-  game.chain = ['garden'];
-  game.usedWords = new Set(['garden']);
+  game.currentCombo = 'er'; // 'render' -> r-E-R-d... contains 'er'
 
-  const result = await submitWord(game, 'castle'); // does not start with 'en'
+  const result = await submitWord(game, 'render');
+  assert.equal(result.accepted, true);
+  assert.equal(result.word, 'render');
+});
+
+test('submitWord rejects a word that does NOT contain the combo', async () => {
+  const game = makeTwoPlayerGame();
+  game.currentCombo = 'en';
+
+  const result = await submitWord(game, 'castle'); // valid word, but no 'en'
   assert.equal(result.accepted, false);
-  assert.equal(result.reason, 'wrong_prefix');
-  assert.equal(result.requiredPrefix, 'en');
+  assert.equal(result.reason, 'missing_combo');
+  assert.equal(result.combo, 'en');
 });
 
 test('submitWord rejects a word that is too short', async () => {
   const game = makeTwoPlayerGame();
-  game.chain = ['garden'];
-  const result = await submitWord(game, 'en'); // only 2 letters
+  game.currentCombo = 'en';
+
+  const result = await submitWord(game, 'en'); // contains the combo but only 2 letters
   assert.equal(result.accepted, false);
   assert.equal(result.reason, 'too_short');
 });
 
 test('submitWord rejects a word already used in this game', async () => {
   const game = makeTwoPlayerGame();
-  // Chain ends in 'garden' -> required prefix is 'en'. 'enter' satisfies
-  // that prefix and is already marked used, so resubmitting it should be
-  // caught by the used-words check specifically (not the prefix check).
-  game.chain = ['garden'];
-  game.usedWords = new Set(['garden', 'enter']);
+  // 'enter' contains the combo 'en' and is already used, so it should be
+  // caught by the used-words check specifically (not the combo check).
+  game.currentCombo = 'en';
+  game.usedWords = new Set(['enter']);
 
   const result = await submitWord(game, 'enter');
   assert.equal(result.accepted, false);
@@ -83,18 +94,27 @@ test('submitWord rejects a word already used in this game', async () => {
 
 test('submitWord rejects a word not in the dictionary', async () => {
   const game = makeTwoPlayerGame();
-  game.chain = ['garden'];
-  game.usedWords = new Set(['garden']);
+  game.currentCombo = 'en';
 
-  const result = await submitWord(game, 'enxyzqqq'); // valid prefix, not a real word
+  const result = await submitWord(game, 'enzzqq'); // contains 'en', not a real word
   assert.equal(result.accepted, false);
   assert.equal(result.reason, 'not_a_word');
 });
 
+test('submitWord rolls a new (different) combo after a successful submission', async () => {
+  const game = makeTwoPlayerGame();
+  game.currentCombo = 'en';
+
+  const result = await submitWord(game, 'enter');
+  assert.equal(result.accepted, true);
+  assert.notEqual(game.currentCombo, 'en', 'combo should change after a success');
+  assert.ok(COMBOS.includes(game.currentCombo), 'new combo should come from the list');
+  assert.equal(result.combo, game.currentCombo, 'result should report the new combo');
+});
+
 test('submitWord advances turn to the next player on success', async () => {
   const game = makeTwoPlayerGame();
-  game.chain = ['garden'];
-  game.usedWords = new Set(['garden']);
+  game.currentCombo = 'en';
 
   assert.equal(getCurrentPlayerId(game), 'p1');
   await submitWord(game, 'enter');
@@ -137,8 +157,7 @@ test('turn order skips eliminated players in a 3-player game', async () => {
     [{ id: 'p1', name: 'A' }, { id: 'p2', name: 'B' }, { id: 'p3', name: 'C' }],
     'medium'
   );
-  game.chain = ['garden'];
-  game.usedWords = new Set(['garden']);
+  game.currentCombo = 'en';
 
   // Eliminate p2 directly to test that turn order skips over them.
   game.players[1].eliminated = true;
@@ -189,16 +208,15 @@ test('invalid difficulty key falls back to medium rather than crashing', () => {
   assert.equal(game.difficulty.startSeconds, DIFFICULTY_PRESETS.medium.startSeconds);
 });
 
-test('rejected word submissions do not advance the turn or mutate the chain', async () => {
+test('rejected word submissions do not advance the turn or record a used word', async () => {
   const game = makeTwoPlayerGame();
-  game.chain = ['garden'];
-  game.usedWords = new Set(['garden']);
+  game.currentCombo = 'en';
 
-  const chainLengthBefore = game.chain.length;
+  const usedBefore = game.usedWords.size;
   const playerBefore = getCurrentPlayerId(game);
 
-  await submitWord(game, 'castle'); // wrong prefix, should be rejected
+  await submitWord(game, 'castle'); // missing the combo, should be rejected
 
-  assert.equal(game.chain.length, chainLengthBefore, 'chain should be unchanged on rejection');
+  assert.equal(game.usedWords.size, usedBefore, 'used words should be unchanged on rejection');
   assert.equal(getCurrentPlayerId(game), playerBefore, 'turn should not advance on rejection');
 });

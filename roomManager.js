@@ -96,7 +96,8 @@ function buildTurnUpdatePayload(room) {
     payload: {
       currentPlayerId: getCurrentPlayerId(game),
       timerSeconds: game.currentTimerSeconds,
-      chain: game.chain,
+      combo: game.currentCombo,
+      usedWords: Array.from(game.usedWords),
       players: game.players.map((p) => ({
         id: p.id,
         name: room.players.find((rp) => rp.id === p.id)?.name || 'Unknown',
