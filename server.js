@@ -21,6 +21,7 @@ const {
   broadcastToRoom,
   buildRoomUpdatePayload,
   buildTurnUpdatePayload,
+  buildGameOverPayload,
   clearTurnTimer,
   startTurnTimer,
 } = require('./roomManager');
@@ -119,6 +120,23 @@ wss.on('connection', (ws) => {
           break;
         }
 
+        case 'set_game_type': {
+          const room = getRoomForConnection(ws);
+          if (!room) return;
+          if (room.hostId !== ws.id) {
+            sendError(ws, 'Only the host can change the game type.', 'set_game_type');
+            return;
+          }
+          const gameType = payload?.gameType;
+          if (!['word-bomb', 'category-blitz'].includes(gameType)) {
+            sendError(ws, 'Invalid game type.', 'set_game_type');
+            return;
+          }
+          room.gameType = gameType;
+          broadcastToRoom(room, buildRoomUpdatePayload(room));
+          break;
+        }
+
         case 'start_game': {
           const room = getRoomForConnection(ws);
           if (!room) return;
@@ -148,7 +166,7 @@ case 'skip_turn': {
           const { eliminatedPlayerId } = handleTimeout(room.game);
           broadcastToRoom(room, { type: 'turn_skipped', payload: { eliminatedPlayerId } });
           if (room.game.status === 'finished') {
-            broadcastToRoom(room, { type: 'game_over', payload: { winnerId: room.game.winnerId, usedWords: Array.from(room.game.usedWords) } });
+            broadcastToRoom(room, buildGameOverPayload(room));
           } else {
             broadcastToRoom(room, buildTurnUpdatePayload(room));
             startTurnTimer(room);

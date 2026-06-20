@@ -4,14 +4,28 @@
 // (submitWord is async only because of the dictionary fetch) so the turn
 // rules can be reasoned about without thinking about real time.
 
+// The turn/timer/lives/elimination helpers are identical across both game
+// modes (they only touch fields common to both game shapes), so we pull
+// them once from gameLogic. The mode-specific pieces - createGame and
+// submitWord - are resolved per room via logicForGameType().
 const {
-  createGame,
   getCurrentPlayerId,
   handleTimeout,
-  submitWord,
   advanceTurn,
   MIN_PLAYERS_TO_START,
 } = require('./gameLogic');
+
+const wordBombLogic = require('./gameLogic');
+const categoryBlitzLogic = require('./categoryBlitzLogic');
+
+/**
+ * Returns the logic module (createGame/submitWord) for a given game type.
+ * Defaults to Word Bomb for anything unrecognized so an old/missing
+ * gameType can never leave a room without a logic module.
+ */
+function logicForGameType(gameType) {
+  return gameType === 'category-blitz' ? categoryBlitzLogic : wordBombLogic;
+}
 
 const ROOM_CODE_LENGTH = 5;
 const ROOM_CODE_CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // no 0/O/1/I to avoid ambiguity
@@ -42,6 +56,7 @@ function createRoom(hostConnection, hostName) {
     players: [{ id: hostConnection.id, name: hostName, connection: hostConnection }],
     game: null,
     difficultyKey: 'medium',
+    gameType: 'word-bomb', // 'word-bomb' | 'category-blitz'
     turnTimerInterval: null,
     turnDeadline: null,
   };
@@ -84,6 +99,7 @@ function buildRoomUpdatePayload(room) {
       code: room.code,
       hostId: room.hostId,
       difficultyKey: room.difficultyKey,
+      gameType: room.gameType,
       players: room.players.map((p) => ({ id: p.id, name: p.name })),
     },
   };
@@ -91,31 +107,42 @@ function buildRoomUpdatePayload(room) {
 
 function buildTurnUpdatePayload(room) {
   const { game } = room;
-  return {
-    type: 'turn_update',
-    payload: {
-      currentPlayerId: getCurrentPlayerId(game),
-      timerSeconds: game.currentTimerSeconds,
-      combo: game.currentCombo,
-      usedWords: Array.from(game.usedWords),
-      players: game.players.map((p) => ({
-        id: p.id,
-        name: room.players.find((rp) => rp.id === p.id)?.name || 'Unknown',
-        lives: p.lives,
-        eliminated: p.eliminated,
-      })),
-    },
+  const payload = {
+    currentPlayerId: getCurrentPlayerId(game),
+    timerSeconds: game.currentTimerSeconds,
+    players: game.players.map((p) => ({
+      id: p.id,
+      name: room.players.find((rp) => rp.id === p.id)?.name || 'Unknown',
+      lives: p.lives,
+      eliminated: p.eliminated,
+    })),
   };
+
+  // Each mode advertises its own prompt + history fields.
+  if (game.gameType === 'category-blitz') {
+    payload.category = game.currentCategory;
+    payload.usedAnswers = Array.from(game.usedAnswers);
+  } else {
+    payload.combo = game.currentCombo;
+    payload.usedWords = Array.from(game.usedWords);
+  }
+
+  return { type: 'turn_update', payload };
 }
 
 function buildGameOverPayload(room) {
-  return {
-    type: 'game_over',
-    payload: {
-      winnerId: room.game.winnerId,
-      usedWords: Array.from(room.game.usedWords),
-    },
-  };
+  const { game } = room;
+  const payload = { winnerId: game.winnerId };
+
+  // Surface the right "everything that was played" list for the mode, so
+  // building game_over never touches a field the other mode doesn't have.
+  if (game.gameType === 'category-blitz') {
+    payload.usedAnswers = Array.from(game.usedAnswers);
+  } else {
+    payload.usedWords = Array.from(game.usedWords);
+  }
+
+  return { type: 'game_over', payload };
 }
 
 /**
@@ -167,11 +194,18 @@ function startGame(room) {
   if (room.players.length < MIN_PLAYERS_TO_START) {
     return { error: 'not_enough_players' };
   }
-  room.game = createGame(
+  const logic = logicForGameType(room.gameType);
+  room.game = logic.createGame(
     room.players.map((p) => ({ id: p.id, name: p.name })),
     room.difficultyKey
   );
-  broadcastToRoom(room, { type: 'game_started', payload: { difficultyKey: room.difficultyKey } });
+  // Stamp the type onto the game so payload builders and submission routing
+  // know which mode this in-progress game is, independent of the room.
+  room.game.gameType = room.gameType;
+  broadcastToRoom(room, {
+    type: 'game_started',
+    payload: { difficultyKey: room.difficultyKey, gameType: room.gameType },
+  });
   broadcastToRoom(room, buildTurnUpdatePayload(room));
   startTurnTimer(room);
   return { room };
@@ -192,7 +226,8 @@ async function handleWordSubmission(room, connectionId, word) {
     return { error: 'not_your_turn' };
   }
 
-  const result = await submitWord(game, word);
+  const logic = logicForGameType(game.gameType);
+  const result = await logic.submitWord(game, word);
 
   if (result.accepted) {
     clearTurnTimer(room);
@@ -266,6 +301,7 @@ module.exports = {
   broadcastToRoom,
   buildRoomUpdatePayload,
   buildTurnUpdatePayload,
+  buildGameOverPayload,
   clearTurnTimer,
   startTurnTimer,
 };
