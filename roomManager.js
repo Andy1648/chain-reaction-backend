@@ -420,6 +420,11 @@ async function handleCategoryAnswer(room, connectionId, answer) {
  * state: kills every active timer, drops the game object, and broadcasts a
  * room_update so all clients fall back to the room view (where the host can
  * tweak difficulty/game type and start again). Backs the host-only rematch.
+ *
+ * The trailing game_reset is an explicit "this room_update is a rematch, leave
+ * the game view" signal: clients ignore plain room_updates while in a game (so
+ * a late room_update can't yank a player out of a just-started match), and rely
+ * on game_reset to drive the game -> room transition.
  */
 function resetGame(room) {
   clearTurnTimer(room);
@@ -427,6 +432,7 @@ function resetGame(room) {
   clearCountdownTimeout(room);
   room.game = null;
   broadcastToRoom(room, buildRoomUpdatePayload(room));
+  broadcastToRoom(room, { type: 'game_reset', payload: {} });
 }
 
 function removePlayer(room, connectionId) {
