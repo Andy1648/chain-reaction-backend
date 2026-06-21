@@ -202,6 +202,26 @@ wss.on('connection', (ws) => {
           break;
         }
 
+        // Real-time typing relay (BombParty style): rebroadcast the current
+        // player's in-progress text to everyone else so they see it keystroke
+        // by keystroke. Deliberately lightweight - no game-state mutation, no
+        // validation - just a capped string relayed to the other players.
+        case 'typing_update': {
+          const room = getRoomForConnection(ws);
+          if (!room) return;
+          if (!room.game || room.game.status !== 'in_progress') return;
+          const text = (payload?.text || '').toString().slice(0, 50);
+          room.players.forEach((p) => {
+            if (p.id !== ws.id && p.connection.readyState === 1) {
+              p.connection.send(JSON.stringify({
+                type: 'typing_update',
+                payload: { playerId: ws.id, text },
+              }));
+            }
+          });
+          break;
+        }
+
         case 'leave_room': {
           const room = getRoomForConnection(ws);
           if (!room) return;
