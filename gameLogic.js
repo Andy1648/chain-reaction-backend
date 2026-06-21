@@ -25,9 +25,9 @@ function _setDictionaryForTesting(mockModule) {
 // down to "floorSeconds" as a hard minimum so the game never becomes
 // literally impossible.
 const DIFFICULTY_PRESETS = {
-  easy: { startSeconds: 20, decreaseEveryNTurns: 3, floorSeconds: 8 },
-  medium: { startSeconds: 15, decreaseEveryNTurns: 2, floorSeconds: 5 },
-  hard: { startSeconds: 10, decreaseEveryNTurns: 1, floorSeconds: 3 },
+  easy: { startSeconds: 15, decreaseEveryNTurns: 3, floorSeconds: 6 },
+  medium: { startSeconds: 10, decreaseEveryNTurns: 2, floorSeconds: 4 },
+  hard: { startSeconds: 7, decreaseEveryNTurns: 1, floorSeconds: 3 },
 };
 
 const STARTING_LIVES = 3;

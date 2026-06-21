@@ -10,12 +10,17 @@
 // here. The room manager owns the wall-clock round timer; this file is just
 // the pure rules operating on a plain game object.
 
-// Answers are validated against pre-generated accept-lists (a Set of valid
-// lowercase answers per category) rather than a live AI call. This makes
-// validation a fast, free, deterministic, offline Set lookup. gemini.js is
-// intentionally no longer imported here - it stays in the repo for possible
-// future use but is never called during gameplay.
+// Answers are validated in TWO stages (hybrid validation):
+//   1. Pre-generated accept-lists (a Set of valid lowercase answers per
+//      category) - a fast, free, deterministic, offline Set lookup that
+//      resolves the common answers instantly with no API call.
+//   2. AI fallback (aiValidator.js) - only consulted when an answer ISN'T on
+//      the list, so creative/uncommon-but-valid answers still get judged. It
+//      stacks Groq then Gemini and fails open if both providers are down.
+// gemini.js is intentionally no longer imported here - aiValidator.js owns all
+// AI calls now; gemini.js stays in the repo for possible future use.
 const CATEGORY_ANSWERS = require('./categoryAnswers');
+const { validateCategoryAnswer } = require('./aiValidator');
 
 const TOTAL_ROUNDS = 3;
 const DEFAULT_ROUND_TIME = 45;
@@ -104,9 +109,10 @@ function createGame(players, difficultyKey) {
 /**
  * Applies an answer from ANY player at any time during an active round -
  * there is no turn checking. Validates length, per-player-per-round
- * uniqueness, then checks the answer against the category's pre-generated
- * accept-list. On success the answer is recorded and the player's score
- * goes up by 1.
+ * uniqueness, then validates the answer in two stages: the category's
+ * pre-generated accept-list first (instant, free), falling back to the AI
+ * judge (aiValidator.js) only when the answer isn't on the list. On success
+ * the answer is recorded and the player's score goes up by 1.
  *
  * Returns { accepted: true, answer, playerId } or
  *         { accepted: false, reason, playerId }.
@@ -135,10 +141,19 @@ async function submitAnswer(game, playerId, rawAnswer) {
     return { accepted: false, reason: 'already_said', playerId };
   }
 
-  // Validate against the pre-generated accept-list for the current category.
+  // Stage 1: the pre-generated accept-list for the current category. A hit
+  // here is instant and free - no API call. A miss does NOT reject; it just
+  // means the answer wasn't pre-generated, so we ask the AI judge next.
   const validAnswers = CATEGORY_ANSWERS[game.currentCategory];
-  if (!validAnswers || !validAnswers.has(normalized)) {
-    return { accepted: false, reason: 'not_in_category', playerId };
+  const onAcceptList = !!validAnswers && validAnswers.has(normalized);
+
+  if (!onAcceptList) {
+    // Stage 2: AI fallback. Judges creative/uncommon answers that aren't on
+    // the list. Stacks Groq then Gemini, and fails open if both are down.
+    const aiAccepted = await validateCategoryAnswer(game.currentCategory, answer);
+    if (!aiAccepted) {
+      return { accepted: false, reason: 'not_in_category', playerId };
+    }
   }
 
   player.answers.push(answer);
