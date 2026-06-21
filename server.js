@@ -16,6 +16,7 @@ const {
   joinRoom,
   getRoom,
   startGame,
+  resetGame,
   handleWordSubmission,
   removePlayer,
   broadcastToRoom,
@@ -150,7 +151,19 @@ wss.on('connection', (ws) => {
           }
           break;
         }
-case 'skip_turn': {
+
+        case 'rematch': {
+          const room = getRoomForConnection(ws);
+          if (!room) return;
+          if (room.hostId !== ws.id) {
+            sendError(ws, 'Only the host can start a rematch.', 'rematch');
+            return;
+          }
+          resetGame(room);
+          break;
+        }
+
+        case 'skip_turn': {
           const room = getRoomForConnection(ws);
           if (!room) return;
           if (!room.game || room.game.status !== 'in_progress') {

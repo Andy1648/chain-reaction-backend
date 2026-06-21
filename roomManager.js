@@ -415,6 +415,20 @@ async function handleCategoryAnswer(room, connectionId, answer) {
   return { result };
 }
 
+/**
+ * Tears the current game down so the room returns to its pre-game lobby
+ * state: kills every active timer, drops the game object, and broadcasts a
+ * room_update so all clients fall back to the room view (where the host can
+ * tweak difficulty/game type and start again). Backs the host-only rematch.
+ */
+function resetGame(room) {
+  clearTurnTimer(room);
+  clearRoundTimer(room);
+  clearCountdownTimeout(room);
+  room.game = null;
+  broadcastToRoom(room, buildRoomUpdatePayload(room));
+}
+
 function removePlayer(room, connectionId) {
   room.players = room.players.filter((p) => p.id !== connectionId);
 
@@ -467,6 +481,7 @@ module.exports = {
   joinRoom,
   getRoom,
   startGame,
+  resetGame,
   handleWordSubmission,
   handleCategoryAnswer,
   removePlayer,
