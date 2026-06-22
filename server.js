@@ -222,6 +222,27 @@ wss.on('connection', (ws) => {
           break;
         }
 
+        // Spectator reactions: an eliminated player fires a quick emoji, which
+        // we relay to EVERYONE in the room (active players + other spectators).
+        // Allow-listed emojis only; no game-state mutation.
+        case 'spectator_reaction': {
+          const room = getRoomForConnection(ws);
+          if (!room) return;
+          if (!room.game || room.game.status !== 'in_progress') return;
+          const emoji = (payload?.emoji || '').toString().slice(0, 4);
+          const allowedEmojis = ['💀', '🔥', '😂', '👏'];
+          if (!allowedEmojis.includes(emoji)) return;
+          broadcastToRoom(room, {
+            type: 'spectator_reaction',
+            payload: {
+              playerId: ws.id,
+              playerName: room.players.find((p) => p.id === ws.id)?.name || 'Spectator',
+              emoji,
+            },
+          });
+          break;
+        }
+
         case 'leave_room': {
           const room = getRoomForConnection(ws);
           if (!room) return;
