@@ -36,13 +36,24 @@ const MIN_PLAYERS_TO_START = 2;
 // Curated list of common English letter sequences. A good combo appears in
 // lots of words so it's almost always solvable, but still forces the player
 // to think. Deliberately a mix of 2- and 3-letter sequences to vary the
-// difficulty turn to turn.
+// difficulty turn to turn - the shorter ones are gimmes, the 3-letter ones
+// bite. Every entry below is a high-frequency sequence with plenty of common
+// words containing it; nothing here should ever be a dead end.
 const COMBOS = [
+  // ---- 2-letter (the easier rolls) ----
   'an', 'er', 'in', 'th', 'ou', 'en', 're', 'on', 'at', 'es',
   'or', 'ti', 'al', 'ar', 'te', 'ne', 'de',
+  'st', 'ed', 'nd', 'le', 'se', 'it', 'ch', 'sh', 'ck', 'll',
+  'ss', 'ee', 'oo', 'ot', 'et', 'am', 'ad', 'ow', 'ew', 'ay',
+  'ly', 'ge',
+  // ---- 3-letter (the ones that make you think) ----
   'ion', 'ing', 'tion', 'ent', 'ant', 'all', 'igh', 'ous', 'ard',
   'age', 'ack', 'ain', 'ast', 'and', 'ill', 'ore', 'ine', 'ate',
   'ide', 'ung', 'ump', 'ock',
+  'est', 'ess', 'ear', 'eat', 'ead', 'een', 'our', 'out', 'own',
+  'end', 'ick', 'uck', 'eck', 'ash', 'ish', 'ush', 'ight', 'able',
+  'tch', 'ter', 'der', 'ver', 'con', 'pre', 'pro', 'ink', 'ank',
+  'ake', 'ame', 'ome', 'one', 'ound',
 ];
 
 /**
