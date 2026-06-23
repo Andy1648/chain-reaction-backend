@@ -34,19 +34,44 @@ const ROUND_TIME_BY_DIFFICULTY = {
   hard: 30,
 };
 
-// Fun, broad categories that most players can answer quickly. Kept broad on
-// purpose so the AI judge has an easy yes/no call and the game stays fast.
+// Categories with PERSONALITY - every one should make a player smirk, argue, or
+// say "oh this is a good one". No boring trivia ("things that are green"). They
+// stay answerable (the AI judge still needs an easy-ish yes/no), but the prompt
+// itself is the fun. Keys here MUST match categoryAnswers.js exactly.
 const CATEGORIES = [
-  'Things in a kitchen', 'Countries in Europe', 'Animals that can swim',
-  'Things that are red', 'Musical instruments', 'Things that are round',
-  'Sports played with a ball', 'Things you find at a beach', 'Fruits',
-  'Things that fly', 'Board games', 'Desserts',
-  'Things you find in a classroom', 'Car brands', 'Things that are cold',
-  'Things you wear on your head', 'Video games', 'Things made of wood',
-  'Pizza toppings', 'Things in a bathroom', 'Superheroes',
-  'Things that are green', 'Drinks', 'Things at a zoo', 'Jobs',
-  'Things in space', 'Cartoon characters', 'Things that are loud',
-  'Shoes brands', 'Things at a party',
+  // Oddly specific
+  'Things in your junk drawer', 'Gas station purchases at 2am',
+  'Things on a CVS receipt', 'Things your mom has in her purse',
+  'Things in a college dorm room', 'Smells in a middle school',
+  "Things in a teacher's desk", 'Things you find between couch cushions',
+  'Things in a hotel minibar', 'Things taped to a fridge',
+  // Food but make it specific
+  "McDonald's menu items", 'Things you dip in ranch',
+  'Foods that are better cold the next day', "Gas station food you'd actually eat",
+  'Things you put on toast', 'School cafeteria foods',
+  "Foods that shouldn't exist but do", 'Things at a buffet nobody touches',
+  'Midnight snack choices', "Foods you eat with your hands but probably shouldn't",
+  // Pop culture (specific)
+  'SpongeBob characters', 'Minecraft mobs', 'Pokemon from Gen 1',
+  'Things you can do in GTA', 'Fortnite skins', 'Mario power-ups and items',
+  'Disney villains', 'Pixar movies', 'Things in Hogwarts', 'Roblox games',
+  // Debatable / funny
+  'Valid excuses for being late', "Things you shouldn't microwave",
+  'Worst superpowers', 'Things that are technically legal but feel illegal',
+  'Reasons to call in sick', 'Things you pretend to understand',
+  'Things you google at 3am', 'Lies on a dating profile',
+  'Things the weird kid did in class', "Things that shouldn't be a sport but are",
+  // Brands & specific knowledge
+  'Shoe brands', 'Car brands', 'Fast food chains', 'Apps on your phone right now',
+  'Things in an Amazon package', 'Things in a Costco', 'YouTube video categories',
+  'Things with a drive-through', 'Subscription services',
+  'Things that come in a vending machine',
+  // Social / relatable
+  'Things teachers always say', 'Things your parents text you',
+  'Things a gym bro says', 'Things you say when you stub your toe',
+  'Things you whisper in a library', 'Things you yell at a sports game',
+  'First things you do when you wake up', 'Things you do when the WiFi goes out',
+  'Things that hit different at night', 'Excuses for not texting back',
 ];
 
 /**
