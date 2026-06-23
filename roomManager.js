@@ -469,7 +469,13 @@ function handleImposterVote(room, connectionId, suspectId) {
 }
 
 function startGame(room) {
-  if (room.players.length < MIN_PLAYERS_TO_START) {
+  // Imposter Word needs at least 3 (a 2-player imposter round is pointless);
+  // the other modes start at the shared 2-player minimum.
+  const minPlayers =
+    room.gameType === 'imposter-word'
+      ? imposterWordLogic.MIN_PLAYERS_TO_START
+      : MIN_PLAYERS_TO_START;
+  if (room.players.length < minPlayers) {
     return { error: 'not_enough_players' };
   }
   const logic = logicForGameType(room.gameType);
