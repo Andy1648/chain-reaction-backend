@@ -15,6 +15,8 @@ const {
   createRoom,
   joinRoom,
   getRoom,
+  listPublicRooms,
+  quickPlay,
   startGame,
   resetGame,
   handleWordSubmission,
@@ -27,6 +29,7 @@ const {
   buildGameOverPayload,
   clearTurnTimer,
   startTurnTimer,
+  startRoomReaper,
 } = require('./roomManager');
 
 // Pre-warm the dictionary cache with our starter words so the very first
@@ -48,6 +51,21 @@ const wss = new WebSocketServer({ server });
 // Tracks which room each live connection currently belongs to, so we can
 // clean up properly on disconnect without the client having to tell us.
 const connectionToRoomCode = new Map();
+
+// Per-connection create_room throttle: at most CREATE_LIMIT room creations per
+// CREATE_WINDOW_MS from a single socket, so one client can't spam the registry.
+// (The global MAX_ACTIVE_ROOMS cap in roomManager is the backstop for a client
+// that opens many sockets.) Timestamps live on the ws object, so they're freed
+// with the connection.
+const CREATE_WINDOW_MS = 60 * 1000;
+const CREATE_LIMIT = 5;
+function allowCreateRoom(ws) {
+  const now = Date.now();
+  ws._createTimes = (ws._createTimes || []).filter((t) => now - t < CREATE_WINDOW_MS);
+  if (ws._createTimes.length >= CREATE_LIMIT) return false;
+  ws._createTimes.push(now);
+  return true;
+}
 
 function send(ws, type, payload) {
   if (ws.readyState === 1) {
@@ -82,11 +100,57 @@ wss.on('connection', (ws) => {
     try {
       switch (type) {
         case 'create_room': {
+          // Throttle create-spam from a single connection first.
+          if (!allowCreateRoom(ws)) {
+            sendError(ws, humanizeError('rate_limited'), 'create_room');
+            return;
+          }
           const name = (payload?.name || 'Player').slice(0, 20);
-          const room = createRoom(ws, name);
+          // isPublic defaults to false: a plain create_room stays code-only/
+          // private exactly as before. Only an explicit true opts into the
+          // public list / quick-play.
+          const result = createRoom(ws, name, payload?.isPublic === true);
+          if (result.error) {
+            // Global cap hit (server_busy) - graceful, no crash/silent drop.
+            sendError(ws, humanizeError(result.error), 'create_room');
+            return;
+          }
+          const room = result.room;
           connectionToRoomCode.set(ws.id, room.code);
           send(ws, 'room_created', { code: room.code });
           send(ws, ...Object.values(buildRoomUpdatePayload(room)));
+          break;
+        }
+
+        // Lobby browser: return the list of joinable public rooms. Read-only -
+        // no room membership required, so it doesn't go through
+        // getRoomForConnection. Replies straight to the asking socket.
+        case 'list_public_rooms': {
+          send(ws, 'public_rooms', { rooms: listPublicRooms() });
+          break;
+        }
+
+        // Quick Play: join the fullest joinable public room, or spin up a new
+        // public one if none exist. Reuses joinRoom's guards (race-safe retry
+        // inside quickPlay) and the same create throttle as create_room.
+        case 'quick_play': {
+          const name = (payload?.name || 'Player').slice(0, 20);
+          const result = quickPlay(ws, name, () => allowCreateRoom(ws));
+          if (result.error) {
+            sendError(ws, humanizeError(result.error), 'quick_play');
+            return;
+          }
+          const room = result.room;
+          connectionToRoomCode.set(ws.id, room.code);
+          // Mirror create_room / join_room so the (future) client handles both
+          // uniformly: a fresh room reports room_created, an existing one
+          // room_joined; then everyone in the room gets the updated roster.
+          if (result.created) {
+            send(ws, 'room_created', { code: room.code });
+          } else {
+            send(ws, 'room_joined', { code: room.code });
+          }
+          broadcastToRoom(room, buildRoomUpdatePayload(room));
           break;
         }
 
@@ -324,6 +388,8 @@ function humanizeError(code) {
     no_rerolls_left: 'No category rerolls left this game.',
     host_only_reroll: 'Only the host can reroll the category.',
     reroll_window_closed: 'Rerolls are only allowed in the first few seconds of a round.',
+    rate_limited: "You're creating rooms too fast. Wait a moment and try again.",
+    server_busy: 'The server is at capacity right now. Please try again shortly.',
   };
   return messages[code] || 'Something went wrong.';
 }
@@ -331,4 +397,6 @@ function humanizeError(code) {
 const PORT = process.env.PORT || 3001;
 server.listen(PORT, () => {
   console.log(`Chain Reaction server listening on port ${PORT}`);
+  // Start the single idle-room reaper sweep (deletes dead non-empty lobbies).
+  startRoomReaper();
 });

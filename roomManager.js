@@ -33,6 +33,10 @@ function logicForGameType(gameType) {
 const ROOM_CODE_LENGTH = 5;
 const ROOM_CODE_CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // no 0/O/1/I to avoid ambiguity
 
+// Max players a single room holds. Was a bare literal in joinRoom; pulled out so
+// the join guard and the public-rooms list/quick-play share one source of truth.
+const MAX_PLAYERS_PER_ROOM = 8;
+
 // Delay before a game/round timer actually starts ticking, so the frontend's
 // 3-2-1-GO countdown (~2.8s) can finish first. Slightly longer than the
 // countdown to be safe. The round_start / turn_update message is still sent
@@ -43,7 +47,26 @@ const COUNTDOWN_DELAY_MS = 3000;
 // actively-running round (anti-grief - no yanking the category mid-round).
 const REROLL_WINDOW_MS = 5000;
 
+// ---- Room lifecycle safety (single-instance, in-memory) ----
+// A non-empty room with no meaningful activity for this long is treated as a
+// dead lobby and reaped - UNLESS it's mid-game (an in_progress game is never
+// reaped). Empty rooms are still deleted immediately by removePlayer; this only
+// catches the still-connected-but-idle ones. Tune ROOM_IDLE_TTL_MS to taste.
+const ROOM_IDLE_TTL_MS = 20 * 60 * 1000; // 20 minutes idle
+const REAPER_SWEEP_MS = 60 * 1000; // sweep once a minute
+// Hard ceiling on concurrent rooms - a backstop against create-spam exhausting
+// memory. createRoom refuses past this with a 'server_busy' error.
+const MAX_ACTIVE_ROOMS = 500;
+
 const rooms = new Map(); // roomCode -> room object
+
+// Marks a room as alive. Call from the events that prove a room is in active use
+// (see the call sites: join, leave, game start, an accepted submission, rematch)
+// so the idle reaper only ever removes genuinely dead lobbies. One helper, one
+// call per event site, so the "alive" set stays consistent and easy to audit.
+function touchRoom(room) {
+  if (room) room.lastActivity = Date.now();
+}
 
 function generateRoomCode() {
   let code;
@@ -61,15 +84,29 @@ function generateRoomCode() {
  * started), and a reference to the active turn-timer interval so it can
  * be cleared on cleanup.
  */
-function createRoom(hostConnection, hostName) {
+function createRoom(hostConnection, hostName, isPublic = false) {
+  // Global cap backstop (DoS guard). The caller surfaces 'server_busy' to the
+  // client rather than crashing or silently dropping.
+  if (rooms.size >= MAX_ACTIVE_ROOMS) {
+    return { error: 'server_busy' };
+  }
   const code = generateRoomCode();
+  const now = Date.now();
   const room = {
     code,
     hostId: hostConnection.id,
     players: [{ id: hostConnection.id, name: hostName, connection: hostConnection }],
     game: null,
+    // Discoverability: private rooms (default) are code-only and never appear in
+    // the public list / quick-play; public rooms are joinable by anyone. Set once
+    // at creation - nothing mutates it later.
+    isPublic: !!isPublic,
     difficultyKey: 'medium',
     gameType: 'word-bomb', // 'word-bomb' | 'category-blitz'
+    // Activity timestamps for the idle reaper. createdAt is fixed; lastActivity
+    // is bumped via touchRoom() on every meaningful room event.
+    createdAt: now,
+    lastActivity: now,
     // Word Bomb uses a per-turn timer; Category Blitz uses a per-round timer
     // plus a between-rounds pause. They are mutually exclusive per game, but
     // both slots live on the room so cleanup is uniform.
@@ -82,7 +119,7 @@ function createRoom(hostConnection, hostName) {
     countdownTimeout: null,
   };
   rooms.set(code, room);
-  return room;
+  return { room };
 }
 
 function joinRoom(code, connection, playerName) {
@@ -93,15 +130,82 @@ function joinRoom(code, connection, playerName) {
   if (room.game && room.game.status === 'in_progress') {
     return { error: 'game_already_started' };
   }
-  if (room.players.length >= 8) {
+  if (room.players.length >= MAX_PLAYERS_PER_ROOM) {
     return { error: 'room_full' };
   }
   room.players.push({ id: connection.id, name: playerName, connection });
+  touchRoom(room); // a join proves the room is alive
   return { room };
 }
 
 function getRoom(code) {
   return rooms.get(code);
+}
+
+/**
+ * Returns the list of joinable PUBLIC rooms for the lobby browser. A room is
+ * listed only if it's public AND waiting (no game object yet) AND not full.
+ * In-progress, finished, and private rooms are all excluded - so every entry
+ * here is something a player can actually join right now. `status` is always
+ * 'waiting' by construction; it's included so the client doesn't have to infer
+ * it. No connections/internal fields leak - just the display-safe summary.
+ */
+function listPublicRooms() {
+  const out = [];
+  for (const room of rooms.values()) {
+    if (!room.isPublic) continue;
+    if (room.game !== null) continue; // waiting only (excludes in-progress/finished)
+    if (room.players.length >= MAX_PLAYERS_PER_ROOM) continue; // not full
+    out.push({
+      code: room.code,
+      playerCount: room.players.length,
+      maxPlayers: MAX_PLAYERS_PER_ROOM,
+      gameType: room.gameType,
+      status: 'waiting',
+    });
+  }
+  return out;
+}
+
+/**
+ * Quick Play: drop the player straight into a game. Ranks all public waiting
+ * rooms fullest-first (fill rooms up rather than scatter players thin), then
+ * tries to join each in turn. The actual not-full / not-started guard is
+ * joinRoom's - so if the top candidate fills up or starts between our snapshot
+ * and the join attempt, that join just errors and we fall through to the next
+ * candidate (race-safe, no locking needed on a single instance).
+ *
+ * If nothing joinable exists, creates a fresh PUBLIC room so the player still
+ * lands somewhere (and others can quick-play into it next). The create path is
+ * gated by `allowCreate` (the caller's per-connection create throttle) so
+ * quick-play can't be abused to spam the registry; createRoom's global cap is
+ * the final backstop. Returns { room, created } on success, or { error }.
+ */
+function quickPlay(connection, playerName, allowCreate) {
+  const candidates = [];
+  for (const room of rooms.values()) {
+    if (!room.isPublic) continue;
+    if (room.game !== null) continue; // waiting only
+    candidates.push(room);
+  }
+  // Fullest-not-full first. Full rooms may still be in here (snapshot race); we
+  // let joinRoom reject them and move on rather than pre-filtering, so the
+  // "retry next candidate on a full/started race" behavior is the same code
+  // path whether the room filled a tick ago or mid-loop.
+  candidates.sort((a, b) => b.players.length - a.players.length);
+  for (const room of candidates) {
+    const res = joinRoom(room.code, connection, playerName);
+    if (!res.error) return { room: res.room, created: false };
+    // room_full / game_already_started / room_not_found => try the next one.
+  }
+
+  // Nothing to join - make a new public room (subject to the create throttle).
+  if (typeof allowCreate === 'function' && !allowCreate()) {
+    return { error: 'rate_limited' };
+  }
+  const res = createRoom(connection, playerName, true);
+  if (res.error) return { error: res.error };
+  return { room: res.room, created: true };
 }
 
 function broadcastToRoom(room, message) {
@@ -430,6 +534,7 @@ function handleImposterAnswer(room, connectionId, answer) {
   }
 
   if (result.accepted) {
+    touchRoom(room); // an accepted answer proves the room is alive
     const player = game.players.find((p) => p.id === connectionId);
     broadcastToRoom(room, {
       type: 'imposter_answer',
@@ -511,6 +616,7 @@ function startGame(room) {
   // Stamp the type onto the game so payload builders and submission routing
   // know which mode this in-progress game is, independent of the room.
   room.game.gameType = room.gameType;
+  touchRoom(room); // starting a game proves the room is alive
   broadcastToRoom(room, {
     type: 'game_started',
     payload: { difficultyKey: room.difficultyKey, gameType: room.gameType },
@@ -576,6 +682,7 @@ async function handleWordSubmission(room, connectionId, word) {
   const result = await logic.submitWord(game, word);
 
   if (result.accepted) {
+    touchRoom(room); // an accepted word proves the room is alive
     clearTurnTimer(room);
     broadcastToRoom(room, { type: 'word_result', payload: result });
 
@@ -628,6 +735,7 @@ async function handleCategoryAnswer(room, connectionId, answer) {
   // Public progress (count only) when the answer actually landed - the count
   // is the only thing that changes, and it reveals nothing about the answer.
   if (result.accepted) {
+    touchRoom(room); // an accepted answer proves the room is alive
     const player = game.players.find((p) => p.id === connectionId);
     broadcastToRoom(room, {
       type: 'player_progress',
@@ -712,20 +820,32 @@ function resetGame(room) {
   clearRoundTimer(room);
   clearCountdownTimeout(room);
   room.game = null;
+  touchRoom(room); // a rematch proves the room is alive
   broadcastToRoom(room, buildRoomUpdatePayload(room));
   broadcastToRoom(room, { type: 'game_reset', payload: {} });
+}
+
+// Single source of truth for tearing a room down: clears every timer it might
+// own and removes it from the registry. Used by the empty-room path below AND
+// the idle reaper, so timer-clearing is never duplicated. (clearTurnTimer /
+// clearRoundTimer each also clear the countdown timeout, but calling all three
+// is explicit and idempotent.)
+function destroyRoom(room) {
+  clearTurnTimer(room);
+  clearRoundTimer(room);
+  clearCountdownTimeout(room);
+  rooms.delete(room.code);
 }
 
 function removePlayer(room, connectionId) {
   room.players = room.players.filter((p) => p.id !== connectionId);
 
   if (room.players.length === 0) {
-    clearTurnTimer(room);
-    clearRoundTimer(room);
-    clearCountdownTimeout(room);
-    rooms.delete(room.code);
+    destroyRoom(room);
     return;
   }
+
+  touchRoom(room); // a leave (with players remaining) proves the room is alive
 
   // Reassign host if the host left.
   if (room.hostId === connectionId) {
@@ -772,10 +892,71 @@ function removePlayer(room, connectionId) {
   broadcastToRoom(room, buildRoomUpdatePayload(room));
 }
 
+/**
+ * Idle-room reaper sweep. Deletes every room that has been idle longer than
+ * ROOM_IDLE_TTL_MS AND is NOT mid-game (game === null, or a finished game) - an
+ * in_progress game is never reaped no matter how long a turn drags. Each reaped
+ * room's still-connected players get a graceful `room_closed` before teardown so
+ * a lingering client isn't left hanging. Collects candidates first, then deletes,
+ * so we never mutate the Map mid-iteration. Returns the reaped room codes.
+ */
+function reapIdleRooms(now = Date.now()) {
+  const stale = [];
+  for (const room of rooms.values()) {
+    const midGame = !!room.game && room.game.status === 'in_progress';
+    if (midGame) continue;
+    const idleFor = now - (room.lastActivity || room.createdAt || now);
+    if (idleFor >= ROOM_IDLE_TTL_MS) stale.push(room);
+  }
+  stale.forEach((room) => {
+    broadcastToRoom(room, {
+      type: 'room_closed',
+      payload: { code: room.code, reason: 'idle' },
+    });
+    destroyRoom(room); // same teardown as the empty-room path
+  });
+  return stale.map((r) => r.code);
+}
+
+// The single server-level reaper interval (not per-room). unref'd so it never
+// keeps the process alive on its own. Idempotent start/stop.
+let reaperInterval = null;
+function startRoomReaper() {
+  if (reaperInterval) return reaperInterval;
+  reaperInterval = setInterval(() => {
+    try {
+      reapIdleRooms();
+    } catch (err) {
+      console.error('Room reaper sweep failed', err);
+    }
+  }, REAPER_SWEEP_MS);
+  if (typeof reaperInterval.unref === 'function') reaperInterval.unref();
+  return reaperInterval;
+}
+function stopRoomReaper() {
+  if (reaperInterval) {
+    clearInterval(reaperInterval);
+    reaperInterval = null;
+  }
+}
+
+// Test-only: wipe the room registry between tests so listPublicRooms/quickPlay
+// see a clean slate. Tears down any timers first so nothing leaks across tests.
+function _resetRoomsForTesting() {
+  for (const room of rooms.values()) {
+    clearTurnTimer(room);
+    clearRoundTimer(room);
+    clearCountdownTimeout(room);
+  }
+  rooms.clear();
+}
+
 module.exports = {
   createRoom,
   joinRoom,
   getRoom,
+  listPublicRooms,
+  quickPlay,
   startGame,
   resetGame,
   handleWordSubmission,
@@ -791,4 +972,11 @@ module.exports = {
   startTurnTimer,
   startRoundTimer,
   clearRoundTimer,
+  // Room lifecycle safety (foundation for public rooms):
+  touchRoom,
+  reapIdleRooms,
+  startRoomReaper,
+  stopRoomReaper,
+  MAX_PLAYERS_PER_ROOM,
+  _resetRoomsForTesting,
 };
