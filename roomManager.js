@@ -17,14 +17,17 @@ const {
 
 const wordBombLogic = require('./gameLogic');
 const categoryBlitzLogic = require('./categoryBlitzLogic');
+const imposterWordLogic = require('./imposterWordLogic');
 
 /**
- * Returns the logic module (createGame/submitWord) for a given game type.
+ * Returns the logic module (createGame/submit*) for a given game type.
  * Defaults to Word Bomb for anything unrecognized so an old/missing
  * gameType can never leave a room without a logic module.
  */
 function logicForGameType(gameType) {
-  return gameType === 'category-blitz' ? categoryBlitzLogic : wordBombLogic;
+  if (gameType === 'category-blitz') return categoryBlitzLogic;
+  if (gameType === 'imposter-word') return imposterWordLogic;
+  return wordBombLogic;
 }
 
 const ROOM_CODE_LENGTH = 5;
@@ -286,6 +289,185 @@ function clearRoundTimer(room) {
   clearCountdownTimeout(room);
 }
 
+/* ============================================================= */
+/* ===============  IMPOSTER WORD ORCHESTRATION  =============== */
+/* ============================================================= */
+// Imposter Word reuses the room's roundTimer / roundPause / countdown slots
+// (a room only ever runs one game at a time), so clearRoundTimer already tears
+// it all down on reset / disconnect. Each round has two timed phases:
+// answering -> voting, then a reveal pause that starts the next round (or ends).
+
+// Reveal sits a touch longer than the spec's 5s so the frontend can play the
+// ~2s "THE IMPOSTER WAS..." suspense AND its 5s countdown to the next round.
+const IMPOSTER_REVEAL_PAUSE_MS = 7000;
+
+/**
+ * Starts a round: sends each player their OWN round_start (the imposter sees a
+ * different category from everyone else, so these can't be one broadcast), then
+ * starts the answer-phase timer once the 3-2-1 countdown has played.
+ */
+function startImposterRound(room) {
+  const { game } = room;
+  const roster = game.players.map((gp) => ({ id: gp.id, name: gp.name }));
+  room.players.forEach((p) => {
+    if (p.connection.readyState !== 1) return;
+    const isImposter = p.id === game.imposterId;
+    p.connection.send(
+      JSON.stringify({
+        type: 'round_start',
+        payload: {
+          round: game.currentRound,
+          totalRounds: game.rounds,
+          category: isImposter ? game.imposterCategory : game.currentCategory,
+          isImposter,
+          phase: 'answering',
+          timerSeconds: game.answerPhaseSeconds,
+          players: roster,
+        },
+      })
+    );
+  });
+  scheduleTimerAfterCountdown(room, startImposterAnswerTimer);
+}
+
+/** Answer phase countdown: broadcasts a tick a second, ends the phase at 0. */
+function startImposterAnswerTimer(room) {
+  clearRoundTimer(room);
+  const { game } = room;
+  let remaining = game.answerPhaseSeconds;
+  room.roundDeadline = Date.now() + remaining * 1000;
+  room.roundTimerInterval = setInterval(() => {
+    remaining -= 1;
+    if (remaining <= 0) {
+      clearRoundTimer(room);
+      endImposterAnswerPhase(room);
+      return;
+    }
+    broadcastToRoom(room, { type: 'timer_tick', payload: { secondsRemaining: remaining } });
+  }, 1000);
+}
+
+/** Closes answering, reveals everyone's answers, and opens voting. */
+function endImposterAnswerPhase(room) {
+  const { game } = room;
+  const result = imposterWordLogic.endAnswerPhase(game);
+  broadcastToRoom(room, {
+    type: 'vote_phase_start',
+    payload: {
+      answers: result.answers,
+      timerSeconds: result.timerSeconds,
+      phase: 'voting',
+      players: game.players.map((p) => ({ id: p.id, name: p.name })),
+    },
+  });
+  startImposterVoteTimer(room);
+}
+
+/** Vote phase countdown: ends at 0 (handleImposterVote ends it early if all in). */
+function startImposterVoteTimer(room) {
+  clearRoundTimer(room);
+  const { game } = room;
+  let remaining = game.votePhaseSeconds;
+  room.roundDeadline = Date.now() + remaining * 1000;
+  room.roundTimerInterval = setInterval(() => {
+    remaining -= 1;
+    if (remaining <= 0) {
+      clearRoundTimer(room);
+      endImposterVotePhase(room);
+      return;
+    }
+    broadcastToRoom(room, { type: 'timer_tick', payload: { secondsRemaining: remaining } });
+  }, 1000);
+}
+
+/** Tallies votes, broadcasts the reveal, then schedules the next round / game over. */
+function endImposterVotePhase(room) {
+  clearRoundTimer(room);
+  const { game } = room;
+  const reveal = imposterWordLogic.endVotePhase(game);
+  broadcastToRoom(room, { type: 'vote_results', payload: { ...reveal, phase: 'reveal' } });
+
+  room.roundPauseTimeout = setTimeout(() => {
+    room.roundPauseTimeout = null;
+    const next = imposterWordLogic.startNextRound(game);
+    if (next === null) {
+      broadcastToRoom(room, {
+        type: 'game_over',
+        payload: { gameType: 'imposter-word', ...imposterWordLogic.getResults(game) },
+      });
+    } else {
+      startImposterRound(room);
+    }
+  }, IMPOSTER_REVEAL_PAUSE_MS);
+}
+
+/**
+ * Handles an Imposter Word answer. Unlike the other modes, answers are PUBLIC:
+ * the accept/reject goes back to the submitter, and on acceptance the answer is
+ * broadcast to everyone in real time (that's how the imposter reverse-engineers
+ * the category). No turn check, no algorithmic validation - players judge.
+ */
+function handleImposterAnswer(room, connectionId, answer) {
+  const { game } = room;
+  if (!game || game.gameType !== 'imposter-word') {
+    return { error: 'no_active_game' };
+  }
+  if (game.status !== 'answering') {
+    return { error: 'round_not_active' };
+  }
+  const result = imposterWordLogic.submitAnswer(game, connectionId, answer);
+
+  const connection = room.players.find((p) => p.id === connectionId)?.connection;
+  if (connection && connection.readyState === 1) {
+    connection.send(JSON.stringify({ type: 'answer_result', payload: result }));
+  }
+
+  if (result.accepted) {
+    const player = game.players.find((p) => p.id === connectionId);
+    broadcastToRoom(room, {
+      type: 'imposter_answer',
+      payload: {
+        playerId: connectionId,
+        playerName: player ? player.name : 'Someone',
+        answer: result.answer,
+      },
+    });
+  }
+
+  return { result };
+}
+
+/**
+ * Handles an Imposter Word vote. The accept/reject goes back to the voter, and
+ * a privacy-safe vote_count (how many have voted, not who for whom) is broadcast
+ * so the UI can show progress. When everyone has voted the phase ends early.
+ */
+function handleImposterVote(room, connectionId, suspectId) {
+  const { game } = room;
+  if (!game || game.gameType !== 'imposter-word') {
+    return { error: 'no_active_game' };
+  }
+  if (game.status !== 'voting') {
+    return { error: 'round_not_active' };
+  }
+  const result = imposterWordLogic.submitVote(game, connectionId, suspectId);
+
+  const connection = room.players.find((p) => p.id === connectionId)?.connection;
+  if (connection && connection.readyState === 1) {
+    connection.send(JSON.stringify({ type: 'vote_result', payload: result }));
+  }
+
+  if (result.accepted) {
+    const tally = imposterWordLogic.countVotes(game);
+    broadcastToRoom(room, { type: 'vote_count', payload: tally });
+    if (tally.voted >= tally.total) {
+      endImposterVotePhase(room); // everyone's in - don't wait out the clock
+    }
+  }
+
+  return { result };
+}
+
 function startGame(room) {
   if (room.players.length < MIN_PLAYERS_TO_START) {
     return { error: 'not_enough_players' };
@@ -315,6 +497,10 @@ function startGame(room) {
       },
     });
     scheduleTimerAfterCountdown(room, startRoundTimer);
+  } else if (room.gameType === 'imposter-word') {
+    // Social deduction: each player gets their OWN round_start (the imposter
+    // sees a different prompt), then the answer-phase timer after the countdown.
+    startImposterRound(room);
   } else {
     // Turn-based Word Bomb: send the first turn immediately, delay its timer.
     broadcastToRoom(room, buildTurnUpdatePayload(room));
@@ -340,6 +526,11 @@ async function handleWordSubmission(room, connectionId, word) {
   // handler instead of the turn-validated Word Bomb path below.
   if (game.gameType === 'category-blitz') {
     return handleCategoryAnswer(room, connectionId, word);
+  }
+
+  // Imposter Word answers are public and judged by players - its own handler.
+  if (game.gameType === 'imposter-word') {
+    return handleImposterAnswer(room, connectionId, word);
   }
 
   if (game.status !== 'in_progress') {
@@ -459,6 +650,15 @@ function removePlayer(room, connectionId) {
     if (Array.isArray(game.players)) {
       game.players = game.players.filter((p) => p.id !== connectionId);
     }
+  } else if (game && game.gameType === 'imposter-word') {
+    // Also simultaneous-ish: drop the leaver from the roster and the imposter
+    // rotation order. The current phase timer keeps running for everyone else.
+    if (Array.isArray(game.players)) {
+      game.players = game.players.filter((p) => p.id !== connectionId);
+    }
+    if (Array.isArray(game.order)) {
+      game.order = game.order.filter((id) => id !== connectionId);
+    }
   } else if (game && game.status === 'in_progress') {
     // Word Bomb: treat the disconnect like the player timing out until
     // eliminated, so the game doesn't hang waiting on someone who left.
@@ -490,6 +690,7 @@ module.exports = {
   resetGame,
   handleWordSubmission,
   handleCategoryAnswer,
+  handleImposterVote,
   removePlayer,
   broadcastToRoom,
   buildRoomUpdatePayload,

@@ -18,6 +18,7 @@ const {
   startGame,
   resetGame,
   handleWordSubmission,
+  handleImposterVote,
   removePlayer,
   broadcastToRoom,
   buildRoomUpdatePayload,
@@ -129,7 +130,7 @@ wss.on('connection', (ws) => {
             return;
           }
           const gameType = payload?.gameType;
-          if (!['word-bomb', 'category-blitz'].includes(gameType)) {
+          if (!['word-bomb', 'category-blitz', 'imposter-word'].includes(gameType)) {
             sendError(ws, 'Invalid game type.', 'set_game_type');
             return;
           }
@@ -198,6 +199,20 @@ wss.on('connection', (ws) => {
           const result = await handleWordSubmission(room, ws.id, text);
           if (result.error) {
             sendError(ws, humanizeError(result.error), type);
+          }
+          break;
+        }
+
+        // Imposter Word: a vote for who the imposter is. Routed through the room
+        // manager, which replies vote_result to the voter and broadcasts a
+        // privacy-safe vote_count (and ends the phase early once everyone's in).
+        case 'submit_vote': {
+          const room = getRoomForConnection(ws);
+          if (!room) return;
+          const suspectId = (payload?.suspectId || '').toString();
+          const result = handleImposterVote(room, ws.id, suspectId);
+          if (result.error) {
+            sendError(ws, humanizeError(result.error), 'submit_vote');
           }
           break;
         }
