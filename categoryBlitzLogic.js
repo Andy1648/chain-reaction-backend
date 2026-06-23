@@ -23,16 +23,19 @@ const CATEGORY_ANSWERS = require('./categoryAnswers');
 const { validateCategoryAnswer } = require('./aiValidator');
 
 const TOTAL_ROUNDS = 3;
-const DEFAULT_ROUND_TIME = 45;
 const MIN_PLAYERS_TO_START = 2;
 
-// Round length per difficulty (seconds): harder difficulties give less time
-// to think. Falls back to DEFAULT_ROUND_TIME for an unknown key.
-const ROUND_TIME_BY_DIFFICULTY = {
-  easy: 60,
-  medium: 45,
-  hard: 30,
-};
+// Every round is a flat 20 seconds, for every difficulty and for both solo and
+// multiplayer. Difficulty no longer changes the clock - it only sets how many
+// category rerolls a game gets (below).
+const ROUND_TIME_SECONDS = 20;
+
+const VALID_DIFFICULTIES = ['easy', 'medium', 'hard'];
+
+// Category rerolls allowed PER GAME, by difficulty tier. The tiers are shown to
+// players as HARD / CRAZY / HELL (see the frontend): easy -> HARD (3 rerolls),
+// medium -> CRAZY (2), hard -> HELL (1). Fewer rerolls = harder.
+const REROLLS_BY_DIFFICULTY = { easy: 3, medium: 2, hard: 1 };
 
 // Categories with PERSONALITY - every one should make a player smirk, argue, or
 // say "oh this is a good one". No boring trivia ("things that are green"). They
@@ -109,23 +112,27 @@ function determineWinner(game) {
  * Creates a fresh Category Blitz game. Each player tracks their OWN answers
  * (for the current round) and a cumulative score across all rounds.
  *
- * When `solo` is true, this is the single-player-against-the-clock variant:
- * exactly one round (no need to play three for one person), no minimum-player
- * gating (the room manager already detected the lone player). The round length
- * still comes from the chosen difficulty (easy 60s / medium 45s / hard 30s).
+ * Always TOTAL_ROUNDS (3) rounds, a different category each round, for BOTH
+ * solo and multiplayer. `solo` is kept only so the room manager can flag the
+ * single-player variant (it bypasses the minimum-player gate); it no longer
+ * changes the round count. Every round is ROUND_TIME_SECONDS (20s); difficulty
+ * only sets the per-game reroll allowance.
  */
 function createGame(players, difficultyKey, solo = false) {
-  const roundTimeSeconds = ROUND_TIME_BY_DIFFICULTY[difficultyKey] || DEFAULT_ROUND_TIME;
+  const difficulty = VALID_DIFFICULTIES.includes(difficultyKey) ? difficultyKey : 'medium';
   const firstCategory = pickRandomCategory();
 
   return {
     status: 'in_progress', // 'in_progress' | 'between_rounds' | 'finished'
-    difficultyKey: ROUND_TIME_BY_DIFFICULTY[difficultyKey] ? difficultyKey : 'medium',
+    difficultyKey: difficulty,
     solo: !!solo,
-    rounds: solo ? 1 : TOTAL_ROUNDS,
+    rounds: TOTAL_ROUNDS,
     currentRound: 1,
     currentCategory: firstCategory,
-    roundTimeSeconds,
+    roundTimeSeconds: ROUND_TIME_SECONDS,
+    // How many category rerolls remain for the whole game (host-controlled in
+    // multiplayer, free for the solo player), set by the difficulty tier.
+    rerollsRemaining: REROLLS_BY_DIFFICULTY[difficulty],
     players: players.map((p) => ({
       id: p.id,
       name: p.name,
@@ -239,6 +246,38 @@ function startNextRound(game) {
     round: game.currentRound,
     category,
     timerSeconds: game.roundTimeSeconds,
+    rerollsRemaining: game.rerollsRemaining,
+  };
+}
+
+/**
+ * Rerolls the CURRENT round's category for a different one (same flat category
+ * pool - there are no per-difficulty category lists, so "same tier" just means
+ * another category that hasn't come up this game). It restarts the round on the
+ * fresh category: this round's answers are cleared and the points earned on the
+ * old category are reverted, so a reroll is a clean redo and can't be used to
+ * farm an easy category before swapping away. Decrements the per-game allowance.
+ *
+ * Returns { round, category, timerSeconds, rerollsRemaining } or { error }.
+ */
+function rerollCategory(game) {
+  if (!game || game.rerollsRemaining <= 0) {
+    return { error: 'no_rerolls_left' };
+  }
+  game.players.forEach((p) => {
+    p.score -= p.answers.length;
+    if (p.score < 0) p.score = 0;
+    p.answers = [];
+  });
+  const category = pickRandomCategory(game.usedCategories);
+  game.currentCategory = category;
+  game.usedCategories.add(category);
+  game.rerollsRemaining -= 1;
+  return {
+    round: game.currentRound,
+    category,
+    timerSeconds: game.roundTimeSeconds,
+    rerollsRemaining: game.rerollsRemaining,
   };
 }
 
@@ -255,11 +294,13 @@ module.exports = {
   CATEGORIES,
   TOTAL_ROUNDS,
   MIN_PLAYERS_TO_START,
-  ROUND_TIME_BY_DIFFICULTY,
+  ROUND_TIME_SECONDS,
+  REROLLS_BY_DIFFICULTY,
   createGame,
   submitAnswer,
   endRound,
   startNextRound,
+  rerollCategory,
   getScoreboard,
   pickRandomCategory,
 };

@@ -18,6 +18,7 @@ const {
   startGame,
   resetGame,
   handleWordSubmission,
+  handleRerollCategory,
   handleImposterVote,
   removePlayer,
   broadcastToRoom,
@@ -203,6 +204,19 @@ wss.on('connection', (ws) => {
           break;
         }
 
+        // Category Blitz: swap the current round's category for a different one
+        // (host-only in multiplayer; free for the solo player, within the
+        // per-game reroll allowance set by difficulty).
+        case 'reroll_category': {
+          const room = getRoomForConnection(ws);
+          if (!room) return;
+          const result = handleRerollCategory(room, ws.id);
+          if (result.error) {
+            sendError(ws, humanizeError(result.error), 'reroll_category');
+          }
+          break;
+        }
+
         // Imposter Word: a vote for who the imposter is. Routed through the room
         // manager, which replies vote_result to the voter and broadcasts a
         // privacy-safe vote_count (and ends the phase early once everyone's in).
@@ -307,6 +321,9 @@ function humanizeError(code) {
     no_active_game: 'There is no active game in this room.',
     not_your_turn: "It's not your turn.",
     round_not_active: 'The round is not currently active.',
+    no_rerolls_left: 'No category rerolls left this game.',
+    host_only_reroll: 'Only the host can reroll the category.',
+    reroll_window_closed: 'Rerolls are only allowed in the first few seconds of a round.',
   };
   return messages[code] || 'Something went wrong.';
 }

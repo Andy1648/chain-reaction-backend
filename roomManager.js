@@ -39,6 +39,10 @@ const ROOM_CODE_CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // no 0/O/1/I to avo
 // immediately so the countdown can play; only the timer waits.
 const COUNTDOWN_DELAY_MS = 3000;
 
+// Category Blitz: a category reroll is only allowed in the opening window of an
+// actively-running round (anti-grief - no yanking the category mid-round).
+const REROLL_WINDOW_MS = 5000;
+
 const rooms = new Map(); // roomCode -> room object
 
 function generateRoomCode() {
@@ -238,6 +242,9 @@ function startRoundTimer(room) {
   const { game } = room;
   let remaining = game.roundTimeSeconds;
   room.roundDeadline = Date.now() + remaining * 1000;
+  // Wall-clock moment this round actually started ticking - used to enforce the
+  // reroll opening window (rerolls are only allowed in the first few seconds).
+  room.roundStartedAt = Date.now();
 
   room.roundTimerInterval = setInterval(() => {
     remaining -= 1;
@@ -518,6 +525,7 @@ function startGame(room) {
         round: room.game.currentRound,
         category: room.game.currentCategory,
         timerSeconds: room.game.roundTimeSeconds,
+        rerollsRemaining: room.game.rerollsRemaining,
       },
     });
     scheduleTimerAfterCountdown(room, startRoundTimer);
@@ -631,6 +639,64 @@ async function handleCategoryAnswer(room, connectionId, answer) {
 }
 
 /**
+ * Rerolls the current Category Blitz round's category - implemented as a fully
+ * server-authoritative ROUND RESTART, not an in-place swap, so clients can never
+ * drift. The server owns everything: it validates, mutates state, then tells
+ * every client (host included) to start the round over via the SAME round_start
+ * path they already handle. Clients change nothing locally on the click.
+ *
+ * Validates: sender is host (or the lone solo player), the round is actively
+ * ticking, we're still inside the opening window (REROLL_WINDOW_MS), and rerolls
+ * remain. On success the round restarts on a fresh category with a full clock
+ * and everyone's answers/this-round points cleared (handled in rerollCategory).
+ *
+ * The broadcast carries `reroll: true` (drives the non-host notice) and keeps
+ * the SAME round number, so clients don't replay the 3-2-1 countdown; and unlike
+ * a normal next round it starts the timer immediately (no countdown delay).
+ */
+function handleRerollCategory(room, connectionId) {
+  const { game } = room;
+  if (!game || game.gameType !== 'category-blitz') {
+    return { error: 'no_active_game' };
+  }
+  if (game.status !== 'in_progress') {
+    return { error: 'round_not_active' };
+  }
+  const isSolo = room.players.length === 1;
+  if (!isSolo && room.hostId !== connectionId) {
+    return { error: 'host_only_reroll' };
+  }
+  // The round must be actively ticking (not mid-countdown or between rounds)...
+  if (!room.roundTimerInterval || room.roundStartedAt == null) {
+    return { error: 'round_not_active' };
+  }
+  // ...and we must still be inside the opening window.
+  if (Date.now() - room.roundStartedAt >= REROLL_WINDOW_MS) {
+    return { error: 'reroll_window_closed' };
+  }
+  if (game.rerollsRemaining <= 0) {
+    return { error: 'no_rerolls_left' };
+  }
+
+  const result = categoryBlitzLogic.rerollCategory(game);
+  if (result.error) {
+    return { error: result.error };
+  }
+
+  // Stop the current round timer, broadcast the authoritative restart to ALL
+  // clients over the round_start path, then start the new full-length timer.
+  clearRoundTimer(room);
+  const byName = room.players.find((p) => p.id === connectionId)?.name || 'Host';
+  broadcastToRoom(room, {
+    type: 'round_start',
+    payload: { ...result, reroll: true, by: byName, byId: connectionId },
+  });
+  startRoundTimer(room);
+
+  return { result };
+}
+
+/**
  * Tears the current game down so the room returns to its pre-game lobby
  * state: kills every active timer, drops the game object, and broadcasts a
  * room_update so all clients fall back to the room view (where the host can
@@ -714,6 +780,7 @@ module.exports = {
   resetGame,
   handleWordSubmission,
   handleCategoryAnswer,
+  handleRerollCategory,
   handleImposterVote,
   removePlayer,
   broadcastToRoom,
