@@ -469,19 +469,37 @@ function handleImposterVote(room, connectionId, suspectId) {
 }
 
 function startGame(room) {
-  // Imposter Word needs at least 3 (a 2-player imposter round is pointless);
-  // the other modes start at the shared 2-player minimum.
-  const minPlayers =
-    room.gameType === 'imposter-word'
-      ? imposterWordLogic.MIN_PLAYERS_TO_START
-      : MIN_PLAYERS_TO_START;
-  if (room.players.length < minPlayers) {
-    return { error: 'not_enough_players' };
+  // Solo Category Blitz: one player racing the clock alone. Auto-detected when
+  // a category-blitz room has exactly one player - no separate flag needed from
+  // the frontend - and it bypasses the usual 2-player minimum.
+  const isSoloCategoryBlitz =
+    room.gameType === 'category-blitz' && room.players.length === 1;
+
+  if (!isSoloCategoryBlitz) {
+    // Imposter Word needs at least 3 (a 2-player imposter round is pointless);
+    // the other modes start at the shared 2-player minimum.
+    const minPlayers =
+      room.gameType === 'imposter-word'
+        ? imposterWordLogic.MIN_PLAYERS_TO_START
+        : MIN_PLAYERS_TO_START;
+    if (room.players.length < minPlayers) {
+      return { error: 'not_enough_players' };
+    }
   }
+
+  // Tear down any timers left over from a previous game before starting a fresh
+  // one. This matters for the solo "PLAY AGAIN" loop: a player can fire
+  // start_game again while the just-finished game's between-rounds pause is
+  // still pending, and a stale timeout firing onto the new game would corrupt
+  // it. clearRoundTimer/clearTurnTimer also clear the pending countdown.
+  clearTurnTimer(room);
+  clearRoundTimer(room);
+
   const logic = logicForGameType(room.gameType);
   room.game = logic.createGame(
     room.players.map((p) => ({ id: p.id, name: p.name })),
-    room.difficultyKey
+    room.difficultyKey,
+    isSoloCategoryBlitz
   );
   // Stamp the type onto the game so payload builders and submission routing
   // know which mode this in-progress game is, independent of the room.

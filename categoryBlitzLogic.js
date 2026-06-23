@@ -108,15 +108,21 @@ function determineWinner(game) {
 /**
  * Creates a fresh Category Blitz game. Each player tracks their OWN answers
  * (for the current round) and a cumulative score across all rounds.
+ *
+ * When `solo` is true, this is the single-player-against-the-clock variant:
+ * exactly one round (no need to play three for one person), no minimum-player
+ * gating (the room manager already detected the lone player). The round length
+ * still comes from the chosen difficulty (easy 60s / medium 45s / hard 30s).
  */
-function createGame(players, difficultyKey) {
+function createGame(players, difficultyKey, solo = false) {
   const roundTimeSeconds = ROUND_TIME_BY_DIFFICULTY[difficultyKey] || DEFAULT_ROUND_TIME;
   const firstCategory = pickRandomCategory();
 
   return {
     status: 'in_progress', // 'in_progress' | 'between_rounds' | 'finished'
     difficultyKey: ROUND_TIME_BY_DIFFICULTY[difficultyKey] ? difficultyKey : 'medium',
-    rounds: TOTAL_ROUNDS,
+    solo: !!solo,
+    rounds: solo ? 1 : TOTAL_ROUNDS,
     currentRound: 1,
     currentCategory: firstCategory,
     roundTimeSeconds,
