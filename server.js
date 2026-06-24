@@ -19,6 +19,7 @@ const {
   quickPlay,
   startGame,
   resetGame,
+  syncSoloBot,
   handleWordSubmission,
   handleRerollCategory,
   handleImposterVote,
@@ -117,6 +118,9 @@ wss.on('connection', (ws) => {
           }
           const room = result.room;
           connectionToRoomCode.set(ws.id, room.code);
+          // A freshly created private Word Bomb room is solo - drop in a bot
+          // opponent so the lobby shows 2 players and the start button lights up.
+          syncSoloBot(room);
           send(ws, 'room_created', { code: room.code });
           send(ws, ...Object.values(buildRoomUpdatePayload(room)));
           break;
@@ -165,6 +169,9 @@ wss.on('connection', (ws) => {
           }
 
           connectionToRoomCode.set(ws.id, code);
+          // A second human joining a solo bot room flips it to real multiplayer:
+          // syncSoloBot drops the bot back out before we broadcast the roster.
+          syncSoloBot(result.room);
           send(ws, 'room_joined', { code });
           broadcastToRoom(result.room, buildRoomUpdatePayload(result.room));
           break;
@@ -200,6 +207,9 @@ wss.on('connection', (ws) => {
             return;
           }
           room.gameType = gameType;
+          // Switching to/from Word Bomb (de)solo changes whether a bot belongs
+          // here: add it for solo word-bomb, strip it for the other modes.
+          syncSoloBot(room);
           broadcastToRoom(room, buildRoomUpdatePayload(room));
           break;
         }

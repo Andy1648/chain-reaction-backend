@@ -19,6 +19,13 @@ const wordBombLogic = require('./gameLogic');
 const categoryBlitzLogic = require('./categoryBlitzLogic');
 const imposterWordLogic = require('./imposterWordLogic');
 
+// Solo Word Bomb bot opponent. wordBombBot supplies the fake player (with a
+// mock sink connection), the valid-word lookup, and the difficulty timing; the
+// dictionary's markAsValid lets us pre-warm the cache for a bot's chosen word so
+// its submission resolves instantly and is guaranteed accepted.
+const wordBombBot = require('./wordBombBot');
+const { markAsValid } = require('./dictionary');
+
 /**
  * Returns the logic module (createGame/submit*) for a given game type.
  * Defaults to Word Bomb for anything unrecognized so an old/missing
@@ -117,6 +124,8 @@ function createRoom(hostConnection, hostName, isPublic = false) {
     roundDeadline: null,
     // Pending "start the timer after the countdown" setTimeout, if any.
     countdownTimeout: null,
+    // Pending solo-bot "submit a word" setTimeout, if the current turn is a bot.
+    botMoveTimeout: null,
   };
   rooms.set(code, room);
   return { room };
@@ -298,6 +307,10 @@ function startTurnTimer(room) {
 
     broadcastToRoom(room, { type: 'timer_tick', payload: { secondsRemaining: remaining } });
   }, 1000);
+
+  // If the player who just gained the turn is a bot, line up its move within
+  // this timer window. No-op for human turns.
+  maybeScheduleBotMove(room);
 }
 
 function clearTurnTimer(room) {
@@ -306,6 +319,7 @@ function clearTurnTimer(room) {
     room.turnTimerInterval = null;
   }
   clearCountdownTimeout(room);
+  clearBotMove(room);
 }
 
 /**
@@ -580,7 +594,103 @@ function handleImposterVote(room, connectionId, suspectId) {
   return { result };
 }
 
+/* ============================================================= */
+/* =================  SOLO WORD BOMB BOT OPPONENT  ============= */
+/* ============================================================= */
+
+/**
+ * Keeps a solo Word Bomb room stocked with exactly one bot opponent so a lone
+ * player gets a real game with no "waiting for players" wall. The bot is a
+ * normal roster entry, so the existing frontend start-gate (players >= 2) just
+ * works with no client changes.
+ *
+ * Idempotent: ADDS a bot when the room is a PRIVATE, word-bomb, single-HUMAN,
+ * not-yet-in-game room that has none; REMOVES any bot the moment those
+ * conditions stop holding (game type switched away, a second human joins, the
+ * room is public, ...). Confining bots to private rooms keeps them out of the
+ * public-rooms list and Quick Play. Returns true if the roster changed.
+ *
+ * Never touches a room with a live game - rosters are frozen once play starts.
+ */
+function syncSoloBot(room) {
+  if (!room) return false;
+  if (room.game && room.game.status === 'in_progress') return false;
+
+  const humans = room.players.filter((p) => !p.isBot);
+  const hasBot = room.players.some((p) => p.isBot);
+  const wantsBot =
+    !room.isPublic && room.gameType === 'word-bomb' && humans.length === 1;
+
+  if (wantsBot && !hasBot) {
+    room.players.push(wordBombBot.createBotPlayer());
+    return true;
+  }
+  if (!wantsBot && hasBot) {
+    room.players = room.players.filter((p) => !p.isBot);
+    return true;
+  }
+  return false;
+}
+
+/** Clears a pending bot move so two can never race onto the same/next turn. */
+function clearBotMove(room) {
+  if (room.botMoveTimeout) {
+    clearTimeout(room.botMoveTimeout);
+    room.botMoveTimeout = null;
+  }
+}
+
+/**
+ * If it's a bot's turn, schedule its move. The bot waits a difficulty-scaled
+ * fraction of the turn timer, then submits a real valid word through the SAME
+ * handleWordSubmission path a human uses. A difficulty-scaled "miss" chance (or
+ * the rare case of no available word) makes it do nothing instead, letting the
+ * normal turn timeout fire and cost it a life. Any previously scheduled bot move
+ * is cleared first. Word Bomb only; a no-op when the current player is human.
+ */
+function maybeScheduleBotMove(room) {
+  const { game } = room;
+  if (!game || game.gameType !== 'word-bomb' || game.status !== 'in_progress') return;
+
+  clearBotMove(room);
+
+  const currentId = getCurrentPlayerId(game);
+  const rosterEntry = room.players.find((p) => p.id === currentId);
+  if (!rosterEntry || !rosterEntry.isBot) return;
+
+  // Choke this turn: do nothing, the running turn timer will time it out.
+  if (wordBombBot.rollMiss(room.difficultyKey)) return;
+
+  const delayMs = wordBombBot.computeDelayMs(room.difficultyKey, game.currentTimerSeconds);
+  room.botMoveTimeout = setTimeout(async () => {
+    room.botMoveTimeout = null;
+    // The world may have moved on while we waited (turn advanced, game ended,
+    // room torn down) - re-check before touching anything.
+    if (!room.game || room.game.status !== 'in_progress') return;
+    if (getCurrentPlayerId(room.game) !== currentId) return;
+
+    const word = wordBombBot.pickWord(room.game.currentCombo, room.game.usedWords);
+    if (!word) return; // nothing available -> treat as a miss
+
+    // The bot only picks from a curated real-word list, so pre-warm the
+    // dictionary cache: submitWord's validity check then resolves instantly with
+    // no API round-trip, and the word is guaranteed to be accepted.
+    markAsValid(word);
+    try {
+      await handleWordSubmission(room, currentId, word);
+    } catch (err) {
+      console.error('Bot move failed', err);
+    }
+  }, delayMs);
+}
+
 function startGame(room) {
+  // Make sure a solo Word Bomb room has its bot opponent before we count heads.
+  // Normally the bot was already added in the lobby (so the start button lit up
+  // at all); this is the authoritative guard for any path that reaches start
+  // without a prior sync.
+  syncSoloBot(room);
+
   // Solo Category Blitz: one player racing the clock alone. Auto-detected when
   // a category-blitz room has exactly one player - no separate flag needed from
   // the frontend - and it bypasses the usual 2-player minimum.
@@ -833,6 +943,9 @@ function resetGame(room) {
   clearRoundTimer(room);
   clearCountdownTimeout(room);
   room.game = null;
+  // Back in the lobby: re-sync the solo bot (re-add it if the just-finished game
+  // had somehow dropped it) so a rematch starts cleanly with the opponent present.
+  syncSoloBot(room);
   touchRoom(room); // a rematch proves the room is alive
   broadcastToRoom(room, buildRoomUpdatePayload(room));
   broadcastToRoom(room, { type: 'game_reset', payload: {} });
@@ -854,6 +967,13 @@ function removePlayer(room, connectionId) {
   room.players = room.players.filter((p) => p.id !== connectionId);
 
   if (room.players.length === 0) {
+    destroyRoom(room);
+    return;
+  }
+
+  // If only bot(s) remain, the lone human left their solo game - don't leave a
+  // bot playing by itself. Tear the whole room (and its timers) down.
+  if (room.players.every((p) => p.isBot)) {
     destroyRoom(room);
     return;
   }
@@ -901,6 +1021,10 @@ function removePlayer(room, connectionId) {
       }
     }
   }
+
+  // If a leave dropped a multiplayer word-bomb lobby back to a single human,
+  // re-add the solo bot (no-op mid-game or for other modes/public rooms).
+  syncSoloBot(room);
 
   broadcastToRoom(room, buildRoomUpdatePayload(room));
 }
@@ -972,6 +1096,7 @@ module.exports = {
   quickPlay,
   startGame,
   resetGame,
+  syncSoloBot,
   handleWordSubmission,
   handleCategoryAnswer,
   handleRerollCategory,
