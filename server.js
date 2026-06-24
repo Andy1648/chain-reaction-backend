@@ -397,6 +397,16 @@ function humanizeError(code) {
 const PORT = process.env.PORT || 3001;
 server.listen(PORT, () => {
   console.log(`Chain Reaction server listening on port ${PORT}`);
+  // Surface whether the Category Blitz AI fallback is active. With no key the
+  // game still runs fine - list-only validation - but creative answers won't be
+  // AI-judged, so make that explicit at boot.
+  if (require('./haikuValidator').isEnabled()) {
+    console.log('[haikuValidator] Category Blitz AI validation ENABLED (Claude Haiku fallback)');
+  } else {
+    console.warn(
+      '[haikuValidator] ANTHROPIC_API_KEY not set - Category Blitz AI validation DISABLED (list-only)'
+    );
+  }
   // Start the single idle-room reaper sweep (deletes dead non-empty lobbies).
   startRoomReaper();
 });

@@ -14,13 +14,16 @@
 //   1. Pre-generated accept-lists (a Set of valid lowercase answers per
 //      category) - a fast, free, deterministic, offline Set lookup that
 //      resolves the common answers instantly with no API call.
-//   2. AI fallback (aiValidator.js) - only consulted when an answer ISN'T on
-//      the list, so creative/uncommon-but-valid answers still get judged. It
-//      stacks Groq then Gemini and fails open if both providers are down.
-// gemini.js is intentionally no longer imported here - aiValidator.js owns all
-// AI calls now; gemini.js stays in the repo for possible future use.
+//   2. AI fallback (haikuValidator.js, Claude Haiku) - only consulted when an
+//      answer ISN'T on the list, so creative/uncommon-but-valid answers still
+//      get judged. Unlike the old Groq/Gemini path this FAILS CLOSED (any
+//      timeout/error/rate-limit rejects) and is rate-limited per player. When
+//      no ANTHROPIC_API_KEY is set the fallback is disabled and list-misses are
+//      accepted (list-only mode) rather than rejected by a judge that isn't there.
+// aiValidator.js (Groq/Gemini) and gemini.js stay in the repo but are no longer
+// wired in here - haikuValidator.js owns the AI fallback now.
 const CATEGORY_ANSWERS = require('./categoryAnswers');
-const { validateCategoryAnswer } = require('./aiValidator');
+const haikuValidator = require('./haikuValidator');
 
 const TOTAL_ROUNDS = 3;
 const MIN_PLAYERS_TO_START = 2;
@@ -148,14 +151,19 @@ function createGame(players, difficultyKey, solo = false) {
  * Applies an answer from ANY player at any time during an active round -
  * there is no turn checking. Validates length, per-player-per-round
  * uniqueness, then validates the answer in two stages: the category's
- * pre-generated accept-list first (instant, free), falling back to the AI
- * judge (aiValidator.js) only when the answer isn't on the list. On success
- * the answer is recorded and the player's score goes up by 1.
+ * pre-generated accept-list first (instant, free), falling back to the Haiku
+ * AI judge only when the answer isn't on the list. On success the answer is
+ * recorded and the player's score goes up by 1.
+ *
+ * `opts.onAiCheck` (optional) is invoked synchronously right before the AI call
+ * is awaited, so the caller can tell the client "checking..." while the ~0.5-1.5s
+ * judge runs. It fires ONLY when the answer missed the list AND AI validation is
+ * enabled (a key is set) - i.e. exactly when there's real latency to cover.
  *
  * Returns { accepted: true, answer, playerId } or
  *         { accepted: false, reason, playerId }.
  */
-async function submitAnswer(game, playerId, rawAnswer) {
+async function submitAnswer(game, playerId, rawAnswer, opts = {}) {
   // Normalize for lookup: trim, then lowercase. Accept-list entries are all
   // stored lowercase, so this is a case-insensitive match.
   const answer = rawAnswer.trim();
@@ -186,11 +194,17 @@ async function submitAnswer(game, playerId, rawAnswer) {
   const onAcceptList = !!validAnswers && validAnswers.has(normalized);
 
   if (!onAcceptList) {
-    // Stage 2: AI fallback. Judges creative/uncommon answers that aren't on
-    // the list. Stacks Groq then Gemini, and fails open if both are down.
-    const aiAccepted = await validateCategoryAnswer(game.currentCategory, answer);
-    if (!aiAccepted) {
-      return { accepted: false, reason: 'not_in_category', playerId };
+    // Stage 2: Haiku AI fallback. Judges creative/uncommon answers that aren't
+    // on the list. Only runs when an API key is configured; otherwise we stay in
+    // list-only mode and ACCEPT the miss (no judge available to fairly reject it).
+    if (haikuValidator.isEnabled()) {
+      // Tell the client we're checking, THEN await the judge (fail-closed,
+      // 3s-timeout, rate-limited - all handled inside validate()).
+      if (typeof opts.onAiCheck === 'function') opts.onAiCheck();
+      const aiAccepted = await haikuValidator.validate(game.currentCategory, answer, playerId);
+      if (!aiAccepted) {
+        return { accepted: false, reason: 'not_in_category', playerId };
+      }
     }
   }
 

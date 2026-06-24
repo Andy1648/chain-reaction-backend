@@ -724,10 +724,23 @@ async function handleCategoryAnswer(room, connectionId, answer) {
     return { error: 'round_not_active' };
   }
 
-  const result = await categoryBlitzLogic.submitAnswer(game, connectionId, answer);
+  // The submitter's own connection - used both for the interim "checking..."
+  // notice (when an answer goes to the AI judge) and the final result. Resolved
+  // before the await so the onAiCheck callback can fire mid-validation.
+  const connection = room.players.find((p) => p.id === connectionId)?.connection;
+
+  const result = await categoryBlitzLogic.submitAnswer(game, connectionId, answer, {
+    // Fires only on a list-miss with AI enabled, right before the ~0.5-1.5s Haiku
+    // call. Tells the submitter to show a brief loading state; the authoritative
+    // answer_result below always follows.
+    onAiCheck: () => {
+      if (connection && connection.readyState === 1) {
+        connection.send(JSON.stringify({ type: 'answer_checking', payload: { answer } }));
+      }
+    },
+  });
 
   // Private result back to the submitter only.
-  const connection = room.players.find((p) => p.id === connectionId)?.connection;
   if (connection && connection.readyState === 1) {
     connection.send(JSON.stringify({ type: 'answer_result', payload: result }));
   }
