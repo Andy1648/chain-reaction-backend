@@ -24,5 +24,16 @@ module.exports = Object.assign(
   require('./categoryAnswers/pop-culture'),
   require('./categoryAnswers/debatable'),
   require('./categoryAnswers/brands'),
-  require('./categoryAnswers/social')
+  require('./categoryAnswers/social'),
+  // Curated expansion batch (gen1-gen5): 19 new categories from the content
+  // review pile, each with a ~150-entry accept-list. Keys must match the new
+  // entries appended to CATEGORIES in categoryBlitzLogic.js exactly.
+  require('./categoryAnswers/gen1'),
+  require('./categoryAnswers/gen2'),
+  require('./categoryAnswers/gen3'),
+  require('./categoryAnswers/gen4'),
+  require('./categoryAnswers/gen5'),
+  // Clean rapid-fire batch (gen6): 20 noun-list categories, each with a 150+
+  // entry accept-list. Keys match the new entries appended to CATEGORIES.
+  require('./categoryAnswers/gen6')
 );

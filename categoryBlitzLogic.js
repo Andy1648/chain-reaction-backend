@@ -78,6 +78,25 @@ const CATEGORIES = [
   'Things you whisper in a library', 'Things you yell at a sports game',
   'First things you do when you wake up', 'Things you do when the WiFi goes out',
   'Things that hit different at night', 'Excuses for not texting back',
+  // Curated expansion batch (accept-lists in categoryAnswers/gen1-gen5.js).
+  // These 19 keys MUST match the gen*.js keys exactly.
+  "Things in a divorced dad's apartment", 'Florida man headlines',
+  'Things a mom yells from another room', 'Ways to die in Minecraft',
+  'Things confiscated by a teacher', 'Red flags in a dating profile',
+  "Things in a 2010 kid's bedroom", 'What the dog ate',
+  'Things at a gas station bathroom', 'Cryptids in the woods at night',
+  'Things a substitute teacher says', "Ways to get sent to the principal's office",
+  'Things in a final boss arena', 'Things at a middle school dance',
+  'Things your weird aunt posts on Facebook', 'The DMV experience',
+  'Things found in a frat house', "Things in an emo kid's room (2008)",
+  'Excuses for not doing your homework',
+  // Clean rapid-fire batch (accept-lists in categoryAnswers/gen6.js). These 20
+  // keys MUST match the gen6.js keys exactly.
+  'Pizza toppings', 'Dog breeds', 'Candy bars', 'Ice cream flavors',
+  'Cereal brands', 'Soda brands', 'Superheroes', 'Halloween costumes',
+  'Sports', 'Musical instruments', 'Starbucks drinks', 'NBA teams',
+  'Disney movies', 'Anime shows', 'Chip & snack brands', 'Video games',
+  'Zoo animals', 'Breakfast foods', 'Board games', 'Types of pasta',
 ];
 
 /**
