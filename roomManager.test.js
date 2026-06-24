@@ -14,7 +14,8 @@ const {
   joinRoom,
   startGame,
   resetGame,
-  syncSoloBot,
+  addBot,
+  removeBot,
   removePlayer,
   getRoom,
   listPublicRooms,
@@ -173,66 +174,81 @@ test('quickPlay respects the create throttle on the create path', () => {
   assert.equal(listPublicRooms().length, 0);
 });
 
-// ---- solo Word Bomb bot opponent -----------------------------------------
+// ---- solo Word Bomb bot opponent (explicit add/remove) -------------------
 
-test('syncSoloBot adds one bot to a private solo Word Bomb room', () => {
+test('addBot adds one bot at the chosen difficulty to a solo Word Bomb room', () => {
   const { room } = createRoom(conn(), 'Solo'); // private, word-bomb, 1 human
-  const changed = syncSoloBot(room);
-  assert.equal(changed, true);
+  const res = addBot(room, 'hard');
+  assert.equal(res.ok, true);
   assert.equal(room.players.length, 2);
   const bots = room.players.filter((p) => p.isBot);
   assert.equal(bots.length, 1);
   assert.equal(bots[0].connection.readyState, 1);
-  // Idempotent: a second sync doesn't add a second bot.
-  assert.equal(syncSoloBot(room), false);
+  assert.equal(bots[0].botDifficulty, 'hard'); // independent of room timer difficulty
+});
+
+test('addBot defaults an invalid difficulty to medium', () => {
+  const { room } = createRoom(conn(), 'Solo');
+  addBot(room, 'banana');
+  assert.equal(room.players.find((p) => p.isBot).botDifficulty, 'medium');
+});
+
+test('addBot refuses a second bot', () => {
+  const { room } = createRoom(conn(), 'Solo');
+  addBot(room, 'easy');
+  const res = addBot(room, 'easy');
+  assert.equal(res.error, 'bot_already_added');
   assert.equal(room.players.filter((p) => p.isBot).length, 1);
 });
 
-test('syncSoloBot does NOT add a bot to a public room', () => {
-  const { room } = createRoom(conn(), 'Solo', true); // public
-  assert.equal(syncSoloBot(room), false);
-  assert.equal(room.players.some((p) => p.isBot), false);
-});
-
-test('syncSoloBot does NOT add a bot for non Word Bomb modes', () => {
+test('addBot refuses non Word Bomb modes', () => {
   const { room } = createRoom(conn(), 'Solo');
   room.gameType = 'category-blitz';
-  assert.equal(syncSoloBot(room), false);
+  assert.equal(addBot(room, 'easy').error, 'bot_word_bomb_only');
   assert.equal(room.players.some((p) => p.isBot), false);
 });
 
-test('syncSoloBot removes the bot when a second human joins', () => {
-  const { room } = createRoom(conn(), 'Host'); // private word-bomb
-  syncSoloBot(room); // bot added
-  assert.equal(room.players.filter((p) => p.isBot).length, 1);
-  joinRoom(room.code, conn(), 'Friend'); // now 2 humans + 1 bot
-  const changed = syncSoloBot(room);
-  assert.equal(changed, true);
+test('addBot refuses when more than one human is present', () => {
+  const { room } = createRoom(conn(), 'Host');
+  joinRoom(room.code, conn(), 'Friend'); // 2 humans
+  assert.equal(addBot(room, 'easy').error, 'bot_solo_only');
   assert.equal(room.players.some((p) => p.isBot), false);
-  assert.equal(room.players.length, 2); // two humans
 });
 
-test('a solo private Word Bomb room can start a real 2-player game', () => {
+test('removeBot drops the bot from the lobby', () => {
   const { room } = createRoom(conn(), 'Solo');
-  syncSoloBot(room); // mirrors what the server does in the lobby
+  addBot(room, 'medium');
+  assert.equal(removeBot(room).ok, true);
+  assert.equal(room.players.some((p) => p.isBot), false);
+  assert.equal(room.players.length, 1);
+});
+
+test('a Word Bomb room with an added bot can start a real 2-player game', () => {
+  const { room } = createRoom(conn(), 'Solo');
+  addBot(room, 'medium');
   const res = startGame(room);
   assert.equal(res.error, undefined);
   assert.equal(room.game.players.length, 2);
-  // The roster has exactly one bot alongside the human.
   assert.equal(room.players.filter((p) => p.isBot).length, 1);
+});
+
+test('a solo Word Bomb room with NO bot cannot start', () => {
+  const { room } = createRoom(conn(), 'Solo'); // 1 human, no bot
+  const res = startGame(room);
+  assert.equal(res.error, 'not_enough_players');
 });
 
 test('removePlayer destroys the room when only the bot remains', () => {
   const host = conn();
   const { room } = createRoom(host, 'Solo');
-  syncSoloBot(room); // [human, bot]
+  addBot(room, 'easy'); // [human, bot]
   removePlayer(room, host.id); // human leaves -> only the bot is left
   assert.equal(getRoom(room.code), undefined); // room torn down, no lone bot
 });
 
-test('resetGame keeps the solo bot present for a rematch', () => {
+test('resetGame keeps the added bot present for a rematch', () => {
   const { room } = createRoom(conn(), 'Solo');
-  syncSoloBot(room);
+  addBot(room, 'hard');
   startGame(room);
   resetGame(room); // back to lobby
   assert.equal(room.game, null);

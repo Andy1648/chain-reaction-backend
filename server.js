@@ -19,7 +19,8 @@ const {
   quickPlay,
   startGame,
   resetGame,
-  syncSoloBot,
+  addBot,
+  removeBot,
   handleWordSubmission,
   handleRerollCategory,
   handleImposterVote,
@@ -118,9 +119,6 @@ wss.on('connection', (ws) => {
           }
           const room = result.room;
           connectionToRoomCode.set(ws.id, room.code);
-          // A freshly created private Word Bomb room is solo - drop in a bot
-          // opponent so the lobby shows 2 players and the start button lights up.
-          syncSoloBot(room);
           send(ws, 'room_created', { code: room.code });
           send(ws, ...Object.values(buildRoomUpdatePayload(room)));
           break;
@@ -169,9 +167,6 @@ wss.on('connection', (ws) => {
           }
 
           connectionToRoomCode.set(ws.id, code);
-          // A second human joining a solo bot room flips it to real multiplayer:
-          // syncSoloBot drops the bot back out before we broadcast the roster.
-          syncSoloBot(result.room);
           send(ws, 'room_joined', { code });
           broadcastToRoom(result.room, buildRoomUpdatePayload(result.room));
           break;
@@ -207,9 +202,48 @@ wss.on('connection', (ws) => {
             return;
           }
           room.gameType = gameType;
-          // Switching to/from Word Bomb (de)solo changes whether a bot belongs
-          // here: add it for solo word-bomb, strip it for the other modes.
-          syncSoloBot(room);
+          // A bot only belongs in Word Bomb; if the host switches to another mode
+          // with a bot still in the lobby, drop it so the roster stays valid.
+          if (gameType !== 'word-bomb') removeBot(room);
+          broadcastToRoom(room, buildRoomUpdatePayload(room));
+          break;
+        }
+
+        // Solo Word Bomb: the lone player explicitly adds a bot opponent at a
+        // chosen difficulty (independent of the game timer difficulty). Host-only;
+        // addBot enforces the word-bomb / single-human / no-existing-bot guards.
+        case 'add_bot': {
+          const room = getRoomForConnection(ws);
+          if (!room) return;
+          if (room.hostId !== ws.id) {
+            sendError(ws, 'Only the host can add a bot.', 'add_bot');
+            return;
+          }
+          const difficulty = ['easy', 'medium', 'hard'].includes(payload?.difficulty)
+            ? payload.difficulty
+            : 'medium';
+          const result = addBot(room, difficulty);
+          if (result.error) {
+            sendError(ws, humanizeError(result.error), 'add_bot');
+            return;
+          }
+          broadcastToRoom(room, buildRoomUpdatePayload(room));
+          break;
+        }
+
+        // Remove the bot from the lobby before starting (host-only).
+        case 'remove_bot': {
+          const room = getRoomForConnection(ws);
+          if (!room) return;
+          if (room.hostId !== ws.id) {
+            sendError(ws, 'Only the host can remove the bot.', 'remove_bot');
+            return;
+          }
+          const result = removeBot(room);
+          if (result.error) {
+            sendError(ws, humanizeError(result.error), 'remove_bot');
+            return;
+          }
           broadcastToRoom(room, buildRoomUpdatePayload(room));
           break;
         }
@@ -400,6 +434,9 @@ function humanizeError(code) {
     reroll_window_closed: 'Rerolls are only allowed in the first few seconds of a round.',
     rate_limited: "You're creating rooms too fast. Wait a moment and try again.",
     server_busy: 'The server is at capacity right now. Please try again shortly.',
+    bot_word_bomb_only: 'Bots are only available in Word Bomb.',
+    bot_already_added: 'There is already a bot in this room.',
+    bot_solo_only: 'You can only add a bot when you are the only player.',
   };
   return messages[code] || 'Something went wrong.';
 }

@@ -77,20 +77,24 @@ function randomBotName() {
 let botCounter = 0;
 
 /**
- * Builds a bot player entry for room.players. The mock connection has
- * readyState 1 (OPEN) and a no-op send, so broadcastToRoom / the typing relay /
- * every other p.connection.send site treats it like a connected player with
- * zero changes. `isBot` lets the room manager find or skip it where it matters
- * (solo detection, disconnect cleanup, public listings). The connection id
- * mirrors the player id, matching how real players are shaped.
+ * Builds a bot player entry for room.players at the given difficulty
+ * (easy|medium|hard, defaulting to medium). The mock connection has readyState 1
+ * (OPEN) and a no-op send, so broadcastToRoom / the typing relay / every other
+ * p.connection.send site treats it like a connected player with zero changes.
+ * `isBot` lets the room manager find or skip it where it matters (disconnect
+ * cleanup, listings); `botDifficulty` drives the bot's speed/miss rate,
+ * independent of the room's timer difficulty. The connection id mirrors the
+ * player id, matching how real players are shaped.
  */
-function createBotPlayer() {
+function createBotPlayer(difficulty) {
   botCounter += 1;
   const id = `bot-${botCounter}-${Math.random().toString(36).slice(2, 8)}`;
+  const botDifficulty = BOT_DIFFICULTY[difficulty] ? difficulty : 'medium';
   return {
     id,
     name: randomBotName(),
     isBot: true,
+    botDifficulty,
     connection: { id, readyState: 1, send() {} },
   };
 }

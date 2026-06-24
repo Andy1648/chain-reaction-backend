@@ -234,7 +234,13 @@ function buildRoomUpdatePayload(room) {
       hostId: room.hostId,
       difficultyKey: room.difficultyKey,
       gameType: room.gameType,
-      players: room.players.map((p) => ({ id: p.id, name: p.name })),
+      players: room.players.map((p) => ({
+        id: p.id,
+        name: p.name,
+        // Surfaced so the lobby can mark the bot and offer a REMOVE BOT control;
+        // botDifficulty (easy|medium|hard) is the bot's own skill, shown on its card.
+        ...(p.isBot ? { isBot: true, botDifficulty: p.botDifficulty || 'medium' } : {}),
+      })),
     },
   };
 }
@@ -599,37 +605,36 @@ function handleImposterVote(room, connectionId, suspectId) {
 /* ============================================================= */
 
 /**
- * Keeps a solo Word Bomb room stocked with exactly one bot opponent so a lone
- * player gets a real game with no "waiting for players" wall. The bot is a
- * normal roster entry, so the existing frontend start-gate (players >= 2) just
- * works with no client changes.
+ * Adds a single bot opponent to a solo Word Bomb room at the requested
+ * difficulty. Explicit (player-triggered via add_bot), NOT automatic - a lone
+ * player chooses to play a bot rather than one being forced on them. The bot is
+ * a normal roster entry with a mock connection, so it renders like any player
+ * and submits words through the same path. Its `botDifficulty` is independent of
+ * the room's timer difficulty and drives only the bot's speed/miss rate.
  *
- * Idempotent: ADDS a bot when the room is a PRIVATE, word-bomb, single-HUMAN,
- * not-yet-in-game room that has none; REMOVES any bot the moment those
- * conditions stop holding (game type switched away, a second human joins, the
- * room is public, ...). Confining bots to private rooms keeps them out of the
- * public-rooms list and Quick Play. Returns true if the roster changed.
- *
- * Never touches a room with a live game - rosters are frozen once play starts.
+ * Guards: word-bomb only, no live game, exactly one human, and no bot already
+ * present. Returns { ok } or { error }.
  */
-function syncSoloBot(room) {
-  if (!room) return false;
-  if (room.game && room.game.status === 'in_progress') return false;
+function addBot(room, difficulty) {
+  if (!room) return { error: 'no_room' };
+  if (room.game && room.game.status === 'in_progress') return { error: 'game_already_started' };
+  if (room.gameType !== 'word-bomb') return { error: 'bot_word_bomb_only' };
+  if (room.players.some((p) => p.isBot)) return { error: 'bot_already_added' };
+  if (room.players.filter((p) => !p.isBot).length !== 1) return { error: 'bot_solo_only' };
 
-  const humans = room.players.filter((p) => !p.isBot);
-  const hasBot = room.players.some((p) => p.isBot);
-  const wantsBot =
-    !room.isPublic && room.gameType === 'word-bomb' && humans.length === 1;
+  room.players.push(wordBombBot.createBotPlayer(difficulty));
+  return { ok: true };
+}
 
-  if (wantsBot && !hasBot) {
-    room.players.push(wordBombBot.createBotPlayer());
-    return true;
-  }
-  if (!wantsBot && hasBot) {
-    room.players = room.players.filter((p) => !p.isBot);
-    return true;
-  }
-  return false;
+/**
+ * Removes the bot from a room (the player kicked it before starting, or a game
+ * teardown wants a clean roster). No-op if there's no bot. Returns { ok }.
+ */
+function removeBot(room) {
+  if (!room) return { error: 'no_room' };
+  if (room.game && room.game.status === 'in_progress') return { error: 'game_already_started' };
+  room.players = room.players.filter((p) => !p.isBot);
+  return { ok: true };
 }
 
 /** Clears a pending bot move so two can never race onto the same/next turn. */
@@ -658,10 +663,14 @@ function maybeScheduleBotMove(room) {
   const rosterEntry = room.players.find((p) => p.id === currentId);
   if (!rosterEntry || !rosterEntry.isBot) return;
 
-  // Choke this turn: do nothing, the running turn timer will time it out.
-  if (wordBombBot.rollMiss(room.difficultyKey)) return;
+  // The bot's skill is its OWN difficulty (chosen when it was added), independent
+  // of the room's timer difficulty. Fall back to medium if somehow unset.
+  const botDifficulty = rosterEntry.botDifficulty || 'medium';
 
-  const delayMs = wordBombBot.computeDelayMs(room.difficultyKey, game.currentTimerSeconds);
+  // Choke this turn: do nothing, the running turn timer will time it out.
+  if (wordBombBot.rollMiss(botDifficulty)) return;
+
+  const delayMs = wordBombBot.computeDelayMs(botDifficulty, game.currentTimerSeconds);
   room.botMoveTimeout = setTimeout(async () => {
     room.botMoveTimeout = null;
     // The world may have moved on while we waited (turn advanced, game ended,
@@ -685,12 +694,6 @@ function maybeScheduleBotMove(room) {
 }
 
 function startGame(room) {
-  // Make sure a solo Word Bomb room has its bot opponent before we count heads.
-  // Normally the bot was already added in the lobby (so the start button lit up
-  // at all); this is the authoritative guard for any path that reaches start
-  // without a prior sync.
-  syncSoloBot(room);
-
   // Solo Category Blitz: one player racing the clock alone. Auto-detected when
   // a category-blitz room has exactly one player - no separate flag needed from
   // the frontend - and it bypasses the usual 2-player minimum.
@@ -943,9 +946,8 @@ function resetGame(room) {
   clearRoundTimer(room);
   clearCountdownTimeout(room);
   room.game = null;
-  // Back in the lobby: re-sync the solo bot (re-add it if the just-finished game
-  // had somehow dropped it) so a rematch starts cleanly with the opponent present.
-  syncSoloBot(room);
+  // The bot (if the player added one) stays in the roster across a rematch, so
+  // they can start again straight away or remove it from the lobby.
   touchRoom(room); // a rematch proves the room is alive
   broadcastToRoom(room, buildRoomUpdatePayload(room));
   broadcastToRoom(room, { type: 'game_reset', payload: {} });
@@ -1022,10 +1024,6 @@ function removePlayer(room, connectionId) {
     }
   }
 
-  // If a leave dropped a multiplayer word-bomb lobby back to a single human,
-  // re-add the solo bot (no-op mid-game or for other modes/public rooms).
-  syncSoloBot(room);
-
   broadcastToRoom(room, buildRoomUpdatePayload(room));
 }
 
@@ -1096,7 +1094,8 @@ module.exports = {
   quickPlay,
   startGame,
   resetGame,
-  syncSoloBot,
+  addBot,
+  removeBot,
   handleWordSubmission,
   handleCategoryAnswer,
   handleRerollCategory,
