@@ -59,8 +59,12 @@ function underRateLimit(playerId) {
   return true;
 }
 
+// Judge like a FUN PARTY-GAME HOST, not a strict teacher. Players type short
+// 1-3 word answers under time pressure, often abbreviated/informal - be generous
+// and accept anything a group of friends would let slide; only reject answers
+// that genuinely make no sense for the category.
 function buildPrompt(category, answer) {
-  return `Is "${answer}" a valid/reasonable answer for the category "${category}"? Reply with only "yes" or "no".`;
+  return `The player is in a fast-paced word game. The category is "${category}". They typed "${answer}". Is this a reasonable or creative answer to this category, even if abbreviated or informal? Be generous - accept anything that a group of friends would accept during a party game. Reply with only "yes" or "no".`;
 }
 
 /**
