@@ -145,6 +145,66 @@ const CATEGORY_PAIRS = [
   { real: 'Things on a road trip playlist', fake: 'Things on a workout playlist' },
   { real: 'Things you bring to a potluck', fake: 'Things you bring to a picnic' },
   { real: 'Things a wedding DJ plays', fake: 'Things a prom DJ plays' },
+
+  // Scenario / vibe overlaps (curated batch) - two places or events whose
+  // associations overlap hard, so the imposter can hide in the shared vibe.
+  { real: 'A wedding', fake: 'A funeral' },
+  { real: 'Disneyland', fake: 'Hell' },
+  { real: 'A first date', fake: 'A job interview' },
+  { real: 'The DMV', fake: 'Purgatory' },
+  { real: 'IKEA', fake: "A maze you can't escape" },
+  { real: 'A gym', fake: 'A nightclub' },
+  { real: 'An aquarium', fake: 'A sushi restaurant' },
+  { real: 'Prom', fake: 'A funeral' },
+  { real: 'A petting zoo', fake: 'A Tinder date' },
+  { real: 'A hospital', fake: 'A prison' },
+  { real: "Grandma's house", fake: 'A haunted house' },
+  { real: 'Going to the dentist', fake: 'Medieval torture' },
+  { real: 'A camping trip', fake: 'The apocalypse' },
+  { real: 'A baby shower', fake: 'A cult' },
+  { real: 'Black Friday', fake: 'A zombie apocalypse' },
+  { real: 'Thanksgiving dinner', fake: 'A political debate' },
+
+  // Expansion batch - same rules: tight, reactable overlaps, school-appropriate.
+  // Oddly specific / Gen-Z
+  { real: 'Tabs open on your laptop right now', fake: 'Tabs playing audio you cannot find' },
+  { real: 'Things in your camera roll', fake: 'Things in your screenshots folder' },
+  { real: 'Things you do during a fire drill', fake: 'Things you do during a tornado drill' },
+  { real: 'Reasons your phone is at one percent', fake: 'Reasons your storage is full' },
+  { real: 'Things you say when you walk into the wrong class', fake: 'Things you say when you wave at the wrong person' },
+  { real: 'Things you say when the group project does nothing', fake: 'Things you say when you carried the team' },
+  { real: 'Things you do to look busy at work', fake: 'Things you do to look busy in class' },
+  { real: 'Things you say to seem fine at the doctor', fake: 'Things you say to seem fine at the dentist' },
+  // Specific pop culture
+  { real: 'Stranger Things characters', fake: 'Wednesday characters' },
+  { real: 'Anime main characters', fake: 'Anime villains' },
+  { real: 'Things in a Pokemon game', fake: 'Things in a Digimon game' },
+  { real: 'Roblox games', fake: 'Minecraft minigames' },
+  { real: 'Billie Eilish song subjects', fake: 'Lana Del Rey song subjects' },
+  { real: 'Things in a Fast and Furious movie', fake: 'Things in a Mission Impossible movie' },
+  { real: 'Squid Game games', fake: 'Field day games' },
+  { real: 'Things in a horror movie', fake: 'Things in a true crime documentary' },
+  // Absurd but answerable
+  { real: 'Things a final boss would say', fake: 'Things a tutorial NPC would say' },
+  { real: 'Bad names for a pet snake', fake: 'Bad names for a guard dog' },
+  { real: 'Reasons a superhero would call in sick', fake: 'Reasons a villain would take a day off' },
+  { real: 'Things that would ruin a magic trick', fake: 'Things that would ruin a wedding' },
+  { real: 'Things a ghost would complain about', fake: 'Things a zombie would complain about' },
+  { real: 'Worst things to bring to a sleepover', fake: 'Worst things to bring to a campout' },
+  { real: 'Things a dragon would post online', fake: 'Things a wizard would post online' },
+  { real: 'Things you do not want your pilot to Google', fake: 'Things you do not want your surgeon to Google' },
+  // Niche knowledge that's still fun
+  { real: 'Things at a school book fair', fake: 'Things at a science fair' },
+  { real: "Things in a nurse's office", fake: "Things in a guidance counselor's office" },
+  { real: 'Things a lunch lady says', fake: 'Things a bus driver says' },
+  { real: 'Things at a car dealership', fake: 'Things at a furniture store' },
+  { real: 'Things you smell at a nail salon', fake: 'Things you smell at a hair salon' },
+  { real: 'Things at a movie theater counter', fake: 'Things in a gas station fridge' },
+  // Scenario / vibe overlaps
+  { real: 'A middle school dance', fake: 'A wedding reception' },
+  { real: 'A group project', fake: 'A hostage negotiation' },
+  { real: 'A school assembly', fake: 'A cult meeting' },
+  { real: 'A haunted corn maze', fake: 'A family reunion' },
 ];
 
 /**
