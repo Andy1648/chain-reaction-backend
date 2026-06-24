@@ -71,7 +71,7 @@ function buildPrompt(category, answer) {
  *
  * `playerId` keys the per-player rate limit.
  */
-async function validate(category, answer, playerId) {
+async function runValidate(category, answer, playerId) {
   const apiKey = process.env.ANTHROPIC_API_KEY;
   // Defensive: callers gate on isEnabled(), but never call the API without a key.
   if (!apiKey) return false;
@@ -123,6 +123,23 @@ async function validate(category, answer, playerId) {
   } finally {
     clearTimeout(timer);
   }
+}
+
+// TEMP DEBUG (remove after confirming the fallback fires in prod): logs every
+// Haiku fallback call and its verdict on EVERY path (yes/no/timeout/error/rate-
+// limit). Pure logging - the returned verdict is unchanged, so game behavior is
+// untouched. The fallback only runs on a list-MISS while a key is set, so seeing
+// these lines proves it's being hit; their absence means every answer is either
+// resolving on the accept-list or the key isn't set.
+async function validate(category, answer, playerId) {
+  console.log(
+    `[haikuValidator] FALLBACK CALLED - category="${category}" answer="${answer}" player=${playerId}`
+  );
+  const verdict = await runValidate(category, answer, playerId);
+  console.log(
+    `[haikuValidator] FALLBACK RESULT - answer="${answer}" -> ${verdict ? 'ACCEPT (yes)' : 'REJECT (no / fail-closed)'}`
+  );
+  return verdict;
 }
 
 module.exports = { validate, isEnabled, RATE_LIMIT_PER_MIN, TIMEOUT_MS };
