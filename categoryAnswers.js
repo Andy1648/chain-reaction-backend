@@ -17,7 +17,7 @@
 // allowed. (One finite domain - "Pixar movies" - has fewer than 150 entries
 // because only ~30 Pixar films exist; the AI fallback covers the long tail.)
 
-module.exports = Object.assign(
+const answers = Object.assign(
   {},
   require('./categoryAnswers/oddly-specific'),
   require('./categoryAnswers/food'),
@@ -37,3 +37,24 @@ module.exports = Object.assign(
   // entry accept-list. Keys match the new entries appended to CATEGORIES.
   require('./categoryAnswers/gen6')
 );
+
+// Supplemental answers (expansion.js) are UNION-MERGED into the sets above so
+// every existing category clears 200+ accepted answers. We can't Object.assign
+// these in (that would REPLACE a category's set with the supplement); instead we
+// add each supplemental entry into the existing Set, creating the set only if
+// the category somehow isn't present yet.
+const supplements = [
+  require('./categoryAnswers/expansion'),
+  require('./categoryAnswers/expansion2'),
+];
+for (const supplement of supplements) {
+  for (const [category, extras] of Object.entries(supplement)) {
+    if (answers[category]) {
+      for (const entry of extras) answers[category].add(entry);
+    } else {
+      answers[category] = new Set(extras);
+    }
+  }
+}
+
+module.exports = answers;
