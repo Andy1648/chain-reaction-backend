@@ -27,6 +27,13 @@ const MAX_TOKENS = 10; // we only need "yes"/"no"
 const RATE_LIMIT_PER_MIN = 10; // max AI calls per player per rolling 60s
 const RATE_WINDOW_MS = 60000;
 
+// Diagnostics are opt-in. Every log below fires only on a FAILURE path (rate
+// limit, API error, timeout, unparseable reply) - never on the happy path - so
+// production is silent by default. Set VALIDATOR_DEBUG=1 to surface them when
+// investigating why list-miss answers are being rejected. Logging only; the
+// validation verdict is unaffected either way.
+const DEBUG = !!process.env.VALIDATOR_DEBUG;
+
 // Per-player sliding window of recent AI-call timestamps (ms since epoch),
 // keyed by playerId. Pruned on access; entries self-empty once a player stops
 // submitting, so this stays bounded by the number of recently-active players.
@@ -81,7 +88,7 @@ async function validate(category, answer, playerId) {
   if (!apiKey) return false;
 
   if (!underRateLimit(playerId)) {
-    console.warn(
+    if (DEBUG) console.warn(
       `[haikuValidator] rate limit hit for player ${playerId} - rejecting "${answer}" without calling the API`
     );
     return false;
@@ -106,7 +113,7 @@ async function validate(category, answer, playerId) {
     });
 
     if (!res.ok) {
-      console.warn(`[haikuValidator] Anthropic API error ${res.status} - rejecting "${answer}"`);
+      if (DEBUG) console.warn(`[haikuValidator] Anthropic API error ${res.status} - rejecting "${answer}"`);
       return false;
     }
 
@@ -115,13 +122,13 @@ async function validate(category, answer, playerId) {
     if (text.startsWith('yes')) return true;
     if (text.startsWith('no')) return false;
     // Anything else (empty, refusal, garbled) -> fail closed.
-    console.warn(`[haikuValidator] unparseable reply "${text}" - rejecting "${answer}"`);
+    if (DEBUG) console.warn(`[haikuValidator] unparseable reply "${text}" - rejecting "${answer}"`);
     return false;
   } catch (err) {
     if (err.name === 'AbortError') {
-      console.warn(`[haikuValidator] timeout (>${TIMEOUT_MS}ms) - rejecting "${answer}"`);
+      if (DEBUG) console.warn(`[haikuValidator] timeout (>${TIMEOUT_MS}ms) - rejecting "${answer}"`);
     } else {
-      console.warn(`[haikuValidator] call failed: ${err.message} - rejecting "${answer}"`);
+      if (DEBUG) console.warn(`[haikuValidator] call failed: ${err.message} - rejecting "${answer}"`);
     }
     return false;
   } finally {

@@ -14,8 +14,19 @@
 // fail OPEN (accept) — losing a third-party judge should never block gameplay,
 // and with two stacked providers a double-failure is rare.
 
+// NOTE: This module is currently RETIRED — categoryBlitzLogic.js uses
+// haikuValidator.js (fail-closed) instead, and nothing requires this file (see
+// categoryBlitzLogic.js: "aiValidator.js ... stay in the repo but are no longer
+// [used]"). It's kept for reference / possible re-enable. Logging below is gated
+// so that if it is ever rewired it stays quiet in production by default.
+
 const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
 const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
+
+// Opt-in diagnostics. Set VALIDATOR_DEBUG=1 to surface provider skips, API
+// errors, and per-verdict logs; silent otherwise. Logging only — verdicts are
+// unaffected.
+const DEBUG = !!process.env.VALIDATOR_DEBUG;
 
 // The judge prompt is identical for both providers so their verdicts are
 // directly comparable.
@@ -30,7 +41,7 @@ function buildPrompt(category, answer) {
 async function validateWithGroq(category, answer) {
   const apiKey = process.env.GROQ_API_KEY;
   if (!apiKey) {
-    console.warn('[aiValidator] No GROQ_API_KEY set — skipping Groq');
+    if (DEBUG) console.warn('[aiValidator] No GROQ_API_KEY set — skipping Groq');
     return null;
   }
 
@@ -49,7 +60,7 @@ async function validateWithGroq(category, answer) {
     });
 
     if (!response.ok) {
-      console.warn('[aiValidator] Groq API error:', response.status);
+      if (DEBUG) console.warn('[aiValidator] Groq API error:', response.status);
       return null;
     }
 
@@ -58,10 +69,10 @@ async function validateWithGroq(category, answer) {
     if (text === 'YES') return true;
     if (text === 'NO') return false;
     // Anything else (empty, garbled) is "couldn't determine".
-    console.warn('[aiValidator] Groq unparseable reply:', text);
+    if (DEBUG) console.warn('[aiValidator] Groq unparseable reply:', text);
     return null;
   } catch (err) {
-    console.warn('[aiValidator] Groq call failed:', err.message);
+    if (DEBUG) console.warn('[aiValidator] Groq call failed:', err.message);
     return null;
   }
 }
@@ -74,7 +85,7 @@ async function validateWithGroq(category, answer) {
 async function validateWithGemini(category, answer) {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
-    console.warn('[aiValidator] No GEMINI_API_KEY set — skipping Gemini');
+    if (DEBUG) console.warn('[aiValidator] No GEMINI_API_KEY set — skipping Gemini');
     return null;
   }
 
@@ -88,7 +99,7 @@ async function validateWithGemini(category, answer) {
     });
 
     if (!response.ok) {
-      console.warn('[aiValidator] Gemini API error:', response.status);
+      if (DEBUG) console.warn('[aiValidator] Gemini API error:', response.status);
       return null;
     }
 
@@ -96,10 +107,10 @@ async function validateWithGemini(category, answer) {
     const text = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim().toUpperCase();
     if (text === 'YES') return true;
     if (text === 'NO') return false;
-    console.warn('[aiValidator] Gemini unparseable reply:', text);
+    if (DEBUG) console.warn('[aiValidator] Gemini unparseable reply:', text);
     return null;
   } catch (err) {
-    console.warn('[aiValidator] Gemini call failed:', err.message);
+    if (DEBUG) console.warn('[aiValidator] Gemini call failed:', err.message);
     return null;
   }
 }
@@ -111,19 +122,19 @@ async function validateWithGemini(category, answer) {
 async function validateCategoryAnswer(category, answer) {
   const groqVerdict = await validateWithGroq(category, answer);
   if (groqVerdict !== null) {
-    console.log(`[aiValidator] verdict by Groq: ${groqVerdict ? 'YES' : 'NO'} (${answer} / ${category})`);
+    if (DEBUG) console.log(`[aiValidator] verdict by Groq: ${groqVerdict ? 'YES' : 'NO'} (${answer} / ${category})`);
     return groqVerdict;
   }
 
   const geminiVerdict = await validateWithGemini(category, answer);
   if (geminiVerdict !== null) {
-    console.log(`[aiValidator] verdict by Gemini: ${geminiVerdict ? 'YES' : 'NO'} (${answer} / ${category})`);
+    if (DEBUG) console.log(`[aiValidator] verdict by Gemini: ${geminiVerdict ? 'YES' : 'NO'} (${answer} / ${category})`);
     return geminiVerdict;
   }
 
   // Both providers failed to return a verdict — fail open so a third-party
   // outage never blocks the game.
-  console.warn(`[aiValidator] both providers failed — failing open (accept) for "${answer}" / "${category}"`);
+  if (DEBUG) console.warn(`[aiValidator] both providers failed — failing open (accept) for "${answer}" / "${category}"`);
   return true;
 }
 
