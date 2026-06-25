@@ -4,6 +4,14 @@
 // game traffic. Every connected socket gets a random id that doubles as
 // its "player id" throughout a room's lifetime.
 
+// Monitoring/analytics FIRST: initSentry() must run before the rest of the app is
+// required so Sentry's auto-instrumentation + global uncaught-exception /
+// unhandled-rejection handlers are installed. Both are graceful no-ops without
+// their env keys and can never block startup or gameplay.
+const { Sentry, initSentry, initAnalytics, captureError } = require('./monitoring');
+initSentry();
+initAnalytics();
+
 const express = require('express');
 const cors = require('cors');
 const http = require('http');
@@ -46,6 +54,14 @@ app.use(express.json());
 app.get('/health', (req, res) => {
   res.json({ status: 'ok' });
 });
+
+// Report any Express route error to Sentry (after all routes). Safe no-op when
+// Sentry is dormant; it does not change the HTTP response behaviour.
+try {
+  Sentry.setupExpressErrorHandler(app);
+} catch {
+  // never block startup if the handler can't attach
+}
 
 const server = http.createServer(app);
 const wss = new WebSocketServer({ server });
@@ -393,6 +409,10 @@ wss.on('connection', (ws) => {
       }
     } catch (err) {
       console.error('Error handling message', type, err);
+      // Report the WS handler error to Sentry (safe no-op if dormant). This is
+      // purely additive — the existing graceful sendError still runs and the
+      // connection/game continues exactly as before.
+      captureError(err, { wsMessageType: type });
       sendError(ws, 'Server error processing your request.', type);
     }
   });

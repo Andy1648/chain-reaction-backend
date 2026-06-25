@@ -9,14 +9,20 @@
     "test": "node --test gameLogic.test.js roomManager.test.js wordBombBot.test.js"
   },
   "dependencies": {
-    "express": "^4.19.2",
+    "@sentry/node": "^10.61.0",
     "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "posthog-node": "^5.38.5",
     "ws": "^8.18.0"
   },
   "engines": {
     "node": ">=18"
   },
-  "keywords": ["websocket", "multiplayer", "word-game"],
+  "keywords": [
+    "websocket",
+    "multiplayer",
+    "word-game"
+  ],
   "author": "",
   "license": "ISC"
 }
