@@ -17,14 +17,24 @@ const { PostHog } = require('posthog-node');
 let posthog = null;
 
 // Init Sentry BEFORE the rest of the app is required (see server.js) so its
-// auto-instrumentation + global uncaught-exception / unhandled-rejection handlers
-// are in place. Those global handlers are what satisfy "capture unhandled
-// exceptions" — they're registered automatically by Sentry.init.
+// auto-instrumentation is in place. We DISABLE Sentry's built-in global
+// uncaughtException / unhandledRejection integrations and instead register our
+// OWN explicit process handlers in server.js (so we control "then existing
+// behavior" precisely and avoid double-capturing the same error twice).
 function initSentry() {
   try {
     const dsn = process.env.SENTRY_DSN;
     if (!dsn) return;
-    Sentry.init({ dsn, tracesSampleRate: 0, sendDefaultPii: false });
+    Sentry.init({
+      dsn,
+      tracesSampleRate: 0,
+      sendDefaultPii: false,
+      // Drop the auto global-error handlers; server.js owns these explicitly.
+      integrations: (defaults) =>
+        defaults.filter(
+          (i) => i.name !== 'OnUncaughtException' && i.name !== 'OnUnhandledRejection'
+        ),
+    });
   } catch {
     // Monitoring must never block startup.
   }

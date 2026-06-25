@@ -12,6 +12,32 @@ const { Sentry, initSentry, initAnalytics, captureError } = require('./monitorin
 initSentry();
 initAnalytics();
 
+// Explicit global error handlers (Sentry's auto ones are disabled in monitoring.js
+// so these are the sole handlers). Each wraps the capture so a reporting failure
+// can't itself throw, then preserves the prior behavior:
+//  - uncaughtException: the process is in an undefined state -> report, log, and
+//    exit so the platform restarts a clean instance (same as Node's default and
+//    Sentry's default integration). Per-message WS throws never reach here; they're
+//    caught in the message handler below, so this only fires for truly fatal errors.
+//  - unhandledRejection: report + log, but DO NOT exit — a stray rejection must not
+//    drop every live game connection.
+process.on('uncaughtException', (err) => {
+  try { captureError(err, { kind: 'uncaughtException' }); } catch { /* never throw from a handler */ }
+  console.error('Uncaught exception:', err);
+  try {
+    Sentry.flush(2000).catch(() => {}).finally(() => process.exit(1));
+  } catch {
+    process.exit(1);
+  }
+});
+process.on('unhandledRejection', (reason) => {
+  try {
+    const err = reason instanceof Error ? reason : new Error(String(reason));
+    captureError(err, { kind: 'unhandledRejection' });
+  } catch { /* never throw from a handler */ }
+  console.error('Unhandled rejection:', reason);
+});
+
 const express = require('express');
 const cors = require('cors');
 const http = require('http');
@@ -55,13 +81,13 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok' });
 });
 
-// Report any Express route error to Sentry (after all routes). Safe no-op when
-// Sentry is dormant; it does not change the HTTP response behaviour.
-try {
-  Sentry.setupExpressErrorHandler(app);
-} catch {
-  // never block startup if the handler can't attach
-}
+// Explicit Express error middleware (after all routes): report the error to
+// Sentry, wrapped so a capture failure can't throw, then pass it through to
+// Express's default handler so the HTTP response behavior is unchanged.
+app.use((err, req, res, next) => {
+  try { captureError(err, { kind: 'express' }); } catch { /* never throw */ }
+  next(err);
+});
 
 const server = http.createServer(app);
 const wss = new WebSocketServer({ server });
