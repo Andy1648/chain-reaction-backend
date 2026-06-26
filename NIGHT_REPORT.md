@@ -14,6 +14,9 @@ _Branch: `night/categories-generate` (chain-reaction-backend) · 2026-06-26 · c
 - **Added:** 103
 - **Final total:** **202**
 
+### 15-category sample of what was added
+`European capitals` (paris, london) · `World rivers` (nile, amazon) · `Birds` (eagle, robin) · `Trees` (oak, pine) · `Cocktails` (margarita, mojito) · `Mexican foods` (taco, burrito) · `Disney princesses` (cinderella, ariel) · `Pixar characters` (woody, buzz) · `Street Fighter characters` (ryu, ken) · `Among Us colors` (red, blue) · `Famous DJs` (calvin harris, david guetta) · `Martial arts` (karate, judo) · `Body parts` (elbow, knee) · `Shapes` (circle, square) · `US presidents` (lincoln, washington)
+
 ### Rejected (with reasons) — the filter working
 - `Sitcoms` — answer >3 words ("how i met your mother")
 - `Boy bands` — answer >3 words ("new kids on the block")
@@ -46,6 +49,9 @@ Loaded `categoryBlitzLogic.js` after wiring gen7 in — its `isBoundedCategory` 
 ### Preview
 Backend repo — not frontend-affecting, so no Vercel preview. Pushed to `origin/night/categories-generate` for review. Runs/serves via Render on merge (not done — no merge).
 
+### Generator hardened (idempotency fix)
+The generator is wired into `categoryAnswers.js`, so after the first run the merged pool already contains gen7's names. A naive re-run saw every candidate as a "duplicate of existing", kept 0, and **emitted an empty `gen7.js` — wiping the batch** (hit during verification). Fixed two ways in `gen7-generate.js`: (1) the dedup set now EXCLUDES gen7's own names, so a re-run reproduces the same 103 instead of self-colliding; (2) a write-guard REFUSES to overwrite `gen7.js` when the kept set is empty. Verified: re-running now keeps 103 / rejects 9 / total 202 and leaves the file intact.
+
 ### For Andy
 - Skim `gen7.js` for taste — a few categories lean general-knowledge (capitals, elements); if you want them punchier/funnier to match the existing "personality" categories, easy to swap.
-- The generator is rerunnable (`node categoryAnswers/gen7-generate.js`) and is the place to add the next batch under the same enforced rule.
+- The generator is rerunnable + idempotent now (`node categoryAnswers/gen7-generate.js`) and is the place to add the next batch under the same enforced rule.

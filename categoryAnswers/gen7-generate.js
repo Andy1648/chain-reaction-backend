@@ -171,8 +171,18 @@ const CANDIDATES = [
 // ---------------------------------------------------------------------------
 // FILTER + DEDUPE + EMIT
 // ---------------------------------------------------------------------------
-const existing = Object.keys(require('../categoryAnswers'));
 const norm = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+// Dedup against the existing pool — but EXCLUDE gen7's own names. This script is
+// wired into categoryAnswers.js, so once it has run, the merged pool already
+// contains gen7's categories; without this exclusion a re-run would see every
+// candidate as a "duplicate of existing", keep zero, and emit an empty gen7.js,
+// wiping the batch. Subtracting gen7's own keys makes the generator idempotent:
+// re-running reproduces the same gen7.js instead of clobbering it.
+let gen7OwnNorm = new Set();
+try {
+  gen7OwnNorm = new Set(Object.keys(require('./gen7')).map(norm));
+} catch { /* gen7.js absent/empty on a first run — nothing to exclude */ }
+const existing = Object.keys(require('../categoryAnswers')).filter((k) => !gen7OwnNorm.has(norm(k)));
 const existingNorm = new Set(existing.map(norm));
 
 const kept = {};
@@ -211,7 +221,14 @@ for (const [name, arr] of Object.entries(kept)) {
   out += `  ${key}: new Set([${vals}]),\n`;
 }
 out += '};\n';
-fs.writeFileSync(path.join(__dirname, 'gen7.js'), out);
+// Safety guard: never overwrite a populated gen7.js with an empty result. If the
+// filter kept nothing (e.g. an unexpected dedup collision), warn and leave the
+// existing file intact rather than wiping the batch.
+if (Object.keys(kept).length === 0) {
+  console.warn('[gen7] kept 0 categories — REFUSING to overwrite gen7.js (file left untouched).');
+} else {
+  fs.writeFileSync(path.join(__dirname, 'gen7.js'), out);
+}
 
 // Report
 console.log('=== gen7 generation report ===');
