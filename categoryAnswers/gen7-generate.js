@@ -34,14 +34,10 @@ const BANNED_NAME_PATTERNS = [
 const CANDIDATES = [
   // ---- Geography ----
   { name: 'European capitals', ex: ['paris', 'london', 'berlin', 'madrid', 'rome', 'vienna', 'oslo', 'athens', 'lisbon', 'warsaw', 'dublin', 'prague'] },
-  { name: 'US state capitals', ex: ['austin', 'denver', 'boston', 'phoenix', 'albany', 'atlanta', 'sacramento', 'columbus', 'nashville', 'helena'] },
   { name: 'African countries', ex: ['egypt', 'kenya', 'nigeria', 'morocco', 'ghana', 'tanzania', 'algeria', 'angola', 'zambia', 'mali'] },
   { name: 'Asian countries', ex: ['japan', 'china', 'india', 'thailand', 'vietnam', 'nepal', 'korea', 'laos', 'mongolia', 'qatar'] },
-  { name: 'Oceans and seas', ex: ['pacific', 'atlantic', 'indian', 'arctic', 'caribbean', 'mediterranean', 'baltic', 'red sea', 'black sea', 'coral sea'] },
-  { name: 'Mountain ranges', ex: ['alps', 'andes', 'himalayas', 'rockies', 'urals', 'pyrenees', 'atlas', 'appalachians', 'cascades', 'caucasus'] },
   { name: 'World rivers', ex: ['nile', 'amazon', 'thames', 'danube', 'ganges', 'yangtze', 'mississippi', 'rhine', 'volga', 'mekong'] },
   { name: 'US states', ex: ['texas', 'ohio', 'maine', 'utah', 'nevada', 'georgia', 'florida', 'oregon', 'kansas', 'iowa'] },
-  { name: 'Canadian provinces', ex: ['ontario', 'quebec', 'alberta', 'manitoba', 'nova scotia', 'yukon', 'nunavut', 'saskatchewan'] },
   { name: 'Famous landmarks', ex: ['eiffel tower', 'big ben', 'colosseum', 'taj mahal', 'pyramids', 'statue of liberty', 'great wall', 'stonehenge'] },
 
   // ---- Animals & nature ----
@@ -120,15 +116,10 @@ const CANDIDATES = [
 
   // ---- Science & space ----
   { name: 'Planets', ex: ['mercury', 'venus', 'earth', 'mars', 'jupiter', 'saturn', 'uranus', 'neptune', 'pluto'] },
-  { name: 'Chemical elements', ex: ['hydrogen', 'helium', 'oxygen', 'carbon', 'gold', 'iron', 'neon', 'sodium', 'silver', 'copper'] },
   { name: 'Body parts', ex: ['elbow', 'knee', 'liver', 'lung', 'spine', 'ankle', 'wrist', 'kidney', 'shoulder', 'thumb'] },
-  { name: 'Bones in the body', ex: ['femur', 'skull', 'rib', 'spine', 'pelvis', 'jaw', 'tibia', 'collarbone', 'kneecap', 'sternum'] },
   { name: 'Weather phenomena', ex: ['rain', 'snow', 'hail', 'fog', 'thunder', 'lightning', 'tornado', 'hurricane', 'blizzard', 'drizzle'] },
-  { name: 'Constellations', ex: ['orion', 'big dipper', 'cassiopeia', 'leo', 'scorpius', 'ursa major', 'gemini', 'aquarius', 'pegasus'] },
-  { name: 'Branches of science', ex: ['biology', 'chemistry', 'physics', 'geology', 'astronomy', 'botany', 'zoology', 'ecology', 'genetics'] },
   { name: 'Gemstones', ex: ['diamond', 'ruby', 'emerald', 'sapphire', 'opal', 'topaz', 'amethyst', 'jade', 'pearl', 'garnet'] },
   { name: 'Shapes', ex: ['circle', 'square', 'triangle', 'hexagon', 'pentagon', 'octagon', 'rhombus', 'oval', 'trapezoid', 'cube'] },
-  { name: 'Metals', ex: ['gold', 'silver', 'iron', 'copper', 'aluminum', 'titanium', 'zinc', 'nickel', 'platinum', 'bronze'] },
 
   // ---- History & myth ----
   { name: 'Greek gods', ex: ['zeus', 'hera', 'poseidon', 'athena', 'apollo', 'ares', 'hades', 'hermes', 'artemis', 'aphrodite'] },
@@ -136,9 +127,7 @@ const CANDIDATES = [
   { name: 'Egyptian gods', ex: ['ra', 'anubis', 'osiris', 'isis', 'horus', 'set', 'thoth', 'bastet', 'sobek'] },
   { name: 'Mythical creatures', ex: ['dragon', 'unicorn', 'phoenix', 'griffin', 'mermaid', 'centaur', 'minotaur', 'kraken', 'cyclops'] },
   { name: 'US presidents', ex: ['lincoln', 'washington', 'roosevelt', 'kennedy', 'obama', 'reagan', 'jefferson', 'truman', 'nixon'] },
-  { name: 'Ancient civilizations', ex: ['romans', 'greeks', 'egyptians', 'mayans', 'aztecs', 'incas', 'vikings', 'persians', 'babylonians'] },
   { name: 'Famous painters', ex: ['picasso', 'van gogh', 'da vinci', 'monet', 'rembrandt', 'dali', 'warhol', 'michelangelo', 'frida kahlo'] },
-  { name: 'Roman numerals', ex: ['i', 'v', 'x', 'l', 'c', 'd', 'm'] },
 
   // ---- Everyday objects ----
   { name: 'Kitchen utensils', ex: ['spatula', 'whisk', 'ladle', 'tongs', 'peeler', 'grater', 'colander', 'rolling pin', 'spoon', 'fork'] },
