@@ -205,6 +205,63 @@ const CATEGORY_PAIRS = [
   { real: 'A group project', fake: 'A hostage negotiation' },
   { real: 'A school assembly', fake: 'A cult meeting' },
   { real: 'A haunted corn maze', fake: 'A family reunion' },
+  // ---- night/content-expand batch ----
+  // Generated + machine-filtered by imposterPairsExpand.js: well-formed,
+  // real != fake, deduped vs all of the above (4 candidates were dropped as
+  // dups). Each is a tight, reactable overlap — close enough for the imposter to
+  // hide, distinct enough for the table to catch a wrong-side answer.
+  // Oddly specific / relatable
+  { real: "Things you do when you can't sleep", fake: "Things you do when you're bored in class" },
+  { real: 'Things in your school backpack', fake: 'Things in your gym bag' },
+  { real: 'Things you say when you lose a game', fake: 'Things you say when you win a game' },
+  { real: 'Things you forget to pack for a trip', fake: 'Things you forget at school' },
+  { real: 'Things you hide from your parents', fake: 'Things you hide from your roommate' },
+  { real: 'Things you say to get out of chores', fake: 'Things you say to skip the gym' },
+  { real: 'Things you keep in your car', fake: 'Things you keep in your locker' },
+  { real: 'Things you do in a waiting room', fake: 'Things you do in a long line' },
+  { real: 'Things people do at a red light', fake: 'Things people do in an elevator' },
+  // Specific pop culture
+  { real: 'Pixar movies', fake: 'DreamWorks movies' },
+  { real: 'Things in a Zelda game', fake: 'Things in a Mario game' },
+  { real: 'Taylor Swift songs', fake: 'Olivia Rodrigo songs' },
+  { real: 'Things in Stranger Things', fake: 'Things in a horror movie' },
+  { real: 'SpongeBob locations', fake: 'Simpsons locations' },
+  { real: 'Disney sidekicks', fake: 'Disney villains' },
+  // Absurd but answerable
+  { real: 'Worst superpowers', fake: 'Useless inventions' },
+  { real: 'Things a villain monologues about', fake: 'Things a coach yells at halftime' },
+  { real: "Things in a dragon's hoard", fake: "Things in a pirate's treasure" },
+  { real: 'Things a robot would misunderstand', fake: 'Things an alien would misunderstand' },
+  { real: 'Reasons the wifi is down', fake: 'Reasons the bus is late' },
+  { real: "Things you'd ban as president", fake: "Things you'd ban as a teacher" },
+  // Niche knowledge that's still fun
+  { real: 'Greek gods', fake: 'Roman gods' },
+  { real: 'Things on a Monopoly board', fake: 'Things in the game of Life' },
+  { real: 'Planets in the solar system', fake: 'Moons in the solar system' },
+  { real: 'Constellations', fake: 'Zodiac signs' },
+  { real: 'Countries in Africa', fake: 'Countries in South America' },
+  { real: 'Dog breeds', fake: 'Cat breeds' },
+  { real: 'Types of clouds', fake: 'Types of storms' },
+  { real: 'Famous paintings', fake: 'Famous sculptures' },
+  // Scenario / vibe overlaps
+  { real: 'Sounds at a carnival', fake: 'Sounds at an arcade' },
+  { real: 'Smells at a campsite', fake: 'Smells at a barbecue' },
+  { real: 'Things at a wedding', fake: 'Things at a prom' },
+  { real: 'Things at a birthday party', fake: "Things at a New Year's party" },
+  { real: 'Things you see at the beach', fake: 'Things you see at a pool' },
+  { real: 'Things at a concert', fake: 'Things at a festival' },
+  { real: 'Things on a road trip', fake: 'Things on a camping trip' },
+  { real: 'Things in a hospital', fake: "Things in a dentist's office" },
+  { real: 'Things at an airport', fake: 'Things at a train station' },
+  { real: 'Things in a haunted house', fake: 'Things in a graveyard' },
+  { real: 'Things at a sleepover', fake: 'Things at summer camp' },
+  { real: 'Things in a science classroom', fake: 'Things in an art classroom' },
+  { real: 'Things at a football game', fake: 'Things at a basketball game' },
+  { real: 'Things in a movie theater', fake: 'Things at a bowling alley' },
+  { real: 'Things in a kitchen', fake: 'Things in a garage' },
+  { real: 'Things at a zoo', fake: 'Things at an aquarium' },
+  { real: 'Things in a barbershop', fake: 'Things in a nail salon' },
+  { real: 'Things in a gym', fake: 'Things in a locker room' },
 ];
 
 /**
