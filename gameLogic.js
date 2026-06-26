@@ -76,6 +76,29 @@ const COMBOS = [
   'old', 'ild', 'und', 'orn', 'ern', 'oat', 'oad', 'oot', 'ool', 'oom', 'oon',
   'eep', 'eed', 'eel', 'eet', 'ail', 'air', 'oin', 'oil', 'unk', 'unt', 'orm',
   'ort', 'ord', 'ark', 'arm', 'art', 'amp', 'ang', 'ong',
+  // ---- night/content-expand batch ----
+  // Machine-generated + filtered by comboExpand.js: every entry below was scanned
+  // against botWords.txt (the bot's ~18k common-word corpus) and kept ONLY if it
+  // appears in >=40 of those words — a floor ~5x stricter than the easiest combo
+  // already shipping ('kle'), so each is comfortably solvable. Deduped vs all of
+  // the above. Rerun `node comboExpand.js` to regenerate/extend under the rule.
+  // 2-letter (high-frequency): ng(using) nt(contact) ri(price) io(motion) ic(which)
+  // is(this) ns(insurance) la(last) ve(have) di(did) ca(can) ce(service) ea(search)
+  // si(site) rs(first) tr(travel) to(top) ac(contact) as(was) he(the) ec(because) il(will)
+  'ng', 'nt', 'ri', 'io', 'ic', 'is', 'ns', 'la', 've', 'di', 'ca', 'ce', 'ea',
+  'si', 'rs', 'tr', 'to', 'ac', 'as', 'he', 'ec', 'il',
+  // 3-letter (deep pools): tio(nation) ati(ratio) ers(others) ons(seasons) res(rest)
+  // tin(rating) ted(united) men(moment) tra(travel) nce(since) tor(store) com(company)
+  // ect(subject) ive(active) cti(section) ica(american) rat(rate) ste(system) sta(state)
+  // lin(online) ies(movies) tic(article) rin(during) per(super) int(into) min(minute)
+  // ran(orange) nte(internet) sti(still) her(other) iti(condition) nti(until) rea(read)
+  // red(credit) eri(american) for(forest) cal(local) les(sales) anc(dance) che(check)
+  // enc(science) din(reading) lan(plan) ins(inside) ity(city) dis(distance) the(other) era(general)
+  'tio', 'ati', 'ers', 'ons', 'res', 'tin', 'ted', 'men', 'tra', 'nce', 'tor',
+  'com', 'ect', 'ive', 'cti', 'ica', 'rat', 'ste', 'sta', 'lin', 'ies', 'tic',
+  'rin', 'per', 'int', 'min', 'ran', 'nte', 'sti', 'her', 'iti', 'nti', 'rea',
+  'red', 'eri', 'for', 'cal', 'les', 'anc', 'che', 'enc', 'din', 'lan', 'ins',
+  'ity', 'dis', 'the', 'era',
 ];
 
 // ---- Escalating combo difficulty ----
