@@ -274,9 +274,30 @@ async function submitWord(game, rawWord) {
     return { accepted: false, reason: 'already_used' };
   }
 
+  // Snapshot the turn position BEFORE the (possibly slow, uncached) dictionary
+  // lookup we're about to await. completedTurnCount advances on EVERY completed
+  // turn - a successful submit OR a timeout - so it's a monotonic "which turn are
+  // we on" marker. Captured here so the race guard below can tell whether the
+  // turn moved on while we were awaiting.
+  const turnAtSubmit = game.completedTurnCount;
+
   const valid = await isValidWord(word);
   if (!valid) {
     return { accepted: false, reason: 'not_a_word' };
+  }
+
+  // RACE GUARD (fix/turn-race): the dictionary lookup above is awaited, and in
+  // the last second of a turn the turn timer's handleTimeout can fire DURING that
+  // await - it costs this player a life and advances the turn. If we then applied
+  // this word we'd double-advance the turn, wrongly skip the next player, and clear
+  // their freshly-started timer (TOCTOU). So if the turn advanced, or the game
+  // ended, while we were awaiting, DISCARD this submission WITHOUT mutating any
+  // state. The caller treats a non-accepted result as an ordinary reject (it does
+  // not touch turns, lives, or timers), so the discard is clean. This guard lives
+  // here, not in the caller, because the turn-advancing mutation below happens
+  // inside this function after the await - the caller can't intercept between them.
+  if (game.status !== 'in_progress' || game.completedTurnCount !== turnAtSubmit) {
+    return { accepted: false, reason: 'turn_over' };
   }
 
   // All checks passed - record the word and roll a fresh combo for the next
