@@ -35,7 +35,12 @@ const answers = Object.assign(
   require('./categoryAnswers/gen5'),
   // Clean rapid-fire batch (gen6): 20 noun-list categories, each with a 150+
   // entry accept-list. Keys match the new entries appended to CATEGORIES.
-  require('./categoryAnswers/gen6')
+  require('./categoryAnswers/gen6'),
+  // gen7 (night/categories-generate): 103 machine-filtered bounded categories
+  // (answers <=3 words), generated + filtered by categoryAnswers/gen7-generate.js.
+  // Seed accept-lists; the Haiku judge covers the long tail. Keys match the
+  // entries appended to CATEGORIES.
+  require('./categoryAnswers/gen7')
 );
 
 // Supplemental answers (expansion.js) are UNION-MERGED into the sets above so
