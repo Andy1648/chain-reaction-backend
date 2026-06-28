@@ -190,6 +190,21 @@ const RAW_CATEGORIES = [
   "Languages",
   "Zodiac signs",
   "Months of the year",
+  // gen8 batch (cb-category-refine): 12 hand-curated bounded categories added to
+  // replace the weak/redundant/open-ended ones cut below. Accept-lists in
+  // categoryAnswers/gen8.js.
+  "Pokémon starters",
+  "Video game consoles",
+  "Mario Kart items",
+  "Minecraft blocks",
+  "Video game villains",
+  "Battle royale games",
+  "Taylor Swift albums",
+  "Stranger Things characters",
+  "Continents",
+  "Oceans",
+  "Wonders of the World",
+  "Donut types",
 ];
 
 // ---- Post-generation guardrail (enforces THE CATEGORY RULE) ----
@@ -261,6 +276,20 @@ const QUARANTINED_CATEGORIES = new Set([
   'Apps on your phone right now',
   'Things in Hogwarts',
   'YouTube video categories',
+  // CUT — weak/redundant/open-ended. Pulled from the active pool via the same
+  // reversible quarantine mechanism; accept-list data is kept on disk.
+  'Action movie stars',
+  'Rappers',
+  'Famous DJs',
+  'Music genres',
+  'Musical genres of dance',
+  'Famous wizards',
+  'Famous landmarks',
+  'Famous painters',
+  'Things with wheels',
+  'Streaming services',
+  'Social media apps',
+  'Breakfast cereals',
 ]);
 
 const CATEGORIES = RAW_CATEGORIES.filter((category) => {
