@@ -40,7 +40,11 @@ const answers = Object.assign(
   // (answers <=3 words), generated + filtered by categoryAnswers/gen7-generate.js.
   // Seed accept-lists; the Haiku judge covers the long tail. Keys match the
   // entries appended to CATEGORIES.
-  require('./categoryAnswers/gen7')
+  require('./categoryAnswers/gen7'),
+  // gen8 (cb-category-refine): 12 hand-curated bounded categories added to
+  // replace the weak/redundant/open-ended ones cut from the active pool. Keys
+  // match the entries appended to CATEGORIES.
+  require('./categoryAnswers/gen8')
 );
 
 // Supplemental answers (expansion.js) are UNION-MERGED into the sets above so
