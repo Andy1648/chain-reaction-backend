@@ -44,6 +44,8 @@ const http = require('http');
 const { WebSocketServer } = require('ws');
 const crypto = require('crypto');
 
+const { isOriginAllowed } = require('./wsOrigin');
+
 const { markAsValid } = require('./dictionary');
 const {
   createRoom,
@@ -90,7 +92,13 @@ app.use((err, req, res, next) => {
 });
 
 const server = http.createServer(app);
-const wss = new WebSocketServer({ server });
+// Origin allowlist (env-driven, see wsOrigin.js). Absent Origin → allowed
+// (non-browser clients); known/portal origins → allowed; unknown browser
+// origins → rejected with 401. This is the ONLY origin gate on the upgrade.
+const wss = new WebSocketServer({
+  server,
+  verifyClient: (info) => isOriginAllowed(info.origin),
+});
 
 // Tracks which room each live connection currently belongs to, so we can
 // clean up properly on disconnect without the client having to tell us.
