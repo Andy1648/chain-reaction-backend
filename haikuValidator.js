@@ -5,14 +5,17 @@
 // for free); this judges the creative/uncommon-but-possibly-valid answers.
 //
 // Design decisions (per the product spec):
-//   - FAIL CLOSED. Any failure - timeout, network error, rate limit, bad key,
-//     unparseable reply - REJECTS the answer. A flaky third-party judge must
-//     never stall the round or wave garbage through. (This is the opposite of
-//     the old Groq/Gemini aiValidator.js, which failed open.)
-//   - HARD 3s TIMEOUT. A slow API never blocks gameplay; past 3s we reject.
-//   - PER-PLAYER RATE LIMIT (10 calls / rolling minute). Stops a player from
-//     spam-submitting gibberish to burn API credits; over the cap we reject
-//     WITHOUT calling the API.
+//   - HONOR REAL VERDICTS, FAIL OPEN ON OPERATIONAL FAILURES. A successful judge
+//     call is obeyed exactly: a clear "yes" accepts, a clear "no" REJECTS. But a
+//     purely OPERATIONAL failure - timeout, network/API error, rate-limit, an
+//     unparseable reply - must NOT punish the player for our infrastructure, so
+//     those ACCEPT (fail open). Only a confident judge "no" rejects an answer.
+//     (Fail-closed killed valid answers whenever the API hiccuped.)
+//   - HARD 5s TIMEOUT. A slow API never blocks gameplay; past 5s we abort and
+//     fail open (accept).
+//   - PER-PLAYER RATE LIMIT (30 calls / rolling minute). Stops a player from
+//     spam-submitting gibberish to burn API credits: over the cap we skip the API
+//     call entirely - and, failing open, ACCEPT rather than reject.
 //   - KEY IS ENV-ONLY (ANTHROPIC_API_KEY). Never hardcoded. When it's unset the
 //     whole fallback is disabled (see isEnabled) and the caller keeps the
 //     list-only behaviour instead of calling this.
@@ -22,16 +25,16 @@
 
 const ANTHROPIC_API_URL = 'https://api.anthropic.com/v1/messages';
 const MODEL = 'claude-haiku-4-5-20251001';
-const TIMEOUT_MS = 3000; // hard cap on the API call; slower than this -> reject
+const TIMEOUT_MS = 5000; // hard cap on the API call; slower than this -> fail open
 const MAX_TOKENS = 10; // we only need "yes"/"no"
-const RATE_LIMIT_PER_MIN = 10; // max AI calls per player per rolling 60s
+const RATE_LIMIT_PER_MIN = 30; // max AI calls per player per rolling 60s
 const RATE_WINDOW_MS = 60000;
 
-// Diagnostics are opt-in. Every log below fires only on a FAILURE path (rate
-// limit, API error, timeout, unparseable reply) - never on the happy path - so
-// production is silent by default. Set VALIDATOR_DEBUG=1 to surface them when
-// investigating why list-miss answers are being rejected. Logging only; the
-// validation verdict is unaffected either way.
+// Diagnostics are opt-in. Every log below fires only on an OPERATIONAL-failure
+// path (rate limit, API error, timeout, unparseable reply) - never on the happy
+// path - so production is silent by default. Set VALIDATOR_DEBUG=1 to surface
+// them when investigating why list-miss answers are being accepted-on-failure
+// (fail open). Logging only; the validation verdict is unaffected either way.
 const DEBUG = !!process.env.VALIDATOR_DEBUG;
 
 // Per-player sliding window of recent AI-call timestamps (ms since epoch),
@@ -75,10 +78,12 @@ function buildPrompt(category, answer) {
 }
 
 /**
- * Judge one answer with Claude Haiku. Returns a definitive boolean:
- *   true  -> accept (model said yes)
- *   false -> reject (model said no, OR any failure / timeout / rate-limit /
- *            unparseable reply - fail closed)
+ * Judge one answer with Claude Haiku. Returns a boolean:
+ *   true  -> accept (model said yes, OR an OPERATIONAL failure - timeout /
+ *            rate-limit / network|API error / unparseable reply - failing open)
+ *   false -> reject (model gave a confident "no")
+ * Only a successful judge call returning a clear "no" rejects; every operational
+ * failure accepts so infrastructure problems never kill a valid answer.
  *
  * `playerId` keys the per-player rate limit.
  */
@@ -89,9 +94,9 @@ async function validate(category, answer, playerId) {
 
   if (!underRateLimit(playerId)) {
     if (DEBUG) console.warn(
-      `[haikuValidator] rate limit hit for player ${playerId} - rejecting "${answer}" without calling the API`
+      `[haikuValidator] rate limit hit for player ${playerId} - accepting "${answer}" (fail open) without calling the API`
     );
-    return false;
+    return true; // operational failure: rate-limit -> fail open (accept)
   }
 
   const controller = new AbortController();
@@ -113,24 +118,29 @@ async function validate(category, answer, playerId) {
     });
 
     if (!res.ok) {
-      if (DEBUG) console.warn(`[haikuValidator] Anthropic API error ${res.status} - rejecting "${answer}"`);
-      return false;
+      // Operational failure: non-200 from the API -> fail open (accept).
+      if (DEBUG) console.warn(`[haikuValidator] Anthropic API error ${res.status} - accepting "${answer}" (fail open)`);
+      return true;
     }
 
     const data = await res.json();
     const text = (data.content?.[0]?.text || '').trim().toLowerCase();
+    // A SUCCESSFUL call with a clear verdict is honored exactly:
     if (text.startsWith('yes')) return true;
-    if (text.startsWith('no')) return false;
-    // Anything else (empty, refusal, garbled) -> fail closed.
-    if (DEBUG) console.warn(`[haikuValidator] unparseable reply "${text}" - rejecting "${answer}"`);
-    return false;
+    if (text.startsWith('no')) return false; // confident "no" -> the only reject
+    // Anything else (empty, refusal, garbled) is an unparseable reply, an
+    // operational failure -> fail open (accept).
+    if (DEBUG) console.warn(`[haikuValidator] unparseable reply "${text}" - accepting "${answer}" (fail open)`);
+    return true;
   } catch (err) {
+    // Operational failure: timeout (AbortError) or any thrown network/API error
+    // -> fail open (accept). Never reject a valid answer over infrastructure.
     if (err.name === 'AbortError') {
-      if (DEBUG) console.warn(`[haikuValidator] timeout (>${TIMEOUT_MS}ms) - rejecting "${answer}"`);
+      if (DEBUG) console.warn(`[haikuValidator] timeout (>${TIMEOUT_MS}ms) - accepting "${answer}" (fail open)`);
     } else {
-      if (DEBUG) console.warn(`[haikuValidator] call failed: ${err.message} - rejecting "${answer}"`);
+      if (DEBUG) console.warn(`[haikuValidator] call failed: ${err.message} - accepting "${answer}" (fail open)`);
     }
-    return false;
+    return true;
   } finally {
     clearTimeout(timer);
   }
