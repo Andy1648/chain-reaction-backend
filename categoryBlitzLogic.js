@@ -257,6 +257,10 @@ const QUARANTINED_CATEGORIES = new Set([
   "Foods you eat with your hands but probably shouldn't",
   "Things you shouldn't microwave",
   "Things that shouldn't be a sport but are",
+  // QUARANTINED — too broad/personal, floods judge
+  'Apps on your phone right now',
+  'Things in Hogwarts',
+  'YouTube video categories',
 ]);
 
 const CATEGORIES = RAW_CATEGORIES.filter((category) => {
