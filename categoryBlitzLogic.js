@@ -210,7 +210,58 @@ function isBoundedCategory(category) {
   }
   return longCount / set.size <= MAX_LONG_ANSWER_RATIO;
 }
+// QUARANTINED — un-enumerable, re-enable after judge fix.
+// These categories have an OPEN-ENDED / subjective answer space (no finite set of
+// NAMED things), so almost every reasonable answer misses the Stage-1 accept-list
+// and falls through to the Haiku judge — which currently FAILS CLOSED (rejects on
+// timeout / rate-limit / error), killing valid answers. They are pulled from the
+// active pool (filtered out below) but NOT deleted: the category names stay right
+// here and their accept-lists stay on disk in categoryAnswers/*, so re-enabling one
+// is just deleting its line from this set.
+//
+// NOTE: the quarantine is applied HERE, at the play pool, NOT by dropping the
+// expansion/expansion2 accept-list imports in categoryAnswers.js. Those files are
+// union-merged SUPPLEMENTS to the KEPT categories' lists (and a set of orphan names
+// that were never in the pool); removing them would only shrink good categories'
+// accept-lists — causing MORE judge hits — and would pull nothing from rotation,
+// because the pool is RAW_CATEGORIES, not the accept-list keys.
+const QUARANTINED_CATEGORIES = new Set([
+  // "Things in / at / on <place or container>" — the place holds arbitrary objects,
+  // so the answer space is effectively infinite (not a finite set of named things).
+  'Things in your junk drawer',
+  'Gas station purchases at 2am',
+  'Things on a CVS receipt',
+  'Things your mom has in her purse',
+  'Things in a college dorm room',
+  'Smells in a middle school',
+  "Things in a teacher's desk",
+  'Things you find between couch cushions',
+  'Things in a hotel minibar',
+  'Things taped to a fridge',
+  'Things in an Amazon package',
+  'Things in a Costco',
+  "Things in a divorced dad's apartment",
+  'Things confiscated by a teacher',
+  "Things in a 2010 kid's bedroom",
+  'Things at a middle school dance',
+  "Things in an emo kid's room (2008)",
+  // Subjective / opinion-shaped food + "things" prompts — answers are judgments,
+  // not a bounded list of named items.
+  'Things you dip in ranch',
+  'Foods that are better cold the next day',
+  "Gas station food you'd actually eat",
+  'Things you put on toast',
+  "Foods that shouldn't exist but do",
+  'Things at a buffet nobody touches',
+  'Midnight snack choices',
+  "Foods you eat with your hands but probably shouldn't",
+  "Things you shouldn't microwave",
+  "Things that shouldn't be a sport but are",
+]);
+
 const CATEGORIES = RAW_CATEGORIES.filter((category) => {
+  // Pulled from rotation until the judge fail-closed path is fixed (see above).
+  if (QUARANTINED_CATEGORIES.has(category)) return false;
   if (isBoundedCategory(category)) return true;
   console.warn(
     `[categoryBlitz] dropped category (answers routinely > ${MAX_ANSWER_WORDS} words, not bounded): "${category}"`
