@@ -9,6 +9,9 @@
 // word that *contains* that combo, isn't too short, and hasn't been used
 // yet. A fresh combo is rolled after every accepted word.
 
+const fs = require('fs');
+const path = require('path');
+
 // The dictionary dependency is injected rather than hard-required so the
 // test suite can substitute dictionary.mock.js (no network needed) while
 // production code (server.js) continues to wire up the real dictionary.js
@@ -139,6 +142,72 @@ function comboDifficultyPressure(completedTurnCount) {
   );
 }
 
+// ---- Pool-size-aware combo difficulty ----
+// Length alone is a coarse difficulty proxy: a length-3 combo with a tiny word
+// pool (e.g. 'nti') is far harder to answer than a length-3 with a deep pool
+// (e.g. 'tio'), yet length-only weighting treats them identically. So we fold
+// each combo's POOL SIZE into an "effective length": rarer pool -> higher
+// effective length -> weighted like a longer (harder) combo. Pool size is the
+// number of words in botWords.txt (the ~18k common-word corpus comboExpand.js
+// already used to vet the combo list) that CONTAIN the combo - the same "word
+// contains the combo" test players must satisfy. Computed ONCE, lazily, cached.
+// If the corpus can't be read we fall back to plain length (no behaviour change).
+const COMBO_RARITY_SCALE = 1.0; // ln(baseline/pool) -> bonus, before clamping
+const COMBO_RARITY_BONUS_MAX = 2.0; // a tiny pool adds at most ~2 effective lengths
+// Baseline percentile: pools at/above this are "common" (bonus 0); smaller pools
+// earn a growing bonus. Set high (not the median) because many curated combos are
+// deliberately small-pool, which drags the median down to where a genuinely hard
+// combo like 'nti' already sits - so the median can't separate it from easy ones.
+const COMBO_RARITY_BASELINE_PCT = 0.75;
+
+// null = not yet computed; 'unavailable' = corpus unreadable (length-only fallback);
+// otherwise a Map<combo, effectiveLength>.
+let _effLenCache = null;
+
+function _computeEffLenCache() {
+  try {
+    const words = fs
+      .readFileSync(path.join(__dirname, 'botWords.txt'), 'utf8')
+      .split(/\r?\n/);
+    const poolByCombo = new Map(COMBOS.map((c) => [c, 0]));
+    for (let w of words) {
+      w = w.trim().toLowerCase();
+      if (!w) continue;
+      for (const c of COMBOS) {
+        if (w.includes(c)) poolByCombo.set(c, poolByCombo.get(c) + 1);
+      }
+    }
+    const sizes = COMBOS.map((c) => poolByCombo.get(c)).sort((a, b) => a - b);
+    const baseline =
+      sizes[Math.min(sizes.length - 1, Math.floor(COMBO_RARITY_BASELINE_PCT * sizes.length))] || 1;
+    const cache = new Map();
+    for (const c of COMBOS) {
+      const pool = Math.max(1, poolByCombo.get(c));
+      // log-scaled, never negative (common combos keep plain length), clamped.
+      const bonus = Math.max(
+        0,
+        Math.min(COMBO_RARITY_BONUS_MAX, COMBO_RARITY_SCALE * Math.log(baseline / pool))
+      );
+      cache.set(c, c.length + bonus);
+    }
+    return cache;
+  } catch (err) {
+    console.warn(
+      `Combo pool-size weighting unavailable (${err.message}); using length-only weighting.`
+    );
+    return 'unavailable';
+  }
+}
+
+// The rarity-adjusted effective length for a combo (>= its real length). Falls
+// back to the plain length if the corpus was unreadable or the combo is unknown.
+function comboEffectiveLength(combo) {
+  if (_effLenCache === null) _effLenCache = _computeEffLenCache();
+  if (_effLenCache === 'unavailable') return combo.length;
+  const v = _effLenCache.get(combo);
+  return v === undefined ? combo.length : v;
+}
+
 /**
  * Picks a combo from the list, weighted by LENGTH and scaled by game progress
  * (completedTurnCount): early game leans short/easy, later it leans long/hard,
@@ -152,10 +221,12 @@ function pickRandomCombo(excludeCombo, completedTurnCount = 0) {
   const pool = excludeCombo ? COMBOS.filter((c) => c !== excludeCombo) : COMBOS;
   const pressure = comboDifficultyPressure(completedTurnCount);
 
-  // Weight each combo by exp(pressure * (length - pivot)) - always positive.
+  // Weight each combo by exp(pressure * (effectiveLength - pivot)) - always
+  // positive. effectiveLength = real length + a pool-size rarity bonus, so a
+  // small-pool combo is weighted like a longer/harder one (see above).
   let total = 0;
   const weights = pool.map((c) => {
-    const w = Math.exp(pressure * (c.length - COMBO_DIFFICULTY_PIVOT_LEN));
+    const w = Math.exp(pressure * (comboEffectiveLength(c) - COMBO_DIFFICULTY_PIVOT_LEN));
     total += w;
     return w;
   });
