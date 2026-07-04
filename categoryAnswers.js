@@ -66,4 +66,18 @@ for (const supplement of supplements) {
   }
 }
 
+// gen9 (pack rework): union-merged like the supplements above rather than
+// Object.assign'd, so it ADDS to any existing curated list instead of replacing
+// it. Shared keys (e.g. "NBA teams", "Dog breeds") keep their existing Set and
+// just gain gen9's extra answers; gen9-only categories are created fresh. This
+// preserves every existing accept-list. (gen9 exports Sets, not arrays.)
+const gen9 = require('./categoryAnswers/gen9');
+for (const [category, set] of Object.entries(gen9)) {
+  if (answers[category]) {
+    for (const entry of set) answers[category].add(entry);
+  } else {
+    answers[category] = set;
+  }
+}
+
 module.exports = answers;

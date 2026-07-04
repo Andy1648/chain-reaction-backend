@@ -207,6 +207,17 @@ const RAW_CATEGORIES = [
   "Donut types",
 ];
 
+// gen9 pack rework: append every gen9 category NOT already in the pool above
+// (dedupe, exact case-sensitive match), so no name is added twice. The pack id
+// for each lives in categoryPacks.js (name -> 'movies'|'gaming'|'food'|'animals'|
+// 'sports'|'world'); their accept-lists are union-merged in categoryAnswers.js.
+// Additive only — nothing above is changed, and the bounded/quarantine filters
+// below still apply to these just like every other category.
+const CATEGORY_PACKS = require('./categoryPacks');
+for (const name of Object.keys(CATEGORY_PACKS)) {
+  if (!RAW_CATEGORIES.includes(name)) RAW_CATEGORIES.push(name);
+}
+
 // ---- Post-generation guardrail (enforces THE CATEGORY RULE) ----
 // Drop any category whose pre-generated accept-list shows it's NOT bounded/short:
 // if more than MAX_LONG_ANSWER_RATIO of its answers exceed MAX_ANSWER_WORDS words,
