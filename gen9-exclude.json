@@ -1,0 +1,18 @@
+{
+  "_comment": "Retired / banned Category Blitz category names. gen9-generate.js ALWAYS avoids these (case-insensitive) — it seeds them into every pack's dedupe set (hard drop at insertion) AND lists them in the prompt avoid-block — independent of gen9.raw.json. This is why removing a category from raw.json alone does NOT stop it regenerating: the avoid-list is built from raw.json, so a deleted name reappears. To DURABLY retire a category: add its exact display name to \"names\" below, remove it from gen9.raw.json + gen9.clean.json, then re-run gen9-convert.js (with --allow-drop if it was already live) to drop it from categoryAnswers/gen9.js + categoryPacks.js. Note: these are NEW-pack duplicates that were dropped; the world/animals ORIGINALS of any shared name (e.g. Types of clouds in animals, Planets in our solar system / US states / African countries / European capitals in world) stay live — the exclude only blocks re-GENERATION, it never edits existing data.",
+  "names": [
+    "Planets and moons",
+    "US Presidents",
+    "Planets of the Solar System",
+    "Planets of the solar system",
+    "Mythical Creatures",
+    "US states",
+    "African countries",
+    "European capitals",
+    "Types of clouds",
+    "Planets in our solar system",
+    "Arthurian relics and figures",
+    "Classic TV detectives",
+    "Anime series"
+  ]
+}

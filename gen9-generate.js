@@ -25,10 +25,22 @@ const MAX_TOKENS = 20000;
 // Tuning knobs. 6 packs x BATCHES_PER_PACK x CATS_PER_CALL categories total.
 // Defaults -> ~24 categories/pack, ~144 total, a big pool to cull from tomorrow.
 const CATS_PER_CALL = 2;
-const BATCHES_PER_PACK = 5;
+const BATCHES_PER_PACK = 6;
 const ANSWERS_PER_CATEGORY = 150;
 const MAX_RETRIES = 3;
 const OUT_FILE = './gen9.raw.json';
+
+// Persistent exclude-list: category names the generator must NEVER (re)produce,
+// independent of raw.json. Retiring a category = add its name to gen9-exclude.json
+// (see that file's _comment). Loaded once; applied to every pack's avoid-list below.
+const EXCLUDE_NAMES = (() => {
+  try {
+    return JSON.parse(fs.readFileSync('./gen9-exclude.json', 'utf8')).names || [];
+  } catch (err) {
+    console.warn(`  (no gen9-exclude.json / unreadable: ${err.message}) — proceeding with none`);
+    return [];
+  }
+})();
 
 // ---- Pack definitions -------------------------------------------------------
 // `scope` steers generation into the pack's lane. Note the sports scope steers
@@ -123,6 +135,55 @@ const PACKS = [
       'Continents, Oceans, Mountain ranges, Major rivers, Deserts, US states, African ' +
       'countries, Island nations, Great Lakes, Time zones. Prefer bounded named sets ' +
       'of named places / features.',
+  },
+  {
+    id: 'mythology',
+    name: 'Mythology',
+    scope:
+      'Mythology as BOUNDED named sets, but AVOID Greek / Norse / Egyptian / Roman / ' +
+      'Hindu / Aztec / Inca gods (the World pack already owns those). Good categories: ' +
+      'Mythical weapons and artifacts, Greek titans, Mythological locations (Olympus, ' +
+      'Valhalla, underworld realms), Japanese yokai, Celtic myth figures, Arthurian ' +
+      'relics, Mythical birds, Legendary creatures by culture, Constellations from ' +
+      'myth. Named finite things, not open-ended.',
+  },
+  {
+    id: 'literature',
+    name: 'Literature',
+    scope:
+      'Literature as BOUNDED named sets. Good categories: Shakespeare plays, Classic ' +
+      'novels, Literary genres, Famous poets, Greek epics, Fairy tales, Sherlock ' +
+      'Holmes stories, Dickens novels, Literary devices, Roald Dahl books, Dystopian ' +
+      'novels, Jane Austen novels. Named finite things, not open-ended.',
+  },
+  {
+    id: 'tech',
+    name: 'Tech',
+    scope:
+      'Tech and internet as BOUNDED named sets. Good categories: Programming ' +
+      'languages, Social media platforms, Web browsers, Operating systems, Tech ' +
+      'companies, Cryptocurrencies, Keyboard keys, Computer components, File formats, ' +
+      'Video streaming services, Phone brands, Apple products. Named finite things, ' +
+      'not open-ended.',
+  },
+  {
+    id: 'art',
+    name: 'Art',
+    scope:
+      'Art as BOUNDED named sets. Good categories: Art movements, Primary and ' +
+      'secondary colors, Painting tools, Famous painters, Sculpture materials, Art ' +
+      'mediums, Famous museums, Pottery types, Drawing tools, Photography terms, Dance ' +
+      'styles, Architecture styles. Named finite things, not open-ended.',
+  },
+  {
+    id: 'tv',
+    name: 'TV',
+    scope:
+      'TV as BOUNDED named sets, but AVOID generic movie / sitcom / animated-show ' +
+      'categories the Movies pack owns. Good categories: Reality TV shows, Game shows, ' +
+      'TV networks, Streaming original series, Talk shows, TV award shows, Anime ' +
+      'series, Cooking shows, HBO series, British sitcoms. Named finite things, not ' +
+      'open-ended.',
   },
 ];
 
@@ -245,11 +306,17 @@ async function main() {
 
   for (const pack of PACKS) {
     if (!out[pack.id]) out[pack.id] = [];
+    // Seed the dedupe set with BOTH what we already have AND the persistent
+    // exclude-list, so retired names are hard-dropped at insertion (line ~"have.has")
+    // even if the model ignores the prompt avoid-block.
     const have = new Set(out[pack.id].map((c) => c.category.toLowerCase()));
+    for (const n of EXCLUDE_NAMES) have.add(n.toLowerCase());
     console.log(`\n=== ${pack.name} (${pack.id}) — have ${out[pack.id].length} so far ===`);
 
     for (let batch = 1; batch <= BATCHES_PER_PACK; batch += 1) {
-      const avoid = out[pack.id].map((c) => c.category);
+      // Prompt avoid-block = existing categories in this pack + the persistent
+      // exclude-list, so the model is steered away from retired names too.
+      const avoid = [...out[pack.id].map((c) => c.category), ...EXCLUDE_NAMES];
       const prompt = buildPrompt(pack, CATS_PER_CALL, ANSWERS_PER_CATEGORY, avoid);
 
       let entries;
