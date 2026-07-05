@@ -161,6 +161,7 @@ async function main() {
       clean[pack].push({ category: cat.category, answers: survivors, removed });
       fs.writeFileSync(OUT_FILE, JSON.stringify(clean, null, 2));
       console.log(`  ${cat.category}: ${original.length} -> ${survivors.length}  (-${removed})`);
+      await new Promise(r=>setTimeout(r,2000));
     }
   }
 
