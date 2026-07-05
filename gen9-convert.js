@@ -81,14 +81,24 @@ const curGen9Keys = curGen9 ? Object.keys(curGen9) : [];
 const curPacksKeys = curPacks ? Object.keys(curPacks) : [];
 
 // 3) DATA-LOSS GUARD — a key in a current file but absent from clean.json means a
-// category would be silently removed. Refuse to write.
+// category would be silently removed. Refuse to write UNLESS the drop is explicitly
+// authorized with `--allow-drop` (or ALLOW_DROP=1), which is how you INTENTIONALLY
+// retire a category (e.g. removing a cross-pack duplicate). Authorized drops are
+// still reported so the removal is never silent.
+const ALLOW_DROP = process.argv.includes('--allow-drop') || !!process.env.ALLOW_DROP;
 const lostGen9 = curGen9Keys.filter((k) => !cleanSet.has(k));
 const lostPacks = curPacksKeys.filter((k) => !cleanSet.has(k));
-if (lostGen9.length || lostPacks.length) {
-  console.error('DATA-LOSS GUARD — refusing to write. Keys present in a current file but MISSING from clean.json:');
-  lostGen9.forEach((k) => console.error(`  gen9.js would lose:        ${k}`));
-  lostPacks.forEach((k) => console.error(`  categoryPacks.js would lose: ${k}`));
-  process.exit(2);
+const lostAll = [...new Set([...lostGen9, ...lostPacks])];
+if (lostAll.length) {
+  if (!ALLOW_DROP) {
+    console.error('DATA-LOSS GUARD — refusing to write. Keys present in a current file but MISSING from clean.json:');
+    lostGen9.forEach((k) => console.error(`  gen9.js would lose:        ${k}`));
+    lostPacks.forEach((k) => console.error(`  categoryPacks.js would lose: ${k}`));
+    console.error('If these removals are intentional, re-run with --allow-drop.');
+    process.exit(2);
+  }
+  console.warn(`AUTHORIZED DROP (--allow-drop): retiring ${lostAll.length} categor${lostAll.length === 1 ? 'y' : 'ies'} present in current files but removed from clean.json:`);
+  lostAll.forEach((k) => console.warn(`  - ${k}`));
 }
 
 // 4) Key-diff REPORT (not a stop): what's new in clean vs the current gen9.js.

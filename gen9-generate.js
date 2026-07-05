@@ -24,9 +24,9 @@ const MAX_TOKENS = 20000;
 
 // Tuning knobs. 6 packs x BATCHES_PER_PACK x CATS_PER_CALL categories total.
 // Defaults -> ~24 categories/pack, ~144 total, a big pool to cull from tomorrow.
-const CATS_PER_CALL = 3;
-const BATCHES_PER_PACK = 30;
-const ANSWERS_PER_CATEGORY = 90;
+const CATS_PER_CALL = 2;
+const BATCHES_PER_PACK = 5;
+const ANSWERS_PER_CATEGORY = 150;
 const MAX_RETRIES = 3;
 const OUT_FILE = './gen9.raw.json';
 
@@ -85,6 +85,44 @@ const PACKS = [
       'Geography, places, mythology, and history as bounded named sets. Good ' +
       'categories: European capitals, US states, African countries, Famous landmarks, ' +
       'Greek gods, Norse gods, US presidents, Planets, World rivers.',
+  },
+  {
+    id: 'music',
+    name: 'Music',
+    scope:
+      'Instruments, genres, bands, composers, and named musical things as BOUNDED ' +
+      'sets. Good categories: Musical instruments, Music genres, String instruments, ' +
+      'Woodwind instruments, Types of guitars, Orchestra sections, Boy bands, ' +
+      'Classical composers, Beatles albums, Musical notes. Prefer bounded named sets ' +
+      '— AVOID open-ended "famous singers / songs" lists.',
+  },
+  {
+    id: 'science',
+    name: 'Science',
+    scope:
+      'Chemistry, physics, biology, and earth science as BOUNDED named sets. Good ' +
+      'categories: Chemical elements, Noble gases, Planets and moons, Human bones, ' +
+      'Human organs, States of matter, SI units, Subatomic particles, Lab equipment, ' +
+      'Cell organelles, Types of rock. Named finite things, not open-ended.',
+  },
+  {
+    id: 'history',
+    name: 'History',
+    scope:
+      'Empires, rulers, eras, and events as BOUNDED named sets. Good categories: ' +
+      'Ancient empires, Roman emperors, Egyptian pharaohs, US founding fathers, ' +
+      'Historical eras, Famous explorers, Ancient wonders, Medieval titles, World War ' +
+      'II battles, Renaissance figures. Prefer bounded named sets — AVOID open-ended ' +
+      '"famous people" lists.',
+  },
+  {
+    id: 'geography',
+    name: 'Geography',
+    scope:
+      'Places and physical features as BOUNDED named sets. Good categories: ' +
+      'Continents, Oceans, Mountain ranges, Major rivers, Deserts, US states, African ' +
+      'countries, Island nations, Great Lakes, Time zones. Prefer bounded named sets ' +
+      'of named places / features.',
   },
 ];
 
