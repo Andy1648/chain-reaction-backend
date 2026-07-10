@@ -269,6 +269,11 @@ wss.on('connection', (ws) => {
             return;
           }
           room.gameType = gameType;
+          // Difficulty is a Word Bomb concept (its HARD/CRAZY/HELL timer tiers). If
+          // the host set HARD then switched to Blitz/Imposter, drop the stale value
+          // back to medium so it can't drag in — Blitz then gets its 2 rerolls and
+          // Imposter's (inert) difficulty stays neutral. Word Bomb keeps its choice.
+          if (gameType !== 'word-bomb') room.difficultyKey = 'medium';
           // A bot only belongs in Word Bomb; if the host switches to another mode
           // with a bot still in the lobby, drop it so the roster stays valid.
           if (gameType !== 'word-bomb') removeBot(room);
