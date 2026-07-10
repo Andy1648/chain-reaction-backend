@@ -22,6 +22,8 @@ const {
   getCurrentPlayerId,
   computeTimerForTurn,
   handleTimeout,
+  pickRandomCombo,
+  comboDifficultyPressure,
   COMBOS,
   DIFFICULTY_PRESETS,
 } = gameLogic;
@@ -168,38 +170,83 @@ test('turn order skips eliminated players in a 3-player game', async () => {
   assert.equal(getCurrentPlayerId(game), 'p3', 'should skip eliminated p2 and go straight to p3');
 });
 
-test('difficulty timer curve: easy starts at 20s and decreases every 3 turns down to floor of 8s', () => {
+test('difficulty timer curve: easy starts at 15s and decreases every 3 turns down to floor of 6s', () => {
   const game = createGame([{ id: 'p1' }, { id: 'p2' }], 'easy');
-  assert.equal(DIFFICULTY_PRESETS.easy.startSeconds, 20);
+  assert.equal(DIFFICULTY_PRESETS.easy.startSeconds, 15);
 
   game.completedTurnCount = 0;
-  assert.equal(computeTimerForTurn(game), 20);
+  assert.equal(computeTimerForTurn(game), 15);
 
   game.completedTurnCount = 3;
-  assert.equal(computeTimerForTurn(game), 19);
+  assert.equal(computeTimerForTurn(game), 14);
 
   game.completedTurnCount = 6;
-  assert.equal(computeTimerForTurn(game), 18);
+  assert.equal(computeTimerForTurn(game), 13);
 
   // Jump far ahead - should be clamped at the floor, never go below it or negative
   game.completedTurnCount = 500;
-  assert.equal(computeTimerForTurn(game), 8, 'should never drop below the configured floor');
+  assert.equal(computeTimerForTurn(game), 6, 'should never drop below the configured floor');
 });
 
-test('difficulty timer curve: hard starts at 10s and decreases every single turn down to floor of 3s', () => {
+test('difficulty timer curve: hard starts at 7s and decreases every single turn down to floor of 3s', () => {
   const game = createGame([{ id: 'p1' }, { id: 'p2' }], 'hard');
 
   game.completedTurnCount = 0;
-  assert.equal(computeTimerForTurn(game), 10);
+  assert.equal(computeTimerForTurn(game), 7);
 
   game.completedTurnCount = 1;
-  assert.equal(computeTimerForTurn(game), 9);
+  assert.equal(computeTimerForTurn(game), 6);
 
-  game.completedTurnCount = 7;
-  assert.equal(computeTimerForTurn(game), 3, 'should hit the floor exactly at turn 7');
+  game.completedTurnCount = 4;
+  assert.equal(computeTimerForTurn(game), 3, 'should hit the floor at turn 4 (7 - 4)');
 
   game.completedTurnCount = 100;
   assert.equal(computeTimerForTurn(game), 3, 'should stay clamped at the floor');
+});
+
+test('combo difficulty pressure ramps up with completedTurnCount and clamps', () => {
+  // Mirrors the computeTimerForTurn tests: a deterministic curve read off the
+  // same completedTurnCount signal. Negative early (favours short combos),
+  // crosses 0 at the neutral point, clamps positive late (favours long combos).
+  assert.equal(comboDifficultyPressure(0), -1.0, 'turn 0 starts fully short-favoured');
+  assert.equal(comboDifficultyPressure(8), -0.5, 'ramps linearly toward neutral');
+  assert.equal(comboDifficultyPressure(16), 0, 'neutral at ~turn 16');
+  assert.equal(comboDifficultyPressure(24), 0.5, 'keeps ramping toward hard');
+  assert.equal(comboDifficultyPressure(32), 1.0, 'reaches the max around turn 32');
+
+  // Strictly monotonic non-decreasing, and clamped at the max far ahead.
+  assert.ok(
+    comboDifficultyPressure(5) < comboDifficultyPressure(20),
+    'pressure should increase with progress'
+  );
+  assert.equal(comboDifficultyPressure(500), 1.0, 'should stay clamped at the max');
+  assert.equal(comboDifficultyPressure(-5), -1.0, 'guards against negative turn counts');
+});
+
+test('pickRandomCombo skews to longer combos as completedTurnCount rises', () => {
+  // Statistical: late game should pick noticeably longer combos on average than
+  // early game. The gap is large (early ~70% length-2, late ~20%), so a big
+  // sample makes this safe from flakiness without seeding.
+  const avgLength = (turns) => {
+    const N = 5000;
+    let sum = 0;
+    for (let i = 0; i < N; i += 1) sum += pickRandomCombo(undefined, turns).length;
+    return sum / N;
+  };
+
+  const early = avgLength(0);
+  const late = avgLength(40);
+
+  // Every pick is always a real combo from the list (no weighting can break that).
+  assert.ok(COMBOS.includes(pickRandomCombo(undefined, 0)));
+  assert.ok(COMBOS.includes(pickRandomCombo(undefined, 40)));
+  // And the exclude-the-just-solved behaviour still holds at any progress.
+  assert.notEqual(pickRandomCombo('en', 40), 'en', 'still excludes the prior combo');
+
+  assert.ok(
+    late > early + 0.2,
+    `late-game combos should average clearly longer (early=${early.toFixed(2)}, late=${late.toFixed(2)})`
+  );
 });
 
 test('invalid difficulty key falls back to medium rather than crashing', () => {
