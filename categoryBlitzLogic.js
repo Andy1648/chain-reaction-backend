@@ -218,6 +218,10 @@ for (const name of Object.keys(CATEGORY_PACKS)) {
   if (!RAW_CATEGORIES.includes(name)) RAW_CATEGORIES.push(name);
 }
 
+// The distinct pack ids — the contract shared with the frontend (set_packs). Derived
+// from CATEGORY_PACKS so it can never drift from the actual pack assignments.
+const PACK_IDS = [...new Set(Object.values(CATEGORY_PACKS))];
+
 // ---- Post-generation guardrail (enforces THE CATEGORY RULE) ----
 // Drop any category whose pre-generated accept-list shows it's NOT bounded/short:
 // if more than MAX_LONG_ANSWER_RATIO of its answers exceed MAX_ANSWER_WORDS words,
@@ -314,16 +318,30 @@ const CATEGORIES = RAW_CATEGORIES.filter((category) => {
 });
 
 /**
- * Picks a random category. If `excludeSet` (a Set of already-played
- * categories) is given, the result is guaranteed not to be one of them, so
- * categories never repeat across rounds. Falls back to the full list in the
- * impossible case that every category has been used.
+ * The category pool restricted to the selected packs. A category belongs to a
+ * pack via CATEGORY_PACKS (name -> pack id); categories with no pack assignment
+ * are never in a pack-filtered pool. If nothing is selected (null / empty) the
+ * full pool is used. GUARD: a too-small selection (e.g. geography's 2 categories)
+ * falls back to the full pool so TOTAL_ROUNDS non-repeating rounds always fill.
  */
-function pickRandomCategory(excludeSet) {
-  const pool = excludeSet
-    ? CATEGORIES.filter((c) => !excludeSet.has(c))
-    : CATEGORIES;
-  const choices = pool.length ? pool : CATEGORIES;
+function categoriesForPacks(selectedPacks) {
+  if (!Array.isArray(selectedPacks) || selectedPacks.length === 0) return CATEGORIES;
+  const set = new Set(selectedPacks);
+  const pool = CATEGORIES.filter((c) => set.has(CATEGORY_PACKS[c]));
+  return pool.length >= TOTAL_ROUNDS ? pool : CATEGORIES;
+}
+
+/**
+ * Picks a random category from the (optionally pack-filtered) pool. If
+ * `excludeSet` (a Set of already-played categories) is given, the result is
+ * guaranteed not to be one of them, so categories never repeat across rounds.
+ * `selectedPacks` (optional) restricts the pool to those packs. Falls back to
+ * the (filtered) base list in the impossible case that every option is excluded.
+ */
+function pickRandomCategory(excludeSet, selectedPacks) {
+  const base = categoriesForPacks(selectedPacks);
+  const pool = excludeSet ? base.filter((c) => !excludeSet.has(c)) : base;
+  const choices = pool.length ? pool : base;
   return choices[Math.floor(Math.random() * choices.length)];
 }
 
@@ -354,14 +372,17 @@ function determineWinner(game) {
  * changes the round count. Every round is ROUND_TIME_SECONDS (20s); difficulty
  * only sets the per-game reroll allowance.
  */
-function createGame(players, difficultyKey, solo = false) {
+function createGame(players, difficultyKey, solo = false, selectedPacks = null) {
   const difficulty = VALID_DIFFICULTIES.includes(difficultyKey) ? difficultyKey : 'medium';
-  const firstCategory = pickRandomCategory();
+  const firstCategory = pickRandomCategory(null, selectedPacks);
 
   return {
     status: 'in_progress', // 'in_progress' | 'between_rounds' | 'finished'
     difficultyKey: difficulty,
     solo: !!solo,
+    // Host-selected category packs (null = all packs). Filters every category pick
+    // for this game (first pick, round advance, reroll). Optional / backwards-compat.
+    selectedPacks: selectedPacks || null,
     rounds: TOTAL_ROUNDS,
     currentRound: 1,
     currentCategory: firstCategory,
@@ -481,7 +502,7 @@ function startNextRound(game) {
   }
 
   game.currentRound += 1;
-  const category = pickRandomCategory(game.usedCategories);
+  const category = pickRandomCategory(game.usedCategories, game.selectedPacks);
   game.currentCategory = category;
   game.usedCategories.add(category);
   game.players.forEach((p) => {
@@ -516,7 +537,7 @@ function rerollCategory(game) {
     if (p.score < 0) p.score = 0;
     p.answers = [];
   });
-  const category = pickRandomCategory(game.usedCategories);
+  const category = pickRandomCategory(game.usedCategories, game.selectedPacks);
   game.currentCategory = category;
   game.usedCategories.add(category);
   game.rerollsRemaining -= 1;
@@ -539,6 +560,7 @@ function getScoreboard(game) {
 
 module.exports = {
   CATEGORIES,
+  PACK_IDS,
   TOTAL_ROUNDS,
   MIN_PLAYERS_TO_START,
   ROUND_TIME_SECONDS,

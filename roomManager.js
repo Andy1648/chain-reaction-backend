@@ -234,6 +234,9 @@ function buildRoomUpdatePayload(room) {
       hostId: room.hostId,
       difficultyKey: room.difficultyKey,
       gameType: room.gameType,
+      // Category Blitz: host-selected packs (null = all). Lets every client mirror
+      // the host's pack choice in the lobby. null until the host sends set_packs.
+      selectedPacks: room.selectedPacks || null,
       players: room.players.map((p) => ({
         id: p.id,
         name: p.name,
@@ -724,7 +727,8 @@ function startGame(room) {
   room.game = logic.createGame(
     room.players.map((p) => ({ id: p.id, name: p.name })),
     room.difficultyKey,
-    isSoloCategoryBlitz
+    isSoloCategoryBlitz,
+    room.selectedPacks // Category Blitz only: host-selected packs (undefined until set_packs); other modes ignore it
   );
   // Stamp the type onto the game so payload builders and submission routing
   // know which mode this in-progress game is, independent of the room.

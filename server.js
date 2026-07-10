@@ -68,6 +68,11 @@ const {
   startRoomReaper,
 } = require('./roomManager');
 
+// Category Blitz pack ids — the valid set the host's set_packs selection is checked
+// against. Derived from CATEGORY_PACKS so it can't drift from the real assignments.
+const { PACK_IDS } = require('./categoryBlitzLogic');
+const VALID_PACK_IDS = new Set(PACK_IDS);
+
 // Pre-warm the dictionary cache with our starter words so the very first
 // move of any game doesn't depend on the Dictionary API being reachable.
 ['garden', 'planet', 'window', 'castle', 'rocket', 'forest', 'bridge', 'pencil', 'guitar', 'mirror', 'jacket', 'turtle']
@@ -227,6 +232,26 @@ wss.on('connection', (ws) => {
             return;
           }
           room.difficultyKey = key;
+          broadcastToRoom(room, buildRoomUpdatePayload(room));
+          break;
+        }
+
+        // Category Blitz: the host picks which category packs are in play. Mirrors
+        // set_difficulty — host-only, validated against VALID_PACK_IDS, then broadcast.
+        // The next createGame reads room.selectedPacks to filter category picks.
+        case 'set_packs': {
+          const room = getRoomForConnection(ws);
+          if (!room) return;
+          if (room.hostId !== ws.id) {
+            sendError(ws, 'Only the host can change packs.', 'set_packs');
+            return;
+          }
+          const packs = payload?.packs;
+          if (!Array.isArray(packs) || packs.length === 0 || !packs.every((p) => VALID_PACK_IDS.has(p))) {
+            sendError(ws, 'Invalid packs.', 'set_packs');
+            return;
+          }
+          room.selectedPacks = packs;
           broadcastToRoom(room, buildRoomUpdatePayload(room));
           break;
         }
