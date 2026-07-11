@@ -101,6 +101,7 @@ const CATEGORY_PACKS = {
   "Fighting game franchises": "gaming",
   "Video game hardware manufacturers": "gaming",
   "Video game hardware": "gaming",
+  "Video Game Genres": "gaming",
   // food
   "Pizza toppings": "food",
   "Breakfast cereal brands": "food",
@@ -167,7 +168,6 @@ const CATEGORY_PACKS = {
   "Breakfast pastries": "food",
   "Types of BBQ sauce": "food",
   "Types of dried meat": "food",
-  "Frozen desserts": "food",
   "Breakfast meats": "food",
   "Indian food dishes": "food",
   "Types of pasta sauces": "food",
@@ -335,7 +335,6 @@ const CATEGORY_PACKS = {
   "Major world peninsulas": "world",
   "South American capitals": "world",
   "US states by name": "world",
-  "Scandinavian countries": "world",
   "Historical capitals": "world",
   "Norse mythological realms": "world",
   // music
@@ -466,8 +465,6 @@ const CATEGORY_PACKS = {
   "Phone brands": "tech",
   "Smart home devices": "tech",
   "Computer ports and connectors": "tech",
-  "Gaming Consoles": "tech",
-  "Video Game Genres": "tech",
   "E-commerce websites": "tech",
   "File sharing and cloud storage services": "tech",
   // art
