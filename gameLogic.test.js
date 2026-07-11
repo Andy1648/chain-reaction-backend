@@ -278,3 +278,79 @@ test('rejected word submissions do not advance the turn or record a used word', 
   assert.equal(game.usedWords.size, usedBefore, 'used words should be unchanged on rejection');
   assert.equal(getCurrentPlayerId(game), playerBefore, 'turn should not advance on rejection');
 });
+
+/* ======================================================================= */
+/* ==================  CATEGORY BLITZ: endRound reveal  ================== */
+/* ======================================================================= */
+// endRound's sampleAnswers field: up to 12 accept-list answers nobody gave
+// this round, revealed so players who blanked learn what would have counted.
+
+const categoryBlitzLogic = require('./categoryBlitzLogic');
+const CATEGORY_ANSWERS = require('./categoryAnswers');
+
+// Minimal game object shaped like categoryBlitzLogic.createGame's output -
+// built by hand so tests control the category instead of getting a random one.
+function makeBlitzGame(category, answersByPlayer = { p1: [] }) {
+  return {
+    status: 'in_progress',
+    currentRound: 1,
+    currentCategory: category,
+    players: Object.entries(answersByPlayer).map(([id, answers]) => ({
+      id,
+      name: id,
+      answers: [...answers],
+      score: answers.length,
+    })),
+  };
+}
+
+// Test-only accept-lists injected into the shared CATEGORY_ANSWERS object so
+// these tests are deterministic and independent of real content data.
+CATEGORY_ANSWERS['__test_tiny__'] = new Set(['blinky', 'pinky', 'inky', 'clyde', 'sue']);
+CATEGORY_ANSWERS['__test_big__'] = new Set(
+  Array.from({ length: 40 }, (_, i) => `answer${i}`)
+);
+
+test('endRound sampleAnswers excludes answers any player gave, case-insensitively', () => {
+  const game = makeBlitzGame('__test_big__', {
+    p1: ['Answer0', 'ANSWER1'], // stored as typed; list entries are lowercase
+    p2: ['answer2'],
+  });
+  const snapshot = categoryBlitzLogic.endRound(game);
+
+  assert.ok(Array.isArray(snapshot.sampleAnswers));
+  for (const given of ['answer0', 'answer1', 'answer2']) {
+    assert.ok(
+      !snapshot.sampleAnswers.includes(given),
+      `sampleAnswers should not contain the given answer "${given}"`
+    );
+  }
+  // Everything revealed really is from the category's accept-list.
+  for (const sample of snapshot.sampleAnswers) {
+    assert.ok(CATEGORY_ANSWERS['__test_big__'].has(sample));
+  }
+});
+
+test('endRound sampleAnswers caps at 12', () => {
+  const game = makeBlitzGame('__test_big__'); // 40 available, none given
+  const snapshot = categoryBlitzLogic.endRound(game);
+  assert.equal(snapshot.sampleAnswers.length, 12);
+  // No duplicates in the reveal.
+  assert.equal(new Set(snapshot.sampleAnswers).size, 12);
+});
+
+test('endRound sampleAnswers returns whatever is left on tiny lists', () => {
+  const game = makeBlitzGame('__test_tiny__', { p1: ['Blinky', 'PINKY'] });
+  const snapshot = categoryBlitzLogic.endRound(game);
+  assert.deepEqual(
+    [...snapshot.sampleAnswers].sort(),
+    ['clyde', 'inky', 'sue'],
+    'the 3 un-given ghosts should all be revealed, and nothing else'
+  );
+});
+
+test('endRound sampleAnswers is [] when the category has no accept-list', () => {
+  const game = makeBlitzGame('__test_no_such_category__');
+  const snapshot = categoryBlitzLogic.endRound(game);
+  assert.deepEqual(snapshot.sampleAnswers, []);
+});

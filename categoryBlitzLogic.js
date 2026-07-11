@@ -452,10 +452,37 @@ async function submitAnswer(game, playerId, rawAnswer, opts = {}) {
   return { accepted: true, answer, playerId };
 }
 
+// How many sample acceptable answers to reveal at round end, so players who
+// blanked learn what would have counted.
+const SAMPLE_ANSWERS_COUNT = 12;
+
+/**
+ * Up to SAMPLE_ANSWERS_COUNT answers from the current category's accept-list
+ * that NOBODY gave this round (case-insensitive), in random order. Finite
+ * domains can have fewer left over than the cap - whatever remains is
+ * returned. Always an array; [] when the category has no accept-list.
+ */
+function buildSampleAnswers(game) {
+  const validAnswers = CATEGORY_ANSWERS[game.currentCategory];
+  if (!validAnswers || validAnswers.size === 0) return [];
+
+  const given = new Set();
+  game.players.forEach((p) => p.answers.forEach((a) => given.add(a.toLowerCase())));
+
+  const remaining = [...validAnswers].filter((a) => !given.has(String(a).toLowerCase()));
+  // Fisher-Yates shuffle so the reveal isn't always the list's first entries.
+  for (let i = remaining.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [remaining[i], remaining[j]] = [remaining[j], remaining[i]];
+  }
+  return remaining.slice(0, SAMPLE_ANSWERS_COUNT);
+}
+
 /**
  * Closes the current round. Flips status to 'between_rounds' and returns a
  * snapshot of what everyone scored this round (with their actual answers
- * revealed, now that the round is over).
+ * revealed, now that the round is over), plus sample acceptable answers
+ * nobody gave.
  */
 function endRound(game) {
   game.status = 'between_rounds';
@@ -468,6 +495,7 @@ function endRound(game) {
       answers: [...p.answers],
       roundScore: p.answers.length,
     })),
+    sampleAnswers: buildSampleAnswers(game),
   };
 }
 

@@ -359,7 +359,8 @@ function scheduleTimerAfterCountdown(room, startFn) {
  * Category Blitz round timer. Counts down game.roundTimeSeconds, broadcasting
  * a timer_tick every second (same shape as the Word Bomb turn timer). When
  * time runs out it ends the round, broadcasts round_end with everyone's
- * results, then after a 5-second intermission either advances to the next
+ * results (the endRound snapshot, including sampleAnswers - acceptable
+ * answers nobody gave), then after a 5-second intermission either advances to the next
  * round (round_start + a fresh round timer) or, if all rounds are done,
  * broadcasts game_over with the final scoreboard.
  */
