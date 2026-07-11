@@ -265,6 +265,7 @@ function createGame(players, difficultyKey) {
     // The opening combo. No turns completed yet, so pickRandomCombo defaults to
     // the easiest (shortest-favouring) weighting.
     currentCombo: pickRandomCombo(),
+    comboFailStreak: 0,
     usedWords: new Set(), // every word accepted so far, so none can be reused
     completedTurnCount: 0,
     currentTimerSeconds: difficulty.startSeconds,
@@ -338,10 +339,26 @@ function handleTimeout(game) {
     }
   }
 
+  // This player couldn't answer the current combo (timeout OR skip both land here).
+  game.comboFailStreak = (game.comboFailStreak || 0) + 1;
   game.completedTurnCount += 1;
   advanceTurn(game);
 
-  return { eliminatedPlayerId: player && player.eliminated ? player.id : null };
+  // Dead-combo rescue: once everyone still standing has whiffed this combo (a full
+  // round, zero answers), retire it for a fresh, EASIER one so an unanswerable combo
+  // can't loop forever / grind the lobby down.
+  let comboSwapped = false;
+  if (game.status === 'in_progress' && game.comboFailStreak >= getActivePlayers(game).length) {
+    game.currentCombo = pickRandomCombo(game.currentCombo, 0); // turn-0 weighting = easier
+    game.comboFailStreak = 0;
+    comboSwapped = true;
+  }
+
+  return {
+    eliminatedPlayerId: player && player.eliminated ? player.id : null,
+    comboSwapped,
+    combo: game.currentCombo,
+  };
 }
 
 /**
@@ -403,6 +420,7 @@ async function submitWord(game, rawWord) {
   game.usedWords.add(word);
   game.completedTurnCount += 1;
   game.currentCombo = pickRandomCombo(combo, game.completedTurnCount);
+  game.comboFailStreak = 0;
   advanceTurn(game);
 
   return { accepted: true, word, combo: game.currentCombo };
