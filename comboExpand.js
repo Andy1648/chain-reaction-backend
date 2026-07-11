@@ -23,23 +23,10 @@
 const fs = require('fs');
 const path = require('path');
 
-// The combos already shipping in gameLogic.js (keep in sync — used for dedupe +
-// floor calibration). Mirrored here so this script is self-contained.
-const EXISTING = [
-  'an','er','in','th','ou','en','re','on','at','es','or','ti','al','ar','te','ne','de',
-  'st','ed','nd','le','se','it','ch','sh','ck','ll','ss','ee','oo','ot','et','am','ad',
-  'ow','ew','ay','ly','ge','nk','mb','kn','wr','ph','zz',
-  'ion','ing','tion','ent','ant','all','igh','ous','ard','age','ack','ain','ast','and',
-  'ill','ore','ine','ate','ide','ung','ump','ock','est','ess','ear','eat','ead','een',
-  'our','out','own','end','ick','uck','eck','ash','ish','ush','ight','able','tch','ter',
-  'der','ver','con','pre','pro','ink','ank','ake','ame','ome','one','ound',
-  'ice','ure','str','scr','thr','squ','dge',
-  'be','co','me','pe','ra','ro','li','lo','ma','mo','na','pa','sa','ta','un','up','ur',
-  'um','ug','ub','ig','ip','ag','ol','el',
-  'ble','tle','cle','kle','ple','ful','ment','ust','ost','ist','old','ild','und','orn',
-  'ern','oat','oad','oot','ool','oom','oon','eep','eed','eel','eet','ail','air','oin',
-  'oil','unk','unt','orm','ort','ord','ark','arm','art','amp','ang','ong',
-];
+// The combos already shipping in gameLogic.js (used for dedupe + floor
+// calibration). Imported LIVE from gameLogic.js so it can never drift out of
+// sync the way a hardcoded mirror did.
+const { COMBOS: EXISTING } = require('./gameLogic.js');
 const existingSet = new Set(EXISTING);
 
 // Load the bot's common-word corpus (one word per line, lowercase, len>=3).
