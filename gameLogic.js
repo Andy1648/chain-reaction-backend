@@ -105,6 +105,25 @@ const COMBOS = [
   // ---- content-expand batch 2 (vetted vs botWords.txt, ≥100-word pools) ----
   'pr', 'ie', 'ni', 'ia', 'mi', 'ct', 'om', 'ts', 'nc', 'ha', 'rt', 'us', 'po', 'ho', 'em', 'ai', 'hi', 'vi', 'su', 'os', 'ci', 'so', 'fi', 'ut', 'mp',
   'nal', 'nde', 'ina', 'nts', 'tri', 'nes', 'tiv', 'gra', 'ali', 'lat', 'lle', 'ere', 'rec', 'ove', 'tur', 'ssi', 'man', 'sio', 'cha', 'oun', 'ari', 'act', 'abl', 'par', 'lit', 'ten', 'ens', 'ces', 'ian', 'ona', 'ell', 'omp', 'cat', 'ans', 'ass', 'ele', 'mar', 'ial', 'ren', 'sto', 'ire', 'rie', 'are', 'ner', 'son', 'ton', 'ont', 'tat', 'tes', 'den', 'ili', 'nta', 'han', 'pla', 'ori', 'har', 'ght', 'car', 'lly', 'ors', 'eme', 'ite', 'ser', 'eve', 'nat', 'kin', 'rac', 'tan', 'ses', 'ind', 'ric', 'spe', 'tal', 'nin', 'ani',
+  // ---- content-expand batch 3 (vetted vs botWords.txt; 2-letter pool>=80, 3-letter pool>=50) ----
+  'ir', 'id', 'ap', 'iv', 'sp', 'im', 'ke', 'pl', 'no', 'bl', 'ba', 'ab', 'sc', 'bo', 'ul', 'ex', 'tu', 'da', 'cr', 'bi', 'op', 'wa', 'ry', 'rd', 'gr', 'ga', 'pi', 'ty', 'fo', 'tt', 'cl', 'ep', 'oc', 'we', 'do', 'rr', 'va', 'cu', 'od', 'fe', 'br', 'ev', 'ds', 'gi', 'ls', 'au', 'bu', 'ru', 'rm', 'wi',
+  'sin', 'mat', 'mon', 'app', 'shi', 'sse', 'por', 'des', 'ert', 'ini', 'ndi', 'log', 'mer', 'edi', 'ler', 'ves',
+  'ber', 'cor', 'pri', 'tte', 'ria', 'ris', 'pos', 'eas', 'lar', 'lic', 'rit', 'sed', 'war', 'gen', 'ven', 'ile',
+  'oll', 'ita', 'rti', 'lis', 'inc', 'ici', 'ger', 'sur', 'cre', 'exp', 'ree', 'chi', 'col', 'ise', 'nge', 'eli',
+  'she', 'als', 'tro', 'tre', 'ngs', 'att', 'ato', 'ene', 'ary', 'mpl', 'rep', 'olo', 'ale', 'ded', 'nst', 'pen',
+  'ron', 'ned', 'ave', 'cou', 'gin', 'arr', 'sen', 'pec', 'ond', 'nic', 'lea', 'dia', 'sho', 'tai', 'ose', 'ula',
+  'led', 'nsi', 'ral', 'omm', 'hin', 'ace', 'ete', 'can', 'nit', 'cia', 'tit', 'hea', 'ien', 'que', 'lli', 'wor',
+  'rel', 'med', 'rai', 'tar', 'tie', 'nds', 'cke', 'fin', 'fic', 'acc', 'eti', 'ann', 'ath', 'rem', 'mis', 'rap',
+  'ime', 'sit', 'cen', 'ade', 'ntr', 'vin', 'ara', 'use', 'eal', 'rou', 'ret', 'ual', 'fer', 'let', 'nda', 'win',
+  'eco', 'iss', 'bil', 'imp', 'ref', 'omi', 'ora', 'hes', 'oli', 'ana', 'nse', 'tim', 'ase', 'ult', 'ize', 'bra',
+  'nne', 'erv', 'ook', 'ope', 'lec', 'dic', 'uti', 'pti', 'dit', 'qui', 'hol', 'lla', 'ote', 'ges', 'spo', 'rre',
+  'cla', 'val', 'hor', 'ker', 'rad', 'ifi', 'len', 'nis', 'ely', 'rri', 'las', 'esi', 'sha', 'rge', 'err', 'rch',
+  'alt', 'tel', 'ign', 'low', 'vis', 'tab', 'iat', 'rma', 'ach', 'gre', 'cur', 'cri', 'isi', 'reg', 'nci', 'isc',
+  'ros', 'lie', 'tia', 'ppe', 'arc', 'uct', 'mes', 'uni', 'met', 'sco', 'ese', 'sub', 'tru', 'rte', 'duc', 'vel',
+  'cto', 'pli', 'lia', 'pat', 'emi', 'erm', 'eci', 'nor', 'sts', 'ict', 'rop', 'equ', 'sor', 'oni', 'rib', 'tho',
+  'pin', 'llo', 'ett', 'oti', 'unc', 'ane', 'cas', 'ute', 'rse', 'lor', 'mic', 'ole', 'bri', 'nve', 'cin', 'inf',
+  'hel', 'pol', 'lon', 'owe', 'rol', 'emo', 'ivi', 'mit', 'ics', 'ets', 'cul', 'ood', 'boo', 'ram', 'eta', 'net',
+  'ami', 'mal', 'qua', 'sid', 'abi', 'emp',
 ];
 
 // ---- Escalating combo difficulty ----
