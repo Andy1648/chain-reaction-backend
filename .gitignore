@@ -1,0 +1,5 @@
+node_modules/
+.env
+gen9.raw.json
+gen9.clean.json
+PLAYTEST-blitz-packs.md
