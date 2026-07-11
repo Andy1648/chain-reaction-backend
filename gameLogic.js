@@ -102,6 +102,9 @@ const COMBOS = [
   'rin', 'per', 'int', 'min', 'ran', 'nte', 'sti', 'her', 'iti', 'nti', 'rea',
   'red', 'eri', 'for', 'cal', 'les', 'anc', 'che', 'enc', 'din', 'lan', 'ins',
   'ity', 'dis', 'the', 'era',
+  // ---- content-expand batch 2 (vetted vs botWords.txt, ≥100-word pools) ----
+  'pr', 'ie', 'ni', 'ia', 'mi', 'ct', 'om', 'ts', 'nc', 'ha', 'rt', 'us', 'po', 'ho', 'em', 'ai', 'hi', 'vi', 'su', 'os', 'ci', 'so', 'fi', 'ut', 'mp',
+  'nal', 'nde', 'ina', 'nts', 'tri', 'nes', 'tiv', 'gra', 'ali', 'lat', 'lle', 'ere', 'rec', 'ove', 'tur', 'ssi', 'man', 'sio', 'cha', 'oun', 'ari', 'act', 'abl', 'par', 'lit', 'ten', 'ens', 'ces', 'ian', 'ona', 'ell', 'omp', 'cat', 'ans', 'ass', 'ele', 'mar', 'ial', 'ren', 'sto', 'ire', 'rie', 'are', 'ner', 'son', 'ton', 'ont', 'tat', 'tes', 'den', 'ili', 'nta', 'han', 'pla', 'ori', 'har', 'ght', 'car', 'lly', 'ors', 'eme', 'ite', 'ser', 'eve', 'nat', 'kin', 'rac', 'tan', 'ses', 'ind', 'ric', 'spe', 'tal', 'nin', 'ani',
 ];
 
 // ---- Escalating combo difficulty ----
