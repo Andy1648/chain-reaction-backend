@@ -80,4 +80,76 @@ for (const [category, set] of Object.entries(gen9)) {
   }
 }
 
+// 2026-07 pool review FOLDS: near-duplicate categories are merged into one
+// KEEPER (union the loser's accept-list into the keeper's, then drop the loser
+// key) and a few salvageable categories are renamed (same op - the target key
+// just doesn't exist yet). The on-disk categoryAnswers/* files stay append-only:
+// the loser/old-name lists remain there as the DATA SOURCE for this fold, so
+// nothing here deletes answers - it only re-homes them under the surviving
+// category name. Keys must match RAW_CATEGORIES / categoryPacks.js exactly.
+const FOLDS = {
+  // renames (salvageable categories, broader/easier phrasing)
+  'SI units': 'Units of measurement',
+  "Rolling Stone's 500 Greatest Albums": 'Iconic albums',
+  'Rock and Roll Hall of Fame Inductees': 'Classic rock artists',
+  'Constellations from myth': 'Constellations',
+  'Active volcanoes': 'Famous volcanoes',
+  // franchise near-dupes (keeper = larger list, keeps the pack tag)
+  'Minecraft Mobs': 'Minecraft mobs',
+  'Pokemon Gen 1': 'Pokemon from Gen 1',
+  'Super Mario power-ups': 'Mario power-ups and items',
+  'Mario Kart items': 'Mario Kart Items',
+  'Zelda characters': 'Legend of Zelda characters',
+  'Sonic characters': 'Sonic the Hedgehog characters',
+  'Marvel superheroes': 'Marvel Superheroes',
+  'DC superheroes': 'DC Comics Superheroes',
+  'Star Wars characters': 'Star Wars Characters',
+  'Harry Potter characters': 'Harry Potter Characters',
+  'Disney Villains': 'Disney villains',
+  'Pixar Movies': 'Pixar movies',
+  'Studio Ghibli movies': 'Studio Ghibli Movies',
+  'SpongeBob SquarePants Characters': 'SpongeBob characters',
+  'Mortal Kombat fighters': 'Mortal Kombat characters',
+  'Fighting games': 'Fighting game franchises',
+  // food/nature near-dupes
+  'Popular spices and herbs': 'Herbs and spices',
+  'Spices and herbs': 'Herbs and spices',
+  'Mushrooms and fungi': 'Types of mushrooms and fungi',
+  'Types of mushrooms': 'Types of mushrooms and fungi',
+  'Citrus fruits': 'Types of citrus fruit',
+  'Edible berries': 'Types of berries',
+  'Types of nuts': 'Nuts and seeds',
+  'Breakfast cereal brands': 'Cereal brands',
+  'Breakfast cereals': 'Cereal brands',
+  'Cake types': 'Types of cake',
+  'Mexican foods': 'Mexican food dishes',
+  'Tea types': 'Types of tea',
+  'Sandwiches': 'Sandwich types',
+  'Reptiles': 'Reptiles and amphibians',
+  // geography/misc near-dupes
+  'US states by name': 'US states',
+  'US state abbreviations': 'US states',
+  'The Great Lakes': 'Great Lakes of North America',
+  'Oceans': 'World oceans',
+  'Seven Wonders of the Ancient World': 'Wonders of the World',
+  'Ancient wonders': 'Wonders of the World',
+  'Planets': 'Planets in our solar system',
+  'World rivers': 'Major world rivers',
+  'Zodiac constellations': 'Zodiac signs',
+  'Types of rocks': 'Types of rock',
+  'Classic dystopian novels': 'Dystopian novels',
+  'Major League Soccer teams': 'MLS teams',
+  'Video game hardware manufacturers': 'Video game hardware',
+  'Streaming services': 'Video streaming services',
+};
+for (const [from, to] of Object.entries(FOLDS)) {
+  if (!answers[from]) continue;
+  if (answers[to]) {
+    for (const entry of answers[from]) answers[to].add(entry);
+  } else {
+    answers[to] = answers[from];
+  }
+  delete answers[from];
+}
+
 module.exports = answers;
