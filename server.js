@@ -86,6 +86,10 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok' });
 });
 
+app.get('/version', (req, res) => {
+  res.json({ commit: process.env.RENDER_GIT_COMMIT || 'unknown' });
+});
+
 // Explicit Express error middleware (after all routes): report the error to
 // Sentry, wrapped so a capture failure can't throw, then pass it through to
 // Express's default handler so the HTTP response behavior is unchanged.
