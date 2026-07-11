@@ -154,6 +154,17 @@ test('game ends and declares a winner when only one player remains', () => {
   assert.equal(game.winnerId, 'p2');
 });
 
+test('a full round of whiffs swaps the combo (dead-combo rescue)', () => {
+  const game = createGame([{ id: 'a', name: 'A' }, { id: 'b', name: 'B' }], 'medium');
+  const original = game.currentCombo;
+  const r1 = handleTimeout(game);        // A whiffs
+  assert.equal(r1.comboSwapped, false, 'no swap after a single whiff');
+  const r2 = handleTimeout(game);        // B whiffs -> full round, nobody answered
+  assert.equal(r2.comboSwapped, true, 'combo swaps after a full dead round');
+  assert.notEqual(game.currentCombo, original, 'a fresh combo is rolled');
+  assert.equal(game.comboFailStreak, 0, 'the streak resets after the swap');
+});
+
 test('turn order skips eliminated players in a 3-player game', async () => {
   const game = createGame(
     [{ id: 'p1', name: 'A' }, { id: 'p2', name: 'B' }, { id: 'p3', name: 'C' }],
