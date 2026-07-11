@@ -34,12 +34,19 @@ const OUT_FILE = './gen9.raw.json';
 // independent of raw.json. Retiring a category = add its name to gen9-exclude.json
 // (see that file's _comment). Loaded once; applied to every pack's avoid-list below.
 const EXCLUDE_NAMES = (() => {
+  let names = [];
   try {
-    return JSON.parse(fs.readFileSync('./gen9-exclude.json', 'utf8')).names || [];
+    names = JSON.parse(fs.readFileSync('./gen9-exclude.json', 'utf8')).names || [];
   } catch (err) {
     console.warn(`  (no gen9-exclude.json / unreadable: ${err.message}) — proceeding with none`);
-    return [];
   }
+  try {
+    const live = require('./categoryBlitzLogic').CATEGORIES;
+    names = [...new Set([...names, ...live])];
+  } catch (err) {
+    console.warn(`  (couldn't load live CATEGORIES for dedupe: ${err.message})`);
+  }
+  return names;
 })();
 
 // ---- Pack definitions -------------------------------------------------------
