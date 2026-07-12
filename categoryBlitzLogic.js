@@ -436,12 +436,40 @@ async function submitAnswer(game, playerId, rawAnswer, opts = {}) {
     // on the list. Only runs when an API key is configured; otherwise we stay in
     // list-only mode and ACCEPT the miss (no judge available to fairly reject it).
     if (haikuValidator.isEnabled()) {
+      // RACE GUARD snapshot: the validate() await below takes 0.5-3s, and the
+      // room's timers keep running while we wait - the round can end, the next
+      // round can start, the category can be rerolled, the game can finish, or
+      // the player can leave. Snapshot which round/category this answer was FOR
+      // so we can tell whether the world moved on during the await.
+      const roundAtSubmit = game.currentRound;
+      const categoryAtSubmit = game.currentCategory;
+
       // Tell the client we're checking, THEN await the judge (fail-closed,
       // 3s-timeout, rate-limited - all handled inside validate()).
       if (typeof opts.onAiCheck === 'function') opts.onAiCheck();
-      const aiAccepted = await haikuValidator.validate(game.currentCategory, answer, playerId);
+      const aiAccepted = await haikuValidator.validate(categoryAtSubmit, answer, playerId);
       if (!aiAccepted) {
         return { accepted: false, reason: 'not_in_category', playerId };
+      }
+
+      // RACE GUARD check: if the round this answer belonged to is no longer the
+      // live one (ended / advanced / rerolled / finished), or the player left
+      // mid-await, DISCARD the answer without mutating anything - otherwise a
+      // round-N answer would land (and score) in round N+1, on a rerolled
+      // category, or on a finished game's final scoreboard.
+      if (
+        game.status !== 'in_progress' ||
+        game.currentRound !== roundAtSubmit ||
+        game.currentCategory !== categoryAtSubmit ||
+        !game.players.includes(player)
+      ) {
+        return { accepted: false, reason: 'round_over', playerId };
+      }
+      // Duplicate-in-flight guard: a second submission of the same answer can
+      // pass the already_said check above while this one is still awaiting the
+      // judge. Re-check so one word can never score twice.
+      if (player.answers.some((a) => a.toLowerCase() === normalized)) {
+        return { accepted: false, reason: 'already_said', playerId };
       }
     }
   }
