@@ -18,9 +18,10 @@
 // slots, so every existing cleanup path tears them down unchanged.
 
 const fuseMode = require('./t5FuseMode');
+const letterStormMode = require('./t5LetterStormMode');
 
 const MODES = {};
-for (const mode of [fuseMode]) {
+for (const mode of [fuseMode, letterStormMode]) {
   MODES[mode.gameType] = mode;
 }
 
