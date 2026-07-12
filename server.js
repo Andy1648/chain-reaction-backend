@@ -278,16 +278,20 @@ wss.on('connection', (ws) => {
           // back to medium so it can't drag in — Blitz then gets its 2 rerolls and
           // Imposter's (inert) difficulty stays neutral. Word Bomb keeps its choice.
           if (gameType !== 'word-bomb') room.difficultyKey = 'medium';
-          // A bot only belongs in Word Bomb; if the host switches to another mode
-          // with a bot still in the lobby, drop it so the roster stays valid.
-          if (gameType !== 'word-bomb') removeBot(room);
+          // Bots are mode-specific (their own name pool and behavior per mode);
+          // if the host switches modes with a bot still in the lobby, drop it so
+          // a stale-flavor bot never carries into a mode it wasn't built for.
+          // Re-adding the right kind is one click.
+          const lobbyBot = room.players.find((p) => p.isBot);
+          if (lobbyBot && lobbyBot.botGameType !== gameType) removeBot(room);
           broadcastToRoom(room, buildRoomUpdatePayload(room));
           break;
         }
 
-        // Solo Word Bomb: the lone player explicitly adds a bot opponent at a
-        // chosen difficulty (independent of the game timer difficulty). Host-only;
-        // addBot enforces the word-bomb / single-human / no-existing-bot guards.
+        // Solo Word Bomb / Category Blitz: the lone player explicitly adds a bot
+        // opponent at a chosen difficulty (independent of the room's difficulty).
+        // Host-only; addBot enforces the supported-mode / single-human /
+        // no-existing-bot guards.
         case 'add_bot': {
           const room = getRoomForConnection(ws);
           if (!room) return;
@@ -514,7 +518,7 @@ function humanizeError(code) {
     reroll_window_closed: 'Rerolls are only allowed in the first few seconds of a round.',
     rate_limited: "You're creating rooms too fast. Wait a moment and try again.",
     server_busy: 'The server is at capacity right now. Please try again shortly.',
-    bot_word_bomb_only: 'Bots are only available in Word Bomb.',
+    bot_mode_unsupported: 'Bots are only available in Word Bomb and Category Blitz.',
     bot_already_added: 'There is already a bot in this room.',
     bot_solo_only: 'You can only add a bot when you are the only player.',
   };

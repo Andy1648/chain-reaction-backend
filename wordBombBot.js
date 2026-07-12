@@ -94,6 +94,7 @@ function createBotPlayer(difficulty) {
     id,
     name: randomBotName(),
     isBot: true,
+    botGameType: 'word-bomb', // which mode this bot was built for (see set_game_type)
     botDifficulty,
     connection: { id, readyState: 1, send() {} },
   };

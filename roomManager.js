@@ -26,6 +26,12 @@ const imposterWordLogic = require('./imposterWordLogic');
 const wordBombBot = require('./wordBombBot');
 const { markAsValid } = require('./dictionary');
 
+// Category Blitz bot opponent. Same shape as the Word Bomb bot (mock sink
+// connection, normal roster entry) but no AI anywhere: it draws answers from
+// the category's pre-generated accept-list, so its submissions always resolve
+// on the free Stage-1 lookup and never touch the Haiku judge.
+const categoryBlitzBot = require('./categoryBlitzBot');
+
 /**
  * Returns the logic module (createGame/submit*) for a given game type.
  * Defaults to Word Bomb for anything unrecognized so an old/missing
@@ -126,6 +132,9 @@ function createRoom(hostConnection, hostName, isPublic = false) {
     countdownTimeout: null,
     // Pending solo-bot "submit a word" setTimeout, if the current turn is a bot.
     botMoveTimeout: null,
+    // Pending Category Blitz bot "submit an answer" setTimeouts for the current
+    // round (one per planned answer). Cleared with the round timer.
+    blitzBotTimeouts: [],
   };
   rooms.set(code, room);
   return { room };
@@ -410,6 +419,10 @@ function startRoundTimer(room) {
 
     broadcastToRoom(room, { type: 'timer_tick', payload: { secondsRemaining: remaining } });
   }, 1000);
+
+  // Line up this round's bot answers (if any bots are in the room) against the
+  // clock that just started ticking. No-op for bot-less rooms.
+  scheduleBlitzBotAnswers(room);
 }
 
 function clearRoundTimer(room) {
@@ -422,6 +435,65 @@ function clearRoundTimer(room) {
     room.roundPauseTimeout = null;
   }
   clearCountdownTimeout(room);
+  clearBlitzBotTimers(room);
+}
+
+/** Cancels every pending Category Blitz bot answer for the current round. */
+function clearBlitzBotTimers(room) {
+  if (Array.isArray(room.blitzBotTimeouts)) {
+    room.blitzBotTimeouts.forEach((handle) => clearTimeout(handle));
+  }
+  room.blitzBotTimeouts = [];
+}
+
+/**
+ * Plans and schedules the round's bot answers for every bot in a Category
+ * Blitz room. Called from startRoundTimer, so the schedule always tracks the
+ * real clock: a new round, a reroll, or a rematch each re-plans from scratch,
+ * and clearRoundTimer (round end, reroll, reset, room teardown) cancels every
+ * pending answer - a bot can never submit after the round ends or during the
+ * between-rounds intermission. Each answer goes through the SAME
+ * handleCategoryAnswer path a human uses; because it's drawn from the
+ * category's accept-list, Stage-1 validation accepts it with no AI call.
+ */
+function scheduleBlitzBotAnswers(room) {
+  const { game } = room;
+  if (!game || game.gameType !== 'category-blitz' || game.status !== 'in_progress') return;
+
+  clearBlitzBotTimers(room);
+
+  const roundCategory = game.currentCategory;
+  room.players.filter((p) => p.isBot).forEach((bot) => {
+    const offsets = categoryBlitzBot.buildAnswerSchedule(
+      bot.botDifficulty || 'medium',
+      game.roundTimeSeconds
+    );
+    offsets.forEach((delayMs) => {
+      const handle = setTimeout(async () => {
+        // The world may have moved on while we waited (round ended, category
+        // rerolled, game reset, bot removed) - re-check before touching anything.
+        // clearBlitzBotTimers already cancels on those paths; these guards make
+        // a stray timer harmless even if a new cleanup path forgets to.
+        if (!room.game || room.game.gameType !== 'category-blitz') return;
+        if (room.game.status !== 'in_progress') return;
+        if (room.game.currentCategory !== roundCategory) return;
+        if (!room.players.some((p) => p.id === bot.id)) return;
+
+        const gamePlayer = room.game.players.find((p) => p.id === bot.id);
+        if (!gamePlayer) return;
+
+        const answer = categoryBlitzBot.pickAnswer(roundCategory, gamePlayer.answers);
+        if (!answer) return; // no accept-list / nothing left -> the bot blanks this beat
+
+        try {
+          await handleCategoryAnswer(room, bot.id, answer);
+        } catch (err) {
+          console.error('Blitz bot answer failed', err);
+        }
+      }, delayMs);
+      room.blitzBotTimeouts.push(handle);
+    });
+  });
 }
 
 /* ============================================================= */
@@ -605,28 +677,37 @@ function handleImposterVote(room, connectionId, suspectId) {
 }
 
 /* ============================================================= */
-/* =================  SOLO WORD BOMB BOT OPPONENT  ============= */
+/* ==================  SOLO BOT OPPONENT (ADD/REMOVE)  ========= */
 /* ============================================================= */
 
+// Which bot module builds the roster entry for each game mode. Modes absent
+// here (imposter-word - a bot can't bluff or vote) don't support bots at all.
+const BOT_FACTORY_BY_GAME_TYPE = {
+  'word-bomb': wordBombBot,
+  'category-blitz': categoryBlitzBot,
+};
+
 /**
- * Adds a single bot opponent to a solo Word Bomb room at the requested
- * difficulty. Explicit (player-triggered via add_bot), NOT automatic - a lone
- * player chooses to play a bot rather than one being forced on them. The bot is
- * a normal roster entry with a mock connection, so it renders like any player
- * and submits words through the same path. Its `botDifficulty` is independent of
- * the room's timer difficulty and drives only the bot's speed/miss rate.
+ * Adds a single bot opponent to a solo Word Bomb or Category Blitz room at the
+ * requested difficulty. Explicit (player-triggered via add_bot), NOT automatic -
+ * a lone player chooses to play a bot rather than one being forced on them. The
+ * bot is a normal roster entry with a mock connection, so it renders like any
+ * player and submits through the same path humans use. Its `botDifficulty` is
+ * independent of the room's difficulty setting and drives only the bot's own
+ * behavior (Word Bomb: speed/miss rate; Blitz: answers-per-round and pacing).
  *
- * Guards: word-bomb only, no live game, exactly one human, and no bot already
- * present. Returns { ok } or { error }.
+ * Guards: a bot-supporting mode only, no live game, exactly one human, and no
+ * bot already present. Returns { ok } or { error }.
  */
 function addBot(room, difficulty) {
   if (!room) return { error: 'no_room' };
   if (room.game && room.game.status === 'in_progress') return { error: 'game_already_started' };
-  if (room.gameType !== 'word-bomb') return { error: 'bot_word_bomb_only' };
+  const botFactory = BOT_FACTORY_BY_GAME_TYPE[room.gameType];
+  if (!botFactory) return { error: 'bot_mode_unsupported' };
   if (room.players.some((p) => p.isBot)) return { error: 'bot_already_added' };
   if (room.players.filter((p) => !p.isBot).length !== 1) return { error: 'bot_solo_only' };
 
-  room.players.push(wordBombBot.createBotPlayer(difficulty));
+  room.players.push(botFactory.createBotPlayer(difficulty));
   return { ok: true };
 }
 

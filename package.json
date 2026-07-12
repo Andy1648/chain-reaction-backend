@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node --watch server.js",
-    "test": "node --test gameLogic.test.js roomManager.test.js wordBombBot.test.js"
+    "test": "node --test gameLogic.test.js roomManager.test.js wordBombBot.test.js categoryBlitzBot.test.js"
   },
   "dependencies": {
     "@sentry/node": "^10.61.0",
