@@ -101,7 +101,6 @@ const RAW_CATEGORIES = [
   "European capitals",
   "African countries",
   "Asian countries",
-  "World rivers",
   "US states",
   "Famous landmarks",
   "Jungle animals",
@@ -110,44 +109,29 @@ const RAW_CATEGORIES = [
   "Insects",
   "Cat breeds",
   "Dinosaurs",
-  "Reptiles",
   "Farm animals",
   "Trees",
   "Flowers",
   "Fruits",
   "Vegetables",
   "Types of cheese",
-  "Breakfast cereals",
   "Cocktails",
   "Coffee drinks",
-  "Sandwiches",
   "Sushi types",
-  "Spices and herbs",
-  "Cake types",
-  "Mexican foods",
   "Italian dishes",
   "Cooking methods",
-  "Tea types",
-  "Marvel superheroes",
-  "DC superheroes",
   "Disney princesses",
-  "Star Wars characters",
-  "Harry Potter characters",
   "Simpsons characters",
   "Horror movies",
-  "Studio Ghibli movies",
   "Pixar characters",
   "Action movie stars",
   "Famous wizards",
   "Mario characters",
-  "Zelda characters",
-  "Sonic characters",
   "Street Fighter characters",
   "Pokemon types",
   "Naruto characters",
   "Dragon Ball characters",
   "One Piece characters",
-  "Fighting games",
   "Among Us colors",
   "Chess pieces",
   "Card games",
@@ -164,7 +148,6 @@ const RAW_CATEGORIES = [
   "Things on a golf course",
   "Baseball positions",
   "Water sports",
-  "Planets",
   "Body parts",
   "Weather phenomena",
   "Gemstones",
@@ -184,7 +167,6 @@ const RAW_CATEGORIES = [
   "Phone brands",
   "Clothing brands",
   "Airlines",
-  "Streaming services",
   "Social media apps",
   "Colors",
   "Languages",
@@ -195,24 +177,28 @@ const RAW_CATEGORIES = [
   // categoryAnswers/gen8.js.
   "Pokémon starters",
   "Video game consoles",
-  "Mario Kart items",
   "Minecraft blocks",
   "Video game villains",
   "Battle royale games",
   "Taylor Swift albums",
   "Stranger Things characters",
   "Continents",
-  "Oceans",
   "Wonders of the World",
   "Donut types",
 ];
 
-// gen9 pack rework: append every gen9 category NOT already in the pool above
-// (dedupe, exact case-sensitive match), so no name is added twice. The pack id
-// for each lives in categoryPacks.js (name -> 'movies'|'gaming'|'food'|'animals'|
-// 'sports'|'world'); their accept-lists are union-merged in categoryAnswers.js.
-// Additive only — nothing above is changed, and the bounded/quarantine filters
-// below still apply to these just like every other category.
+// gen9 pack rework: append every pack-mapped category NOT already in the pool
+// above (dedupe, exact case-sensitive match), so no name is added twice. The
+// pack id for each lives in categoryPacks.js; their accept-lists are
+// union-merged in categoryAnswers.js. The bounded/quarantine filters below
+// still apply to these just like every other category.
+//
+// 2026-07 pool review: ~73 too-obscure pack categories were cut (removed from
+// categoryPacks.js), ~44 near-duplicates were merged into one keeper each
+// (losers removed here + from categoryPacks.js; their accept-lists are folded
+// into the keeper's by the FOLDS step in categoryAnswers.js), 5 categories were
+// renamed, and every surviving legacy category got a pack tag - so ALL live
+// categories are now pack-mapped and appear in pack-filtered pools.
 const CATEGORY_PACKS = require('./categoryPacks');
 for (const name of Object.keys(CATEGORY_PACKS)) {
   if (!RAW_CATEGORIES.includes(name)) RAW_CATEGORIES.push(name);
@@ -302,9 +288,7 @@ const QUARANTINED_CATEGORIES = new Set([
   'Famous landmarks',
   'Famous painters',
   'Things with wheels',
-  'Streaming services',
   'Social media apps',
-  'Breakfast cereals',
 ]);
 
 const CATEGORIES = RAW_CATEGORIES.filter((category) => {
