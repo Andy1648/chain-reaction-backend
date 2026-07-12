@@ -10,6 +10,7 @@
 // submitWord - are resolved per room via logicForGameType().
 const {
   getCurrentPlayerId,
+  getActivePlayers,
   handleTimeout,
   advanceTurn,
   MIN_PLAYERS_TO_START,
@@ -41,6 +42,19 @@ function logicForGameType(gameType) {
   if (gameType === 'category-blitz') return categoryBlitzLogic;
   if (gameType === 'imposter-word') return imposterWordLogic;
   return wordBombLogic;
+}
+
+/**
+ * True when the room has a LIVE (unfinished) game, in ANY mode's sense of
+ * "live". Word Bomb's live game is always status 'in_progress', but Category
+ * Blitz also lives in 'between_rounds', and Imposter Word never uses
+ * 'in_progress' at all (answering/voting/reveal/between_rounds). Guards that
+ * mean "is a game running right now" must use this, not a raw in_progress
+ * check - keying off in_progress let players join/mutate/restart mid-game
+ * during every non-in_progress live phase.
+ */
+function isGameLive(room) {
+  return !!room.game && room.game.status !== 'finished';
 }
 
 const ROOM_CODE_LENGTH = 5;
@@ -145,7 +159,11 @@ function joinRoom(code, connection, playerName) {
   if (!room) {
     return { error: 'room_not_found' };
   }
-  if (room.game && room.game.status === 'in_progress') {
+  // Live in ANY phase (not just in_progress - see isGameLive): joining a
+  // Blitz intermission or an Imposter round produced a ghost roster entry
+  // (in room.players but not game.players) that got broadcasts but couldn't
+  // play or score. A FINISHED game still joins like a lobby.
+  if (isGameLive(room)) {
     return { error: 'game_already_started' };
   }
   if (room.players.length >= MAX_PLAYERS_PER_ROOM) {
@@ -701,7 +719,7 @@ const BOT_FACTORY_BY_GAME_TYPE = {
  */
 function addBot(room, difficulty) {
   if (!room) return { error: 'no_room' };
-  if (room.game && room.game.status === 'in_progress') return { error: 'game_already_started' };
+  if (isGameLive(room)) return { error: 'game_already_started' };
   const botFactory = BOT_FACTORY_BY_GAME_TYPE[room.gameType];
   if (!botFactory) return { error: 'bot_mode_unsupported' };
   if (room.players.some((p) => p.isBot)) return { error: 'bot_already_added' };
@@ -717,7 +735,7 @@ function addBot(room, difficulty) {
  */
 function removeBot(room) {
   if (!room) return { error: 'no_room' };
-  if (room.game && room.game.status === 'in_progress') return { error: 'game_already_started' };
+  if (isGameLive(room)) return { error: 'game_already_started' };
   room.players = room.players.filter((p) => !p.isBot);
   return { ok: true };
 }
@@ -779,6 +797,16 @@ function maybeScheduleBotMove(room) {
 }
 
 function startGame(room) {
+  // Double-fire / mid-game restart guard: a second start_game while a game is
+  // LIVE (any unfinished status - see isGameLive) must not silently discard
+  // the running game and re-init it, wiping everyone's progress and firing a
+  // duplicate game_started. The solo PLAY-AGAIN loop is unaffected: it only
+  // refires start_game after the previous game reached status 'finished'
+  // (the leftover-timer teardown below still covers its pending intermission).
+  if (isGameLive(room)) {
+    return { error: 'game_already_started' };
+  }
+
   // Solo Category Blitz: one player racing the clock alone. Auto-detected when
   // a category-blitz room has exactly one player - no separate flag needed from
   // the frontend - and it bypasses the usual 2-player minimum.
@@ -1068,9 +1096,12 @@ function removePlayer(room, connectionId) {
 
   touchRoom(room); // a leave (with players remaining) proves the room is alive
 
-  // Reassign host if the host left.
+  // Reassign host if the host left. Never hand the role to a bot (a bot host
+  // can't start/reroll/rematch, bricking the room - reachable because a room
+  // holding a solo player's bot is still joinable by a second human). A
+  // non-bot always exists here: the every-bot case destroyed the room above.
   if (room.hostId === connectionId) {
-    room.hostId = room.players[0].id;
+    room.hostId = (room.players.find((p) => !p.isBot) || room.players[0]).id;
   }
 
   const game = room.game;
@@ -1107,6 +1138,14 @@ function removePlayer(room, connectionId) {
         broadcastToRoom(room, buildTurnUpdatePayload(room));
         startTurnTimer(room);
       }
+    } else if (getActivePlayers(game).length <= 1) {
+      // The leaver wasn't the current player, but their elimination left at
+      // most one player standing. Finish now - otherwise the game sat
+      // in_progress with a lone survivor forced to play out one more turn
+      // against nobody before the win fired.
+      clearTurnTimer(room);
+      advanceTurn(game); // <=1 active -> flips to finished + resolves winnerId
+      broadcastToRoom(room, buildGameOverPayload(room));
     }
   }
 
@@ -1115,8 +1154,8 @@ function removePlayer(room, connectionId) {
 
 /**
  * Idle-room reaper sweep. Deletes every room that has been idle longer than
- * ROOM_IDLE_TTL_MS AND is NOT mid-game (game === null, or a finished game) - an
- * in_progress game is never reaped no matter how long a turn drags. Each reaped
+ * ROOM_IDLE_TTL_MS AND is NOT mid-game (game === null, or a finished game) - a
+ * live game (any unfinished status) is never reaped no matter how long it drags. Each reaped
  * room's still-connected players get a graceful `room_closed` before teardown so
  * a lingering client isn't left hanging. Collects candidates first, then deletes,
  * so we never mutate the Map mid-iteration. Returns the reaped room codes.
@@ -1124,8 +1163,10 @@ function removePlayer(room, connectionId) {
 function reapIdleRooms(now = Date.now()) {
   const stale = [];
   for (const room of rooms.values()) {
-    const midGame = !!room.game && room.game.status === 'in_progress';
-    if (midGame) continue;
+    // Any LIVE game protects the room (see isGameLive) - an in_progress-only
+    // check would let a live Imposter game (which never has that status) or a
+    // Blitz intermission be reaped mid-play.
+    if (isGameLive(room)) continue;
     const idleFor = now - (room.lastActivity || room.createdAt || now);
     if (idleFor >= ROOM_IDLE_TTL_MS) stale.push(room);
   }
