@@ -77,7 +77,7 @@ async function callGemini(prompt) {
 }
 
 function parseJsonArray(text) {
-  let t = text.replace(/```json/gi, '').replace(/```/g, '').trim();
+  const t = text.replace(/```json/gi, '').replace(/```/g, '').trim();
   const start = t.indexOf('[');
   const end = t.lastIndexOf(']');
   if (start === -1 || end === -1) throw new Error('no JSON array found in reply');
