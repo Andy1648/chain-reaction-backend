@@ -1161,6 +1161,25 @@ function stopRoomReaper() {
   }
 }
 
+// Test-only: a snapshot of registry size and live timer handles, for the
+// t3-harness leak checks (served by t3-harness/server-wrapper.js on a side
+// port). Counts every non-null timer slot across all rooms so an uncleaned
+// interval/timeout after room teardown shows up as a nonzero delta.
+function _getStatsForTesting() {
+  let timers = 0;
+  let playersTotal = 0;
+  for (const room of rooms.values()) {
+    if (room.turnTimerInterval) timers += 1;
+    if (room.roundTimerInterval) timers += 1;
+    if (room.roundPauseTimeout) timers += 1;
+    if (room.countdownTimeout) timers += 1;
+    if (room.botMoveTimeout) timers += 1;
+    if (Array.isArray(room.blitzBotTimeouts)) timers += room.blitzBotTimeouts.length;
+    playersTotal += room.players.length;
+  }
+  return { rooms: rooms.size, roomTimers: timers, playersTotal };
+}
+
 // Test-only: wipe the room registry between tests so listPublicRooms/quickPlay
 // see a clean slate. Tears down any timers first so nothing leaks across tests.
 function _resetRoomsForTesting() {
@@ -1202,4 +1221,5 @@ module.exports = {
   stopRoomReaper,
   MAX_PLAYERS_PER_ROOM,
   _resetRoomsForTesting,
+  _getStatsForTesting,
 };
