@@ -45,6 +45,9 @@ const { WebSocketServer } = require('ws');
 const crypto = require('crypto');
 
 const { markAsValid } = require('./dictionary');
+// Structured logging (JSON lines with level/event/roomCode/playerId). logError
+// also reports to Sentry, so the handler catch below needs only one call.
+const { logInfo, logWarn, logError } = require('./logger');
 const {
   createRoom,
   joinRoom,
@@ -59,6 +62,7 @@ const {
   handleRerollCategory,
   handleImposterVote,
   removePlayer,
+  failRoom,
   broadcastToRoom,
   buildRoomUpdatePayload,
   buildTurnUpdatePayload,
@@ -72,6 +76,23 @@ const {
 // against. Derived from CATEGORY_PACKS so it can't drift from the real assignments.
 const { PACK_IDS } = require('./categoryBlitzLogic');
 const VALID_PACK_IDS = new Set(PACK_IDS);
+
+// Input hardening + abuse throttles (see security.js). sanitizeName strips
+// control/formatting/angle-bracket chars from usernames; slidingWindowAllow
+// backs the per-socket message + join caps; MAX_WS_PAYLOAD_BYTES caps frame size.
+const {
+  sanitizeName,
+  slidingWindowAllow,
+  MESSAGE_WINDOW_MS,
+  MESSAGE_LIMIT,
+  JOIN_WINDOW_MS,
+  JOIN_LIMIT,
+  MAX_WS_PAYLOAD_BYTES,
+} = require('./security');
+
+// [T5] Experimental mode registry: extra gameTypes accepted by set_game_type
+// and extra error strings consulted by humanizeError. See t5Modes.js.
+const { MODES: T5_MODES, ERROR_MESSAGES: T5_ERROR_MESSAGES } = require('./t5Modes');
 
 // Pre-warm the dictionary cache with our starter words so the very first
 // move of any game doesn't depend on the Dictionary API being reachable.
@@ -99,7 +120,10 @@ app.use((err, req, res, next) => {
 });
 
 const server = http.createServer(app);
-const wss = new WebSocketServer({ server });
+// maxPayload caps a single inbound frame (vector R3). The ws default is ~100 MiB;
+// game messages are a few hundred bytes, so 64 KiB is generous. An over-cap frame
+// makes ws close the socket with 1009 (message too big) before our handler runs.
+const wss = new WebSocketServer({ server, maxPayload: MAX_WS_PAYLOAD_BYTES });
 
 // Tracks which room each live connection currently belongs to, so we can
 // clean up properly on disconnect without the client having to tell us.
@@ -120,9 +144,33 @@ function allowCreateRoom(ws) {
   return true;
 }
 
+// Global per-socket inbound message throttle (vectors R1/R2/R6). Every message,
+// whatever its type, counts against one generous sliding window so a single
+// socket can't flood the handler or amplify via typing_update / spectator_reaction
+// / Category Blitz answer spam. Tuned in security.js well above any human's peak
+// typing rate. Timestamps live on the ws object, freed with the connection.
+function allowMessage(ws) {
+  ws._msgTimes = ws._msgTimes || [];
+  return slidingWindowAllow(ws._msgTimes, Date.now(), MESSAGE_WINDOW_MS, MESSAGE_LIMIT);
+}
+
+// Per-socket join_room throttle (vector R5): blunts room-code brute-forcing and
+// join spam without touching the far-higher global message cap.
+function allowJoin(ws) {
+  ws._joinTimes = ws._joinTimes || [];
+  return slidingWindowAllow(ws._joinTimes, Date.now(), JOIN_WINDOW_MS, JOIN_LIMIT);
+}
+
 function send(ws, type, payload) {
-  if (ws.readyState === 1) {
-    ws.send(JSON.stringify({ type, payload }));
+  // try/catch: readyState can flip between the check and the send (teardown
+  // race), and this helper also runs outside the message handler's try/catch
+  // (e.g. the 'connected' hello) where a throw would otherwise be fatal.
+  try {
+    if (ws.readyState === 1) {
+      ws.send(JSON.stringify({ type, payload }));
+    }
+  } catch (err) {
+    logWarn('ws_send_failed', { playerId: ws.id, msgType: type }, err);
   }
 }
 
@@ -130,8 +178,23 @@ function sendError(ws, message, context) {
   send(ws, 'error', { message, context });
 }
 
+// A server-level error (rare - e.g. the underlying HTTP server erroring) must
+// be visible but must not bring the process down via an unhandled 'error' event.
+wss.on('error', (err) => {
+  logError('wss_error', {}, err);
+});
+
 wss.on('connection', (ws) => {
   ws.id = crypto.randomUUID();
+
+  // Without an 'error' listener, a socket-level error (ECONNRESET from a phone
+  // dropping off Wi-Fi mid-frame, an invalid close frame, an over-cap payload)
+  // is an unhandled 'error' event -> uncaughtException -> the WHOLE process
+  // dies. ws tears the broken socket down itself and 'close' still fires (so
+  // the room is cleaned up below); we only need to record it.
+  ws.on('error', (err) => {
+    logWarn('ws_socket_error', { roomCode: connectionToRoomCode.get(ws.id), playerId: ws.id }, err);
+  });
 
   // The client has no other way to learn its own connection id - room
   // broadcasts include every player's id but never single out "which one
@@ -150,6 +213,19 @@ wss.on('connection', (ws) => {
 
     const { type, payload } = message;
 
+    // Global per-socket flood guard. Over the cap we drop the message and notify
+    // ONCE per burst (tracked by _throttleNotified) so our own error replies
+    // don't themselves become an amplification channel. The flag resets as soon
+    // as the socket is back under the cap.
+    if (!allowMessage(ws)) {
+      if (!ws._throttleNotified) {
+        ws._throttleNotified = true;
+        sendError(ws, humanizeError('rate_limited'), type);
+      }
+      return;
+    }
+    ws._throttleNotified = false;
+
     try {
       switch (type) {
         case 'create_room': {
@@ -158,7 +234,7 @@ wss.on('connection', (ws) => {
             sendError(ws, humanizeError('rate_limited'), 'create_room');
             return;
           }
-          const name = (payload?.name || 'Player').slice(0, 20);
+          const name = sanitizeName(payload?.name);
           // isPublic defaults to false: a plain create_room stays code-only/
           // private exactly as before. Only an explicit true opts into the
           // public list / quick-play.
@@ -187,7 +263,7 @@ wss.on('connection', (ws) => {
         // public one if none exist. Reuses joinRoom's guards (race-safe retry
         // inside quickPlay) and the same create throttle as create_room.
         case 'quick_play': {
-          const name = (payload?.name || 'Player').slice(0, 20);
+          const name = sanitizeName(payload?.name);
           const result = quickPlay(ws, name, () => allowCreateRoom(ws));
           if (result.error) {
             sendError(ws, humanizeError(result.error), 'quick_play');
@@ -208,8 +284,14 @@ wss.on('connection', (ws) => {
         }
 
         case 'join_room': {
+          // Throttle join attempts first, so code-guessing / join-spam is capped
+          // even below the global message limit.
+          if (!allowJoin(ws)) {
+            sendError(ws, humanizeError('rate_limited'), 'join_room');
+            return;
+          }
           const code = (payload?.code || '').toUpperCase().trim();
-          const name = (payload?.name || 'Player').slice(0, 20);
+          const name = sanitizeName(payload?.name);
           const result = joinRoom(code, ws, name);
 
           if (result.error) {
@@ -268,7 +350,10 @@ wss.on('connection', (ws) => {
             return;
           }
           const gameType = payload?.gameType;
-          if (!['word-bomb', 'category-blitz', 'imposter-word'].includes(gameType)) {
+          if (
+            !['word-bomb', 'category-blitz', 'imposter-word'].includes(gameType) &&
+            !T5_MODES[gameType] // [T5] experimental modes are also selectable
+          ) {
             sendError(ws, 'Invalid game type.', 'set_game_type');
             return;
           }
@@ -335,7 +420,10 @@ wss.on('connection', (ws) => {
             sendError(ws, 'Only the host can start the game.', 'start_game');
             return;
           }
-          const result = startGame(room);
+          // daily:true opts a solo Category Blitz start into the Daily
+          // Challenge (date-seeded categories, no rerolls). Anything else
+          // about the message is unchanged; startGame validates solo-only.
+          const result = startGame(room, { daily: payload?.daily === true });
           if (result.error) {
             sendError(ws, humanizeError(result.error), 'start_game');
           }
@@ -472,21 +560,34 @@ wss.on('connection', (ws) => {
           sendError(ws, `Unknown message type: ${type}`);
       }
     } catch (err) {
-      console.error('Error handling message', type, err);
-      // Report the WS handler error to Sentry (safe no-op if dormant). This is
-      // purely additive — the existing graceful sendError still runs and the
-      // connection/game continues exactly as before.
-      captureError(err, { wsMessageType: type });
+      // Structured log with the full blast-radius context (room, player, message
+      // type); logError also reports to Sentry. The graceful sendError still
+      // runs and the connection/game continues exactly as before.
+      logError(
+        'ws_message_error',
+        { roomCode: connectionToRoomCode.get(ws.id), playerId: ws.id, wsMessageType: type },
+        err
+      );
       sendError(ws, 'Server error processing your request.', type);
     }
   });
 
   ws.on('close', () => {
-    const room = getRoomForConnection(ws);
-    if (room) {
-      removePlayer(room, ws.id);
-    }
+    // Look the room up directly (not via getRoomForConnection, which would try
+    // to send an error to a socket that's already gone). Drop the mapping FIRST
+    // so it can't leak even if the cleanup below fails.
+    const code = connectionToRoomCode.get(ws.id);
     connectionToRoomCode.delete(ws.id);
+    const room = code ? getRoom(code) : null;
+    if (!room) return;
+    try {
+      removePlayer(room, ws.id);
+    } catch (err) {
+      // removePlayer advances turns / restarts timers; if it threw, the room's
+      // state can't be trusted. Close that one room cleanly (room_closed +
+      // teardown) rather than crash the process or strand a frozen game.
+      failRoom(room, 'player_disconnect_error', err);
+    }
   });
 
   function getRoomForConnection(connection) {
@@ -522,12 +623,13 @@ function humanizeError(code) {
     bot_already_added: 'There is already a bot in this room.',
     bot_solo_only: 'You can only add a bot when you are the only player.',
   };
-  return messages[code] || 'Something went wrong.';
+  return messages[code] || T5_ERROR_MESSAGES[code] || 'Something went wrong.';
 }
 
 const PORT = process.env.PORT || 3001;
 server.listen(PORT, () => {
-  console.log(`Chain Reaction server listening on port ${PORT}`);
+  console.log(`Chain Reaction server listening on port ${server.address().port}`);
+  logInfo('server_listening', { port: server.address().port });
   // Surface whether the Category Blitz AI fallback is active. With no key the
   // game still runs fine - list-only validation - but creative answers won't be
   // AI-judged, so make that explicit at boot.
