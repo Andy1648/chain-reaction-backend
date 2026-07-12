@@ -622,6 +622,7 @@ function humanizeError(code) {
     bot_mode_unsupported: 'Bots are only available in Word Bomb and Category Blitz.',
     bot_already_added: 'There is already a bot in this room.',
     bot_solo_only: 'You can only add a bot when you are the only player.',
+    daily_solo_only: 'The Daily Challenge is solo Category Blitz only — no other players or bots.',
   };
   return messages[code] || T5_ERROR_MESSAGES[code] || 'Something went wrong.';
 }

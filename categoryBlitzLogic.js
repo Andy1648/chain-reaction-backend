@@ -44,6 +44,62 @@ const MAX_ANSWER_LENGTH = 60;
 // medium -> CRAZY (2), hard -> HELL (1). Fewer rerolls = harder.
 const REROLLS_BY_DIFFICULTY = { easy: 3, medium: 2, hard: 1 };
 
+// ---- Daily Challenge -------------------------------------------------------
+// A once-per-day solo Blitz where EVERYONE on the planet gets the same three
+// categories: the picks are a pure function of the UTC date, so any two
+// server instances (or a restart mid-day) agree. Day boundaries are UTC —
+// integer day math, immune to DST/timezone weirdness. Day #1 = 2026-01-01 UTC.
+const DAILY_EPOCH_UTC = Date.UTC(2026, 0, 1);
+const MS_PER_DAY = 24 * 60 * 60 * 1000;
+
+/** { dayNumber, dateKey } for a wall-clock ms timestamp (defaults to now). */
+function dailyInfo(nowMs = Date.now()) {
+  const dayNumber = Math.floor((nowMs - DAILY_EPOCH_UTC) / MS_PER_DAY) + 1;
+  const dateKey = new Date(nowMs).toISOString().slice(0, 10); // 'YYYY-MM-DD' (UTC)
+  return { dayNumber, dateKey };
+}
+
+// Tiny deterministic PRNG (xmur3 string hash seeding mulberry32) so the day's
+// category picks depend only on the dateKey — no Math.random anywhere here.
+function hashString(str) {
+  let h = 1779033703 ^ str.length;
+  for (let i = 0; i < str.length; i++) {
+    h = Math.imul(h ^ str.charCodeAt(i), 3432918353);
+    h = (h << 13) | (h >>> 19);
+  }
+  h = Math.imul(h ^ (h >>> 16), 2246822507);
+  h = Math.imul(h ^ (h >>> 13), 3266489909);
+  return (h ^= h >>> 16) >>> 0;
+}
+
+function mulberry32(seed) {
+  let a = seed >>> 0;
+  return function next() {
+    a |= 0;
+    a = (a + 0x6d2b79f5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+/**
+ * The day's TOTAL_ROUNDS categories, fully determined by the dateKey. Drawn
+ * from the FULL pool (pack selections don't apply to the daily — everyone
+ * plays the same board) over an alphabetically sorted copy, so the result
+ * doesn't depend on CATEGORIES' declaration order within a deploy.
+ */
+function dailyCategories(dateKey) {
+  const pool = [...CATEGORIES].sort();
+  const rng = mulberry32(hashString(`typeaword-daily:${dateKey}`));
+  const picks = [];
+  while (picks.length < TOTAL_ROUNDS && pool.length > 0) {
+    const idx = Math.floor(rng() * pool.length);
+    picks.push(pool.splice(idx, 1)[0]);
+  }
+  return picks;
+}
+
 // Categories with PERSONALITY - every one should make a player smirk, argue, or
 // say "oh this is a good one". No boring trivia ("things that are green"). The
 // prompt itself is the fun. Keys here MUST match categoryAnswers.js exactly.
@@ -360,9 +416,13 @@ function determineWinner(game) {
  * changes the round count. Every round is ROUND_TIME_SECONDS (20s); difficulty
  * only sets the per-game reroll allowance.
  */
-function createGame(players, difficultyKey, solo = false, selectedPacks = null) {
+function createGame(players, difficultyKey, solo = false, selectedPacks = null, daily = null) {
   const difficulty = VALID_DIFFICULTIES.includes(difficultyKey) ? difficultyKey : 'medium';
-  const firstCategory = pickRandomCategory(null, selectedPacks);
+  // Daily Challenge: the whole game's categories are predetermined by the UTC
+  // date (same board for everyone), packs are ignored, and rerolls are off —
+  // a reroll would fork the board away from everyone else's.
+  const dailyPlan = daily ? dailyCategories(daily.dateKey) : null;
+  const firstCategory = dailyPlan ? dailyPlan[0] : pickRandomCategory(null, selectedPacks);
 
   return {
     status: 'in_progress', // 'in_progress' | 'between_rounds' | 'finished'
@@ -370,14 +430,19 @@ function createGame(players, difficultyKey, solo = false, selectedPacks = null) 
     solo: !!solo,
     // Host-selected category packs (null = all packs). Filters every category pick
     // for this game (first pick, round advance, reroll). Optional / backwards-compat.
-    selectedPacks: selectedPacks || null,
+    selectedPacks: dailyPlan ? null : selectedPacks || null,
+    // Daily Challenge bookkeeping: { dayNumber, dateKey } + the fixed category
+    // plan for all rounds. Both null for a normal game.
+    daily: daily ? { dayNumber: daily.dayNumber, dateKey: daily.dateKey } : null,
+    dailyPlan,
     rounds: TOTAL_ROUNDS,
     currentRound: 1,
     currentCategory: firstCategory,
     roundTimeSeconds: ROUND_TIME_SECONDS,
     // How many category rerolls remain for the whole game (host-controlled in
     // multiplayer, free for the solo player), set by the difficulty tier.
-    rerollsRemaining: REROLLS_BY_DIFFICULTY[difficulty],
+    // Daily: none — the day's board is fixed.
+    rerollsRemaining: daily ? 0 : REROLLS_BY_DIFFICULTY[difficulty],
     players: players.map((p) => ({
       id: p.id,
       name: p.name,
@@ -553,7 +618,11 @@ function startNextRound(game) {
   }
 
   game.currentRound += 1;
-  const category = pickRandomCategory(game.usedCategories, game.selectedPacks);
+  // Daily games follow the fixed per-day plan; normal games roll a fresh
+  // non-repeating category.
+  const category = game.dailyPlan
+    ? game.dailyPlan[game.currentRound - 1]
+    : pickRandomCategory(game.usedCategories, game.selectedPacks);
   game.currentCategory = category;
   game.usedCategories.add(category);
   game.players.forEach((p) => {
@@ -566,6 +635,7 @@ function startNextRound(game) {
     category,
     timerSeconds: game.roundTimeSeconds,
     rerollsRemaining: game.rerollsRemaining,
+    ...(game.daily ? { daily: game.daily } : {}),
   };
 }
 
@@ -623,4 +693,7 @@ module.exports = {
   rerollCategory,
   getScoreboard,
   pickRandomCategory,
+  dailyInfo,
+  dailyCategories,
+  DAILY_EPOCH_UTC,
 };

@@ -439,6 +439,9 @@ function startRoundTimer(room) {
             payload: {
               winnerId: game.winnerId,
               finalScores: categoryBlitzLogic.getScoreboard(game),
+              // Daily Challenge games stamp their day info so the client can
+              // record the streak against the SERVER's day, not its own clock.
+              ...(game.daily ? { daily: game.daily } : {}),
             },
           });
         } else {
@@ -826,7 +829,7 @@ function maybeScheduleBotMove(room) {
   }, delayMs);
 }
 
-function startGame(room) {
+function startGame(room, opts = {}) {
   // Double-fire / mid-game restart guard: a second start_game while a game is
   // LIVE (any unfinished status - see isGameLive) must not silently discard
   // the running game and re-init it, wiping everyone's progress and firing a
@@ -842,6 +845,16 @@ function startGame(room) {
   // the frontend - and it bypasses the usual 2-player minimum.
   const isSoloCategoryBlitz =
     room.gameType === 'category-blitz' && room.players.length === 1;
+
+  // Daily Challenge (opts.daily): the date-seeded solo Blitz. Solo-only by
+  // design — the board is identical for everyone that day, so it's a personal
+  // race, not a lobby mode (and a bot in the room disqualifies it: roster
+  // size 2 means isSoloCategoryBlitz is false).
+  const wantDaily = opts.daily === true;
+  if (wantDaily && !isSoloCategoryBlitz) {
+    return { error: 'daily_solo_only' };
+  }
+  const daily = wantDaily ? categoryBlitzLogic.dailyInfo() : null;
 
   if (!isSoloCategoryBlitz) {
     // Imposter Word needs at least 3 (a 2-player imposter round is pointless);
@@ -868,7 +881,8 @@ function startGame(room) {
     room.players.map((p) => ({ id: p.id, name: p.name })),
     room.difficultyKey,
     isSoloCategoryBlitz,
-    room.selectedPacks // Category Blitz only: host-selected packs (undefined until set_packs); other modes ignore it
+    room.selectedPacks, // Category Blitz only: host-selected packs (undefined until set_packs); other modes ignore it
+    daily // Category Blitz only: Daily Challenge info ({ dayNumber, dateKey }) or null
   );
   // Stamp the type onto the game so payload builders and submission routing
   // know which mode this in-progress game is, independent of the room.
@@ -881,7 +895,11 @@ function startGame(room) {
   });
   broadcastToRoom(room, {
     type: 'game_started',
-    payload: { difficultyKey: room.difficultyKey, gameType: room.gameType },
+    payload: {
+      difficultyKey: room.difficultyKey,
+      gameType: room.gameType,
+      ...(room.game.daily ? { daily: room.game.daily } : {}),
+    },
   });
 
   if (room.gameType === 'category-blitz') {
@@ -894,6 +912,7 @@ function startGame(room) {
         category: room.game.currentCategory,
         timerSeconds: room.game.roundTimeSeconds,
         rerollsRemaining: room.game.rerollsRemaining,
+        ...(room.game.daily ? { daily: room.game.daily } : {}),
       },
     });
     scheduleTimerAfterCountdown(room, startRoundTimer);
