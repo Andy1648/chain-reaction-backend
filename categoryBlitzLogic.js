@@ -35,6 +35,10 @@ const ROUND_TIME_SECONDS = 20;
 
 const VALID_DIFFICULTIES = ['easy', 'medium', 'hard'];
 
+// Hard cap on submitted answer length (input hardening). Valid answers are
+// <=3 short words by THE CATEGORY RULE below, so 60 chars is generous.
+const MAX_ANSWER_LENGTH = 60;
+
 // Category rerolls allowed PER GAME, by difficulty tier. The tiers are shown to
 // players as HARD / CRAZY / HELL (see the frontend): easy -> HARD (3 rerolls),
 // medium -> CRAZY (2), hard -> HELL (1). Fewer rerolls = harder.
@@ -416,6 +420,13 @@ async function submitAnswer(game, playerId, rawAnswer, opts = {}) {
   // is just 2 characters.
   if (answer.length < 2) {
     return { accepted: false, reason: 'too_short', playerId };
+  }
+
+  // ...and capped (input hardening): a multi-KB blob must never reach the AI
+  // judge (burning credits) nor - in list-only mode, which accepts any
+  // list-miss - get stored and rebroadcast to the whole room at round end.
+  if (answer.length > MAX_ANSWER_LENGTH) {
+    return { accepted: false, reason: 'too_long', playerId };
   }
 
   // Only THIS player's answers for THIS round block a resubmission - two
