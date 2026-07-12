@@ -4,13 +4,22 @@
 # on an untyped codebase). Prettier is opt-in per file, so no format gate.
 name: CI
 
+# push is restricted to long-lived branches so a push to a PR branch runs
+# once (as pull_request), not twice — concurrency groups can't dedupe that
+# (push and pull_request events resolve to different refs).
 on:
   push:
+    branches: [main, feat/blitz-bot]
   pull_request:
 
+permissions:
+  contents: read
+
 concurrency:
-  group: ci-${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}
+  # Don't cancel in-flight runs on main: every main commit should keep a
+  # completed CI status.
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
   test:
