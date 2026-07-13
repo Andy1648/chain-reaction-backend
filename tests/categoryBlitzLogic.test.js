@@ -120,12 +120,18 @@ test('pickRandomCategory never returns an excluded category', () => {
   assert.equal(pickRandomCategory(exclude), keep);
 });
 
-test('PACK_IDS covers every pack assignment and CATEGORIES is quarantine-filtered', () => {
-  for (const pack of Object.values(CATEGORY_PACKS)) {
-    assert.ok(PACK_IDS.includes(pack));
+test('pack ids are well-formed and quarantined categories are really out of rotation', () => {
+  // PACK_IDS is the frontend contract for set_packs - every id must be a
+  // usable, non-empty string (a stray null/empty pack tag would silently
+  // break the server-side set_packs validation).
+  assert.ok(PACK_IDS.length > 0);
+  for (const pack of PACK_IDS) {
+    assert.ok(typeof pack === 'string' && pack.trim().length > 0, `bad pack id: ${JSON.stringify(pack)}`);
   }
-  // Spot-check that a known quarantined category is really out of rotation.
+  // Quarantine spot-checks: open-ended categories must be out of rotation
+  // even though their names/accept-lists remain on disk.
   assert.ok(!CATEGORIES.includes('Things in your junk drawer'));
+  assert.ok(!CATEGORIES.includes('Apps on your phone right now'));
 });
 
 /* ========================== submitAnswer: basics ======================== */
@@ -326,13 +332,21 @@ test('getScoreboard sorts by score descending', () => {
 
 /* ====================== active-pool content invariants =================== */
 
-test('the active pool is big enough for a full game from every single pack selection', () => {
-  // Every advertised pack id must either fill TOTAL_ROUNDS rounds on its own
-  // or rely on the documented fallback (which pickRandomCategory handles).
-  // This guards the contract that ANY set_packs choice yields a playable game.
-  const game = createGame(PLAYERS, 'medium', false, [...PACK_IDS]);
-  assert.ok(CATEGORIES.includes(game.currentCategory));
-  assert.ok(CATEGORIES.length >= TOTAL_ROUNDS * 2, 'pool is comfortably larger than one game');
+test('EVERY advertised pack id yields a playable full game (own pool or documented fallback)', () => {
+  // The contract behind set_packs: whatever single pack a host selects, a
+  // full TOTAL_ROUNDS game must complete with valid, non-repeating
+  // categories (small packs fall back to the full pool by design).
+  for (const pack of PACK_IDS) {
+    const game = createGame(PLAYERS, 'medium', false, [pack]);
+    const seen = new Set([game.currentCategory]);
+    assert.ok(CATEGORIES.includes(game.currentCategory), `pack ${pack}: bad first category`);
+    while (startNextRound(game) !== null) {
+      assert.ok(CATEGORIES.includes(game.currentCategory), `pack ${pack}: bad category mid-game`);
+      assert.ok(!seen.has(game.currentCategory), `pack ${pack}: repeated "${game.currentCategory}"`);
+      seen.add(game.currentCategory);
+    }
+    assert.equal(seen.size, TOTAL_ROUNDS, `pack ${pack}: game did not fill all rounds`);
+  }
 });
 
 test('every active category with an accept-list stores lowercase entries (Stage-1 contract)', () => {

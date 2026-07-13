@@ -65,12 +65,14 @@ test('hostile input never crashes submitWord and is always rejected', async () =
   assert.equal(game.usedWords.size, 0);
 });
 
-test('the combo match is on the NORMALIZED word (case-insensitive)', async () => {
+test('the combo match is on the NORMALIZED word, not the raw input', async () => {
   const game = twoPlayer();
   game.currentCombo = 'en';
-  // Uppercase word containing the combo only after lowercasing.
-  const res = await submitWord(game, 'ENTER');
+  // The RAW string 'dEnOTE' does not contain 'en' ('En' != 'en'); only the
+  // lowercased form does. A raw includes() check would wrongly reject this.
+  const res = await submitWord(game, 'dEnOTE');
   assert.equal(res.accepted, true);
+  assert.ok(game.usedWords.has('denote'));
 });
 
 /* ========================= degenerate rosters =========================== */
