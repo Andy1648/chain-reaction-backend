@@ -37,6 +37,23 @@ const { logInfo, logWarn, logError } = require('./logger');
 // on the free Stage-1 lookup and never touch the Haiku judge.
 const categoryBlitzBot = require('./categoryBlitzBot');
 
+// [T5] Experimental mode registry. Each T5 mode is a self-contained plugin
+// (pure logic + orchestrator in its own t5*Mode.js file); this file only
+// routes to it via a handful of generic hooks and hands it t5Helpers. The
+// helpers reference hoisted function declarations from this file, so this
+// block is safe up top; plugins never require roomManager back (no cycles)
+// and only use the room's standard timer slots, so every existing cleanup
+// path (resetGame / destroyRoom / _resetRoomsForTesting) tears them down
+// unchanged.
+const t5Modes = require('./t5Modes').MODES;
+const t5Helpers = {
+  broadcastToRoom,
+  scheduleTimerAfterCountdown,
+  clearTurnTimer,
+  clearRoundTimer,
+  touchRoom,
+};
+
 /**
  * Returns the logic module (createGame/submit*) for a given game type.
  * Defaults to Word Bomb for anything unrecognized so an old/missing
@@ -45,6 +62,7 @@ const categoryBlitzBot = require('./categoryBlitzBot');
 function logicForGameType(gameType) {
   if (gameType === 'category-blitz') return categoryBlitzLogic;
   if (gameType === 'imposter-word') return imposterWordLogic;
+  if (t5Modes[gameType]) return t5Modes[gameType].logic; // [T5]
   return wordBombLogic;
 }
 
@@ -858,11 +876,14 @@ function startGame(room, opts = {}) {
 
   if (!isSoloCategoryBlitz) {
     // Imposter Word needs at least 3 (a 2-player imposter round is pointless);
-    // the other modes start at the shared 2-player minimum.
+    // T5 modes declare their own minimum; the rest start at the shared
+    // 2-player minimum.
     const minPlayers =
       room.gameType === 'imposter-word'
         ? imposterWordLogic.MIN_PLAYERS_TO_START
-        : MIN_PLAYERS_TO_START;
+        : t5Modes[room.gameType]
+          ? t5Modes[room.gameType].minPlayers
+          : MIN_PLAYERS_TO_START;
     if (room.players.length < minPlayers) {
       return { error: 'not_enough_players' };
     }
@@ -920,6 +941,9 @@ function startGame(room, opts = {}) {
     // Social deduction: each player gets their OWN round_start (the imposter
     // sees a different prompt), then the answer-phase timer after the countdown.
     startImposterRound(room);
+  } else if (t5Modes[room.gameType]) {
+    // [T5] experimental modes own their opening broadcast + first timer.
+    t5Modes[room.gameType].start(room, t5Helpers);
   } else {
     // Turn-based Word Bomb: send the first turn immediately, delay its timer.
     broadcastToRoom(room, buildTurnUpdatePayload(room));
@@ -950,6 +974,11 @@ async function handleWordSubmission(room, connectionId, word) {
   // Imposter Word answers are public and judged by players - its own handler.
   if (game.gameType === 'imposter-word') {
     return handleImposterAnswer(room, connectionId, word);
+  }
+
+  // [T5] experimental modes route to their own submit handlers.
+  if (t5Modes[game.gameType]) {
+    return t5Modes[game.gameType].handleSubmit(room, connectionId, word, t5Helpers);
   }
 
   if (game.status !== 'in_progress') {
@@ -1219,6 +1248,10 @@ function removePlayer(room, connectionId) {
     if (Array.isArray(game.order)) {
       game.order = game.order.filter((id) => id !== connectionId);
     }
+  } else if (game && t5Modes[game.gameType]) {
+    // [T5] experimental modes own their mid-game leave semantics (e.g. Fuse
+    // eliminates the leaver and re-lights the fuse if they held the bomb).
+    t5Modes[game.gameType].handleLeave(room, connectionId, t5Helpers);
   } else if (game && game.status === 'in_progress') {
     // Word Bomb: treat the disconnect like the player timing out until
     // eliminated, so the game doesn't hang waiting on someone who left.
@@ -1301,6 +1334,32 @@ function stopRoomReaper() {
   }
 }
 
+/**
+ * Display-safe operational stats for the /admin/status endpoint: counts only —
+ * no room codes, player names, or connection objects. Cheap enough to compute
+ * on every request (one pass over the registry).
+ */
+function getRoomStats() {
+  const stats = {
+    rooms: rooms.size,
+    publicRooms: 0,
+    gamesInProgress: 0,
+    players: 0,
+    bots: 0,
+    roomsByGameType: {},
+  };
+  for (const room of rooms.values()) {
+    if (room.isPublic) stats.publicRooms += 1;
+    if (room.game && room.game.status !== 'finished') stats.gamesInProgress += 1;
+    for (const p of room.players) {
+      if (p.isBot) stats.bots += 1;
+      else stats.players += 1;
+    }
+    stats.roomsByGameType[room.gameType] = (stats.roomsByGameType[room.gameType] || 0) + 1;
+  }
+  return stats;
+}
+
 // Test-only: a snapshot of registry size and live timer handles, for the
 // t3-harness leak checks (served by t3-harness/server-wrapper.js on a side
 // port). Counts every non-null timer slot across all rooms so an uncleaned
@@ -1358,6 +1417,7 @@ module.exports = {
   touchRoom,
   failRoom,
   guardRoom,
+  getRoomStats,
   reapIdleRooms,
   startRoomReaper,
   stopRoomReaper,
