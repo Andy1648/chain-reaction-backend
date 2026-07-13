@@ -444,7 +444,12 @@ wss.on('connection', (ws) => {
         case 'skip_turn': {
           const room = getRoomForConnection(ws);
           if (!room) return;
-          if (!room.game || room.game.status !== 'in_progress') {
+          // Turn-based games only: getCurrentPlayerId below reads
+          // game.turnOrder, which the round-based modes (Blitz / Imposter /
+          // plugin modes) don't have - without the Array check, skip_turn on
+          // one of those games threw a TypeError (caught, but surfaced to the
+          // player as a generic server error, plus Sentry noise).
+          if (!room.game || !Array.isArray(room.game.turnOrder) || room.game.status !== 'in_progress') {
             sendError(ws, 'No active game.', 'skip_turn');
             return;
           }
@@ -644,3 +649,8 @@ server.listen(PORT, () => {
   // Start the single idle-room reaper sweep (deletes dead non-empty lobbies).
   startRoomReaper();
 });
+
+// Test hook: integration tests (t2-server.test.js) boot this real server on an
+// ephemeral port (PORT=0) and drive it with real WebSocket clients. Production
+// never reads these exports.
+module.exports = { server, wss };
