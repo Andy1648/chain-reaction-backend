@@ -32,6 +32,14 @@ async function isValidWord(word) {
     return cache.get(normalized);
   }
 
+  // Test hook: FAKE_DICTIONARY=1 accepts any alphabetic word without touching
+  // the network, so multi-client test harnesses (t3-harness/) get deterministic
+  // word acceptance offline. Never set in production.
+  if (process.env.FAKE_DICTIONARY === '1') {
+    cache.set(normalized, true);
+    return true;
+  }
+
   try {
     const response = await fetch(`${DICTIONARY_API_BASE}${encodeURIComponent(normalized)}`);
 

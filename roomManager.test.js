@@ -1,10 +1,12 @@
 // roomManager.test.js
 // Run with: node --test roomManager.test.js
-// Covers the public-rooms data layer added for the lobby browser / quick play:
-// the isPublic flag, listPublicRooms filtering, and quickPlay ranking +
-// retry-on-race + create-fallback. Uses Node's built-in test runner only (no
-// npm deps) and a fake WebSocket connection - none of this touches the network
-// or starts a game, so no timers run.
+// Covers the public-rooms data layer added for the lobby browser / quick play
+// (the isPublic flag, listPublicRooms filtering, quickPlay ranking +
+// retry-on-race + create-fallback) plus the solo bot add/remove lifecycle for
+// Word Bomb and Category Blitz. Uses Node's built-in test runner only (no npm
+// deps) and a fake WebSocket connection. Most tests are timer-free; the Blitz
+// bot live-round test runs real (short) timers and cleans them up via the
+// beforeEach/after room reset.
 
 const test = require('node:test');
 const assert = require('node:assert/strict');
@@ -20,9 +22,19 @@ const {
   getRoom,
   listPublicRooms,
   quickPlay,
+  handleWordSubmission,
+  handleCategoryAnswer,
+  startRoundTimer,
+  clearRoundTimer,
   MAX_PLAYERS_PER_ROOM,
   _resetRoomsForTesting,
 } = require('./roomManager');
+
+const CATEGORY_ANSWERS = require('./categoryAnswers');
+
+// A stable accept-listed category the Blitz bot tests pin the round to, so bot
+// picks are deterministic regardless of which category the game rolled.
+const BLITZ_CATEGORY = 'Pizza toppings';
 
 // Minimal stand-in for a ws connection: an id + an OPEN readyState + a no-op
 // send (broadcasts call .send on every player). Each call gets a unique id.
@@ -201,10 +213,10 @@ test('addBot refuses a second bot', () => {
   assert.equal(room.players.filter((p) => p.isBot).length, 1);
 });
 
-test('addBot refuses non Word Bomb modes', () => {
+test('addBot refuses modes without bot support (imposter-word)', () => {
   const { room } = createRoom(conn(), 'Solo');
-  room.gameType = 'category-blitz';
-  assert.equal(addBot(room, 'easy').error, 'bot_word_bomb_only');
+  room.gameType = 'imposter-word';
+  assert.equal(addBot(room, 'easy').error, 'bot_mode_unsupported');
   assert.equal(room.players.some((p) => p.isBot), false);
 });
 
@@ -253,4 +265,102 @@ test('resetGame keeps the added bot present for a rematch', () => {
   resetGame(room); // back to lobby
   assert.equal(room.game, null);
   assert.equal(room.players.filter((p) => p.isBot).length, 1);
+});
+
+// ---- solo Category Blitz bot opponent -------------------------------------
+
+// A solo Category Blitz room with a bot already added, game not yet started.
+function blitzRoomWithBot(difficulty = 'medium') {
+  const host = conn();
+  const { room } = createRoom(host, 'Solo');
+  room.gameType = 'category-blitz';
+  const res = addBot(room, difficulty);
+  assert.equal(res.ok, true);
+  return { room, host };
+}
+
+test('addBot adds a blitz-flavored bot to a solo Category Blitz room', () => {
+  const { room } = blitzRoomWithBot('hard');
+  const bots = room.players.filter((p) => p.isBot);
+  assert.equal(bots.length, 1);
+  assert.equal(bots[0].botGameType, 'category-blitz');
+  assert.equal(bots[0].botDifficulty, 'hard');
+  assert.equal(bots[0].connection.readyState, 1);
+});
+
+test('removeBot drops the blitz bot from the lobby', () => {
+  const { room } = blitzRoomWithBot();
+  assert.equal(removeBot(room).ok, true);
+  assert.equal(room.players.some((p) => p.isBot), false);
+});
+
+test('a Category Blitz room with an added bot starts a real 2-player game', () => {
+  const { room } = blitzRoomWithBot();
+  const res = startGame(room);
+  assert.equal(res.error, undefined);
+  assert.equal(room.game.gameType, 'category-blitz');
+  assert.equal(room.game.players.length, 2); // human + bot both in the game roster
+  assert.equal(room.game.solo, false); // 2 players -> the normal multiplayer path
+});
+
+test('removePlayer destroys a blitz room when only the bot remains', () => {
+  const { room, host } = blitzRoomWithBot();
+  removePlayer(room, host.id);
+  assert.equal(getRoom(room.code), undefined); // no bot left playing alone
+});
+
+test('a blitz bot answer goes through the human submit path and scores', async () => {
+  const { room } = blitzRoomWithBot();
+  startGame(room);
+  room.game.currentCategory = BLITZ_CATEGORY; // pin to a known accept-list
+  const botId = room.players.find((p) => p.isBot).id;
+
+  // First entry of the accept-list - guaranteed to pass Stage-1 validation.
+  const answer = [...CATEGORY_ANSWERS[BLITZ_CATEGORY]][0];
+  const { result } = await handleWordSubmission(room, botId, answer);
+
+  assert.equal(result.accepted, true);
+  const gameBot = room.game.players.find((p) => p.id === botId);
+  assert.deepEqual(gameBot.answers, [answer]);
+  assert.equal(gameBot.score, 1);
+});
+
+test('a blitz bot answer is rejected outside an active round', async () => {
+  const { room } = blitzRoomWithBot();
+  startGame(room);
+  room.game.status = 'between_rounds'; // intermission - no submissions allowed
+  const botId = room.players.find((p) => p.isBot).id;
+
+  const res = await handleCategoryAnswer(room, botId, 'pepperoni');
+  assert.equal(res.error, 'round_not_active');
+  assert.equal(room.game.players.find((p) => p.id === botId).score, 0);
+});
+
+test('blitz bot submits scored accept-list answers during a live round and stops at round end', async () => {
+  const { room } = blitzRoomWithBot('hard'); // hard: first answer within 2000ms
+  startGame(room);
+  room.game.currentCategory = BLITZ_CATEGORY;
+  // Start the round clock now (also cancels the pending 3s countdown delay) -
+  // this is what schedules the bot's answers for the round.
+  startRoundTimer(room);
+  const botId = room.players.find((p) => p.isBot).id;
+  const gameBot = room.game.players.find((p) => p.id === botId);
+
+  // hard's first answer is guaranteed within its 2000ms thinking window.
+  await new Promise((r) => setTimeout(r, 2600));
+  assert.ok(gameBot.answers.length >= 1, 'bot should have answered by now');
+  assert.equal(gameBot.score, gameBot.answers.length); // accepted + scored via the human path
+  const accept = CATEGORY_ANSWERS[BLITZ_CATEGORY];
+  gameBot.answers.forEach((a) => {
+    assert.ok(accept.has(a.toLowerCase()), `"${a}" should be from the accept-list`);
+  });
+
+  // End the round the way the round timer does: clear timers (cancels every
+  // pending bot answer), flip to the intermission.
+  clearRoundTimer(room);
+  room.game.status = 'between_rounds';
+  const scoreAtRoundEnd = gameBot.answers.length;
+
+  await new Promise((r) => setTimeout(r, 2000));
+  assert.equal(gameBot.answers.length, scoreAtRoundEnd, 'no submissions after round end');
 });

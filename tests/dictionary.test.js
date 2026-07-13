@@ -1,0 +1,147 @@
+// tests/dictionary.test.js
+// Run with: npm test   (node --test discovers this file)
+//
+// Unit tests for dictionary.js - the Word Bomb validity check. Its contract
+// is the mirror image of haikuValidator's: it FAILS OPEN (a network problem
+// treats the word as valid, availability over strictness) but hard-rejects
+// malformed input BEFORE any network I/O, and caches definitive verdicts so
+// repeat words never re-hit the API.
+//
+// global.fetch is stubbed per test (the module calls the bare global).
+// The module-level cache is shared across this file's tests, so every test
+// uses its own unique words. FAKE_DICTIONARY (a T3 harness hook that
+// short-circuits everything) is explicitly cleared for this suite.
+
+const test = require('node:test');
+const assert = require('node:assert/strict');
+
+const { isValidWord, markAsValid } = require('../dictionary');
+
+const ORIGINAL_FETCH = global.fetch;
+const ORIGINAL_FAKE = process.env.FAKE_DICTIONARY;
+delete process.env.FAKE_DICTIONARY; // this suite tests the REAL paths
+
+test.after(() => {
+  global.fetch = ORIGINAL_FETCH;
+  if (ORIGINAL_FAKE === undefined) delete process.env.FAKE_DICTIONARY;
+  else process.env.FAKE_DICTIONARY = ORIGINAL_FAKE;
+});
+
+function stubFetch(t, impl) {
+  global.fetch = impl;
+  t.after(() => {
+    global.fetch = ORIGINAL_FETCH;
+  });
+}
+
+// API-shape helpers.
+const found = (word) => ({ ok: true, status: 200, json: async () => [{ word }] });
+const notFound = { ok: false, status: 404, json: async () => ({}) };
+
+/* ======================= input hygiene (no network) ===================== */
+
+test('garbage input is rejected before any network call', async (t) => {
+  let fetched = false;
+  stubFetch(t, async () => {
+    fetched = true;
+    return found('x');
+  });
+
+  const garbage = [
+    '', '   ', '\t\n',
+    'two words',
+    'hyphen-ated', "apostrophe's",
+    'digits123', '42',
+    'semi;colon', 'sql\'); DROP TABLE rooms;--',
+    'ünïcode', 'naïve', '日本語', '💣bomb',
+    'null\u0000byte',
+  ];
+  for (const input of garbage) {
+    assert.equal(await isValidWord(input), false, `"${input}" must be rejected`);
+  }
+  assert.equal(fetched, false, 'none of these may reach the API');
+});
+
+test('input is trimmed and lowercased before lookup', async (t) => {
+  let requested = null;
+  stubFetch(t, async (url) => {
+    requested = url;
+    return found('breeze');
+  });
+
+  assert.equal(await isValidWord('  BREEZE \n'), true);
+  assert.ok(requested.endsWith('/breeze'), `API got the normalized form (${requested})`);
+  // The cached verdict is keyed on the normalized form too - any casing of
+  // the same word must now resolve without a second fetch.
+  requested = null;
+  assert.equal(await isValidWord('Breeze'), true);
+  assert.equal(requested, null, 'served from cache');
+});
+
+/* =========================== API verdicts =============================== */
+
+test('a 404 means "not a word" and the rejection is cached', async (t) => {
+  let calls = 0;
+  stubFetch(t, async () => {
+    calls += 1;
+    return notFound;
+  });
+
+  assert.equal(await isValidWord('zzgibberishzz'), false);
+  assert.equal(await isValidWord('zzgibberishzz'), false);
+  assert.equal(calls, 1, 'the 404 verdict is cached');
+});
+
+test('a healthy reply with entries validates the word and caches it', async (t) => {
+  let calls = 0;
+  stubFetch(t, async () => {
+    calls += 1;
+    return found('meadow');
+  });
+
+  assert.equal(await isValidWord('meadow'), true);
+  assert.equal(await isValidWord('meadow'), true);
+  assert.equal(calls, 1);
+});
+
+test('a healthy reply with an EMPTY array is treated as not-a-word', async (t) => {
+  stubFetch(t, async () => ({ ok: true, status: 200, json: async () => [] }));
+  assert.equal(await isValidWord('emptyarrayword'), false);
+});
+
+/* ============================ fail open ================================= */
+
+test('an unexpected HTTP status fails OPEN and is NOT cached as a verdict', async (t) => {
+  let calls = 0;
+  stubFetch(t, async () => {
+    calls += 1;
+    return { ok: false, status: 503, json: async () => ({}) };
+  });
+
+  assert.equal(await isValidWord('outageword'), true, 'API outage must not block gameplay');
+  // Fail-open is a temporary benefit of the doubt, not a cached fact - the
+  // next check should ask again (and get the real verdict once the API heals).
+  await isValidWord('outageword');
+  assert.equal(calls, 2, 'no verdict was cached for the outage response');
+});
+
+test('a thrown fetch (network down / DNS failure) fails OPEN', async (t) => {
+  stubFetch(t, async () => {
+    throw new Error('getaddrinfo ENOTFOUND');
+  });
+  assert.equal(await isValidWord('networkless'), true);
+});
+
+/* ============================ markAsValid =============================== */
+
+test('markAsValid pre-warms the cache so the word never hits the API', async (t) => {
+  let fetched = false;
+  stubFetch(t, async () => {
+    fetched = true;
+    return notFound; // would reject if it were ever consulted
+  });
+
+  markAsValid('  PrEwArMeD ');
+  assert.equal(await isValidWord('prewarmed'), true);
+  assert.equal(fetched, false);
+});

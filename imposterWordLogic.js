@@ -18,6 +18,10 @@
 const TOTAL_ROUNDS = 5;
 const MIN_PLAYERS_TO_START = 3;
 
+// Hard cap on submitted answer length (input hardening). Imposter answers are
+// short phrases; 80 chars is generous for anything a human would type.
+const MAX_ANSWER_LENGTH = 80;
+
 // Per-difficulty phase lengths in seconds, as { answer, vote }. Harder
 // difficulties give less time to think (and less time to deliberate the
 // vote). Falls back to 'medium' for an unknown key.
@@ -369,6 +373,13 @@ function submitAnswer(game, playerId, rawAnswer) {
   // Answers can legitimately be short, so the floor is just 2 characters.
   if (answer.length < 2) {
     return { accepted: false, reason: 'too_short', playerId };
+  }
+
+  // ...and capped (input hardening). There is NO algorithmic validation in
+  // this mode - without a cap, 3 multi-KB blobs per player would be accepted
+  // verbatim and broadcast to the whole room at the vote reveal.
+  if (answer.length > MAX_ANSWER_LENGTH) {
+    return { accepted: false, reason: 'too_long', playerId };
   }
 
   // Each player gets at most 3 answers per round.

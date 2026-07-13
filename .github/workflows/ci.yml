@@ -1,0 +1,43 @@
+# CI: install -> lint -> test on every push and PR.
+# No build/typecheck steps: this is a plain-CommonJS Node server with no
+# build artifact, and tsc --checkJs was evaluated and rejected (too noisy
+# on an untyped codebase). Prettier is opt-in per file, so no format gate.
+name: CI
+
+# push is restricted to long-lived branches so a push to a PR branch runs
+# once (as pull_request), not twice — concurrency groups can't dedupe that
+# (push and pull_request events resolve to different refs).
+on:
+  push:
+    branches: [main, feat/blitz-bot]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  # Don't cancel in-flight runs on main: every main commit should keep a
+  # completed CI status.
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm test

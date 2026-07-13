@@ -10,6 +10,7 @@
 // submitWord - are resolved per room via logicForGameType().
 const {
   getCurrentPlayerId,
+  getActivePlayers,
   handleTimeout,
   advanceTurn,
   MIN_PLAYERS_TO_START,
@@ -26,6 +27,33 @@ const imposterWordLogic = require('./imposterWordLogic');
 const wordBombBot = require('./wordBombBot');
 const { markAsValid } = require('./dictionary');
 
+// Structured logging (level/event/roomCode/playerId JSON lines). logError also
+// forwards to Sentry, so the guarded failure paths below report with context.
+const { logInfo, logWarn, logError } = require('./logger');
+
+// Category Blitz bot opponent. Same shape as the Word Bomb bot (mock sink
+// connection, normal roster entry) but no AI anywhere: it draws answers from
+// the category's pre-generated accept-list, so its submissions always resolve
+// on the free Stage-1 lookup and never touch the Haiku judge.
+const categoryBlitzBot = require('./categoryBlitzBot');
+
+// [T5] Experimental mode registry. Each T5 mode is a self-contained plugin
+// (pure logic + orchestrator in its own t5*Mode.js file); this file only
+// routes to it via a handful of generic hooks and hands it t5Helpers. The
+// helpers reference hoisted function declarations from this file, so this
+// block is safe up top; plugins never require roomManager back (no cycles)
+// and only use the room's standard timer slots, so every existing cleanup
+// path (resetGame / destroyRoom / _resetRoomsForTesting) tears them down
+// unchanged.
+const t5Modes = require('./t5Modes').MODES;
+const t5Helpers = {
+  broadcastToRoom,
+  scheduleTimerAfterCountdown,
+  clearTurnTimer,
+  clearRoundTimer,
+  touchRoom,
+};
+
 /**
  * Returns the logic module (createGame/submit*) for a given game type.
  * Defaults to Word Bomb for anything unrecognized so an old/missing
@@ -34,7 +62,21 @@ const { markAsValid } = require('./dictionary');
 function logicForGameType(gameType) {
   if (gameType === 'category-blitz') return categoryBlitzLogic;
   if (gameType === 'imposter-word') return imposterWordLogic;
+  if (t5Modes[gameType]) return t5Modes[gameType].logic; // [T5]
   return wordBombLogic;
+}
+
+/**
+ * True when the room has a LIVE (unfinished) game, in ANY mode's sense of
+ * "live". Word Bomb's live game is always status 'in_progress', but Category
+ * Blitz also lives in 'between_rounds', and Imposter Word never uses
+ * 'in_progress' at all (answering/voting/reveal/between_rounds). Guards that
+ * mean "is a game running right now" must use this, not a raw in_progress
+ * check - keying off in_progress let players join/mutate/restart mid-game
+ * during every non-in_progress live phase.
+ */
+function isGameLive(room) {
+  return !!room.game && room.game.status !== 'finished';
 }
 
 const ROOM_CODE_LENGTH = 5;
@@ -126,8 +168,12 @@ function createRoom(hostConnection, hostName, isPublic = false) {
     countdownTimeout: null,
     // Pending solo-bot "submit a word" setTimeout, if the current turn is a bot.
     botMoveTimeout: null,
+    // Pending Category Blitz bot "submit an answer" setTimeouts for the current
+    // round (one per planned answer). Cleared with the round timer.
+    blitzBotTimeouts: [],
   };
   rooms.set(code, room);
+  logInfo('room_created', { roomCode: code, playerId: hostConnection.id, isPublic: room.isPublic });
   return { room };
 }
 
@@ -136,7 +182,11 @@ function joinRoom(code, connection, playerName) {
   if (!room) {
     return { error: 'room_not_found' };
   }
-  if (room.game && room.game.status === 'in_progress') {
+  // Live in ANY phase (not just in_progress - see isGameLive): joining a
+  // Blitz intermission or an Imposter round produced a ghost roster entry
+  // (in room.players but not game.players) that got broadcasts but couldn't
+  // play or score. A FINISHED game still joins like a lobby.
+  if (isGameLive(room)) {
     return { error: 'game_already_started' };
   }
   if (room.players.length >= MAX_PLAYERS_PER_ROOM) {
@@ -220,8 +270,15 @@ function quickPlay(connection, playerName, allowCreate) {
 function broadcastToRoom(room, message) {
   const payload = JSON.stringify(message);
   room.players.forEach((p) => {
-    if (p.connection.readyState === 1 /* WebSocket.OPEN */) {
-      p.connection.send(payload);
+    // Per-recipient try/catch: readyState can flip between the check and the
+    // send (socket teardown race), and one bad socket must not abort the rest
+    // of the room's broadcast — or, when called from a timer, crash the process.
+    try {
+      if (p.connection.readyState === 1 /* WebSocket.OPEN */) {
+        p.connection.send(payload);
+      }
+    } catch (err) {
+      logWarn('broadcast_send_failed', { roomCode: room.code, playerId: p.id, msgType: message.type }, err);
     }
   });
 }
@@ -293,7 +350,9 @@ function startTurnTimer(room) {
   let remaining = game.currentTimerSeconds;
   room.turnDeadline = Date.now() + remaining * 1000;
 
-  room.turnTimerInterval = setInterval(() => {
+  // guardRoom: a throw in here (corrupt game state, a bad payload builder)
+  // would otherwise hit uncaughtException and take down the whole process.
+  room.turnTimerInterval = setInterval(() => guardRoom(room, 'turn_timer_error', () => {
     remaining -= 1;
 
     if (remaining <= 0) {
@@ -315,7 +374,7 @@ function startTurnTimer(room) {
     }
 
     broadcastToRoom(room, { type: 'timer_tick', payload: { secondsRemaining: remaining } });
-  }, 1000);
+  }), 1000);
 
   // If the player who just gained the turn is a bot, line up its move within
   // this timer window. No-op for human turns.
@@ -351,7 +410,8 @@ function scheduleTimerAfterCountdown(room, startFn) {
   clearCountdownTimeout(room);
   room.countdownTimeout = setTimeout(() => {
     room.countdownTimeout = null;
-    startFn(room);
+    // Timer context: a throw in the start function must fail this room only.
+    guardRoom(room, 'countdown_start_error', () => startFn(room));
   }, COUNTDOWN_DELAY_MS);
 }
 
@@ -374,7 +434,9 @@ function startRoundTimer(room) {
   // reroll opening window (rerolls are only allowed in the first few seconds).
   room.roundStartedAt = Date.now();
 
-  room.roundTimerInterval = setInterval(() => {
+  // guardRoom on the tick AND the intermission: both mutate game state from a
+  // timer, so an unexpected throw must fail this room, not the process.
+  room.roundTimerInterval = setInterval(() => guardRoom(room, 'round_timer_error', () => {
     remaining -= 1;
 
     if (remaining <= 0) {
@@ -385,7 +447,7 @@ function startRoundTimer(room) {
 
       // Intermission so players can read the round results before the next
       // category drops (or the game ends).
-      room.roundPauseTimeout = setTimeout(() => {
+      room.roundPauseTimeout = setTimeout(() => guardRoom(room, 'round_intermission_error', () => {
         room.roundPauseTimeout = null;
 
         const next = categoryBlitzLogic.startNextRound(game);
@@ -395,6 +457,9 @@ function startRoundTimer(room) {
             payload: {
               winnerId: game.winnerId,
               finalScores: categoryBlitzLogic.getScoreboard(game),
+              // Daily Challenge games stamp their day info so the client can
+              // record the streak against the SERVER's day, not its own clock.
+              ...(game.daily ? { daily: game.daily } : {}),
             },
           });
         } else {
@@ -403,13 +468,17 @@ function startRoundTimer(room) {
           broadcastToRoom(room, { type: 'round_start', payload: next });
           scheduleTimerAfterCountdown(room, startRoundTimer);
         }
-      }, 5000);
+      }), 5000);
 
       return;
     }
 
     broadcastToRoom(room, { type: 'timer_tick', payload: { secondsRemaining: remaining } });
-  }, 1000);
+  }), 1000);
+
+  // Line up this round's bot answers (if any bots are in the room) against the
+  // clock that just started ticking. No-op for bot-less rooms.
+  scheduleBlitzBotAnswers(room);
 }
 
 function clearRoundTimer(room) {
@@ -422,6 +491,69 @@ function clearRoundTimer(room) {
     room.roundPauseTimeout = null;
   }
   clearCountdownTimeout(room);
+  clearBlitzBotTimers(room);
+}
+
+/** Cancels every pending Category Blitz bot answer for the current round. */
+function clearBlitzBotTimers(room) {
+  if (Array.isArray(room.blitzBotTimeouts)) {
+    room.blitzBotTimeouts.forEach((handle) => clearTimeout(handle));
+  }
+  room.blitzBotTimeouts = [];
+}
+
+/**
+ * Plans and schedules the round's bot answers for every bot in a Category
+ * Blitz room. Called from startRoundTimer, so the schedule always tracks the
+ * real clock: a new round, a reroll, or a rematch each re-plans from scratch,
+ * and clearRoundTimer (round end, reroll, reset, room teardown) cancels every
+ * pending answer - a bot can never submit after the round ends or during the
+ * between-rounds intermission. Each answer goes through the SAME
+ * handleCategoryAnswer path a human uses; because it's drawn from the
+ * category's accept-list, Stage-1 validation accepts it with no AI call.
+ */
+function scheduleBlitzBotAnswers(room) {
+  const { game } = room;
+  if (!game || game.gameType !== 'category-blitz' || game.status !== 'in_progress') return;
+
+  clearBlitzBotTimers(room);
+
+  const roundCategory = game.currentCategory;
+  room.players.filter((p) => p.isBot).forEach((bot) => {
+    const offsets = categoryBlitzBot.buildAnswerSchedule(
+      bot.botDifficulty || 'medium',
+      game.roundTimeSeconds
+    );
+    offsets.forEach((delayMs) => {
+      const handle = setTimeout(async () => {
+        // Whole body in try/catch (not just the await): this runs on a timer,
+        // so even a throw in the guards below would otherwise crash the
+        // process. A bot hiccup only costs the bot its beat - the round and
+        // the room carry on - so this logs rather than failing the room.
+        try {
+          // The world may have moved on while we waited (round ended, category
+          // rerolled, game reset, bot removed) - re-check before touching anything.
+          // clearBlitzBotTimers already cancels on those paths; these guards make
+          // a stray timer harmless even if a new cleanup path forgets to.
+          if (!room.game || room.game.gameType !== 'category-blitz') return;
+          if (room.game.status !== 'in_progress') return;
+          if (room.game.currentCategory !== roundCategory) return;
+          if (!room.players.some((p) => p.id === bot.id)) return;
+
+          const gamePlayer = room.game.players.find((p) => p.id === bot.id);
+          if (!gamePlayer) return;
+
+          const answer = categoryBlitzBot.pickAnswer(roundCategory, gamePlayer.answers);
+          if (!answer) return; // no accept-list / nothing left -> the bot blanks this beat
+
+          await handleCategoryAnswer(room, bot.id, answer);
+        } catch (err) {
+          logError('blitz_bot_answer_failed', { roomCode: room.code, playerId: bot.id }, err);
+        }
+      }, delayMs);
+      room.blitzBotTimeouts.push(handle);
+    });
+  });
 }
 
 /* ============================================================= */
@@ -445,22 +577,28 @@ function startImposterRound(room) {
   const { game } = room;
   const roster = game.players.map((gp) => ({ id: gp.id, name: gp.name }));
   room.players.forEach((p) => {
-    if (p.connection.readyState !== 1) return;
-    const isImposter = p.id === game.imposterId;
-    p.connection.send(
-      JSON.stringify({
-        type: 'round_start',
-        payload: {
-          round: game.currentRound,
-          totalRounds: game.rounds,
-          category: isImposter ? game.imposterCategory : game.currentCategory,
-          isImposter,
-          phase: 'answering',
-          timerSeconds: game.answerPhaseSeconds,
-          players: roster,
-        },
-      })
-    );
+    // Per-recipient try/catch, same rationale as broadcastToRoom: one torn-down
+    // socket must not stop the other players from receiving their round.
+    try {
+      if (p.connection.readyState !== 1) return;
+      const isImposter = p.id === game.imposterId;
+      p.connection.send(
+        JSON.stringify({
+          type: 'round_start',
+          payload: {
+            round: game.currentRound,
+            totalRounds: game.rounds,
+            category: isImposter ? game.imposterCategory : game.currentCategory,
+            isImposter,
+            phase: 'answering',
+            timerSeconds: game.answerPhaseSeconds,
+            players: roster,
+          },
+        })
+      );
+    } catch (err) {
+      logWarn('round_start_send_failed', { roomCode: room.code, playerId: p.id }, err);
+    }
   });
   scheduleTimerAfterCountdown(room, startImposterAnswerTimer);
 }
@@ -471,7 +609,7 @@ function startImposterAnswerTimer(room) {
   const { game } = room;
   let remaining = game.answerPhaseSeconds;
   room.roundDeadline = Date.now() + remaining * 1000;
-  room.roundTimerInterval = setInterval(() => {
+  room.roundTimerInterval = setInterval(() => guardRoom(room, 'imposter_answer_timer_error', () => {
     remaining -= 1;
     if (remaining <= 0) {
       clearRoundTimer(room);
@@ -479,7 +617,7 @@ function startImposterAnswerTimer(room) {
       return;
     }
     broadcastToRoom(room, { type: 'timer_tick', payload: { secondsRemaining: remaining } });
-  }, 1000);
+  }), 1000);
 }
 
 /** Closes answering, reveals everyone's answers, and opens voting. */
@@ -504,7 +642,7 @@ function startImposterVoteTimer(room) {
   const { game } = room;
   let remaining = game.votePhaseSeconds;
   room.roundDeadline = Date.now() + remaining * 1000;
-  room.roundTimerInterval = setInterval(() => {
+  room.roundTimerInterval = setInterval(() => guardRoom(room, 'imposter_vote_timer_error', () => {
     remaining -= 1;
     if (remaining <= 0) {
       clearRoundTimer(room);
@@ -512,7 +650,7 @@ function startImposterVoteTimer(room) {
       return;
     }
     broadcastToRoom(room, { type: 'timer_tick', payload: { secondsRemaining: remaining } });
-  }, 1000);
+  }), 1000);
 }
 
 /** Tallies votes, broadcasts the reveal, then schedules the next round / game over. */
@@ -522,7 +660,7 @@ function endImposterVotePhase(room) {
   const reveal = imposterWordLogic.endVotePhase(game);
   broadcastToRoom(room, { type: 'vote_results', payload: { ...reveal, phase: 'reveal' } });
 
-  room.roundPauseTimeout = setTimeout(() => {
+  room.roundPauseTimeout = setTimeout(() => guardRoom(room, 'imposter_reveal_pause_error', () => {
     room.roundPauseTimeout = null;
     const next = imposterWordLogic.startNextRound(game);
     if (next === null) {
@@ -533,7 +671,7 @@ function endImposterVotePhase(room) {
     } else {
       startImposterRound(room);
     }
-  }, IMPOSTER_REVEAL_PAUSE_MS);
+  }), IMPOSTER_REVEAL_PAUSE_MS);
 }
 
 /**
@@ -605,28 +743,37 @@ function handleImposterVote(room, connectionId, suspectId) {
 }
 
 /* ============================================================= */
-/* =================  SOLO WORD BOMB BOT OPPONENT  ============= */
+/* ==================  SOLO BOT OPPONENT (ADD/REMOVE)  ========= */
 /* ============================================================= */
 
+// Which bot module builds the roster entry for each game mode. Modes absent
+// here (imposter-word - a bot can't bluff or vote) don't support bots at all.
+const BOT_FACTORY_BY_GAME_TYPE = {
+  'word-bomb': wordBombBot,
+  'category-blitz': categoryBlitzBot,
+};
+
 /**
- * Adds a single bot opponent to a solo Word Bomb room at the requested
- * difficulty. Explicit (player-triggered via add_bot), NOT automatic - a lone
- * player chooses to play a bot rather than one being forced on them. The bot is
- * a normal roster entry with a mock connection, so it renders like any player
- * and submits words through the same path. Its `botDifficulty` is independent of
- * the room's timer difficulty and drives only the bot's speed/miss rate.
+ * Adds a single bot opponent to a solo Word Bomb or Category Blitz room at the
+ * requested difficulty. Explicit (player-triggered via add_bot), NOT automatic -
+ * a lone player chooses to play a bot rather than one being forced on them. The
+ * bot is a normal roster entry with a mock connection, so it renders like any
+ * player and submits through the same path humans use. Its `botDifficulty` is
+ * independent of the room's difficulty setting and drives only the bot's own
+ * behavior (Word Bomb: speed/miss rate; Blitz: answers-per-round and pacing).
  *
- * Guards: word-bomb only, no live game, exactly one human, and no bot already
- * present. Returns { ok } or { error }.
+ * Guards: a bot-supporting mode only, no live game, exactly one human, and no
+ * bot already present. Returns { ok } or { error }.
  */
 function addBot(room, difficulty) {
   if (!room) return { error: 'no_room' };
-  if (room.game && room.game.status === 'in_progress') return { error: 'game_already_started' };
-  if (room.gameType !== 'word-bomb') return { error: 'bot_word_bomb_only' };
+  if (isGameLive(room)) return { error: 'game_already_started' };
+  const botFactory = BOT_FACTORY_BY_GAME_TYPE[room.gameType];
+  if (!botFactory) return { error: 'bot_mode_unsupported' };
   if (room.players.some((p) => p.isBot)) return { error: 'bot_already_added' };
   if (room.players.filter((p) => !p.isBot).length !== 1) return { error: 'bot_solo_only' };
 
-  room.players.push(wordBombBot.createBotPlayer(difficulty));
+  room.players.push(botFactory.createBotPlayer(difficulty));
   return { ok: true };
 }
 
@@ -636,7 +783,7 @@ function addBot(room, difficulty) {
  */
 function removeBot(room) {
   if (!room) return { error: 'no_room' };
-  if (room.game && room.game.status === 'in_progress') return { error: 'game_already_started' };
+  if (isGameLive(room)) return { error: 'game_already_started' };
   room.players = room.players.filter((p) => !p.isBot);
   return { ok: true };
 }
@@ -676,41 +823,67 @@ function maybeScheduleBotMove(room) {
 
   const delayMs = wordBombBot.computeDelayMs(botDifficulty, game.currentTimerSeconds);
   room.botMoveTimeout = setTimeout(async () => {
-    room.botMoveTimeout = null;
-    // The world may have moved on while we waited (turn advanced, game ended,
-    // room torn down) - re-check before touching anything.
-    if (!room.game || room.game.status !== 'in_progress') return;
-    if (getCurrentPlayerId(room.game) !== currentId) return;
-
-    const word = wordBombBot.pickWord(room.game.currentCombo, room.game.usedWords);
-    if (!word) return; // nothing available -> treat as a miss
-
-    // The bot only picks from a curated real-word list, so pre-warm the
-    // dictionary cache: submitWord's validity check then resolves instantly with
-    // no API round-trip, and the word is guaranteed to be accepted.
-    markAsValid(word);
+    // Whole body in try/catch (not just the await) - timer context, so a throw
+    // anywhere in here must never reach uncaughtException. A failed bot move is
+    // just a miss: the running turn timer times the bot out normally.
     try {
+      room.botMoveTimeout = null;
+      // The world may have moved on while we waited (turn advanced, game ended,
+      // room torn down) - re-check before touching anything.
+      if (!room.game || room.game.status !== 'in_progress') return;
+      if (getCurrentPlayerId(room.game) !== currentId) return;
+
+      const word = wordBombBot.pickWord(room.game.currentCombo, room.game.usedWords);
+      if (!word) return; // nothing available -> treat as a miss
+
+      // The bot only picks from a curated real-word list, so pre-warm the
+      // dictionary cache: submitWord's validity check then resolves instantly with
+      // no API round-trip, and the word is guaranteed to be accepted.
+      markAsValid(word);
       await handleWordSubmission(room, currentId, word);
     } catch (err) {
-      console.error('Bot move failed', err);
+      logError('bot_move_failed', { roomCode: room.code, playerId: currentId }, err);
     }
   }, delayMs);
 }
 
-function startGame(room) {
+function startGame(room, opts = {}) {
+  // Double-fire / mid-game restart guard: a second start_game while a game is
+  // LIVE (any unfinished status - see isGameLive) must not silently discard
+  // the running game and re-init it, wiping everyone's progress and firing a
+  // duplicate game_started. The solo PLAY-AGAIN loop is unaffected: it only
+  // refires start_game after the previous game reached status 'finished'
+  // (the leftover-timer teardown below still covers its pending intermission).
+  if (isGameLive(room)) {
+    return { error: 'game_already_started' };
+  }
+
   // Solo Category Blitz: one player racing the clock alone. Auto-detected when
   // a category-blitz room has exactly one player - no separate flag needed from
   // the frontend - and it bypasses the usual 2-player minimum.
   const isSoloCategoryBlitz =
     room.gameType === 'category-blitz' && room.players.length === 1;
 
+  // Daily Challenge (opts.daily): the date-seeded solo Blitz. Solo-only by
+  // design — the board is identical for everyone that day, so it's a personal
+  // race, not a lobby mode (and a bot in the room disqualifies it: roster
+  // size 2 means isSoloCategoryBlitz is false).
+  const wantDaily = opts.daily === true;
+  if (wantDaily && !isSoloCategoryBlitz) {
+    return { error: 'daily_solo_only' };
+  }
+  const daily = wantDaily ? categoryBlitzLogic.dailyInfo() : null;
+
   if (!isSoloCategoryBlitz) {
     // Imposter Word needs at least 3 (a 2-player imposter round is pointless);
-    // the other modes start at the shared 2-player minimum.
+    // T5 modes declare their own minimum; the rest start at the shared
+    // 2-player minimum.
     const minPlayers =
       room.gameType === 'imposter-word'
         ? imposterWordLogic.MIN_PLAYERS_TO_START
-        : MIN_PLAYERS_TO_START;
+        : t5Modes[room.gameType]
+          ? t5Modes[room.gameType].minPlayers
+          : MIN_PLAYERS_TO_START;
     if (room.players.length < minPlayers) {
       return { error: 'not_enough_players' };
     }
@@ -729,15 +902,25 @@ function startGame(room) {
     room.players.map((p) => ({ id: p.id, name: p.name })),
     room.difficultyKey,
     isSoloCategoryBlitz,
-    room.selectedPacks // Category Blitz only: host-selected packs (undefined until set_packs); other modes ignore it
+    room.selectedPacks, // Category Blitz only: host-selected packs (undefined until set_packs); other modes ignore it
+    daily // Category Blitz only: Daily Challenge info ({ dayNumber, dateKey }) or null
   );
   // Stamp the type onto the game so payload builders and submission routing
   // know which mode this in-progress game is, independent of the room.
   room.game.gameType = room.gameType;
   touchRoom(room); // starting a game proves the room is alive
+  logInfo('game_started', {
+    roomCode: room.code,
+    gameType: room.gameType,
+    players: room.players.length,
+  });
   broadcastToRoom(room, {
     type: 'game_started',
-    payload: { difficultyKey: room.difficultyKey, gameType: room.gameType },
+    payload: {
+      difficultyKey: room.difficultyKey,
+      gameType: room.gameType,
+      ...(room.game.daily ? { daily: room.game.daily } : {}),
+    },
   });
 
   if (room.gameType === 'category-blitz') {
@@ -750,6 +933,7 @@ function startGame(room) {
         category: room.game.currentCategory,
         timerSeconds: room.game.roundTimeSeconds,
         rerollsRemaining: room.game.rerollsRemaining,
+        ...(room.game.daily ? { daily: room.game.daily } : {}),
       },
     });
     scheduleTimerAfterCountdown(room, startRoundTimer);
@@ -757,6 +941,9 @@ function startGame(room) {
     // Social deduction: each player gets their OWN round_start (the imposter
     // sees a different prompt), then the answer-phase timer after the countdown.
     startImposterRound(room);
+  } else if (t5Modes[room.gameType]) {
+    // [T5] experimental modes own their opening broadcast + first timer.
+    t5Modes[room.gameType].start(room, t5Helpers);
   } else {
     // Turn-based Word Bomb: send the first turn immediately, delay its timer.
     broadcastToRoom(room, buildTurnUpdatePayload(room));
@@ -787,6 +974,11 @@ async function handleWordSubmission(room, connectionId, word) {
   // Imposter Word answers are public and judged by players - its own handler.
   if (game.gameType === 'imposter-word') {
     return handleImposterAnswer(room, connectionId, word);
+  }
+
+  // [T5] experimental modes route to their own submit handlers.
+  if (t5Modes[game.gameType]) {
+    return t5Modes[game.gameType].handleSubmit(room, connectionId, word, t5Helpers);
   }
 
   if (game.status !== 'in_progress') {
@@ -968,6 +1160,50 @@ function destroyRoom(room) {
   clearRoundTimer(room);
   clearCountdownTimeout(room);
   rooms.delete(room.code);
+  logInfo('room_destroyed', { roomCode: room.code });
+}
+
+/**
+ * Last-resort containment for an unexpected throw on a room's timer/async path
+ * (anything NOT already covered by the WS message handler's try/catch). By the
+ * time this runs the room's game state can't be trusted, so rather than letting
+ * the error reach uncaughtException — which exits the process and kills EVERY
+ * room on the instance — we log it with context, tell the players
+ * (room_closed reason 'server_error'; the frontend routes home with a friendly
+ * notice), and tear this one room down. Blast radius: one room, not the server.
+ */
+function failRoom(room, event, err) {
+  logError(event, { roomCode: room && room.code }, err);
+  if (!room) return;
+  try {
+    broadcastToRoom(room, {
+      type: 'room_closed',
+      payload: { code: room.code, reason: 'server_error' },
+    });
+  } catch {
+    /* broadcast is per-socket safe already; belt and braces */
+  }
+  try {
+    destroyRoom(room);
+  } catch (teardownErr) {
+    // Even if timer cleanup threw, the registry entry MUST go, or the broken
+    // room would sit there failing forever.
+    logError('room_teardown_failed', { roomCode: room.code }, teardownErr);
+    rooms.delete(room.code);
+  }
+}
+
+/**
+ * Runs a timer-driven step for a room; an unexpected throw fails that room
+ * cleanly (see failRoom) instead of crashing the process. Every setInterval /
+ * setTimeout body that mutates game state goes through this.
+ */
+function guardRoom(room, event, fn) {
+  try {
+    fn();
+  } catch (err) {
+    failRoom(room, event, err);
+  }
 }
 
 function removePlayer(room, connectionId) {
@@ -987,9 +1223,12 @@ function removePlayer(room, connectionId) {
 
   touchRoom(room); // a leave (with players remaining) proves the room is alive
 
-  // Reassign host if the host left.
+  // Reassign host if the host left. Never hand the role to a bot (a bot host
+  // can't start/reroll/rematch, bricking the room - reachable because a room
+  // holding a solo player's bot is still joinable by a second human). A
+  // non-bot always exists here: the every-bot case destroyed the room above.
   if (room.hostId === connectionId) {
-    room.hostId = room.players[0].id;
+    room.hostId = (room.players.find((p) => !p.isBot) || room.players[0]).id;
   }
 
   const game = room.game;
@@ -1009,6 +1248,20 @@ function removePlayer(room, connectionId) {
     if (Array.isArray(game.order)) {
       game.order = game.order.filter((id) => id !== connectionId);
     }
+    // If the leaver was the vote phase's last hold-out, the survivors may now
+    // ALL have voted - resolve the phase exactly as the final vote arriving
+    // would have (handleImposterVote's early-end check only runs on votes, so
+    // without this the table stared at a dead clock until the timer expired).
+    if (game.status === 'voting') {
+      const tally = imposterWordLogic.countVotes(game);
+      if (tally.total > 0 && tally.voted >= tally.total) {
+        endImposterVotePhase(room);
+      }
+    }
+  } else if (game && t5Modes[game.gameType]) {
+    // [T5] experimental modes own their mid-game leave semantics (e.g. Fuse
+    // eliminates the leaver and re-lights the fuse if they held the bomb).
+    t5Modes[game.gameType].handleLeave(room, connectionId, t5Helpers);
   } else if (game && game.status === 'in_progress') {
     // Word Bomb: treat the disconnect like the player timing out until
     // eliminated, so the game doesn't hang waiting on someone who left.
@@ -1026,6 +1279,14 @@ function removePlayer(room, connectionId) {
         broadcastToRoom(room, buildTurnUpdatePayload(room));
         startTurnTimer(room);
       }
+    } else if (getActivePlayers(game).length <= 1) {
+      // The leaver wasn't the current player, but their elimination left at
+      // most one player standing. Finish now - otherwise the game sat
+      // in_progress with a lone survivor forced to play out one more turn
+      // against nobody before the win fired.
+      clearTurnTimer(room);
+      advanceTurn(game); // <=1 active -> flips to finished + resolves winnerId
+      broadcastToRoom(room, buildGameOverPayload(room));
     }
   }
 
@@ -1034,8 +1295,8 @@ function removePlayer(room, connectionId) {
 
 /**
  * Idle-room reaper sweep. Deletes every room that has been idle longer than
- * ROOM_IDLE_TTL_MS AND is NOT mid-game (game === null, or a finished game) - an
- * in_progress game is never reaped no matter how long a turn drags. Each reaped
+ * ROOM_IDLE_TTL_MS AND is NOT mid-game (game === null, or a finished game) - a
+ * live game (any unfinished status) is never reaped no matter how long it drags. Each reaped
  * room's still-connected players get a graceful `room_closed` before teardown so
  * a lingering client isn't left hanging. Collects candidates first, then deletes,
  * so we never mutate the Map mid-iteration. Returns the reaped room codes.
@@ -1043,8 +1304,10 @@ function removePlayer(room, connectionId) {
 function reapIdleRooms(now = Date.now()) {
   const stale = [];
   for (const room of rooms.values()) {
-    const midGame = !!room.game && room.game.status === 'in_progress';
-    if (midGame) continue;
+    // Any LIVE game protects the room (see isGameLive) - an in_progress-only
+    // check would let a live Imposter game (which never has that status) or a
+    // Blitz intermission be reaped mid-play.
+    if (isGameLive(room)) continue;
     const idleFor = now - (room.lastActivity || room.createdAt || now);
     if (idleFor >= ROOM_IDLE_TTL_MS) stale.push(room);
   }
@@ -1054,6 +1317,7 @@ function reapIdleRooms(now = Date.now()) {
       payload: { code: room.code, reason: 'idle' },
     });
     destroyRoom(room); // same teardown as the empty-room path
+    logInfo('room_reaped', { roomCode: room.code, players: room.players.length });
   });
   return stale.map((r) => r.code);
 }
@@ -1067,7 +1331,7 @@ function startRoomReaper() {
     try {
       reapIdleRooms();
     } catch (err) {
-      console.error('Room reaper sweep failed', err);
+      logError('reaper_sweep_failed', {}, err);
     }
   }, REAPER_SWEEP_MS);
   if (typeof reaperInterval.unref === 'function') reaperInterval.unref();
@@ -1078,6 +1342,51 @@ function stopRoomReaper() {
     clearInterval(reaperInterval);
     reaperInterval = null;
   }
+}
+
+/**
+ * Display-safe operational stats for the /admin/status endpoint: counts only —
+ * no room codes, player names, or connection objects. Cheap enough to compute
+ * on every request (one pass over the registry).
+ */
+function getRoomStats() {
+  const stats = {
+    rooms: rooms.size,
+    publicRooms: 0,
+    gamesInProgress: 0,
+    players: 0,
+    bots: 0,
+    roomsByGameType: {},
+  };
+  for (const room of rooms.values()) {
+    if (room.isPublic) stats.publicRooms += 1;
+    if (room.game && room.game.status !== 'finished') stats.gamesInProgress += 1;
+    for (const p of room.players) {
+      if (p.isBot) stats.bots += 1;
+      else stats.players += 1;
+    }
+    stats.roomsByGameType[room.gameType] = (stats.roomsByGameType[room.gameType] || 0) + 1;
+  }
+  return stats;
+}
+
+// Test-only: a snapshot of registry size and live timer handles, for the
+// t3-harness leak checks (served by t3-harness/server-wrapper.js on a side
+// port). Counts every non-null timer slot across all rooms so an uncleaned
+// interval/timeout after room teardown shows up as a nonzero delta.
+function _getStatsForTesting() {
+  let timers = 0;
+  let playersTotal = 0;
+  for (const room of rooms.values()) {
+    if (room.turnTimerInterval) timers += 1;
+    if (room.roundTimerInterval) timers += 1;
+    if (room.roundPauseTimeout) timers += 1;
+    if (room.countdownTimeout) timers += 1;
+    if (room.botMoveTimeout) timers += 1;
+    if (Array.isArray(room.blitzBotTimeouts)) timers += room.blitzBotTimeouts.length;
+    playersTotal += room.players.length;
+  }
+  return { rooms: rooms.size, roomTimers: timers, playersTotal };
 }
 
 // Test-only: wipe the room registry between tests so listPublicRooms/quickPlay
@@ -1116,9 +1425,13 @@ module.exports = {
   clearRoundTimer,
   // Room lifecycle safety (foundation for public rooms):
   touchRoom,
+  failRoom,
+  guardRoom,
+  getRoomStats,
   reapIdleRooms,
   startRoomReaper,
   stopRoomReaper,
   MAX_PLAYERS_PER_ROOM,
   _resetRoomsForTesting,
+  _getStatsForTesting,
 };

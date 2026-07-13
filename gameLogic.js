@@ -36,6 +36,14 @@ const DIFFICULTY_PRESETS = {
 const STARTING_LIVES = 3;
 const MIN_PLAYERS_TO_START = 2;
 
+// Hard cap on submitted word length (input hardening). The longest word most
+// dictionaries carry is 45 letters; anything past this is garbage. Without the
+// cap, a multi-KB all-letters string passes the alphabetic check, the
+// Dictionary API call for it fails (over-long URL) and FAILS OPEN, and the
+// blob then lives in usedWords - rebroadcast to every player in EVERY
+// subsequent turn_update.
+const MAX_WORD_LENGTH = 45;
+
 // Curated list of common English letter sequences. A good combo appears in
 // lots of words so it's almost always solvable, but still forces the player
 // to think. Deliberately a mix of 2- and 3-letter sequences to vary the
@@ -395,6 +403,12 @@ async function submitWord(game, rawWord) {
 
   if (word.length < 3) {
     return { accepted: false, reason: 'too_short' };
+  }
+
+  // Reject oversized garbage BEFORE the dictionary call: a huge string would
+  // make that call fail and fail OPEN, accepting the blob into usedWords.
+  if (word.length > MAX_WORD_LENGTH) {
+    return { accepted: false, reason: 'too_long' };
   }
 
   // The core Word Bomb rule: the word must contain the combo anywhere.

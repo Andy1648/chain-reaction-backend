@@ -6,7 +6,11 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node --watch server.js",
-    "test": "node --test gameLogic.test.js roomManager.test.js wordBombBot.test.js"
+    "test": "node --test",
+    "test:coverage": "node --test --experimental-test-coverage",
+    "lint": "eslint .",
+    "format": "prettier --write",
+    "format:check": "prettier --check ."
   },
   "dependencies": {
     "@sentry/node": "^10.61.0",
@@ -24,5 +28,11 @@
     "word-game"
   ],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "eslint": "^9.39.5",
+    "globals": "^17.7.0",
+    "prettier": "^3.9.5"
+  }
 }

@@ -1,0 +1,8 @@
+# Prettier is opt-in per file (npm run format -- <file>); never bulk-reformat.
+node_modules/
+package-lock.json
+gen9.raw.json
+gen9.clean.json
+categoryAnswers/
+botWords.txt
+*.md

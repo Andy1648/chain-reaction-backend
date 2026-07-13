@@ -1,38 +1,33 @@
 # Chain Reaction backend
 
-WebSocket server for the Chain Reaction multiplayer word game (part of WordArcade).
+[![CI](https://github.com/Andy1648/chain-reaction-backend/actions/workflows/ci.yml/badge.svg)](https://github.com/Andy1648/chain-reaction-backend/actions/workflows/ci.yml)
 
-## Status: what's verified vs. what isn't
+WebSocket server for the WordArcade multiplayer word games: Chain Reaction,
+Word Bomb, Category Blitz, and Imposter Word. Deployed on Render; every push
+and PR runs install → lint → test in GitHub Actions.
 
-This was built in a sandboxed environment with **no internet access**, which
-means two things could not be done here and need to happen wherever you
-deploy this:
+## Local setup
 
-- `npm install` has not actually been run against the real npm registry.
-  `package.json` lists the three dependencies (`express`, `cors`, `ws`) but
-  `node_modules` does not exist in this bundle.
-- The server has never been started and no real WebSocket connection has
-  ever been made to it. The networking layer (`server.js`, the WebSocket
-  parts of `roomManager.js`) is untested against a live socket.
-
-**What HAS been verified:** `gameLogic.js` - the actual game rules (chain
-validation, turn order, lives, elimination, the difficulty timer curve) -
-has a full automated test suite (`gameLogic.test.js`, 16 tests, all
-passing) that runs with zero external dependencies using Node's built-in
-test runner. This is deliberately the part most likely to contain logic
-bugs, so it's the part that got the real testing budget.
-
-## Setup
+Requires Node >= 18 (developed on 24). No build step, no global tooling.
 
 ```bash
 npm install
-npm start          # starts the server on port 3001 (or $PORT)
-npm test           # runs the gameLogic test suite
-npm run dev        # starts with auto-restart on file changes
+npm start           # server on port 3001 (or $PORT)
+npm run dev         # same, with auto-restart on file changes
+npm test            # runs every *.test.js via Node's built-in test runner
+npm run lint        # ESLint (correctness rules only)
 ```
 
-Once running, `GET /health` should return `{"status":"ok"}` - check that
-first if anything seems wrong.
+No env vars are required to run: optional keys enable AI answer validation
+and monitoring — see `.env.example`. Once running, `GET /health` should
+return `{"status":"ok"}`; `GET /version` echoes the deployed git commit.
+
+See `CONTRIBUTING.md` for conventions, `T1-ARCHITECTURE.md` and
+`T3-MULTIPLAYER_MAP.md` for architecture maps.
+
+> The protocol tables below cover the original Chain Reaction mode; the
+> newer modes (Word Bomb, Category Blitz, Imposter Word) speak additional
+> message types — `server.js` is the routing table of record.
 
 ## Architecture
 
@@ -94,13 +89,10 @@ are fixed at 3 for all difficulties.
 - If a player disconnects mid-game, they're treated as immediately
   eliminated (rather than the game hanging on their turn forever).
 
-## Next steps
+## Deployment
 
-1. Deploy somewhere with real network access (Railway, Render, etc.) and
-   run `npm install && npm start` there - that's the actual first real
-   test of the networking layer.
-2. Build the frontend (this server has zero opinions about UI - it just
-   speaks the JSON protocol above over a WebSocket).
-3. Report back anything that breaks once it's live - the most likely
-   first issues are probably WebSocket-library API differences if `ws`
-   resolves to a slightly different version than assumed here.
+Live on Render, which runs `npm install && npm start` on every push to the
+deployed branch. `GET /version` echoes `RENDER_GIT_COMMIT` so you can verify
+which commit is actually serving. The frontend lives in the separate
+`wordarcade-frontend` repo and speaks the JSON protocol above over a
+WebSocket.
