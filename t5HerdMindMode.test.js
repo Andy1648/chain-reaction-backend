@@ -18,12 +18,18 @@ function makeGame(names = ['p1', 'p2', 'p3', 'p4'], difficulty = 'medium') {
 
 /* ============================ normalization ============================ */
 
-test('herd-mind: normalizeKey folds case, punctuation, articles, and plurals', () => {
+test('herd-mind: normalizeKey folds case, punctuation, articles, plurals, and spaces', () => {
   assert.equal(herd.normalizeKey('  Pepperoni!  '), 'pepperoni');
   assert.equal(herd.normalizeKey('The Beatles'), herd.normalizeKey('beatle'));
   assert.equal(herd.normalizeKey('DOGS'), herd.normalizeKey('dog'));
-  assert.equal(herd.normalizeKey('a   hot  dog'), 'hot dog');
-  assert.equal(herd.normalizeKey("mac 'n' cheese"), 'mac n cheese');
+  // Space-in-compound answers herd together.
+  assert.equal(herd.normalizeKey('a   hot  dog'), herd.normalizeKey('hotdog'));
+  assert.equal(herd.normalizeKey('ice cream'), herd.normalizeKey('icecream'));
+  assert.equal(herd.normalizeKey('spider man'), herd.normalizeKey('Spider-Man'));
+  // es-plurals converge with their stems.
+  assert.equal(herd.normalizeKey('dishes'), herd.normalizeKey('dish'));
+  assert.equal(herd.normalizeKey('glasses'), herd.normalizeKey('glass'));
+  assert.equal(herd.normalizeKey('boxes'), herd.normalizeKey('box'));
   // Short words keep their trailing s (no false fold on 'gas'/'bus').
   assert.equal(herd.normalizeKey('gas'), 'gas');
 });
@@ -73,7 +79,7 @@ test('herd-mind: countAnswers / allAnswered track the lock progress', () => {
 
 /* ========================== grouping & scoring ========================= */
 
-test('herd-mind: the herd scores (group size - 1) each; loners score zero', () => {
+test('herd-mind: herds score (size - 1), the biggest herd gets +1, loners get zero', () => {
   const game = makeGame(['a', 'b', 'c', 'd', 'e']);
   herd.submitAnswer(game, 'a', 'pepperoni');
   herd.submitAnswer(game, 'b', 'Pepperoni!');
@@ -85,15 +91,46 @@ test('herd-mind: the herd scores (group size - 1) each; loners score zero', () =
   assert.equal(game.status, 'reveal');
   assert.equal(reveal.groups.length, 2);
   assert.equal(reveal.groups[0].playerIds.length, 3, 'biggest herd first');
-  assert.equal(reveal.groups[0].points, 2);
+  assert.equal(reveal.groups[0].points, 3, '(3-1) + biggest-herd bonus');
   assert.equal(reveal.groups[0].answer, 'pepperoni', 'first-submitted raw form displays');
+  assert.equal(reveal.groups[1].points, 1, '(2-1), no bonus for the smaller herd');
+  assert.equal(reveal.doublePoints, false);
 
   const byId = Object.fromEntries(reveal.scores.map((s) => [s.id, s]));
-  assert.equal(byId.a.roundScore, 2);
-  assert.equal(byId.c.roundScore, 2);
+  assert.equal(byId.a.roundScore, 3);
+  assert.equal(byId.c.roundScore, 3);
   assert.equal(byId.d.roundScore, 1);
   assert.equal(byId.e.roundScore, 1);
   assert.equal(reveal.blackSheepId, null, 'no singleton at all');
+});
+
+test('herd-mind: tied biggest herds both take the bonus; the final round pays double', () => {
+  const game = makeGame(['a', 'b', 'c', 'd']);
+  game.currentRound = game.rounds; // the final round
+  herd.submitAnswer(game, 'a', 'cheese');
+  herd.submitAnswer(game, 'b', 'cheese');
+  herd.submitAnswer(game, 'c', 'bacon');
+  herd.submitAnswer(game, 'd', 'bacon');
+
+  const reveal = herd.endRound(game);
+  assert.equal(reveal.doublePoints, true);
+  reveal.groups.forEach((g) => {
+    assert.equal(g.points, 4, '((2-1) + 1 bonus) x2 final-round multiplier');
+  });
+});
+
+test('herd-mind: the no-repeat rule blocks an answer key reused from an earlier round', () => {
+  const game = makeGame(['a', 'b', 'c']);
+  herd.submitAnswer(game, 'a', 'poop');
+  herd.submitAnswer(game, 'b', 'cheese');
+  herd.submitAnswer(game, 'c', 'cheese');
+  herd.endRound(game);
+  herd.startNextRound(game);
+
+  const again = herd.submitAnswer(game, 'a', 'POOPS!'); // same key after folding
+  assert.equal(again.accepted, false);
+  assert.equal(again.reason, 'repeat_answer');
+  assert.equal(herd.submitAnswer(game, 'a', 'onions').accepted, true, 'a fresh answer is fine');
 });
 
 test('herd-mind: the lone unique answer among herds is the black sheep', () => {
@@ -156,7 +193,7 @@ test('herd-mind: startNextRound resets answers and never repeats a prompt', () =
 
 test('herd-mind: the game finishes after the last round; scores accumulate', () => {
   const game = makeGame(['a', 'b', 'c']);
-  // Round 1: a+b herd.
+  // Round 1: a+b herd (biggest, +1 bonus) -> 2 each; c alone -> 0.
   herd.submitAnswer(game, 'a', 'cheese');
   herd.submitAnswer(game, 'b', 'cheese');
   herd.submitAnswer(game, 'c', 'olives');
@@ -166,20 +203,35 @@ test('herd-mind: the game finishes after the last round; scores accumulate', () 
   game.players.forEach((p) => {
     p.answer = null;
   });
-  // Final round: everyone herds.
+  // Final round (double): a+c herd -> (1+1)x2 = 4 each; b alone -> 0.
   herd.submitAnswer(game, 'a', 'dog');
-  herd.submitAnswer(game, 'b', 'dogs');
-  herd.submitAnswer(game, 'c', 'DOG');
+  herd.submitAnswer(game, 'b', 'cat');
+  herd.submitAnswer(game, 'c', 'DOGS');
   herd.endRound(game);
 
   assert.equal(herd.startNextRound(game), null);
   assert.equal(game.status, 'finished');
-  assert.equal(game.winnerId, 'a', 'a: 1+2 beats c: 0+2');
+  assert.equal(game.winnerId, 'a', 'a: 2+4 beats c: 0+4 and b: 2+0');
 
   const results = herd.getResults(game);
+  assert.deepEqual(results.winnerIds, ['a']);
   assert.equal(results.finalScores[0].id, 'a');
-  assert.equal(results.finalScores[0].score, 3);
-  assert.equal(results.finalScores.at(-1).id, 'c');
+  assert.equal(results.finalScores[0].score, 6);
+  assert.equal(results.finalScores.at(-1).id, 'b');
+});
+
+test('herd-mind: a score tie is a shared win, never a join-order coin flip', () => {
+  const game = makeGame(['a', 'b', 'c']);
+  game.currentRound = game.rounds;
+  herd.submitAnswer(game, 'a', 'cheese');
+  herd.submitAnswer(game, 'b', 'cheese');
+  herd.submitAnswer(game, 'c', 'olives');
+  herd.endRound(game);
+  herd.startNextRound(game);
+
+  assert.equal(game.winnerId, null, 'no single winner on a tie');
+  assert.deepEqual(game.winnerIds, ['a', 'b'], 'both leaders share the win');
+  assert.deepEqual(herd.getResults(game).winnerIds, ['a', 'b']);
 });
 
 /* ==================== integration via roomManager ===================== */

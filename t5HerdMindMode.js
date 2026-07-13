@@ -102,11 +102,14 @@ const PROMPTS = [
 ];
 
 /**
- * Normalizes an answer into its herd-matching key: lowercase, trimmed,
- * punctuation stripped, whitespace collapsed, leading article dropped, and a
- * naive plural fold (trailing 's' when longer than 3 chars) so "dogs" herds
- * with "dog". The fold is applied consistently to every answer, so grouping
- * stays correct even when the folded form isn't itself a word.
+ * Normalizes an answer into its herd-matching key: lowercase, punctuation
+ * stripped, leading article dropped, plurals folded (an es-fold for
+ * sh/ch/ss/x/z stems, then the naive trailing-s fold), and finally ALL
+ * spaces removed - so "hot dog" herds with "hotdog", "dishes" with "dish",
+ * and "glasses" with "glass". Folds are applied identically to every answer,
+ * so grouping stays consistent even when a folded form isn't itself a word.
+ * (A false merge between different real answers is far rarer - and far
+ * cheaper - than a false MISS that robs a herd at the reveal.)
  */
 function normalizeKey(rawAnswer) {
   let key = String(rawAnswer)
@@ -115,8 +118,11 @@ function normalizeKey(rawAnswer) {
     .replace(/\s+/g, ' ')
     .trim();
   key = key.replace(/^(the|a|an) /, '');
+  // Plural folds: "dishes"->"dish", "boxes"->"box"; then "glasses"->"glass"
+  // ->"glas" exactly like bare "glass"->"glas", so both spellings converge.
+  if (key.length > 4 && /(sh|ch|ss|x|z)es$/.test(key)) key = key.slice(0, -2);
   if (key.length > 3 && key.endsWith('s')) key = key.slice(0, -1);
-  return key;
+  return key.replace(/ /g, '');
 }
 
 /** Picks a random prompt not already used this game. */
@@ -146,19 +152,26 @@ function createGame(players, difficultyKey) {
       id: p.id,
       name: p.name,
       answer: null, // { raw, key } once locked this round
+      usedKeys: new Set(), // every key this player has played this GAME (no-repeat rule)
       score: 0, // cumulative
       sheepCount: 0, // times branded the black sheep
     })),
-    winnerId: null,
+    winnerId: null, // single winner, or null on a shared win (see winnerIds)
+    winnerIds: [],
   };
 }
 
 /**
  * Locks in a player's ONE answer for the round. First submission wins - no
  * edits (the lock is what makes the early phase end safe and the reveal
- * honest). Returns { accepted: true, answer, playerId } or
+ * honest). The NO-REPEAT rule rejects any answer whose key this player
+ * already played in an earlier round: it kills the lazy exploits in one
+ * check (a troll can't be the "poop" sheep five rounds running, and a
+ * whisper-pact can't farm the same agreed word all game) and pushes
+ * everyone toward breadth. Returns { accepted: true, answer, playerId } or
  * { accepted: false, reason, playerId } with reason one of
- * 'wrong_phase' | 'not_in_game' | 'too_short' | 'already_answered'.
+ * 'wrong_phase' | 'not_in_game' | 'too_short' | 'already_answered'
+ * | 'repeat_answer'.
  */
 function submitAnswer(game, playerId, rawAnswer) {
   if (game.status !== 'answering') {
@@ -176,8 +189,12 @@ function submitAnswer(game, playerId, rawAnswer) {
   if (player.answer !== null) {
     return { accepted: false, reason: 'already_answered', playerId };
   }
+  if (player.usedKeys.has(key)) {
+    return { accepted: false, reason: 'repeat_answer', playerId };
+  }
 
   player.answer = { raw, key };
+  player.usedKeys.add(key);
   return { accepted: true, answer: raw, playerId };
 }
 
@@ -195,12 +212,15 @@ function allAnswered(game) {
 
 /**
  * Closes the round and resolves the herd. Answers are grouped by normalized
- * key; every player scores (their group size - 1), so a 4-strong herd pays
- * +3 each and a unique answer pays nothing. If EXACTLY ONE player ended up
- * alone while every other answerer found a group, they're the BLACK SHEEP
- * (flavor + tally; no extra penalty - zero points already hurts). Players
- * who never answered score zero and can't be the sheep (blanking isn't
- * bleating). Flips status to 'reveal' and returns the full reveal snapshot.
+ * key; every player scores (their group size - 1), the BIGGEST herd(s) pay
+ * one bonus point on top (the obvious answer is a race with a winner, not a
+ * flat payout - and it prices out two-player pacts at bigger tables), and
+ * the FINAL round pays double so trailing players stay live to the end. If
+ * EXACTLY ONE player ended up alone while at least one herd formed, they're
+ * the BLACK SHEEP (flavor + tally; no extra penalty - zero points already
+ * hurts). Players who never answered score zero and can't be the sheep
+ * (blanking isn't bleating). Flips status to 'reveal' and returns the full
+ * reveal snapshot.
  */
 function endRound(game) {
   // key -> { displayAnswer, playerIds }; display is the first-submitted raw form.
@@ -213,10 +233,17 @@ function endRound(game) {
     groups.get(p.answer.key).playerIds.push(p.id);
   });
 
-  // Score: group size - 1 per member.
+  // Score: (group size - 1) per member, +1 for the biggest herd(s), all
+  // doubled in the final round.
+  const doublePoints = game.currentRound === game.rounds;
+  const multiplier = doublePoints ? 2 : 1;
+  const biggestHerd = Math.max(0, ...[...groups.values()].map((g) => g.playerIds.length));
   const roundScoreById = new Map();
   for (const group of groups.values()) {
-    const points = group.playerIds.length - 1;
+    const size = group.playerIds.length;
+    const bonus = size >= 2 && size === biggestHerd ? 1 : 0;
+    const points = (size - 1 + bonus) * multiplier;
+    group.points = points;
     group.playerIds.forEach((id) => roundScoreById.set(id, points));
   }
   game.players.forEach((p) => {
@@ -239,11 +266,12 @@ function endRound(game) {
   return {
     round: game.currentRound,
     prompt: game.currentPrompt,
+    doublePoints,
     groups: groupList
       .map((g) => ({
         answer: g.answer,
         playerIds: g.playerIds,
-        points: g.playerIds.length - 1,
+        points: g.points,
       }))
       .sort((a, b) => b.playerIds.length - a.playerIds.length),
     noAnswerIds: game.players.filter((p) => p.answer === null).map((p) => p.id),
@@ -257,17 +285,16 @@ function endRound(game) {
   };
 }
 
-/** Highest cumulative score wins; ties break to the earlier-joined player. */
-function determineWinner(game) {
-  let winnerId = null;
-  let best = -1;
-  game.players.forEach((p) => {
-    if (p.score > best) {
-      best = p.score;
-      winnerId = p.id;
-    }
-  });
-  return winnerId;
+/**
+ * Highest cumulative score wins - SHARED. A tie is a shared win (winnerIds
+ * holds every leader; winnerId is the single winner or null on a tie), never
+ * a hidden join-order coin flip.
+ */
+function resolveWinners(game) {
+  const best = Math.max(0, ...game.players.map((p) => p.score));
+  const winnerIds = game.players.filter((p) => p.score === best).map((p) => p.id);
+  game.winnerIds = winnerIds;
+  game.winnerId = winnerIds.length === 1 ? winnerIds[0] : null;
 }
 
 /**
@@ -278,7 +305,7 @@ function determineWinner(game) {
 function startNextRound(game) {
   if (game.currentRound >= game.rounds) {
     game.status = 'finished';
-    game.winnerId = determineWinner(game);
+    resolveWinners(game);
     return null;
   }
 
@@ -299,7 +326,7 @@ function startNextRound(game) {
   };
 }
 
-/** Final results: winner + scoreboard (score desc, join order on ties). */
+/** Final results: winner(s) + scoreboard (score desc, join order for display). */
 function getResults(game) {
   const finalScores = game.players
     .map((p, index) => ({
@@ -311,7 +338,7 @@ function getResults(game) {
     }))
     .sort((a, b) => b.score - a.score || a._order - b._order)
     .map(({ _order, ...rest }) => rest);
-  return { winnerId: game.winnerId, finalScores };
+  return { winnerId: game.winnerId, winnerIds: [...game.winnerIds], finalScores };
 }
 
 /* ============================== ORCHESTRATOR ============================== */
@@ -439,7 +466,7 @@ function handleLeave(room, connectionId, helpers) {
   if (game.players.length < 2) {
     helpers.clearRoundTimer(room);
     game.status = 'finished';
-    game.winnerId = determineWinner(game);
+    resolveWinners(game);
     helpers.broadcastToRoom(room, {
       type: 'game_over',
       payload: { gameType: 'herd-mind', ...getResults(game) },
@@ -472,6 +499,6 @@ module.exports = {
   allAnswered,
   endRound,
   startNextRound,
-  determineWinner,
+  resolveWinners,
   getResults,
 };
