@@ -31,13 +31,15 @@ const MIN_WORD_LENGTH = 3;
 // Difficulty sets only the round clock - the rack and scoring never change.
 const TIME_BY_DIFFICULTY = { easy: 40, medium: 30, hard: 20 };
 
-// Points by word length: len - 2, except a full-rack STORM which pays 10
-// (5 base + 5 bonus). Finding threes fast is a valid strategy, but one storm
-// outscores ten of them landing every few seconds.
-const STORM_BONUS = 5;
+// Points by word length - deliberately NONLINEAR. A linear len-2 curve made
+// 3/4-letter spam the dominant strategy on points-per-second (find-time grows
+// superlinearly with length while linear points don't): review math put
+// 4-letter spam at ~0.55 pts/s vs ~0.33 for hunting fives. This curve makes a
+// 5 worth four 3s and a full-rack STORM a genuine jackpot, so hunting long
+// words beats hoovering short ones.
+const POINTS_BY_LENGTH = { 3: 1, 4: 2, 5: 4, 6: 7, 7: 12 };
 function scoreForWord(word) {
-  const base = word.length - 2;
-  return word.length === RACK_SIZE ? base + STORM_BONUS : base;
+  return POINTS_BY_LENGTH[word.length] || Math.max(1, word.length - 2);
 }
 
 // How many unfound words to reveal at round end (longest first) so players
@@ -108,12 +110,24 @@ function shuffled(arr) {
  * uppercase letters plus the precomputed solution set. `excludeSet` holds the
  * source words already played this game so racks never repeat.
  */
+// A rack below this many total solutions is a dead round for everyone (the
+// corpus's worst sources yield ~11 words vs ~199 for the richest). buildRack
+// rerolls a few times for a rack over the floor, keeping the best fallback.
+const RACK_MIN_SOLUTIONS = 25;
+const RACK_BUILD_ATTEMPTS = 6;
+
 function buildRack(excludeSet) {
   loadCorpus();
   const pool = excludeSet ? RACK_SOURCES.filter((w) => !excludeSet.has(w)) : RACK_SOURCES;
   const choices = pool.length ? pool : RACK_SOURCES;
-  const source = choices[Math.floor(Math.random() * choices.length)];
-  return buildRackFromSource(source);
+  let best = null;
+  for (let i = 0; i < RACK_BUILD_ATTEMPTS; i += 1) {
+    const source = choices[Math.floor(Math.random() * choices.length)];
+    const rack = buildRackFromSource(source);
+    if (!best || rack.solutions.size > best.solutions.size) best = rack;
+    if (best.solutions.size >= RACK_MIN_SOLUTIONS) break;
+  }
+  return best;
 }
 
 /** Deterministic rack construction from a given source word (also the test hook). */
@@ -381,6 +395,15 @@ function handleSubmit(room, connectionId, word, helpers) {
         wordCount: player ? player.answers.length : 0,
       },
     });
+    // A full-rack STORM is the mode's signature moment - announce it the
+    // instant it lands (name only; the word itself stays secret until the
+    // reveal) so the room erupts in real time instead of at round end.
+    if (result.word.length === RACK_SIZE) {
+      helpers.broadcastToRoom(room, {
+        type: 'storm',
+        payload: { playerId: connectionId, playerName: player ? player.name : 'Someone' },
+      });
+    }
   }
 
   return { result };
@@ -410,7 +433,8 @@ module.exports = {
   TOTAL_ROUNDS,
   RACK_SIZE,
   MIN_WORD_LENGTH,
-  STORM_BONUS,
+  POINTS_BY_LENGTH,
+  RACK_MIN_SOLUTIONS,
   TIME_BY_DIFFICULTY,
   MISSED_REVEAL_COUNT,
   scoreForWord,

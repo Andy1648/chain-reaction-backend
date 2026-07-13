@@ -68,11 +68,12 @@ test('letter-storm: canBuildFromRack respects letter multiplicity', () => {
   assert.equal(storm.canBuildFromRack('zoo', counts), false, 'no o at all');
 });
 
-test('letter-storm: scoreForWord pays len-2 with a full-rack storm bonus', () => {
+test('letter-storm: scoring is nonlinear so long words beat short-word spam', () => {
   assert.equal(storm.scoreForWord('rot'), 1);
   assert.equal(storm.scoreForWord('goat'), 2);
-  assert.equal(storm.scoreForWord('store'), 3);
-  assert.equal(storm.scoreForWord('storage'), 5 + storm.STORM_BONUS);
+  assert.equal(storm.scoreForWord('store'), 4, 'a five is worth four threes');
+  assert.equal(storm.scoreForWord('gators'), 7);
+  assert.equal(storm.scoreForWord('storage'), 12, 'the STORM jackpot');
 });
 
 /* ============================== createGame ============================== */
@@ -103,10 +104,10 @@ test('letter-storm: accepted words record points and raise the score', () => {
   assert.equal(goat.points, 2);
 
   const full = storm.submitAnswer(game, 'p1', 'storage');
-  assert.equal(full.points, 10, 'storm bonus applied');
+  assert.equal(full.points, 12, 'storm jackpot applied');
 
   const p1 = game.players[0];
-  assert.equal(p1.score, 12);
+  assert.equal(p1.score, 14);
   assert.equal(p1.answers.length, 2);
 });
 
@@ -146,7 +147,7 @@ test('letter-storm: endRound reveals words, per-round scores, and best misses', 
   assert.equal(game.status, 'between_rounds');
   assert.equal(reveal.rackSource, 'storage');
   assert.equal(reveal.playerResults[0].roundScore, 2);
-  assert.equal(reveal.playerResults[1].roundScore, 10);
+  assert.equal(reveal.playerResults[1].roundScore, 12);
   assert.ok(!reveal.missedWords.includes('goat'), 'found words are not "missed"');
   assert.ok(!reveal.missedWords.includes('storage'));
   assert.ok(reveal.missedWords.includes('gators'), 'unfound solutions are revealed');
@@ -180,7 +181,7 @@ test('letter-storm: the game finishes after the last round with the top scorer w
   assert.equal(game.winnerId, 'p2');
   const board = storm.getScoreboard(game);
   assert.equal(board[0].id, 'p2');
-  assert.equal(board[0].score, 10);
+  assert.equal(board[0].score, 12);
 });
 
 test('letter-storm: a score tie breaks to the earlier-joined player', () => {
@@ -258,7 +259,23 @@ test('letter-storm: submissions are private, progress is a broadcast count', asy
   assert.equal(rejected.result.accepted, false);
   assert.equal(rejected.result.reason, 'not_in_rack');
 
+  // A full-rack word erupts as a live STORM broadcast (name only, no word).
+  await roomManager.handleWordSubmission(room, 'guest', 'storage');
+  const stormMsg = host.messages.find((m) => m.type === 'storm');
+  assert.ok(stormMsg, 'storms are announced the instant they land');
+  assert.equal(stormMsg.payload.playerId, 'guest');
+  assert.equal(stormMsg.payload.word, undefined, 'the word itself stays secret');
+
   roomManager._resetRoomsForTesting();
+});
+
+test('letter-storm: buildRack avoids dead racks when richer sources exist', () => {
+  // A corpus with one barren source ('almanac' - triple a, few subwords here)
+  // and one rich source; buildRack should overwhelmingly settle on a rack
+  // meeting the floor or, failing that, the best available.
+  const rack = storm.buildRack();
+  assert.ok(rack.solutions.size >= 1, 'always returns a playable rack');
+  assert.equal(rack.letters.length, storm.RACK_SIZE);
 });
 
 test('letter-storm: a leaver is dropped from the live roster mid-round', () => {
