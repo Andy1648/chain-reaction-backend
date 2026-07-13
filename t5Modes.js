@@ -19,9 +19,10 @@
 
 const fuseMode = require('./t5FuseMode');
 const letterStormMode = require('./t5LetterStormMode');
+const herdMindMode = require('./t5HerdMindMode');
 
 const MODES = {};
-for (const mode of [fuseMode, letterStormMode]) {
+for (const mode of [fuseMode, letterStormMode, herdMindMode]) {
   MODES[mode.gameType] = mode;
 }
 
