@@ -30,6 +30,7 @@ for (const mode of [fuseMode, letterStormMode, herdMindMode]) {
 // already cover. Looked up by humanizeError before its generic fallback.
 const ERROR_MESSAGES = {
   not_holding_bomb: "You're not holding the bomb.",
+  submission_pending: 'Your last word is still being checked - one at a time!',
 };
 
 module.exports = { MODES, ERROR_MESSAGES };

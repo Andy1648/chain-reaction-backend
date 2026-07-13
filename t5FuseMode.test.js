@@ -377,6 +377,59 @@ test('fuse: a leaving holder is eliminated and the bomb moves on (removePlayer)'
   roomManager._resetRoomsForTesting();
 });
 
+test('fuse: shotgunning is blocked - one submission in flight per holder', async () => {
+  const host = makeConnection('host');
+  const guest = makeConnection('guest');
+  const { room } = roomManager.createRoom(host, 'HOST');
+  roomManager.joinRoom(room.code, guest, 'GUEST');
+  room.gameType = 'fuse';
+  roomManager.startGame(room);
+  room.game.currentCombo = 'en';
+
+  // A dictionary slow enough that a second submit arrives mid-flight.
+  let release;
+  fuse._setDictionaryForTesting({
+    isValidWord: () => new Promise((resolve) => {
+      release = () => resolve(true);
+    }),
+  });
+
+  const first = roomManager.handleWordSubmission(room, 'host', 'enter');
+  const second = await roomManager.handleWordSubmission(room, 'host', 'denote');
+  assert.equal(second.error, 'submission_pending', 'parallel guesses are refused');
+
+  release();
+  const settled = await first;
+  assert.equal(settled.result.accepted, true, 'the in-flight word still lands');
+  assert.equal(room.fusePendingSubmit, false, 'the gate reopens after the verdict');
+
+  fuse._setDictionaryForTesting(mockDictionary);
+  roomManager._resetRoomsForTesting();
+});
+
+test('fuse: a buzzer-beater pass relights a fresh fuse for the next holder', async () => {
+  const host = makeConnection('host');
+  const guest = makeConnection('guest');
+  const { room } = roomManager.createRoom(host, 'HOST');
+  roomManager.joinRoom(room.code, guest, 'GUEST');
+  room.gameType = 'fuse';
+  roomManager.startGame(room);
+
+  // Simulate a fuse that fully burned out while the word was being checked.
+  room.fuseMs = 20000;
+  room.fuseLitAt = Date.now() - 21000;
+  const spentLitAt = room.fuseLitAt;
+
+  room.game.currentCombo = 'en';
+  const accepted = await roomManager.handleWordSubmission(room, 'host', 'enter');
+  assert.equal(accepted.result.accepted, true);
+  assert.ok(room.fuseLitAt > spentLitAt, 'a fresh fuse was lit');
+  assert.ok(fuse.burnedFraction(room) < 0.1, 'the new holder does not inherit a spent fuse');
+  assert.ok(room.turnTimerInterval, 'the new fuse is ticking');
+
+  roomManager._resetRoomsForTesting();
+});
+
 test('fuse: an accepted pass records hold stats and flags close calls', async () => {
   const host = makeConnection('host');
   const guest = makeConnection('guest');

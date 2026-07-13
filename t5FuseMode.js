@@ -289,6 +289,12 @@ function eliminatePlayer(game, playerId) {
 
 const FUSE_TICK_MS = 250; // fine-grained so hints and the explosion land close to true
 
+// In-flight submission grace: if the holder's word entered handleSubmit
+// before the deadline, the explosion waits for the dictionary's verdict (up
+// to this long past the deadline) instead of letting network latency decide
+// a death. A reject (or a hung lookup outlasting the grace) still explodes.
+const FUSE_PENDING_GRACE_MS = 3000;
+
 function buildBombUpdatePayload(game) {
   return {
     type: 'bomb_update',
@@ -383,6 +389,13 @@ function startFuse(room, helpers) {
     }
     const burned = (Date.now() - litAt) / fuseMs;
 
+    // A word typed in time deserves its verdict: while the holder's
+    // submission is being dictionary-checked, hold the explosion (bounded by
+    // the grace window so a hung lookup can't stall the game).
+    if (burned >= 1 && room.fusePendingSubmit && Date.now() - (litAt + fuseMs) < FUSE_PENDING_GRACE_MS) {
+      return;
+    }
+
     while (hintLevel < FUSE_HINT_THRESHOLDS.length && burned >= FUSE_HINT_THRESHOLDS[hintLevel]) {
       hintLevel += 1;
       helpers.broadcastToRoom(room, {
@@ -430,12 +443,25 @@ async function handleSubmit(room, connectionId, word, helpers) {
     return { error: 'not_your_turn' };
   }
 
+  // One submission in flight at a time: firing several candidates in
+  // parallel and letting the first valid one win ("shotgunning") would beat
+  // thinking. The next attempt is welcome as soon as this verdict lands.
+  if (room.fusePendingSubmit) {
+    return { error: 'submission_pending' };
+  }
+
   // Judged BEFORE the await: a close call is about when you TYPED it, and the
   // fuse may blow (or the burn fraction move) during the dictionary lookup.
   const heldMs = heldMsNow(room);
   const closeCall = burnedFraction(room) >= FUSE_HINT_THRESHOLDS[FUSE_HINT_THRESHOLDS.length - 1];
 
-  const result = await submitWord(game, word);
+  let result;
+  room.fusePendingSubmit = true; // also holds the explosion (see startFuse)
+  try {
+    result = await submitWord(game, word);
+  } finally {
+    room.fusePendingSubmit = false;
+  }
 
   if (result.accepted) {
     helpers.touchRoom(room);
@@ -446,6 +472,12 @@ async function handleSubmit(room, connectionId, word, helpers) {
     // (the level-3 crackle hint has fired by then).
     helpers.broadcastToRoom(room, { type: 'word_result', payload: { ...result, closeCall } });
     helpers.broadcastToRoom(room, buildBombUpdatePayload(game));
+    // Buzzer-beater: if the fuse burned out while the word was being checked,
+    // the pass still counts (it was typed in time) - but the next player must
+    // not inherit a spent fuse. The save "defuses" it: light a fresh one.
+    if (burnedFraction(room) >= 1) {
+      startFuse(room, helpers);
+    }
   } else {
     const connection = room.players.find((p) => p.id === connectionId)?.connection;
     if (connection && connection.readyState === 1) {
