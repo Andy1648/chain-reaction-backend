@@ -1248,6 +1248,16 @@ function removePlayer(room, connectionId) {
     if (Array.isArray(game.order)) {
       game.order = game.order.filter((id) => id !== connectionId);
     }
+    // If the leaver was the vote phase's last hold-out, the survivors may now
+    // ALL have voted - resolve the phase exactly as the final vote arriving
+    // would have (handleImposterVote's early-end check only runs on votes, so
+    // without this the table stared at a dead clock until the timer expired).
+    if (game.status === 'voting') {
+      const tally = imposterWordLogic.countVotes(game);
+      if (tally.total > 0 && tally.voted >= tally.total) {
+        endImposterVotePhase(room);
+      }
+    }
   } else if (game && t5Modes[game.gameType]) {
     // [T5] experimental modes own their mid-game leave semantics (e.g. Fuse
     // eliminates the leaver and re-lights the fuse if they held the bomb).
