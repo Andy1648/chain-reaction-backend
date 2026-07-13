@@ -74,8 +74,61 @@ function createGame(players, difficultyKey) {
     usedWords: new Set(),
     passCount: 0, // accepted words this game - drives combo difficulty ramp
     bombIndex: 0, // how many bombs have exploded - drives fuse shrink
+    // Elimination order (first-out first) - reversed into the final ranking.
+    eliminationOrder: [],
+    // Game-over screen material. Hold times are measured by the orchestrator
+    // (wall clock lives there) and recorded here via recordHold().
+    stats: {
+      totalPasses: 0,
+      explosions: 0,
+      fastestPassMs: null,
+      fastestPassBy: null,
+      longestHoldMs: 0,
+      longestHoldBy: null,
+    },
     winnerId: null,
   };
+}
+
+/**
+ * Records how long a player held the bomb before passing it ('pass') or
+ * eating it ('explosion'). Pure state-keeping - the orchestrator measures
+ * heldMs, this just folds it into the stats the game-over screen shows.
+ */
+function recordHold(game, playerId, heldMs, kind) {
+  const stats = game.stats;
+  if (!stats || typeof heldMs !== 'number' || heldMs < 0) return;
+  if (kind === 'pass') {
+    stats.totalPasses += 1;
+    if (stats.fastestPassMs === null || heldMs < stats.fastestPassMs) {
+      stats.fastestPassMs = heldMs;
+      stats.fastestPassBy = playerId;
+    }
+  } else if (kind === 'explosion') {
+    stats.explosions += 1;
+  }
+  if (heldMs > stats.longestHoldMs) {
+    stats.longestHoldMs = heldMs;
+    stats.longestHoldBy = playerId;
+  }
+}
+
+/**
+ * Final ranking, winner first, then the eliminated in reverse knockout order
+ * (last player standing beats the last one out, and so on). Players never
+ * formally eliminated (e.g. the game ended with them alive) sort by survival.
+ */
+function buildFinalRanking(game) {
+  const out = [];
+  const eliminated = new Set(game.eliminationOrder);
+  // Survivors first, in seat order with the winner up top.
+  game.players
+    .filter((p) => !eliminated.has(p.id))
+    .sort((a, b) => (b.id === game.winnerId) - (a.id === game.winnerId))
+    .forEach((p) => out.push(p.id));
+  // Then the knocked-out, most recent first.
+  [...game.eliminationOrder].reverse().forEach((id) => out.push(id));
+  return out;
 }
 
 function getHolderId(game) {
@@ -182,7 +235,10 @@ function handleExplosion(game) {
   const player = game.players.find((p) => p.id === holderId);
   if (player) {
     player.lives -= 1;
-    if (player.lives <= 0) player.eliminated = true;
+    if (player.lives <= 0) {
+      player.eliminated = true;
+      game.eliminationOrder.push(player.id);
+    }
   }
 
   game.bombIndex += 1;
@@ -192,6 +248,7 @@ function handleExplosion(game) {
   return {
     explodedPlayerId: holderId,
     eliminated: !!(player && player.eliminated),
+    livesLeft: player ? player.lives : 0,
     finished: game.status === 'finished',
   };
 }
@@ -206,9 +263,10 @@ function handleExplosion(game) {
 function eliminatePlayer(game, playerId) {
   const wasHolder = getHolderId(game) === playerId && game.status === 'in_progress';
   const player = game.players.find((p) => p.id === playerId);
-  if (player) {
+  if (player && !player.eliminated) {
     player.lives = 0;
     player.eliminated = true;
+    game.eliminationOrder.push(player.id);
   }
   if (game.status === 'in_progress') {
     const active = getActivePlayers(game);
@@ -255,9 +313,28 @@ function buildGameOverPayload(game) {
     payload: {
       gameType: 'fuse',
       winnerId: game.winnerId,
+      // Winner first, then the eliminated in reverse knockout order.
+      finalRanking: buildFinalRanking(game),
+      // Game-over screen bragging rights: pass volume, the twitchiest pass,
+      // the longest (most reckless) hold, and how many bombs went off.
+      stats: { ...game.stats },
       usedWords: Array.from(game.usedWords),
     },
   };
+}
+
+/**
+ * How much of the current fuse has burned (0..1+), per the orchestrator's
+ * stamps on the room. NaN-safe: returns 0 until a fuse has been lit.
+ */
+function burnedFraction(room) {
+  if (!room.fuseLitAt || !room.fuseMs) return 0;
+  return (Date.now() - room.fuseLitAt) / room.fuseMs;
+}
+
+/** Marks the moment the current holder received the bomb (for hold stats). */
+function stampHolder(room) {
+  room.fuseHolderSince = Date.now();
 }
 
 /**
@@ -268,6 +345,16 @@ function buildGameOverPayload(game) {
 function start(room, helpers) {
   helpers.broadcastToRoom(room, buildBombUpdatePayload(room.game));
   helpers.scheduleTimerAfterCountdown(room, (r) => startFuse(r, helpers));
+}
+
+/**
+ * The current holder's hold time so far, measured from whichever came later:
+ * receiving the bomb or the fuse being lit (the opening holder's clock only
+ * starts once the countdown ends and the fuse is actually burning).
+ */
+function heldMsNow(room) {
+  const since = Math.max(room.fuseHolderSince || 0, room.fuseLitAt || 0);
+  return since ? Date.now() - since : 0;
 }
 
 /**
@@ -282,6 +369,11 @@ function startFuse(room, helpers) {
   const fuseMs = rollFuseMs(game);
   const litAt = Date.now();
   room.turnDeadline = litAt + fuseMs;
+  // Stamped on the room so handleSubmit can judge close calls and hold times
+  // without ever leaking the fuse length to a client.
+  room.fuseLitAt = litAt;
+  room.fuseMs = fuseMs;
+  stampHolder(room);
   let hintLevel = 0;
 
   room.turnTimerInterval = setInterval(() => {
@@ -293,17 +385,24 @@ function startFuse(room, helpers) {
 
     while (hintLevel < FUSE_HINT_THRESHOLDS.length && burned >= FUSE_HINT_THRESHOLDS[hintLevel]) {
       hintLevel += 1;
-      helpers.broadcastToRoom(room, { type: 'fuse_hint', payload: { level: hintLevel } });
+      helpers.broadcastToRoom(room, {
+        type: 'fuse_hint',
+        // holderId lets the UI shake/smoke the right player card, and dead
+        // players get the same escalating dread as everyone else.
+        payload: { level: hintLevel, holderId: getHolderId(game) },
+      });
     }
 
     if (burned >= 1) {
       helpers.clearTurnTimer(room);
+      recordHold(game, getHolderId(game), heldMsNow(room), 'explosion');
       const result = handleExplosion(game);
       helpers.broadcastToRoom(room, {
         type: 'bomb_exploded',
         payload: {
           playerId: result.explodedPlayerId,
           eliminated: result.eliminated,
+          livesLeft: result.livesLeft,
           nextHolderId: result.finished ? null : getHolderId(game),
         },
       });
@@ -331,11 +430,21 @@ async function handleSubmit(room, connectionId, word, helpers) {
     return { error: 'not_your_turn' };
   }
 
+  // Judged BEFORE the await: a close call is about when you TYPED it, and the
+  // fuse may blow (or the burn fraction move) during the dictionary lookup.
+  const heldMs = heldMsNow(room);
+  const closeCall = burnedFraction(room) >= FUSE_HINT_THRESHOLDS[FUSE_HINT_THRESHOLDS.length - 1];
+
   const result = await submitWord(game, word);
 
   if (result.accepted) {
     helpers.touchRoom(room);
-    helpers.broadcastToRoom(room, { type: 'word_result', payload: result });
+    recordHold(game, connectionId, heldMs, 'pass');
+    stampHolder(room); // the next holder's clock starts now
+    // closeCall marks a pass that landed in the final 10% of the fuse - the
+    // frontend's "CLOSE CALL!" flash. It reveals nothing not already public
+    // (the level-3 crackle hint has fired by then).
+    helpers.broadcastToRoom(room, { type: 'word_result', payload: { ...result, closeCall } });
     helpers.broadcastToRoom(room, buildBombUpdatePayload(game));
   } else {
     const connection = room.players.find((p) => p.id === connectionId)?.connection;
@@ -389,6 +498,9 @@ module.exports = {
   submitWord,
   handleExplosion,
   eliminatePlayer,
+  recordHold,
+  buildFinalRanking,
   buildBombUpdatePayload,
+  burnedFraction,
   _setDictionaryForTesting,
 };

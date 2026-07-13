@@ -186,6 +186,60 @@ test('fuse: rollFuseMs stays inside the difficulty range and shrinks per bomb', 
   }
 });
 
+/* ===================== polish: ranking, stats, juice ==================== */
+
+test('fuse: eliminations are recorded and the final ranking reads winner-first', () => {
+  const game = makeGame(); // p1, p2, p3
+  game.players.forEach((p) => {
+    p.lives = 1; // every explosion is fatal
+  });
+
+  fuse.handleExplosion(game); // p1 out
+  fuse.handleExplosion(game); // p2 out -> p3 wins
+  assert.deepEqual(game.eliminationOrder, ['p1', 'p2']);
+  assert.equal(game.winnerId, 'p3');
+  assert.deepEqual(
+    fuse.buildFinalRanking(game),
+    ['p3', 'p2', 'p1'],
+    'winner, then reverse knockout order'
+  );
+});
+
+test('fuse: a double elimination never double-records (leave after explosion)', () => {
+  const game = makeGame();
+  game.players[0].lives = 1;
+  fuse.handleExplosion(game); // p1 eliminated
+  fuse.eliminatePlayer(game, 'p1'); // then their socket also closes
+  assert.deepEqual(game.eliminationOrder, ['p1']);
+});
+
+test('fuse: recordHold tracks pass volume, the fastest pass, and the longest hold', () => {
+  const game = makeGame();
+  fuse.recordHold(game, 'p1', 4200, 'pass');
+  fuse.recordHold(game, 'p2', 900, 'pass');
+  fuse.recordHold(game, 'p3', 2000, 'pass');
+  fuse.recordHold(game, 'p1', 9000, 'explosion');
+
+  assert.equal(game.stats.totalPasses, 3);
+  assert.equal(game.stats.explosions, 1);
+  assert.equal(game.stats.fastestPassMs, 900);
+  assert.equal(game.stats.fastestPassBy, 'p2');
+  assert.equal(game.stats.longestHoldMs, 9000);
+  assert.equal(game.stats.longestHoldBy, 'p1');
+
+  fuse.recordHold(game, 'p2', -5, 'pass');
+  assert.equal(game.stats.totalPasses, 3, 'garbage hold times are ignored');
+});
+
+test('fuse: burnedFraction is 0 before a fuse is lit and tracks the stamps', () => {
+  const room = {};
+  assert.equal(fuse.burnedFraction(room), 0);
+  room.fuseLitAt = Date.now() - 500;
+  room.fuseMs = 1000;
+  const burned = fuse.burnedFraction(room);
+  assert.ok(burned > 0.4 && burned < 0.7, `~half burned, got ${burned}`);
+});
+
 /* ============================ leaves/quits ============================= */
 
 test('fuse: a leaving non-holder is eliminated without moving the bomb', () => {
@@ -315,7 +369,36 @@ test('fuse: a leaving holder is eliminated and the bomb moves on (removePlayer)'
   roomManager.removePlayer(room, 'b'); // now one player remains -> game over
   assert.equal(room.game.status, 'finished');
   assert.equal(room.game.winnerId, 'c');
-  assert.ok(c.messages.some((m) => m.type === 'game_over' && m.payload.winnerId === 'c'));
+  const over = c.messages.find((m) => m.type === 'game_over');
+  assert.ok(over && over.payload.winnerId === 'c');
+  assert.deepEqual(over.payload.finalRanking, ['c', 'b', 'a']);
+  assert.ok(over.payload.stats, 'game_over carries the stats block');
+
+  roomManager._resetRoomsForTesting();
+});
+
+test('fuse: an accepted pass records hold stats and flags close calls', async () => {
+  const host = makeConnection('host');
+  const guest = makeConnection('guest');
+  const { room } = roomManager.createRoom(host, 'HOST');
+  roomManager.joinRoom(room.code, guest, 'GUEST');
+  room.gameType = 'fuse';
+  roomManager.startGame(room);
+
+  // Simulate a lit fuse at 95% burned, held for ~2s.
+  room.fuseMs = 20000;
+  room.fuseLitAt = Date.now() - 19000;
+  room.fuseHolderSince = Date.now() - 2000;
+
+  room.game.currentCombo = 'en';
+  await roomManager.handleWordSubmission(room, 'host', 'enter');
+
+  const result = guest.messages.find((m) => m.type === 'word_result');
+  assert.equal(result.payload.accepted, true);
+  assert.equal(result.payload.closeCall, true, '95% burned = close call');
+  assert.equal(room.game.stats.totalPasses, 1);
+  assert.ok(room.game.stats.fastestPassMs >= 1900, 'held ~2s before passing');
+  assert.equal(room.game.stats.fastestPassBy, 'host');
 
   roomManager._resetRoomsForTesting();
 });
