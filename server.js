@@ -172,8 +172,20 @@ function leaveCurrentRoom(ws) {
   const code = connectionToRoomCode.get(ws.id);
   if (!code) return;
   const room = getRoom(code);
-  if (room) removePlayer(room, ws.id);
+  // Same containment as the 'close' handler: drop the mapping FIRST so it can
+  // never dangle if removePlayer throws, and wrap removePlayer so a throw on
+  // the OLD room (Word Bomb turn advance, Imposter vote-phase resolve, a T5
+  // plugin's handleLeave) can't abort the in-flight create/join that already
+  // put this socket into a NEW room — which would strand a ghost entry there,
+  // the exact bug this function exists to prevent. failRoom tears the old room
+  // down cleanly instead of leaving a half-mutated/frozen game behind.
   connectionToRoomCode.delete(ws.id);
+  if (!room) return;
+  try {
+    removePlayer(room, ws.id);
+  } catch (err) {
+    failRoom(room, 'room_hop_leave_error', err);
+  }
 }
 
 function send(ws, type, payload) {
@@ -321,9 +333,18 @@ wss.on('connection', (ws) => {
           // leave+rejoin: joinRoom would push a duplicate roster entry, and
           // leaving first would destroy a room you're alone in / churn the
           // host role. Just re-send the confirmation and current roster.
-          if (connectionToRoomCode.get(ws.id) === code && getRoom(code)) {
+          //
+          // Require actual roster membership, not just the mapping: the mapping
+          // can outlive membership (a room reaped/failed can't clean the
+          // server-scoped connectionToRoomCode, and a reaped code can later be
+          // reissued to a different room). Trusting the mapping alone would ack
+          // membership in a room the player isn't in — a silent zombie with no
+          // error to recover from. If they're not really in it, fall through to
+          // joinRoom, which re-adds them or returns a clean error.
+          const currentRoom = connectionToRoomCode.get(ws.id) === code ? getRoom(code) : null;
+          if (currentRoom && currentRoom.players.some((p) => p.id === ws.id)) {
             send(ws, 'room_joined', { code });
-            send(ws, ...Object.values(buildRoomUpdatePayload(getRoom(code))));
+            send(ws, ...Object.values(buildRoomUpdatePayload(currentRoom)));
             return;
           }
 

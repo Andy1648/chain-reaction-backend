@@ -318,6 +318,46 @@ function closeAll(clients) {
   });
 
   // ------------------------------------------------------------------
+  await scenario('S7d: hopping OUT of an in-progress Word Bomb game leaves the old game clean', async () => {
+    // Exercises leaveCurrentRoom's containment path: the old room has a live
+    // game, so removePlayer runs turn-advance / game-over logic. The hop must
+    // both (a) land the hopper cleanly in the new room and (b) resolve the old
+    // game for its survivor without a hang, crash, or ghost entry.
+    const [a, b, dest] = await connectMany(server.url, 3, 'S7d-');
+    try {
+      const oldCode = await a.createRoom();
+      assertEqual(await b.joinRoom(oldCode), 'ok', 'b joins old room');
+      const destCode = await dest.createRoom();
+
+      a.send('start_game');
+      await a.waitFor('turn_update', { timeoutMs: 5000 });
+      b.drainInbox();
+
+      // A abandons the live game by joining a different room (no leave_room).
+      assertEqual(await a.joinRoom(destCode), 'ok', 'hopper lands in destination room');
+
+      // Old room: A is eliminated, leaving B the lone active player, so the
+      // game must finish with B as winner (containment path did the right thing).
+      const over = await b.waitFor('game_over', { timeoutMs: 5000 });
+      assertEqual(over.payload.winnerId, b.id, 'old game resolved to the survivor');
+
+      // Destination room really contains A (roster membership, not just mapping).
+      dest.send('set_difficulty', { difficultyKey: 'hard' });
+      const destUpdate = await a.waitFor('room_update', {
+        timeoutMs: 3000,
+        where: (m) => m.payload.difficultyKey === 'hard',
+      });
+      assert(destUpdate.payload.players.some((p) => p.id === a.id), 'hopper is in destination roster');
+
+      // The same-room ack now works for A in its NEW room.
+      assertEqual(await a.joinRoom(destCode), 'ok', 're-ack in destination room');
+    } finally {
+      closeAll([a, b, dest]);
+      await sleep(200);
+    }
+  });
+
+  // ------------------------------------------------------------------
   await scenario('S8: two clients race for the last slot -> exactly one gets in', async () => {
     const filler = await connectMany(server.url, 7, 'S8-fill');
     const [r1, r2] = await connectMany(server.url, 2, 'S8-race');
