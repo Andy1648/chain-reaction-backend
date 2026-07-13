@@ -63,6 +63,7 @@ const {
   handleImposterVote,
   removePlayer,
   failRoom,
+  getRoomStats,
   broadcastToRoom,
   buildRoomUpdatePayload,
   buildTurnUpdatePayload,
@@ -109,6 +110,36 @@ app.get('/health', (req, res) => {
 
 app.get('/version', (req, res) => {
   res.json({ commit: process.env.RENDER_GIT_COMMIT || 'unknown' });
+});
+
+// Protected operational status endpoint (see ADMIN.md). Enabled ONLY when
+// ADMIN_TOKEN is set; without it the route 404s like any unknown path, so
+// nothing is advertised. Auth: `Authorization: Bearer <token>` header, or
+// `?token=<token>` for a quick browser check. Comparison is timing-safe.
+app.get('/admin/status', (req, res) => {
+  const token = process.env.ADMIN_TOKEN;
+  if (!token) return res.status(404).end();
+  const supplied =
+    (req.headers.authorization || '').replace(/^Bearer\s+/i, '') || req.query.token || '';
+  const a = Buffer.from(String(supplied));
+  const b = Buffer.from(token);
+  if (a.length !== b.length || !crypto.timingSafeEqual(a, b)) {
+    return res.status(403).json({ error: 'forbidden' });
+  }
+  const mem = process.memoryUsage();
+  res.json({
+    status: 'ok',
+    commit: process.env.RENDER_GIT_COMMIT || 'unknown',
+    uptimeSeconds: Math.round(process.uptime()),
+    // Live sockets (includes lobby browsers not yet in any room); the
+    // room-scoped counts below come from the registry itself.
+    connections: wss.clients.size,
+    ...getRoomStats(),
+    memory: {
+      rssMb: Math.round(mem.rss / 1048576),
+      heapUsedMb: Math.round(mem.heapUsed / 1048576),
+    },
+  });
 });
 
 // Explicit Express error middleware (after all routes): report the error to
@@ -230,6 +261,22 @@ wss.on('connection', (ws) => {
   send(ws, 'connected', { id: ws.id });
 
   ws.on('message', async (raw) => {
+    // Global per-socket flood guard FIRST — on the raw frame, before we even
+    // parse. Counting after JSON.parse would let a stream of malformed frames
+    // (e.g. "{") slip the cap entirely: each would draw an uncounted error reply
+    // (a reflected-amplification channel) and an uncapped parse attempt. Over the
+    // cap we drop the frame and notify ONCE per burst (tracked by
+    // _throttleNotified) so our own error replies can't become an amplifier; the
+    // flag resets as soon as the socket is back under the cap.
+    if (!allowMessage(ws)) {
+      if (!ws._throttleNotified) {
+        ws._throttleNotified = true;
+        sendError(ws, humanizeError('rate_limited'));
+      }
+      return;
+    }
+    ws._throttleNotified = false;
+
     let message;
     try {
       message = JSON.parse(raw.toString());
@@ -239,19 +286,6 @@ wss.on('connection', (ws) => {
     }
 
     const { type, payload } = message;
-
-    // Global per-socket flood guard. Over the cap we drop the message and notify
-    // ONCE per burst (tracked by _throttleNotified) so our own error replies
-    // don't themselves become an amplification channel. The flag resets as soon
-    // as the socket is back under the cap.
-    if (!allowMessage(ws)) {
-      if (!ws._throttleNotified) {
-        ws._throttleNotified = true;
-        sendError(ws, humanizeError('rate_limited'), type);
-      }
-      return;
-    }
-    ws._throttleNotified = false;
 
     try {
       switch (type) {
@@ -293,6 +327,13 @@ wss.on('connection', (ws) => {
         // public one if none exist. Reuses joinRoom's guards (race-safe retry
         // inside quickPlay) and the same create throttle as create_room.
         case 'quick_play': {
+          // quick_play joins a public room too, so it shares the join throttle
+          // (it can't target a code, so this isn't a brute-force path — the cap
+          // just bounds join/leave churn symmetrically with join_room).
+          if (!allowJoin(ws)) {
+            sendError(ws, humanizeError('rate_limited'), 'quick_play');
+            return;
+          }
           const name = sanitizeName(payload?.name);
           // Leave BEFORE the search (not after, like create/join): quick_play's
           // candidate scan could otherwise pick the very room the player is
