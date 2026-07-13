@@ -95,19 +95,45 @@ test('all players eliminated at once finishes with NO winner (winnerId null)', (
   assert.equal(game.winnerId, null);
 });
 
-test('advanceTurn survives a turnOrder/players desync (safety counter)', () => {
+test('advanceTurn tolerates turnOrder entries with no matching player (ghost ids)', () => {
   const game = createGame(
     [{ id: 'p1', name: 'A' }, { id: 'p2', name: 'B' }, { id: 'p3', name: 'C' }],
     'medium'
   );
-  // Pathological: turnOrder references players that no longer exist. The
-  // find() returns undefined for them (not eliminated), so the walk stops on
-  // the first ghost rather than looping forever - the invariant under test is
-  // simply "this returns and the game object stays sane".
+  // turnOrder references players that no longer exist. The find() returns
+  // undefined for them (not eliminated), so the walk stops on the first ghost
+  // rather than looping - the invariant is "this returns and stays sane".
   game.turnOrder = ['ghost1', 'ghost2', 'ghost3'];
   advanceTurn(game);
   assert.equal(game.status, 'in_progress', 'three live players - no premature finish');
   assert.ok(game.currentPlayerIndex >= 0 && game.currentPlayerIndex < 3);
+});
+
+test('advanceTurn terminates when turnOrder holds ONLY eliminated players (safety counter)', () => {
+  // The case the safety counter actually guards: every turnOrder entry is an
+  // eliminated-but-existing player, while enough active players exist outside
+  // turnOrder to dodge the <=1-active finish path. Without the counter the
+  // skip-eliminated walk would loop forever; the assertion is that this call
+  // RETURNS (a hang here fails the test by runner timeout) with sane state.
+  const game = createGame(
+    [
+      { id: 'a', name: 'ActiveA' }, { id: 'b', name: 'ActiveB' },
+      { id: 'z1', name: 'OutZ1' }, { id: 'z2', name: 'OutZ2' },
+    ],
+    'medium'
+  );
+  game.players.find((p) => p.id === 'z1').eliminated = true;
+  game.players.find((p) => p.id === 'z2').eliminated = true;
+  game.turnOrder = ['z1', 'z2']; // desync: the active players fell out of the order
+  game.currentPlayerIndex = 0;
+
+  advanceTurn(game);
+
+  assert.equal(game.status, 'in_progress', 'two active players - not a finish');
+  assert.ok(
+    game.currentPlayerIndex >= 0 && game.currentPlayerIndex < game.turnOrder.length,
+    'index stays inside turnOrder bounds'
+  );
 });
 
 /* ============================ end states ================================= */
