@@ -130,6 +130,46 @@ bounded by F1. Full bot-proofing (accounts/CAPTCHA) is out of scope.
 
 ---
 
+## PHASE 4 — Adversarial self-review (red-team pass)
+
+A subagent was tasked with attacking the fixes above. It confirmed the rate
+limiter's memory is hard-bounded (no unbounded `_msgTimes` growth), the
+window math has no off-by-one, `_throttleNotified` doesn't amplify, backward
+clock jumps only tighten (never bypass) the limiter, and non-string/array/object
+names all hit the fallback. It found five real gaps; the top three are now fixed:
+
+### F5 — Malformed-JSON frames bypassed the flood cap — **HIGH** (was live)
+The throttle ran *after* `JSON.parse`, so a stream of non-JSON frames (e.g. `{`)
+never counted against the cap: each drew an uncounted error reply (a reflected
+~40× amplification channel) and an uncapped parse attempt. **Fixed** by moving
+`allowMessage(ws)` to the very top of the handler, before parse. Live proof: 200
+malformed frames now yield exactly 51 replies (50 parse-errors + 1 throttle
+notice), vs 200 before.
+
+### F6 — sanitizeName missed newer bidi/format chars — **MEDIUM**
+`FORMAT_CHARS` omitted the bidi isolates U+2066–2069 (LRI/RLI/FSI/PDI), the
+Arabic letter mark U+061C, and U+180E — all as effective for name-spoofing as the
+overrides that were stripped. **Fixed** by extending the class. Proof:
+`security.test.js` → "strips bidi isolates and the Arabic letter mark".
+
+### F7 — sanitizeName didn't normalize; compat angle brackets survived — **MEDIUM**
+Only literal `<`/`>` were stripped, so fullwidth (U+FF1C/FF1E) and small-form
+(U+FE64/FE65) angle brackets passed through — and a client that NFKC-normalizes a
+name at render time would reconstitute real `<`/`>`. **Fixed** by `normalize('NFKC')`
+*before* stripping, so look-alikes fold to `<`/`>` and are then removed. Proof:
+`security.test.js` → "NFKC-folds compatibility angle brackets, then strips them".
+
+### F8 — quick_play wasn't under the join throttle — **LOW**
+`quick_play` also joins a public room but only hit the global message cap. It
+can't target a code (so it's not an R5 brute-force path), but for symmetry it now
+shares `allowJoin` (bounds join/leave churn). **Fixed** (wiring in `server.js`).
+
+**Residual (accepted, not fixed):** combining-mark "Zalgo" names (a base char +
+stacked U+0300-range marks) remain possible within the 20-char cap. It's a
+rendering nuisance, not injection; blanket-stripping combining marks would break
+legitimate names in Arabic/Indic and other scripts, so it's left to the
+frontend's render layer. See also the Origin / per-answer-floor recommendations.
+
 ## Recommendations (not fixed — documented)
 - **Per-answer floor for Category Blitz** (cheap, optional): a ~150–250 ms
   minimum interval between accepted answers per player would make scripted

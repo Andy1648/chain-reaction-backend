@@ -29,6 +29,12 @@ const BELL = String.fromCharCode(7);
 const ZWSP = String.fromCharCode(0x200b); // zero-width space
 const RTL_OVERRIDE = String.fromCharCode(0x202e); // right-to-left override
 const BOM = String.fromCharCode(0xfeff); // zero-width no-break space
+const RLI = String.fromCharCode(0x2066); // right-to-left isolate (bidi isolate)
+const PDI = String.fromCharCode(0x2069); // pop directional isolate
+const ALM = String.fromCharCode(0x061c); // arabic letter mark
+const FW_LT = String.fromCharCode(0xff1c); // fullwidth '<'
+const FW_GT = String.fromCharCode(0xff1e); // fullwidth '>'
+const SMALL_LT = String.fromCharCode(0xfe64); // small form '<'
 
 // ---- sanitizeName (vector R4: XSS via usernames) --------------------------
 
@@ -58,6 +64,23 @@ test('sanitizeName removes zero-width and bidi formatting characters', () => {
   assert.equal(sanitizeName('ab' + ZWSP + 'cd'), 'abcd');
   assert.equal(sanitizeName('evil' + RTL_OVERRIDE + 'eman'), 'evileman');
   assert.equal(sanitizeName('x' + BOM + 'y'), 'xy');
+});
+
+test('sanitizeName strips bidi isolates and the Arabic letter mark', () => {
+  // U+2066..2069 (isolates) and U+061C spoof text direction just like the
+  // overrides — they must not survive.
+  assert.equal(sanitizeName('A' + RLI + 'B' + PDI + 'C'), 'ABC');
+  assert.equal(sanitizeName('x' + ALM + 'y'), 'xy');
+});
+
+test('sanitizeName NFKC-folds compatibility angle brackets, then strips them', () => {
+  // Fullwidth / small-form angle brackets normalize to real '<'/'>' — which the
+  // sanitizer then removes, so a client that NFKC-normalizes at render time can
+  // never reconstitute injection delimiters.
+  assert.equal(sanitizeName('img' + FW_LT + 'script' + FW_GT), 'imgscript');
+  assert.equal(sanitizeName('a' + SMALL_LT + 'b'), 'ab');
+  // And the sanitized output itself contains no angle bracket even after NFKC.
+  assert.ok(!sanitizeName('x' + FW_LT + 'y').normalize('NFKC').includes('<'));
 });
 
 test('sanitizeName collapses internal whitespace and trims the ends', () => {

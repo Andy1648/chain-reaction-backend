@@ -18,17 +18,30 @@ const DEFAULT_NAME = 'Player';
 // Character classes to strip, built via RegExp() from escaped strings so this
 // source file stays pure ASCII (no hidden control bytes on disk):
 //   - C0 control chars (00-1F), DEL (7F), and C1 controls (80-9F)
-//   - zero-width + LTR/RTL marks (200B-200F), bidi overrides (202A-202E),
-//     word joiner (2060), and zero-width no-break space / BOM (FEFF)
+//   - Arabic letter mark (061C), Mongolian vowel separator (180E), zero-width +
+//     LTR/RTL marks (200B-200F), bidi overrides (202A-202E), word joiner (2060),
+//     bidi isolates LRI/RLI/FSI/PDI (2066-2069), and ZWNBSP / BOM (FEFF).
+//     The isolates and 061C are as effective for name-spoofing as the overrides,
+//     so they must be stripped too.
 // Matching control chars is the whole point here (we strip them), so the
 // no-control-regex lint rule is intentionally disabled for this line.
 // eslint-disable-next-line no-control-regex
 const CONTROL_CHARS = new RegExp('[\\u0000-\\u001F\\u007F-\\u009F]', 'g');
-const FORMAT_CHARS = new RegExp('[\\u200B-\\u200F\\u202A-\\u202E\\u2060\\uFEFF]', 'g');
+const FORMAT_CHARS = new RegExp(
+  '[\\u061C\\u180E\\u200B-\\u200F\\u202A-\\u202E\\u2060\\u2066-\\u2069\\uFEFF]',
+  'g'
+);
 
 function sanitizeName(raw, fallback = DEFAULT_NAME) {
   if (typeof raw !== 'string') return fallback;
   const cleaned = raw
+    // NFKC-normalize FIRST so compatibility look-alikes fold to their canonical
+    // form BEFORE we strip: fullwidth/small-form angle brackets (U+FF1C/FF1E,
+    // U+FE64/FE65) become real '<'/'>' and are then removed — otherwise a client
+    // that normalizes a name at render time would reconstitute the delimiters we
+    // thought we'd stripped. normalize() never throws on content (only on a bad
+    // form arg), so it's safe on any string.
+    .normalize('NFKC')
     .replace(CONTROL_CHARS, '')
     .replace(FORMAT_CHARS, '')
     // Angle brackets: a display name never needs them, and dropping them
