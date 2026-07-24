@@ -315,6 +315,9 @@ function buildTurnUpdatePayload(room) {
     payload: {
       currentPlayerId: getCurrentPlayerId(game),
       timerSeconds: game.currentTimerSeconds,
+      // Single source of truth for the heart count: the tier's starting lives,
+      // so the client draws exactly as many hearts as the game actually grants.
+      maxLives: game.maxLives,
       combo: game.currentCombo,
       usedWords: Array.from(game.usedWords),
       players: game.players.map((p) => ({
@@ -328,11 +331,18 @@ function buildTurnUpdatePayload(room) {
 }
 
 function buildGameOverPayload(room) {
+  const { game } = room;
   return {
     type: 'game_over',
     payload: {
-      winnerId: room.game.winnerId,
-      usedWords: Array.from(room.game.usedWords),
+      winnerId: game.winnerId,
+      usedWords: Array.from(game.usedWords),
+      // Server-authoritative tallies so the summary can show skips and timeouts
+      // as distinct numbers rather than lumping skips in with timeouts.
+      stats: {
+        timeouts: game.timeoutCount || 0,
+        skips: game.skipCount || 0,
+      },
     },
   };
 }

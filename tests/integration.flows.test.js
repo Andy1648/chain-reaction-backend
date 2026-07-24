@@ -106,7 +106,10 @@ test('Word Bomb: full flow from join to game_over with a real timeout eliminatio
     const firstTurn = lastOfType(c, 'turn_update');
     assert.equal(firstTurn.payload.currentPlayerId, alice.id, 'host moves first');
     assert.equal(firstTurn.payload.players.length, 2);
-    assert.ok(firstTurn.payload.players.every((p) => p.lives === 3));
+    // Everyone starts at the tier's maxLives (medium/CRAZY default = 2), and the
+    // turn_update carries maxLives so the client can draw the right heart count.
+    assert.equal(firstTurn.payload.maxLives, 2);
+    assert.ok(firstTurn.payload.players.every((p) => p.lives === firstTurn.payload.maxLives));
   }
 
   // --- several real turns: each current player answers the LIVE combo ---

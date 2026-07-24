@@ -4,6 +4,8 @@
 // get checked repeatedly across games, and the API has no auth/rate-limit
 // info published, so we want to be a good citizen.
 
+const { isDisallowedWord } = require('./wordFilter');
+
 const cache = new Map(); // word (lowercase) -> boolean
 
 const DICTIONARY_API_BASE = 'https://api.dictionaryapi.dev/api/v2/entries/en/';
@@ -25,6 +27,15 @@ async function isValidWord(word) {
   // Words must be alphabetic only - no numbers, spaces, or punctuation.
   // This also blocks people trying to break the chain logic with weird input.
   if (!/^[a-z]+$/.test(normalized)) {
+    return false;
+  }
+
+  // Reject proper nouns / place names / foreign entries up front. The public
+  // dictionary API returns definitions for things like "morocco" and "pagina",
+  // so we can't rely on it to keep them out — see wordFilter.js. This runs
+  // before the cache/network so it's cheap and never fails open.
+  if (isDisallowedWord(normalized)) {
+    cache.set(normalized, false);
     return false;
   }
 

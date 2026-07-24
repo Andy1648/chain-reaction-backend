@@ -60,7 +60,7 @@ test('race: a timeout firing DURING the dictionary await discards the submission
     // No side effects from the discarded word.
     assert.equal(game.usedWords.has('garden'), false, 'the discarded word must not be recorded');
     assert.equal(game.currentCombo, 'gar', 'the combo must not be re-rolled by a discarded submit');
-    assert.equal(p1.lives, 2, 'p1 lost exactly one life (the timeout), not penalised twice');
+    assert.equal(p1.lives, game.maxLives - 1, 'p1 lost exactly one life (the timeout), not penalised twice');
   } finally {
     restoreDict();
   }
@@ -83,7 +83,7 @@ test('no race: a normal submission still accepts and advances the turn exactly o
     assert.equal(game.currentPlayerIndex, 1, 'turn passed to p2');
     assert.equal(game.usedWords.has('garden'), true, 'accepted word is recorded');
     assert.notEqual(game.currentCombo, 'gar', 'a fresh combo is rolled for the next player');
-    assert.equal(p1.lives, 3, 'an accepted word costs no life');
+    assert.equal(p1.lives, game.maxLives, 'an accepted word costs no life');
   } finally {
     restoreDict();
   }

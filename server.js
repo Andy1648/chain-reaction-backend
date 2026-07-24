@@ -412,7 +412,7 @@ wss.on('connection', (ws) => {
             return;
           }
           const key = payload?.difficultyKey;
-          if (!['easy', 'medium', 'hard'].includes(key)) {
+          if (!['chill', 'easy', 'medium', 'hard'].includes(key)) {
             sendError(ws, 'Invalid difficulty.', 'set_difficulty');
             return;
           }
@@ -558,8 +558,14 @@ wss.on('connection', (ws) => {
             return;
           }
           clearTurnTimer(room);
-          const { eliminatedPlayerId } = handleTimeout(room.game);
-          broadcastToRoom(room, { type: 'turn_skipped', payload: { eliminatedPlayerId } });
+          // reason: 'skip' so it's tallied as a skip (not a timeout) in the
+          // summary; playerId/playerName let the client name the skipper in the
+          // live feed even when the skip didn't eliminate them.
+          const { eliminatedPlayerId, playerId, playerName } = handleTimeout(room.game, 'skip');
+          broadcastToRoom(room, {
+            type: 'turn_skipped',
+            payload: { eliminatedPlayerId, playerId, playerName },
+          });
           if (room.game.status === 'finished') {
             broadcastToRoom(room, buildGameOverPayload(room));
           } else {

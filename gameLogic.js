@@ -26,14 +26,20 @@ function _setDictionaryForTesting(mockModule) {
 // Difficulty presets. "decreaseEveryNTurns" means the timer drops by 1
 // second every N completed turns (across all players, not per-player),
 // down to "floorSeconds" as a hard minimum so the game never becomes
-// literally impossible.
+// literally impossible. `lives` is the number of timeouts a player can absorb
+// before elimination, and is the SINGLE SOURCE OF TRUTH for the heart count the
+// client draws (surfaced as `maxLives` in every turn_update). Frontend labels:
+// chill -> CHILL, easy -> HARD, medium -> CRAZY, hard -> HELL.
 const DIFFICULTY_PRESETS = {
-  easy: { startSeconds: 15, decreaseEveryNTurns: 3, floorSeconds: 6 },
-  medium: { startSeconds: 10, decreaseEveryNTurns: 2, floorSeconds: 4 },
-  hard: { startSeconds: 7, decreaseEveryNTurns: 1, floorSeconds: 3 },
+  chill: { startSeconds: 20, decreaseEveryNTurns: 4, floorSeconds: 8, lives: 3 },
+  easy: { startSeconds: 15, decreaseEveryNTurns: 3, floorSeconds: 6, lives: 2 },
+  medium: { startSeconds: 10, decreaseEveryNTurns: 2, floorSeconds: 4, lives: 2 },
+  hard: { startSeconds: 7, decreaseEveryNTurns: 1, floorSeconds: 3, lives: 2 },
 };
 
-const STARTING_LIVES = 3;
+// Fallback only — every preset above carries its own `lives`. Used if a preset
+// somehow lacks the field so createGame never yields a 0-life game.
+const STARTING_LIVES = 2;
 const MIN_PLAYERS_TO_START = 2;
 
 // Hard cap on submitted word length (input hardening). The longest word most
@@ -276,15 +282,19 @@ function pickRandomCombo(excludeCombo, completedTurnCount = 0) {
  */
 function createGame(players, difficultyKey) {
   const difficulty = DIFFICULTY_PRESETS[difficultyKey] || DIFFICULTY_PRESETS.medium;
+  const startingLives = difficulty.lives || STARTING_LIVES;
 
   return {
     status: 'in_progress', // 'in_progress' | 'finished'
     difficultyKey: DIFFICULTY_PRESETS[difficultyKey] ? difficultyKey : 'medium',
     difficulty,
+    // The number of hearts everyone starts with, echoed to clients so the heart
+    // render always matches the actual elimination threshold for this tier.
+    maxLives: startingLives,
     players: players.map((p) => ({
       id: p.id,
       name: p.name,
-      lives: STARTING_LIVES,
+      lives: startingLives,
       eliminated: false,
     })),
     turnOrder: players.map((p) => p.id),
@@ -296,6 +306,10 @@ function createGame(players, difficultyKey) {
     usedWords: new Set(), // every word accepted so far, so none can be reused
     completedTurnCount: 0,
     currentTimerSeconds: difficulty.startSeconds,
+    // Separate tallies so the post-game summary can distinguish a voluntary skip
+    // (player chose to burn a life) from a genuine timeout (ran out the clock).
+    timeoutCount: 0,
+    skipCount: 0,
     winnerId: null,
   };
 }
@@ -352,10 +366,12 @@ function advanceTurn(game) {
 }
 
 /**
- * Called when the current player's turn timer expires with no valid
- * submission. Costs a life and moves to the next player.
+ * Called when the current player's turn ends without a valid submission - either
+ * the timer expired (`reason: 'timeout'`, the default) or the player voluntarily
+ * skipped (`reason: 'skip'`). Both cost a life and advance the turn; the reason
+ * only decides which tally we bump so the summary can report them separately.
  */
-function handleTimeout(game) {
+function handleTimeout(game, reason = 'timeout') {
   const currentPlayerId = getCurrentPlayerId(game);
   const player = game.players.find((p) => p.id === currentPlayerId);
 
@@ -364,6 +380,13 @@ function handleTimeout(game) {
     if (player.lives <= 0) {
       player.eliminated = true;
     }
+  }
+
+  // Attribute the life loss so timeouts and skips stay distinct in the summary.
+  if (reason === 'skip') {
+    game.skipCount = (game.skipCount || 0) + 1;
+  } else {
+    game.timeoutCount = (game.timeoutCount || 0) + 1;
   }
 
   // This player couldn't answer the current combo (timeout OR skip both land here).
@@ -382,6 +405,10 @@ function handleTimeout(game) {
   }
 
   return {
+    // The player who just lost the life (whether they timed out or skipped) - lets
+    // the caller name them in the live feed even when they aren't eliminated.
+    playerId: currentPlayerId,
+    playerName: player ? player.name : null,
     eliminatedPlayerId: player && player.eliminated ? player.id : null,
     comboSwapped,
     combo: game.currentCombo,

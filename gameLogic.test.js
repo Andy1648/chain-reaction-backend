@@ -36,8 +36,10 @@ test('createGame sets up correct initial state', () => {
   const game = makeTwoPlayerGame();
   assert.equal(game.status, 'in_progress');
   assert.equal(game.players.length, 2);
-  assert.equal(game.players[0].lives, 3);
-  assert.equal(game.players[1].lives, 3);
+  // medium (CRAZY) grants 2 lives; maxLives mirrors it as the heart-count source of truth.
+  assert.equal(game.players[0].lives, 2);
+  assert.equal(game.players[1].lives, 2);
+  assert.equal(game.maxLives, 2);
   assert.equal(game.usedWords.size, 0, 'should start with no used words');
   assert.ok(COMBOS.includes(game.currentCombo), 'should start with a combo from the list');
   assert.equal(game.chain, undefined, 'Word Bomb has no chain');
@@ -131,6 +133,32 @@ test('handleTimeout costs a life and does not eliminate above zero', () => {
 
   assert.equal(game.players[0].lives, startingLives - 1);
   assert.equal(game.players[0].eliminated, false, 'should not be eliminated with lives remaining');
+});
+
+test('handleTimeout tallies timeouts and skips separately', () => {
+  const game = makeTwoPlayerGame();
+  handleTimeout(game);          // default reason: timeout (p1)
+  handleTimeout(game, 'skip');  // p2 skips
+  assert.equal(game.timeoutCount, 1, 'one timeout counted');
+  assert.equal(game.skipCount, 1, 'one skip counted');
+});
+
+test('handleTimeout returns the acting player so a skip can be named in the feed', () => {
+  const game = makeTwoPlayerGame();
+  const res = handleTimeout(game, 'skip');
+  assert.equal(res.playerId, 'p1', 'the player who lost the life is reported');
+  assert.equal(res.playerName, 'Alice');
+});
+
+test('CHILL tier grants 20s and 3 lives; HARD/CRAZY/HELL grant 2', () => {
+  const chill = createGame([{ id: 'p1' }, { id: 'p2' }], 'chill');
+  assert.equal(chill.difficulty.startSeconds, 20);
+  assert.equal(chill.maxLives, 3);
+  assert.equal(chill.players[0].lives, 3);
+  for (const key of ['easy', 'medium', 'hard']) {
+    const g = createGame([{ id: 'p1' }, { id: 'p2' }], key);
+    assert.equal(g.maxLives, 2, `${key} should grant 2 lives`);
+  }
 });
 
 test('handleTimeout eliminates a player when lives reach zero', () => {

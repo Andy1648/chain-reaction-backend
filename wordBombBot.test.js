@@ -56,37 +56,63 @@ test('createBotPlayer has a sink connection and unique ids', () => {
   assert.notEqual(a.id, b.id);
 });
 
-// ---- difficulty timing ----------------------------------------------------
+// ---- difficulty timing (absolute humanized reaction, not timer fraction) ---
 
-test('computeDelayMs stays within the difficulty fraction and below the deadline', () => {
-  const timer = 10; // seconds
+test('computeDelayMs samples an absolute reaction inside the difficulty window', () => {
+  // Long timer so the deadline ceiling never bites; delay must reflect the
+  // per-difficulty ABSOLUTE second band, independent of the turn length.
+  const timer = 30;
   for (const key of ['easy', 'medium', 'hard']) {
-    const [lo, hi] = bot.BOT_DIFFICULTY[key].delayFrac;
-    for (let i = 0; i < 200; i++) {
+    const [lo, hi] = bot.BOT_DIFFICULTY[key].delaySec;
+    for (let i = 0; i < 500; i++) {
       const ms = bot.computeDelayMs(key, timer);
-      assert.ok(ms >= 0, 'delay non-negative');
-      assert.ok(ms <= timer * 1000 * hi + 1, `delay <= ${hi} of timer`);
-      // never later than the safety margin before the deadline
-      assert.ok(ms <= timer * 1000 - bot.SAFETY_MARGIN_MS + 1, 'delay under deadline margin');
+      assert.ok(ms >= lo * 1000 - 1, `${key}: ${ms} >= ${lo}s`);
+      assert.ok(ms <= hi * 1000 + 1, `${key}: ${ms} <= ${hi}s`);
     }
     assert.ok(lo < hi);
   }
 });
 
+test('computeDelayMs never fires faster than 1s on ANY difficulty (the medium-bot bug)', () => {
+  for (const key of ['easy', 'medium', 'hard']) {
+    for (let i = 0; i < 500; i++) {
+      // Even with a generous timer, the hard floor holds.
+      assert.ok(bot.computeDelayMs(key, 30) >= bot.MIN_REACTION_MS, `${key} dipped below 1s`);
+    }
+  }
+  assert.equal(bot.MIN_REACTION_MS, 1000);
+});
+
+test('the reaction band matches the balance spec', () => {
+  assert.deepEqual(bot.BOT_DIFFICULTY.easy.delaySec, [4.0, 8.0]);
+  assert.deepEqual(bot.BOT_DIFFICULTY.medium.delaySec, [2.0, 5.0]);
+  assert.deepEqual(bot.BOT_DIFFICULTY.hard.delaySec, [1.0, 2.5]);
+  assert.ok(Math.abs(bot.BOT_DIFFICULTY.easy.miss - 0.15) < 1e-9);
+  assert.ok(Math.abs(bot.BOT_DIFFICULTY.medium.miss - 0.05) < 1e-9);
+  assert.ok(Math.abs(bot.BOT_DIFFICULTY.hard.miss - 0.01) < 1e-9);
+});
+
 test('computeDelayMs caps a very short floor timer to a safe margin', () => {
-  // 3s timer, "easy" can want up to 70% (2100ms) but the 900ms margin caps it.
-  const ms = bot.computeDelayMs('easy', 3);
-  assert.ok(ms <= 3000 - bot.SAFETY_MARGIN_MS + 1, `expected <= 2100, got ${ms}`);
+  // On a 7s HELL room a slow easy bot (up to 8s) must still land before timeout.
+  for (let i = 0; i < 200; i++) {
+    const ms = bot.computeDelayMs('easy', 7);
+    assert.ok(ms <= 7000 - bot.SAFETY_MARGIN_MS + 1, `expected <= 6100, got ${ms}`);
+  }
 });
 
 test('rollMiss returns a boolean and unknown difficulty falls back to medium', () => {
   assert.equal(typeof bot.rollMiss('hard'), 'boolean');
   assert.equal(typeof bot.rollMiss('nonsense'), 'boolean');
-  assert.deepEqual(bot.BOT_DIFFICULTY.medium.delayFrac.length, 2);
+  assert.deepEqual(bot.BOT_DIFFICULTY.medium.delaySec.length, 2);
 });
 
-test('word list loads and is sizable', () => {
+test('word list loads, is sizable, and excludes proper nouns / place names', () => {
   const words = bot._loadWords();
   assert.ok(words.length > 10000, `expected a big list, got ${words.length}`);
   assert.ok(words.every((w) => /^[a-z]+$/.test(w) && w.length >= 3));
+  // The bot must never be able to play a filtered proper noun.
+  const wordSet = new Set(words);
+  for (const banned of ['morocco', 'london', 'paris', 'canada', 'google']) {
+    assert.ok(!wordSet.has(banned), `bot pool still contains "${banned}"`);
+  }
 });
