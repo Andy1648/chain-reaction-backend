@@ -507,7 +507,22 @@ async function submitAnswer(game, playerId, rawAnswer, opts = {}) {
   const validAnswers = CATEGORY_ANSWERS[game.currentCategory];
   const onAcceptList = !!validAnswers && validAnswers.has(normalized);
 
-  if (!onAcceptList) {
+  // Stage 1.5: compound leniency. The head noun of an English compound is its
+  // LAST word - "socket wrench" IS a wrench, "ball-peen hammer" IS a hammer - so
+  // a multi-word answer whose head word is itself a listed answer is clearly
+  // in-category. Accept it without troubling the AI judge, which was wrongly
+  // rejecting these valid compounds with "doesn't fit the category". Using the
+  // head word (not any word) keeps "apple pie" out of a Fruits round.
+  let compoundHeadHit = false;
+  if (!onAcceptList && validAnswers) {
+    const tokens = normalized.split(/\s+/).filter(Boolean);
+    if (tokens.length >= 2) {
+      const head = tokens[tokens.length - 1];
+      compoundHeadHit = head.length >= 3 && validAnswers.has(head);
+    }
+  }
+
+  if (!onAcceptList && !compoundHeadHit) {
     // Stage 2: Haiku AI fallback. Judges creative/uncommon answers that aren't
     // on the list. Only runs when an API key is configured; otherwise we stay in
     // list-only mode and ACCEPT the miss (no judge available to fairly reject it).
