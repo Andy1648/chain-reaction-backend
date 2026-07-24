@@ -73,6 +73,92 @@ test('createRoom coerces a truthy non-bool isPublic to a real boolean', () => {
   assert.strictEqual(room.isPublic, true);
 });
 
+// ---- Word Bomb turn-timer expiries (fake timers) --------------------------
+
+// A recording connection: captures every broadcast frame it receives so a test
+// can inspect the exact wire sequence the client would see.
+function recordingConn(id) {
+  const received = [];
+  return {
+    id,
+    readyState: 1,
+    received,
+    send(raw) {
+      try {
+        received.push(JSON.parse(raw));
+      } catch {
+        /* ignore non-JSON */
+      }
+    },
+  };
+}
+
+test('real turn-timer expiries cost exactly one life each, and the eliminating expiry sends the final lives=0 turn_update BEFORE game_over', () => {
+  // Drives the ACTUAL bomb-timer path (startTurnTimer's setInterval), not
+  // handleTimeout in isolation - this is the path that was suspected of
+  // double-decrementing and the one whose finish was missing a final frame.
+  test.mock.timers.enable({ apis: ['setTimeout', 'setInterval'] });
+  try {
+    const host = recordingConn('host');
+    const { room } = createRoom(host, 'Host');
+    const p2 = recordingConn('p2');
+    joinRoom(room.code, p2, 'P2');
+    room.difficultyKey = 'chill'; // 3 lives, 20s turns
+    startGame(room); // broadcasts game_started + the opening turn_update, then a 3s countdown
+
+    // Never submit for anyone -> every turn ends in a real timer expiry. Tick 1s
+    // at a time so each interval fires once and nested timers (the next turn's
+    // freshly-created interval) step cleanly instead of cascading in one jump.
+    let guard = 0;
+    const isOver = () => host.received.some((m) => m.type === 'game_over');
+    while (!isOver() && guard++ < 500) {
+      test.mock.timers.tick(1000);
+    }
+    assert.ok(isOver(), 'the game should finish purely via timer expiries');
+
+    const frames = host.received;
+    const types = frames.map((m) => m.type);
+
+    // (1) Each turn_update's TOTAL remaining lives never drops by more than 1
+    // between frames - i.e. a single expiry decrements exactly once, never twice.
+    let prevTotal = null;
+    for (const m of frames) {
+      if (m.type !== 'turn_update') continue;
+      const total = m.payload.players.reduce((s, p) => s + Math.max(0, p.lives), 0);
+      if (prevTotal !== null) {
+        const drop = prevTotal - total;
+        assert.ok(drop === 0 || drop === 1, `life total dropped by ${drop} in one step (double-decrement?)`);
+      }
+      prevTotal = total;
+    }
+
+    // (2) The eliminated player is knocked out only when their lives hit 0, and
+    // a 3-life player therefore absorbs exactly 3 expiries.
+    const eliminatedId = frames.find((m) => m.type === 'game_over')?.payload?.winnerId === 'host' ? 'p2' : 'host';
+    const eliminatedLivesSeq = frames
+      .filter((m) => m.type === 'turn_update')
+      .map((m) => m.payload.players.find((p) => p.id === eliminatedId)?.lives)
+      .filter((v, i, a) => v !== a[i - 1]); // collapse repeats
+    assert.deepEqual(eliminatedLivesSeq, [3, 2, 1, 0], `eliminated player lives should step 3->2->1->0, got ${eliminatedLivesSeq}`);
+
+    // (3) THE FIX: a turn_update carrying the eliminated player's final
+    // lives=0 / eliminated=true is broadcast immediately BEFORE game_over (so the
+    // client renders 0 hearts and counts the final loss instead of freezing).
+    const goIdx = types.lastIndexOf('game_over');
+    let finalTU = null;
+    for (let i = goIdx - 1; i >= 0; i--) {
+      if (frames[i].type === 'turn_update') { finalTU = frames[i]; break; }
+    }
+    assert.ok(finalTU, 'a turn_update must precede game_over');
+    const dead = finalTU.payload.players.find((p) => p.eliminated);
+    assert.ok(dead, 'the pre-game_over turn_update carries the eliminated player');
+    assert.equal(dead.lives, 0, "the eliminated player's final lives must be 0, not a stale 1");
+  } finally {
+    test.mock.timers.reset();
+    _resetRoomsForTesting();
+  }
+});
+
 // ---- listPublicRooms filtering -------------------------------------------
 
 test('listPublicRooms returns only public, waiting, not-full rooms', () => {

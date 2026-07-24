@@ -374,10 +374,17 @@ function startTurnTimer(room) {
         payload: { eliminatedPlayerId },
       });
 
+      // Always send the post-timeout state BEFORE any game_over. When this
+      // timeout eliminates the last-but-one player the game finishes, and the
+      // eliminated player's final lives (0) + eliminated flag live in this
+      // turn_update. Without it the client froze on the PREVIOUS turn's lives
+      // (still showing a filled heart) and never counted the eliminating
+      // timeout - the summary read one short (e.g. "2 TIMEOUTS" for a 3-life
+      // elimination). See also the skip path in server.js.
+      broadcastToRoom(room, buildTurnUpdatePayload(room));
       if (game.status === 'finished') {
         broadcastToRoom(room, buildGameOverPayload(room));
       } else {
-        broadcastToRoom(room, buildTurnUpdatePayload(room));
         startTurnTimer(room); // chain into the next turn's timer
       }
       return;

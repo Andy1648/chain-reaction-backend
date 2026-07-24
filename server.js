@@ -566,10 +566,15 @@ wss.on('connection', (ws) => {
             type: 'turn_skipped',
             payload: { eliminatedPlayerId, playerId, playerName },
           });
+          // Always send the post-skip state (incl. the eliminated player's final
+          // lives=0 / eliminated flag) BEFORE any game_over, so the client's heart
+          // display and its timeout/skip tally reflect the eliminating loss rather
+          // than freezing on the previous turn. Mirrors the timeout path in
+          // roomManager.startTurnTimer.
+          broadcastToRoom(room, buildTurnUpdatePayload(room));
           if (room.game.status === 'finished') {
             broadcastToRoom(room, buildGameOverPayload(room));
           } else {
-            broadcastToRoom(room, buildTurnUpdatePayload(room));
             startTurnTimer(room);
           }
           break;
