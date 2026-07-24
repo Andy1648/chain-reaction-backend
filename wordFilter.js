@@ -155,12 +155,40 @@ function isDisallowedWord(word) {
   return BLOCKLIST.has(word.trim().toLowerCase());
 }
 
-/**
- * Returns a new array with every disallowed word removed. Used to clean the
- * bot's word pool at load time.
- */
-function filterWords(words) {
-  return words.filter((w) => !isDisallowedWord(w));
+/* ===================== COMMON-ENGLISH WORDLIST ===================== */
+// The blocklist above can't enumerate every proper noun (SADDAM, HITLER, PUTIN,
+// ... the long tail is endless), so it can't be the primary gate. Instead we
+// require every playable word to appear in a curated ~275k common-English
+// wordlist (an-array-of-english-words, SCOWL-derived, lowercase-only). Proper
+// nouns are capitalized in the source and therefore ABSENT from this list, so a
+// word like "saddam" simply isn't in it and fails. The blocklist then supplements
+// this for the handful of place names that ARE ordinary English words and so
+// slip INTO the list (MOROCCO, PARIS, LONDON). Built once, lazily, so a process
+// that never validates a word (or spawns a bot) doesn't pay for it at startup.
+let ENGLISH_WORDS = null;
+function englishWords() {
+  if (!ENGLISH_WORDS) {
+    ENGLISH_WORDS = new Set(require('an-array-of-english-words'));
+  }
+  return ENGLISH_WORDS;
 }
 
-module.exports = { isDisallowedWord, filterWords, BLOCKLIST };
+/**
+ * True if `word` is in the curated common-English wordlist. This is a local,
+ * deterministic, network-free check. Case-insensitive; whitespace-trimmed.
+ */
+function isCommonEnglishWord(word) {
+  if (typeof word !== 'string') return false;
+  return englishWords().has(word.trim().toLowerCase());
+}
+
+/**
+ * Bot-pool cleaner: keep only real common-English words that aren't blocklisted.
+ * The wordlist drops proper nouns the blocklist can't enumerate (e.g. SADDAM);
+ * the blocklist drops place names that ARE common English words (e.g. MOROCCO).
+ */
+function filterWords(words) {
+  return words.filter((w) => isCommonEnglishWord(w) && !isDisallowedWord(w));
+}
+
+module.exports = { isDisallowedWord, isCommonEnglishWord, filterWords, BLOCKLIST };

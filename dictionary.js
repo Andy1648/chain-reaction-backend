@@ -1,21 +1,22 @@
 // dictionary.js
-// Wraps the free Dictionary API (https://dictionaryapi.dev) to validate
-// whether a word is real. Caches results in memory since the same words
-// get checked repeatedly across games, and the API has no auth/rate-limit
-// info published, so we want to be a good citizen.
+// Validates whether a submitted word is a real, playable English word. Backed by
+// a curated ~275k common-English wordlist (see wordFilter.js) rather than the
+// public dictionary API: the API happily returned proper nouns like SADDAM and
+// MOROCCO, which then leaked into gameplay. The wordlist is local, deterministic,
+// and network-free, so validation can't be broken by a vendor outage either.
+// Results are cached since the same words get checked repeatedly across games.
 
-const { isDisallowedWord } = require('./wordFilter');
+const { isDisallowedWord, isCommonEnglishWord } = require('./wordFilter');
 
 const cache = new Map(); // word (lowercase) -> boolean
 
-const DICTIONARY_API_BASE = 'https://api.dictionaryapi.dev/api/v2/entries/en/';
-
 /**
- * Checks whether a word exists in the dictionary.
- * Returns true/false. Never throws - on network failure, we fail OPEN
- * (treat the word as valid) rather than blocking gameplay on an API outage.
- * This is a deliberate design choice: a flaky third-party API should never
- * make our game unplayable. We log the failure so we can monitor it.
+ * Checks whether a word is valid to play. Returns true/false, never throws.
+ * A word is valid iff it is purely alphabetic, NOT on the proper-noun/place-name
+ * blocklist, AND present in the curated common-English wordlist. Proper nouns
+ * (SADDAM, HITLER, ...) are absent from that lowercase-only list, so they fail;
+ * place names that are also ordinary English words (MOROCCO, PARIS) are caught by
+ * the blocklist supplement.
  */
 async function isValidWord(word) {
   const normalized = word.trim().toLowerCase();
@@ -30,10 +31,8 @@ async function isValidWord(word) {
     return false;
   }
 
-  // Reject proper nouns / place names / foreign entries up front. The public
-  // dictionary API returns definitions for things like "morocco" and "pagina",
-  // so we can't rely on it to keep them out — see wordFilter.js. This runs
-  // before the cache/network so it's cheap and never fails open.
+  // Blocklist supplement: place names / foreign words that ARE valid English
+  // words and so appear in the wordlist below (MOROCCO, PARIS, PAGINA).
   if (isDisallowedWord(normalized)) {
     cache.set(normalized, false);
     return false;
@@ -43,42 +42,25 @@ async function isValidWord(word) {
     return cache.get(normalized);
   }
 
-  // Test hook: FAKE_DICTIONARY=1 accepts any alphabetic word without touching
-  // the network, so multi-client test harnesses (t3-harness/) get deterministic
-  // word acceptance offline. Never set in production.
+  // Test hook: FAKE_DICTIONARY=1 accepts any alphabetic word without consulting
+  // the wordlist, so multi-client test harnesses (t3-harness/) get deterministic
+  // word acceptance for arbitrary tokens. Never set in production.
   if (process.env.FAKE_DICTIONARY === '1') {
     cache.set(normalized, true);
     return true;
   }
 
-  try {
-    const response = await fetch(`${DICTIONARY_API_BASE}${encodeURIComponent(normalized)}`);
-
-    // The API returns 404 for words it doesn't recognize - that's a valid
-    // "not found" response, not an error, so we handle it explicitly.
-    if (response.status === 404) {
-      cache.set(normalized, false);
-      return false;
-    }
-
-    if (!response.ok) {
-      console.warn(`Dictionary API returned unexpected status ${response.status} for "${normalized}". Failing open.`);
-      return true;
-    }
-
-    const data = await response.json();
-    const isValid = Array.isArray(data) && data.length > 0;
-    cache.set(normalized, isValid);
-    return isValid;
-  } catch (error) {
-    console.warn(`Dictionary API request failed for "${normalized}": ${error.message}. Failing open.`);
-    return true;
-  }
+  // The authoritative check: is this a real common-English word? Local lookup,
+  // no network. Proper nouns / non-English tokens are not in the list -> false.
+  const valid = isCommonEnglishWord(normalized);
+  cache.set(normalized, valid);
+  return valid;
 }
 
 /**
- * Pre-warms the cache with a word, useful for words we already know are
- * valid (e.g. the word that started a chain, chosen from a known word list).
+ * Pre-warms the cache with a word we already know is valid (e.g. a word the bot
+ * is about to play, drawn from the already-filtered bot pool). Keeps the hot
+ * path off the wordlist lookup for known-good words.
  */
 function markAsValid(word) {
   cache.set(word.trim().toLowerCase(), true);

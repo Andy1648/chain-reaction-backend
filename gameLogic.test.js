@@ -135,6 +135,33 @@ test('handleTimeout costs a life and does not eliminate above zero', () => {
   assert.equal(game.players[0].eliminated, false, 'should not be eliminated with lives remaining');
 });
 
+test('a player with N lives survives exactly N-1 timeouts and is eliminated on the Nth', () => {
+  // Guards the elimination boundary: a life is lost per timeout and elimination
+  // fires only when lives hit 0 (post-decrement), never at 1. Run for medium (2)
+  // and chill (3).
+  for (const [diff, N] of [['medium', 2], ['chill', 3]]) {
+    const game = createGame([{ id: 'p1', name: 'A' }, { id: 'p2', name: 'B' }], diff);
+    assert.equal(game.maxLives, N, `${diff} should grant ${N} lives`);
+    const p1 = game.players.find((p) => p.id === 'p1');
+
+    for (let i = 1; i <= N; i++) {
+      // Force the turn back to p1 so each timeout is p1's (handleTimeout advances).
+      game.currentPlayerIndex = game.turnOrder.indexOf('p1');
+      assert.equal(p1.eliminated, false, `${diff}: eliminated before timeout ${i} (should survive ${N - 1})`);
+
+      handleTimeout(game);
+
+      if (i < N) {
+        assert.equal(p1.lives, N - i, `${diff}: lives should be ${N - i} after ${i} timeout(s)`);
+        assert.equal(p1.eliminated, false, `${diff}: eliminated on timeout ${i}, must survive until the ${N}th`);
+      } else {
+        assert.equal(p1.lives, 0, `${diff}: lives should reach 0 on the ${N}th timeout`);
+        assert.equal(p1.eliminated, true, `${diff}: must be eliminated on the ${N}th timeout`);
+      }
+    }
+  }
+});
+
 test('handleTimeout tallies timeouts and skips separately', () => {
   const game = makeTwoPlayerGame();
   handleTimeout(game);          // default reason: timeout (p1)

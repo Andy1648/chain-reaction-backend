@@ -110,9 +110,10 @@ test('word list loads, is sizable, and excludes proper nouns / place names', () 
   const words = bot._loadWords();
   assert.ok(words.length > 10000, `expected a big list, got ${words.length}`);
   assert.ok(words.every((w) => /^[a-z]+$/.test(w) && w.length >= 3));
-  // The bot must never be able to play a filtered proper noun.
+  // The bot must never be able to play a filtered proper noun - blocklisted place
+  // names (morocco/london/...) AND the wordlist-excluded long tail (saddam/...).
   const wordSet = new Set(words);
-  for (const banned of ['morocco', 'london', 'paris', 'canada', 'google']) {
+  for (const banned of ['morocco', 'london', 'paris', 'canada', 'google', 'saddam', 'hitler', 'putin']) {
     assert.ok(!wordSet.has(banned), `bot pool still contains "${banned}"`);
   }
 });

@@ -6,11 +6,25 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 
-const { isDisallowedWord, filterWords, BLOCKLIST } = require('./wordFilter');
+const { isDisallowedWord, isCommonEnglishWord, filterWords, BLOCKLIST } = require('./wordFilter');
 
 test('blocks the observed offenders (proper noun + foreign word)', () => {
   assert.equal(isDisallowedWord('morocco'), true);
   assert.equal(isDisallowedWord('pagina'), true);
+});
+
+test('common-English wordlist rejects the proper-noun long tail (incl. SADDAM)', () => {
+  // These proper nouns are absent from the lowercase wordlist, so they fail the
+  // primary gate even though the blocklist never enumerates them.
+  for (const w of ['saddam', 'hitler', 'putin', 'gandhi', 'obama', 'churchill', 'stalin']) {
+    assert.equal(isCommonEnglishWord(w), false, `"${w}" should NOT be a common English word`);
+  }
+});
+
+test('common-English wordlist keeps ordinary vocabulary', () => {
+  for (const w of ['apple', 'garden', 'thunder', 'wizard', 'pizza', 'goblin', 'question']) {
+    assert.equal(isCommonEnglishWord(w), true, `"${w}" should be a common English word`);
+  }
 });
 
 test('blocks place names, nationalities, brands, and calendar names', () => {
@@ -38,8 +52,10 @@ test('does not block normal vocabulary', () => {
   }
 });
 
-test('filterWords strips every disallowed entry', () => {
-  const input = ['garden', 'morocco', 'apple', 'london', 'thunder'];
+test('filterWords requires wordlist membership AND passes the blocklist', () => {
+  // garden/apple/thunder: real words, kept. morocco/london: real words but
+  // blocklisted, dropped. saddam/hitler: not in the wordlist at all, dropped.
+  const input = ['garden', 'saddam', 'morocco', 'apple', 'london', 'hitler', 'thunder'];
   assert.deepEqual(filterWords(input), ['garden', 'apple', 'thunder']);
 });
 
