@@ -23,10 +23,31 @@
 // Run from the backend repo root:  node gen9-convert.js
 
 const fs = require('fs');
+const path = require('path');
 
 const CLEAN_FILE = './gen9.clean.json';
-const GEN9_FILE = './categoryAnswers/gen9.js';
-const PACKS_FILE = './categoryPacks.js';
+
+// DRY-RUN OUTPUT OVERRIDE. By default this writes the live pipeline files. Pass
+// `--out=<dir>` / `--out <dir>` or set `GEN9_CONVERT_OUT=<dir>` to redirect BOTH
+// generated files into <dir> (as gen9.js + categoryPacks.js) and leave the real
+// pipeline files untouched — this is how you validate a batch before integration.
+// Default is unchanged, so `node gen9-convert.js` still targets the live paths.
+// When <dir> is fresh/empty there are no "current" files to append onto, so the
+// output is a clean regeneration in pure clean.json (pack, then within-pack) order.
+function resolveOutDir() {
+  const eq = process.argv.find((a) => a.startsWith('--out='));
+  if (eq) return eq.slice('--out='.length);
+  const i = process.argv.indexOf('--out');
+  if (i !== -1 && process.argv[i + 1]) return process.argv[i + 1];
+  return process.env.GEN9_CONVERT_OUT || null;
+}
+const OUT_DIR = resolveOutDir();
+const GEN9_FILE = OUT_DIR ? path.resolve(OUT_DIR, 'gen9.js') : './categoryAnswers/gen9.js';
+const PACKS_FILE = OUT_DIR ? path.resolve(OUT_DIR, 'categoryPacks.js') : './categoryPacks.js';
+if (OUT_DIR) {
+  fs.mkdirSync(path.resolve(OUT_DIR), { recursive: true });
+  console.log(`DRY RUN — writing to ${path.resolve(OUT_DIR)} (live pipeline files untouched).`);
+}
 
 // The exact 6-line header the current gen9.js carries — preserved verbatim.
 const GEN9_HEADER = `// gen9.js
@@ -62,10 +83,27 @@ const PACK_ORDER = Object.keys(clean); // e.g. movies, gaming, food, animals, sp
 const cleanOrder = []; // categories flattened in pack order, then within-pack order
 const packOf = new Map(); // category -> packId
 const answersOf = new Map(); // category -> [answers]
+const dupDropped = []; // cross-pack duplicates resolved by first-occurrence-wins
 for (const pack of PACK_ORDER) {
   for (const entry of clean[pack]) {
     if (packOf.has(entry.category)) {
-      die(`FATAL: duplicate category name across packs in clean.json: "${entry.category}" — cannot map 1:1. Nothing written.`);
+      // Cross-pack duplicate. Both output files are FLAT category-keyed maps (one
+      // pack id / one Set per category), so a category can live in exactly one pack.
+      // If the two accept-lists are the SAME SET of answers it is a harmless dup:
+      // keep the FIRST occurrence (PACK_ORDER precedence) and drop this one, reported.
+      // If the answer sets DIFFER the choice is genuinely ambiguous (real answers
+      // would be lost either way) — refuse and let a human reconcile clean.json.
+      const firstAnswers = new Set(answersOf.get(entry.category));
+      const thisAnswers = new Set(entry.answers);
+      const sameSet =
+        firstAnswers.size === thisAnswers.size && [...firstAnswers].every((a) => thisAnswers.has(a));
+      if (!sameSet) {
+        die(
+          `FATAL: category "${entry.category}" appears in packs "${packOf.get(entry.category)}" and "${pack}" with DIFFERENT answer sets — cannot pick one without losing answers. Reconcile gen9.clean.json. Nothing written.`
+        );
+      }
+      dupDropped.push({ category: entry.category, keptPack: packOf.get(entry.category), droppedPack: pack });
+      continue;
     }
     packOf.set(entry.category, pack);
     answersOf.set(entry.category, entry.answers);
@@ -73,6 +111,12 @@ for (const pack of PACK_ORDER) {
   }
 }
 const cleanSet = new Set(cleanOrder);
+if (dupDropped.length) {
+  console.warn(
+    `Deduped ${dupDropped.length} cross-pack duplicate categor${dupDropped.length === 1 ? 'y' : 'ies'} (identical answer set; first pack in clean.json order wins):`
+  );
+  dupDropped.forEach((d) => console.warn(`  - "${d.category}" kept in [${d.keptPack}], dropped from [${d.droppedPack}]`));
+}
 
 // 2) Current file key orders (for stable, no-op-preserving output). Missing -> [].
 const curGen9 = tryRequire(GEN9_FILE);
