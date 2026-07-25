@@ -84,18 +84,32 @@ function mulberry32(seed) {
 }
 
 /**
- * The day's TOTAL_ROUNDS categories, fully determined by the dateKey. Drawn
- * from the FULL pool (pack selections don't apply to the daily — everyone
- * plays the same board) over an alphabetically sorted copy, so the result
- * doesn't depend on CATEGORIES' declaration order within a deploy.
+ * The day's TOTAL_ROUNDS categories as an ESCALATING RAMP: round 1 = a broad
+ * (tier 1) category, round 2 = medium (tier 2), round 3 = niche (tier 3) — so
+ * every player scores in round 1 and niche knowledge is an edge, not a wall.
+ *
+ * Fully deterministic: seeded only by dateKey (a fixed mulberry32 PRNG, no
+ * Math.random), drawn over ALPHABETICALLY SORTED tier pools, so every player
+ * worldwide gets the same three categories in the same order and the result
+ * never depends on declaration/deploy order. Pack selections don't apply to the
+ * daily (everyone plays the same board). Backfills from the full sorted pool in
+ * the impossible case a tier is empty.
  */
 function dailyCategories(dateKey) {
-  const pool = [...CATEGORIES].sort();
   const rng = mulberry32(hashString(`typeaword-daily:${dateKey}`));
   const picks = [];
-  while (picks.length < TOTAL_ROUNDS && pool.length > 0) {
-    const idx = Math.floor(rng() * pool.length);
-    picks.push(pool.splice(idx, 1)[0]);
+  const drawFrom = (arr) => {
+    const pool = arr.filter((c) => !picks.includes(c));
+    if (pool.length === 0) return;
+    picks.push(pool[Math.floor(rng() * pool.length)]);
+  };
+  for (const tier of [1, 2, 3]) drawFrom(TIER_POOLS[tier]);
+  // Safety net: if any tier was empty, top up from the full sorted pool.
+  const full = [...CATEGORIES].sort();
+  while (picks.length < TOTAL_ROUNDS) {
+    const before = picks.length;
+    drawFrom(full);
+    if (picks.length === before) break; // nothing left to draw
   }
   return picks;
 }
@@ -361,6 +375,112 @@ const CATEGORIES = RAW_CATEGORIES.filter((category) => {
   return false;
 });
 
+/* ============================ CATEGORY TIERS ============================ */
+// Every category is tiered by BREADTH so the Daily can escalate (round 1 broad ->
+// round 2 medium -> round 3 niche) and regular rooms can weight toward broad.
+//   Tier 1 BROAD  - nearly anyone names 5+ (Fruits, Animals, Tools in a toolbox)
+//   Tier 2 MEDIUM - most name 2-3 (Apple products, Sushi types, European capitals)
+//   Tier 3 NICHE  - enthusiasts only (Half-Life enemies, MLS teams, Roman emperors)
+// Answer-list SIZE is a weak proxy (a tiny list like "States of matter" is broad; a
+// small list like "Pac-Man ghosts" is niche), so tiers are assigned by TOPIC: an
+// explicit broad set, a mainstream-franchise medium override, then niche
+// franchise/specialist patterns + explicit niche, defaulting to medium.
+const TIER_BROAD = new Set([
+  // food
+  'Fruits', 'Vegetables', 'Pizza toppings', 'Ice cream flavors', 'Candy bars', 'Cereal brands',
+  'Soda brands', 'Fast food chains', 'Breakfast foods', 'Types of bread', 'Types of cheese',
+  'Types of pasta', 'Coffee drinks', 'Types of tea', 'Types of cake', 'Types of pie', 'Types of cookies',
+  'Cooking methods', 'Kitchen utensils', 'Sandwich types', 'Types of soup', 'Types of berries',
+  "McDonald's menu items", 'Starbucks drinks', 'Cocktails', 'International cuisines', 'Types of seafood',
+  'Types of eggs', 'Popular condiments', 'Chip & snack brands', 'Frozen treats',
+  'School cafeteria foods', 'Things that come in a vending machine', 'Things with a drive-through',
+  // animals / nature
+  'Farm animals', 'Zoo animals', 'Jungle animals', 'Ocean animals', 'Big cats', 'Bears', 'Cat breeds',
+  'Dog breeds', 'Birds', 'Insects', 'Flowers', 'Trees', 'Dinosaurs', 'Fish', 'Reptiles and amphibians',
+  'Primates', 'Marine mammals', 'Rodents', 'Houseplants', 'Herbs and spices', 'Root vegetables',
+  'Nuts and seeds', 'Weather phenomena', 'Types of Natural Disasters', 'Gemstones', 'Horses and ponies',
+  'Wild animals of the desert', 'Wild animals of the savanna',
+  // world / geography basics
+  'Continents', 'Months of the year', 'Planets in our solar system', 'Zodiac signs', 'World oceans',
+  'US states', 'Wonders of the World',
+  // science basics
+  'Body parts', 'Shapes', 'States of matter', 'Human organs', 'Units of measurement', 'Human body systems',
+  // sports basics
+  'Sports', 'Types of sports balls', 'Olympic sports', 'Martial arts', 'Chess pieces', 'Water sports',
+  'Winter Olympic sports',
+  // tech / brands everyone uses
+  'Tools in a toolbox', 'Office supplies', 'Phone brands', 'Apple products', 'Social media platforms',
+  'Web browsers', 'Car brands', 'Video streaming services', 'Subscription services', 'Shoe brands',
+  // movies / everyday pop culture
+  'Disney movies', 'Disney princesses', 'Superheroes', 'Halloween costumes', 'Horror movies',
+  'Pixar movies', 'Animated Movies',
+  // music basics
+  'Musical instruments', 'String instruments', 'Percussion instruments', 'Musical notes',
+  // art basics
+  'Colors', 'Drawing tools', 'Painting tools',
+  // tv basics
+  'TV networks', 'Reality TV shows', 'Game shows', 'Talk shows', 'Cooking shows',
+]);
+// Mainstream franchises where naming a few is EASY (not enthusiasts-only): they
+// match a niche franchise pattern below but belong in MEDIUM, not NICHE.
+const TIER_MEDIUM_OVERRIDE = new Set([
+  'Marvel Superheroes', 'Star Wars Characters', 'Star Wars Ships', 'Star Wars Planets',
+  'Mario characters', 'Friends Characters', 'The Office characters', 'Breaking Bad characters',
+  'Lord of the Rings characters', 'Batman Characters', 'Batman villains', 'Stranger Things characters',
+  'James Bond Movies', 'Harry Potter Characters', 'Harry Potter Spells', 'Pokemon from Gen 1',
+  'Marvel Cinematic Universe Villains', 'Anime Villains', 'Greek gods', 'Studio Ghibli Movies',
+]);
+// Explicit niche (specialist/deep-cut) not always caught by the franchise patterns.
+const TIER_NICHE = new Set([
+  'Video game villains', 'Video Game Genres', 'Nintendo consoles and handhelds', 'Video game hardware',
+  'Video game consoles', 'TV animation networks', 'TV award shows', 'Music awards', 'Major record labels',
+  'Iconic albums', 'Classical composers', 'Boy bands', 'Classic rock artists', 'Guitar brands',
+  'Famous paintings', 'Famous museums', 'Art movements', 'Roman gods', 'Egyptian gods', 'Norse gods',
+  'Greek heroes', 'Greek monsters and beasts', 'Greek Titans', 'Trojan War figures',
+  'Japanese yokai', 'US First Ladies', 'US Founding Fathers', 'Roman emperors', 'Egyptian pharaohs',
+  'Renaissance figures', 'World War II battles', 'Medieval titles', 'Ancient Empires', 'Famous explorers',
+  'British monarchs', 'US presidents', 'Subatomic particles', 'Types of electromagnetic radiation',
+  'Programming languages', 'Computer ports and connectors', 'Cryptocurrencies',
+  'File sharing and cloud storage services', 'Formula 1 constructors', 'Active Formula 1 tracks',
+  'MLS teams', 'NFL teams', 'NBA teams', 'NHL teams', 'WNBA teams', 'English Premier League clubs',
+  'Major League Baseball teams', 'Major League Baseball awards', 'Active NBA Arenas', 'Active NFL stadiums',
+  'Grand Slam tennis tournaments', 'Soccer clubs', 'Professional tennis tournaments',
+  'Scandinavian and Nordic countries', 'Central American countries', 'Caribbean countries',
+  'Oceanian countries', 'Famous volcanoes', 'US states bordering the Pacific Ocean',
+  'Great Lakes of North America', 'Harry Potter books', 'Roald Dahl books', 'Dystopian novels',
+  'Literary devices', 'Shakespeare plays', 'Taylor Swift albums', 'Beatles songs',
+  'Naruto characters', 'Dragon Ball characters', 'One Piece characters',
+  'Elden Ring bosses', 'Half-Life enemies', 'Half-Life weapons', 'Team Fortress 2 classes', 'Pac-Man ghosts',
+  'Genshin Impact playable characters', 'League of Legends Champions',
+]);
+// Niche franchise/specialist keyword patterns (case-insensitive).
+const TIER_NICHE_PATTERNS = [
+  /pac-?man|among us|team fortress|mortal kombat|the sims|street fighter|battle royale|minecraft|elden ring|fallout|grand theft auto|resident evil|skyrim|metroid|valorant|call of duty|pok[eé]mon|half-?life|fall guys|final fantasy|\bportal\b|apex legends|donkey kong|dark souls|fortnite|sonic|stardew|angry birds|zelda|\bmario\b|\bhalo\b|overwatch|kingdom hearts|tekken|genshin|league of legends|smash bros|animal crossing|roblox|kombat|playstation|nintendo switch|fighting game/i,
+  /naruto|dragon ball|one piece|stranger things|breaking bad|the office|\bfriends\b|lord of the rings|studio ghibli|james bond|star wars|\bmarvel\b|\bbatman\b|percy jackson|hbo series|anime villain/i,
+  /beatles|taylor swift|roald dahl|shakespeare|dystopian|record label|electronic music/i,
+  /\bmls\b|\bnfl\b|\bnba\b|\bnhl\b|\bwnba\b|major league baseball|\bmlb\b|premier league|formula 1|\bf1\b|soccer club|grand slam|arenas|stadiums|constructors|\btracks\b|professional tennis tournament/i,
+  /roman emperor|egyptian pharaoh|renaissance|founding father|first ladies|world war|medieval title|ancient empire|greek titan|norse god|hindu deit|egyptian god|greek god|greek hero|greek monster|trojan|yokai|arthurian|knights of the round|subatomic|electromagnetic|programming language|computer ports|cryptocurrenc|scandinavian|central american|caribbean countr|oceanian|famous volcano|prehistoric|constellations|titans/i,
+];
+/** Breadth tier (1 broad / 2 medium / 3 niche) for a category name. */
+function tierForCategory(name) {
+  if (TIER_BROAD.has(name)) return 1;
+  if (TIER_MEDIUM_OVERRIDE.has(name)) return 2;
+  if (TIER_NICHE.has(name)) return 3;
+  if (TIER_NICHE_PATTERNS.some((re) => re.test(name))) return 3;
+  return 2;
+}
+// The stored tier for every ACTIVE category (name -> 1|2|3), computed once.
+const CATEGORY_TIER = {};
+for (const c of CATEGORIES) CATEGORY_TIER[c] = tierForCategory(c);
+// Tier -> sorted category pool (sorted so the seeded daily picks are stable across
+// deploys regardless of declaration order).
+const TIER_POOLS = { 1: [], 2: [], 3: [] };
+for (const c of CATEGORIES) TIER_POOLS[CATEGORY_TIER[c]].push(c);
+for (const t of [1, 2, 3]) TIER_POOLS[t].sort();
+// Regular-room draw weights across tiers (the Daily uses the escalating ramp, not
+// these). ~half broad, a third medium, a sixth niche.
+const TIER_WEIGHTS = { 1: 0.5, 2: 0.35, 3: 0.15 };
+
 /**
  * The category pool restricted to the selected packs. A category belongs to a
  * pack via CATEGORY_PACKS (name -> pack id); categories with no pack assignment
@@ -376,17 +496,41 @@ function categoriesForPacks(selectedPacks) {
 }
 
 /**
- * Picks a random category from the (optionally pack-filtered) pool. If
- * `excludeSet` (a Set of already-played categories) is given, the result is
- * guaranteed not to be one of them, so categories never repeat across rounds.
- * `selectedPacks` (optional) restricts the pool to those packs. Falls back to
- * the (filtered) base list in the impossible case that every option is excluded.
+ * Weighted pick over a pool by breadth tier: chooses a tier by TIER_WEIGHTS
+ * (~50/35/15 broad/medium/niche), then a uniform category within it. Weight from
+ * any tier absent in `pool` (e.g. a pack selection with no broad categories)
+ * redistributes across the tiers that ARE present, so the pack filter always
+ * wins. `rng` is injectable for deterministic tests. Returns null on an empty pool.
+ */
+function pickWeightedByTier(pool, rng = Math.random) {
+  if (!pool || pool.length === 0) return null;
+  const byTier = { 1: [], 2: [], 3: [] };
+  for (const c of pool) byTier[CATEGORY_TIER[c] || 2].push(c);
+  const avail = [1, 2, 3].filter((t) => byTier[t].length > 0);
+  const totalW = avail.reduce((s, t) => s + TIER_WEIGHTS[t], 0);
+  let r = rng() * totalW;
+  let tier = avail[avail.length - 1];
+  for (const t of avail) {
+    if (r < TIER_WEIGHTS[t]) { tier = t; break; }
+    r -= TIER_WEIGHTS[t];
+  }
+  const bucket = byTier[tier];
+  return bucket[Math.floor(rng() * bucket.length)];
+}
+
+/**
+ * Picks a category from the (optionally pack-filtered) pool, WEIGHTED toward
+ * broader tiers (see pickWeightedByTier) instead of uniform. If `excludeSet` (a
+ * Set of already-played categories) is given, the result is guaranteed not to be
+ * one of them, so categories never repeat across rounds. `selectedPacks`
+ * (optional) restricts the pool to those packs. Falls back to the (filtered) base
+ * list in the impossible case that every option is excluded.
  */
 function pickRandomCategory(excludeSet, selectedPacks) {
   const base = categoriesForPacks(selectedPacks);
   const pool = excludeSet ? base.filter((c) => !excludeSet.has(c)) : base;
   const choices = pool.length ? pool : base;
-  return choices[Math.floor(Math.random() * choices.length)];
+  return pickWeightedByTier(choices) || choices[Math.floor(Math.random() * choices.length)];
 }
 
 /**
@@ -711,4 +855,9 @@ module.exports = {
   dailyInfo,
   dailyCategories,
   DAILY_EPOCH_UTC,
+  // Category tiering (breadth) — exposed for tests + tooling.
+  tierForCategory,
+  CATEGORY_TIER,
+  TIER_POOLS,
+  TIER_WEIGHTS,
 };
