@@ -14,7 +14,7 @@
 ## Architecture pointers
 - `server.js` — entry point; Express health/version routes + WebSocket message router. Sentry/PostHog init FIRST (`monitoring.js`), both no-op without env keys.
 - `roomManager.js` — rooms, turn timers, broadcasting; the shared multiplayer core for all game modes.
-- Game modes: `gameLogic.js` (Chain Reaction), `categoryBlitzLogic.js`, `imposterWordLogic.js`; bots in `wordBombBot.js` / `categoryBlitzBot.js`.
+- Game modes: `gameLogic.js` (Word Bomb), `categoryBlitzLogic.js`, `imposterWordLogic.js`; bots in `wordBombBot.js` / `categoryBlitzBot.js`.
 - Content pipeline: `gen9-generate.js` / `gen9-convert.js` / `gen9-verify.js` + `categoryAnswers/` (per-generation answer packs) + `categoryPacks.js`. NOTE: `gen9-convert.js` broken since the pool review — see memory `gen9-pipeline-post-cull`.
 - Deeper maps: `T1-ARCHITECTURE.md`, `T3-MULTIPLAYER_MAP.md`; conventions: `CONTRIBUTING.md`.
 
