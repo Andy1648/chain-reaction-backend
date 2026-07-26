@@ -140,31 +140,51 @@ test('no duplicate keys, and pack grouping matches clean.json', () => {
 // GROUP B — reconciliation against the real (gitignored) gen9.clean.json
 // ---------------------------------------------------------------------------
 
-test('reconciles real gen9.clean.json: 534 entries -> 533 unique, July batch present', (t) => {
+test('reconciles real gen9.clean.json: counts derive from the pool, every category converts', (t) => {
   if (!fs.existsSync(REAL_CLEAN)) {
     t.skip('gen9.clean.json not present (gitignored / fresh checkout)');
     return;
   }
 
   const clean = JSON.parse(fs.readFileSync(REAL_CLEAN, 'utf8'));
+
+  // Derive ALL expectations from the pool itself — no hardcoded batch counts or
+  // category-name lists, so this test never needs editing when a batch lands.
   let entryCount = 0;
-  const perName = new Map(); // category -> count of packs it appears in
-  const packOfFirst = new Map(); // category -> first pack in key order
+  const occurrences = new Map(); // category -> [{ pack, answers }] in clean key order
+  const packOfFirst = new Map(); // category -> first pack it appears in
   for (const pack of Object.keys(clean)) {
     for (const e of clean[pack]) {
       entryCount++;
-      perName.set(e.category, (perName.get(e.category) || 0) + 1);
+      if (!occurrences.has(e.category)) occurrences.set(e.category, []);
+      occurrences.get(e.category).push({ pack, answers: e.answers });
       if (!packOfFirst.has(e.category)) packOfFirst.set(e.category, pack);
     }
   }
-  const crossPackDups = [...perName.values()].filter((n) => n > 1).length;
-  const expectedUnique = perName.size;
 
-  // Reflect the known state of this pool: 534 entries with exactly one cross-pack
-  // duplicate ("Dwarf planets") -> 533 unique categories.
-  assert.equal(entryCount, 534, 'expected 534 total entries in clean.json');
-  assert.equal(crossPackDups, 1, 'expected exactly one cross-pack duplicate');
-  assert.equal(expectedUnique, 533, 'expected 533 unique categories after dedup');
+  // A cross-pack duplicate whose occurrences share the SAME answer set is deduped by
+  // convert to one (first-pack) entry. A duplicate with DIFFERING sets makes convert
+  // exit non-zero — so if convert succeeds below, every dup was identical and the
+  // unique count is exactly the number of distinct category names.
+  const sameSet = (a, b) => {
+    const sa = new Set(a);
+    const sb = new Set(b);
+    return sa.size === sb.size && [...sa].every((x) => sb.has(x));
+  };
+  let identicalDupDrops = 0;
+  for (const occ of occurrences.values()) {
+    if (occ.length > 1 && occ.every((o) => sameSet(o.answers, occ[0].answers))) {
+      identicalDupDrops += occ.length - 1;
+    }
+  }
+  const expectedUnique = occurrences.size; // distinct category names
+  // The entry -> unique gap must be fully explained by identical-answer dedups
+  // (i.e. no differing-set cross-pack duplicates lurking, which convert would reject).
+  assert.equal(
+    entryCount - expectedUnique,
+    identicalDupDrops,
+    'entry->unique gap must be explained only by identical-answer cross-pack dedups'
+  );
 
   const out = tmpDir('real-out');
   const res = runConvert(REPO_ROOT, out);
@@ -173,46 +193,24 @@ test('reconciles real gen9.clean.json: 534 entries -> 533 unique, July batch pre
   const answers = loadFresh(path.join(out, 'gen9.js'));
   const packs = loadFresh(path.join(out, 'categoryPacks.js'));
 
-  // Counts reconcile with clean.json.
+  // Counts reconcile with the pool.
   assert.equal(Object.keys(answers).length, expectedUnique);
   assert.equal(Object.keys(packs).length, expectedUnique);
 
-  // Every unique clean category is present exactly once in both outputs, grouped
-  // into its first-occurrence pack.
+  // EVERY category in clean.json appears in BOTH outputs, in its first-occurrence
+  // pack. This covers the whole batch generically — there is no per-batch name list
+  // to keep in sync.
   for (const [cat, firstPack] of packOfFirst) {
     assert.ok(cat in answers, `gen9.js missing category: ${cat}`);
+    assert.ok(cat in packs, `categoryPacks.js missing category: ${cat}`);
     assert.equal(packs[cat], firstPack, `wrong pack for: ${cat}`);
     assert.ok(answers[cat] instanceof Set, `not a Set: ${cat}`);
   }
 
-  // The one known cross-pack duplicate resolves to its first pack (world before science).
-  assert.equal(packs['Dwarf planets'], 'world');
-
-  // The 44-category July batch is all present as keys.
-  const JULY_BATCH = [
-    // science (21: 20 kept + Geological eras)
-    'Types of telescopes', 'Laboratory safety gear', 'Human teeth', 'Scientific fields',
-    'Parts of a flower', 'Taxonomic kingdoms', 'Parts of an atom', 'Human endocrine hormones',
-    'Human muscles', 'Human infectious diseases', 'Dwarf planets', 'Types of blood cells',
-    'Parts of the human brain', 'Scientific laws and principles', 'Human digestive system parts',
-    'Types of chemical reactions', 'SI derived units', 'Types of blood vessels',
-    'Taxonomic domains and phyla', 'Parts of a plant cell', 'Geological eras',
-    // tech (10)
-    'Programming paradigms', 'Cybersecurity terms', 'Database management systems',
-    'Programming frameworks', 'Tech hardware brands', 'Internet protocols', 'Tech job titles',
-    'Internet top-level domains', 'Web development languages', 'Tech input devices',
-    // literature (6)
-    'Fairy tales', 'Gothic novels', 'Beatrix Potter characters', 'C.S. Lewis books',
-    'Agatha Christie detectives', 'Greek playwrights',
-    // history (4)
-    'Inca emperors', 'Mongol Khans', 'French monarchs', 'Historical peace treaties',
-    // music (3)
-    'Music production software', 'Electronic music genres', 'Famous music festivals',
-  ];
-  assert.equal(JULY_BATCH.length, 44);
-  for (const cat of JULY_BATCH) {
-    assert.ok(cat in answers, `July batch category missing from gen9.js: ${cat}`);
-    assert.ok(cat in packs, `July batch category missing from categoryPacks.js: ${cat}`);
+  // Any cross-pack duplicate resolves to its FIRST-occurrence pack (asserted
+  // generically, so e.g. a name shared by two packs stays in the earlier one).
+  for (const [cat, occ] of occurrences) {
+    if (occ.length > 1) assert.equal(packs[cat], packOfFirst.get(cat), `dup ${cat} not in first pack`);
   }
 
   // Output shape matches the committed structure: gen9.js is a flat map of Sets,
