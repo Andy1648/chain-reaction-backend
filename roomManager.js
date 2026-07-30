@@ -976,16 +976,17 @@ function startGame(room, opts = {}) {
  * check has to live here because only the networking layer knows which
  * connection sent the message.
  */
-async function handleWordSubmission(room, connectionId, word) {
+async function handleWordSubmission(room, connectionId, word, context = {}) {
   const { game } = room;
   if (!game) {
     return { error: 'no_active_game' };
   }
 
   // Category Blitz is simultaneous - no turns - so it routes to its own
-  // handler instead of the turn-validated Word Bomb path below.
+  // handler instead of the turn-validated Word Bomb path below. `context` carries
+  // the optional submit-time round tag ({ expectedCategory, expectedRound }).
   if (game.gameType === 'category-blitz') {
-    return handleCategoryAnswer(room, connectionId, word);
+    return handleCategoryAnswer(room, connectionId, word, context);
   }
 
   // Imposter Word answers are public and judged by players - its own handler.
@@ -1006,7 +1007,9 @@ async function handleWordSubmission(room, connectionId, word) {
   }
 
   const logic = logicForGameType(game.gameType);
-  const result = await logic.submitWord(game, word);
+  // Pass the submit-time fragment tag through so a word typed for a now-past
+  // fragment is rejected as `turn_over`, not judged against the new one.
+  const result = await logic.submitWord(game, word, { expectedCombo: context.expectedCombo });
 
   if (result.accepted) {
     touchRoom(room); // an accepted word proves the room is alive
@@ -1040,7 +1043,7 @@ async function handleWordSubmission(room, connectionId, word) {
  * mid-round), while a privacy-safe player_progress (just a count) is
  * broadcast to everyone so the UI can show how each player is doing.
  */
-async function handleCategoryAnswer(room, connectionId, answer) {
+async function handleCategoryAnswer(room, connectionId, answer, context = {}) {
   const { game } = room;
   if (!game || game.gameType !== 'category-blitz') {
     return { error: 'no_active_game' };
@@ -1057,6 +1060,11 @@ async function handleCategoryAnswer(room, connectionId, answer) {
   const connection = room.players.find((p) => p.id === connectionId)?.connection;
 
   const result = await categoryBlitzLogic.submitAnswer(game, connectionId, answer, {
+    // Submit-time round tag (protocol): judge against the category/round the client
+    // was showing, so drift/rotation can't misjudge a valid answer. Absent for
+    // legacy clients (falls back to the live category).
+    expectedCategory: context.expectedCategory,
+    expectedRound: context.expectedRound,
     // Fires only on a list-miss with AI enabled, right before the ~0.5-1.5s Haiku
     // call. Tells the submitter to show a brief loading state; the authoritative
     // answer_result below always follows.
