@@ -424,9 +424,20 @@ function handleTimeout(game, reason = 'timeout') {
  * that's the caller's job, since it requires knowing the connection's
  * player id, which lives in the networking layer.
  */
-async function submitWord(game, rawWord) {
+async function submitWord(game, rawWord, opts = {}) {
   const word = rawWord.trim().toLowerCase();
   const combo = game.currentCombo;
+
+  // SUBMIT-TIME TURN CONTEXT (protocol): the client may tag a submission with the
+  // fragment it was TYPING AGAINST (opts.expectedCombo). If that no longer matches
+  // the live combo, the turn has already rotated - the word was for a past fragment.
+  // Reject it cleanly as `turn_over` INSTEAD of running the containment check against
+  // the NEW fragment, which produced the misleading "MUST CONTAIN <new fragment>" on
+  // a word the player validly typed for the old one. Legacy clients that send no
+  // expectedCombo keep the previous behavior unchanged.
+  if (opts.expectedCombo != null && opts.expectedCombo !== combo) {
+    return { accepted: false, reason: 'turn_over' };
+  }
 
   if (word.length < 3) {
     return { accepted: false, reason: 'too_short' };

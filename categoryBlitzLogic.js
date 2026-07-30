@@ -645,10 +645,31 @@ async function submitAnswer(game, playerId, rawAnswer, opts = {}) {
     return { accepted: false, reason: 'already_said', playerId };
   }
 
-  // Stage 1: the pre-generated accept-list for the current category. A hit
-  // here is instant and free - no API call. A miss does NOT reject; it just
-  // means the answer wasn't pre-generated, so we ask the AI judge next.
-  const validAnswers = CATEGORY_ANSWERS[game.currentCategory];
+  // SUBMIT-TIME ROUND CONTEXT (protocol): the client may tag a submission with the
+  // round/category it was DISPLAYING when the player typed (opts.expectedCategory,
+  // opts.expectedRound). Judge against THAT, not against whatever game.currentCategory
+  // happens to be now - otherwise an answer typed against category X can get judged
+  // against a category the game has since moved to (drift / boundary rotation),
+  // scoring 0 and showing a misleading "doesn't fit". If the tagged context no longer
+  // matches the live round we return a distinct `stale_round` (the caller/client can
+  // resync and re-show), rather than silently judging it against the wrong list.
+  // Legacy clients that send no context fall back to the live category unchanged.
+  const liveCategory = game.currentCategory;
+  const liveRound = game.currentRound;
+  let judgeCategory = liveCategory;
+  if (opts.expectedCategory != null) {
+    const roundMatches = opts.expectedRound == null || opts.expectedRound === liveRound;
+    if (opts.expectedCategory !== liveCategory || !roundMatches) {
+      return { accepted: false, reason: 'stale_round', playerId };
+    }
+    judgeCategory = opts.expectedCategory;
+  }
+
+  // Stage 1: the pre-generated accept-list for the round's category (the one the
+  // player was shown - see judgeCategory above). A hit here is instant and free -
+  // no API call. A miss does NOT reject; it just means the answer wasn't
+  // pre-generated, so we ask the AI judge next.
+  const validAnswers = CATEGORY_ANSWERS[judgeCategory];
   const onAcceptList = !!validAnswers && validAnswers.has(normalized);
 
   // Stage 1.5: compound leniency. The head noun of an English compound is its
@@ -676,8 +697,8 @@ async function submitAnswer(game, playerId, rawAnswer, opts = {}) {
       // round can start, the category can be rerolled, the game can finish, or
       // the player can leave. Snapshot which round/category this answer was FOR
       // so we can tell whether the world moved on during the await.
-      const roundAtSubmit = game.currentRound;
-      const categoryAtSubmit = game.currentCategory;
+      const roundAtSubmit = liveRound;
+      const categoryAtSubmit = judgeCategory;
 
       // Tell the client we're checking, THEN await the judge (fail-closed,
       // 3s-timeout, rate-limited - all handled inside validate()).

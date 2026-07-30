@@ -588,7 +588,17 @@ wss.on('connection', (ws) => {
           const room = getRoomForConnection(ws);
           if (!room) return;
           const text = (payload?.word ?? payload?.answer ?? '').toString();
-          const result = await handleWordSubmission(room, ws.id, text);
+          // Optional submit-time context so the server judges against what the
+          // client was SHOWING, not against whatever the round/turn has since
+          // become. Word Bomb tags the fragment it typed against (combo); Category
+          // Blitz tags its displayed category + round number. All optional and
+          // backward-compatible: absent fields fall back to the live game state.
+          const context = {
+            expectedCombo: payload?.combo ?? payload?.expectedCombo,
+            expectedCategory: payload?.category ?? payload?.expectedCategory,
+            expectedRound: payload?.roundId ?? payload?.expectedRound,
+          };
+          const result = await handleWordSubmission(room, ws.id, text, context);
           if (result.error) {
             sendError(ws, humanizeError(result.error), type);
           }
