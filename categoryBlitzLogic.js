@@ -20,8 +20,8 @@
 //      timeout/error/rate-limit rejects) and is rate-limited per player. When
 //      no ANTHROPIC_API_KEY is set the fallback is disabled and list-misses are
 //      accepted (list-only mode) rather than rejected by a judge that isn't there.
-// aiValidator.js (Groq/Gemini) and gemini.js stay in the repo but are no longer
-// wired in here - haikuValidator.js owns the AI fallback now.
+// The former Groq/Gemini fallback (aiValidator.js + gemini.js) was removed in
+// chore/backend-cleanup - haikuValidator.js owns the AI fallback now.
 const CATEGORY_ANSWERS = require('./categoryAnswers');
 const haikuValidator = require('./haikuValidator');
 
