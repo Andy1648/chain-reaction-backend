@@ -8,7 +8,7 @@
 // ---- Display-name sanitization (vector R4: XSS via usernames) --------------
 // Usernames are the only persistent, cross-player, free-text display string in
 // the game (there is no chat). They're rebroadcast in room_update / turn_update
-// / spectator_reaction / imposter answers. The frontend owns HTML-escaping at
+// / spectator_reaction. The frontend owns HTML-escaping at
 // render time, but we strip server-side as defense-in-depth so a hostile name
 // can never carry control characters, bidi/zero-width formatting tricks, or raw
 // angle brackets into any client that renders a name less carefully.

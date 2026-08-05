@@ -299,9 +299,9 @@ test('addBot refuses a second bot', () => {
   assert.equal(room.players.filter((p) => p.isBot).length, 1);
 });
 
-test('addBot refuses modes without bot support (imposter-word)', () => {
+test('addBot refuses modes without bot support (herd-mind)', () => {
   const { room } = createRoom(conn(), 'Solo');
-  room.gameType = 'imposter-word';
+  room.gameType = 'herd-mind';
   assert.equal(addBot(room, 'easy').error, 'bot_mode_unsupported');
   assert.equal(room.players.some((p) => p.isBot), false);
 });

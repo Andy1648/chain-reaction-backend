@@ -10,8 +10,6 @@
 //     and rebroadcast to every player in EVERY subsequent turn_update.
 //   - Category Blitz: in list-only mode (no ANTHROPIC_API_KEY) any list-miss
 //     is accepted -> a 60KB "answer" is stored and rebroadcast at round end.
-//   - Imposter Word: answers are never validated algorithmically, only capped
-//     at 3 per round -> 3 x 60KB per player broadcast to the whole room.
 // The fix adds a per-mode max length, rejected with reason 'too_long' before
 // any network/AI call is made.
 
@@ -20,7 +18,6 @@ const assert = require('node:assert/strict');
 
 const gameLogic = require('./gameLogic');
 const blitz = require('./categoryBlitzLogic');
-const imposter = require('./imposterWordLogic');
 const mockDictionary = require('./dictionary.mock');
 const haikuValidator = require('./haikuValidator');
 
@@ -113,24 +110,4 @@ test('Blitz still accepts a normal multi-word answer', async () => {
   } finally {
     haikuValidator.isEnabled = realIsEnabled;
   }
-});
-
-// ---- Imposter Word ------------------------------------------------------------
-
-test('Imposter rejects an oversized answer', () => {
-  const players = [{ id: 'p1', name: 'A' }, { id: 'p2', name: 'B' }, { id: 'p3', name: 'C' }];
-  const game = imposter.createGame(players, 'medium');
-
-  const res = imposter.submitAnswer(game, 'p1', 'x'.repeat(60 * 1024));
-  assert.equal(res.accepted, false, 'a 60KB imposter answer must be rejected');
-  assert.equal(res.reason, 'too_long');
-  assert.deepEqual(game.players.find((p) => p.id === 'p1').answers, []);
-});
-
-test('Imposter still accepts a normal sentence-ish answer', () => {
-  const players = [{ id: 'p1', name: 'A' }, { id: 'p2', name: 'B' }, { id: 'p3', name: 'C' }];
-  const game = imposter.createGame(players, 'medium');
-
-  const res = imposter.submitAnswer(game, 'p1', 'the weird humming noise');
-  assert.equal(res.accepted, true, 'normal answers are unaffected');
 });

@@ -7,8 +7,6 @@
 //   - handleCategoryAnswer privacy: opponents see a count, never the answer
 //   - handleRerollCategory's guard chain (host-only, ticking round, opening
 //     window, allowance) and its authoritative round-restart broadcast
-//   - imposter vote orchestration: vote_count broadcasts and the early phase
-//     end once everyone has voted
 //   - removePlayer: host reassignment and mid-game elimination of the
 //     current player advancing the turn
 //   - reapIdleRooms TTL behavior and the createRoom global cap
@@ -31,7 +29,6 @@ const {
   startGame,
   handleWordSubmission,
   handleRerollCategory,
-  handleImposterVote,
   removePlayer,
   startRoundTimer,
   reapIdleRooms,
@@ -223,59 +220,6 @@ test('a valid reroll broadcasts an authoritative round_start restart to everyone
     assert.equal(restarts[0].payload.round, room.game.currentRound, 'same round number - a redo, not an advance');
   }
   assert.ok(room.roundTimerInterval, 'a fresh full-length round timer is running');
-});
-
-/* ==================== imposter vote orchestration ======================== */
-
-function imposterRoomInVoting() {
-  const players = [conn(), conn(), conn()];
-  const { room } = createRoom(players[0], 'P0');
-  room.gameType = 'imposter-word';
-  joinRoom(room.code, players[1], 'P1');
-  joinRoom(room.code, players[2], 'P2');
-  startGame(room);
-  room.game.status = 'voting'; // jump straight to the phase under test
-  return { room, players };
-}
-
-test('each accepted vote broadcasts a privacy-safe vote_count (who-voted-for-whom stays secret)', () => {
-  const { room, players } = imposterRoomInVoting();
-  const [a, b] = players;
-
-  handleImposterVote(room, a.id, b.id);
-
-  for (const c of players) {
-    const counts = messagesOfType(c, 'vote_count');
-    assert.equal(counts.length, 1);
-    assert.deepEqual(counts[0].payload, { voted: 1, total: 3 });
-    assert.ok(!JSON.stringify(counts[0].payload).includes(b.id), 'no suspect id in the broadcast');
-  }
-});
-
-test('the vote phase ends early with a vote_results broadcast once everyone has voted', () => {
-  const { room, players } = imposterRoomInVoting();
-  const [a, b, c] = players;
-
-  handleImposterVote(room, a.id, b.id);
-  handleImposterVote(room, b.id, a.id);
-  assert.equal(room.game.status, 'voting', 'still waiting on the last voter');
-  assert.equal(messagesOfType(a, 'vote_results').length, 0);
-
-  handleImposterVote(room, c.id, a.id);
-
-  assert.equal(room.game.status, 'reveal');
-  for (const p of players) {
-    const results = messagesOfType(p, 'vote_results');
-    assert.equal(results.length, 1);
-    assert.equal(results[0].payload.phase, 'reveal');
-    assert.equal(typeof results[0].payload.imposterCaught, 'boolean');
-  }
-});
-
-test('a vote outside the voting phase errors round_not_active', () => {
-  const { room, players } = imposterRoomInVoting();
-  room.game.status = 'answering';
-  assert.equal(handleImposterVote(room, players[0].id, players[1].id).error, 'round_not_active');
 });
 
 /* ==================== removePlayer mid-game behavior ===================== */

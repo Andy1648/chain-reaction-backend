@@ -60,7 +60,6 @@ const {
   removeBot,
   handleWordSubmission,
   handleRerollCategory,
-  handleImposterVote,
   removePlayer,
   failRoom,
   getRoomStats,
@@ -205,9 +204,9 @@ function leaveCurrentRoom(ws) {
   const room = getRoom(code);
   // Same containment as the 'close' handler: drop the mapping FIRST so it can
   // never dangle if removePlayer throws, and wrap removePlayer so a throw on
-  // the OLD room (Word Bomb turn advance, Imposter vote-phase resolve, a T5
-  // plugin's handleLeave) can't abort the in-flight create/join that already
-  // put this socket into a NEW room — which would strand a ghost entry there,
+  // the OLD room (Word Bomb turn advance, a T5 plugin's handleLeave) can't
+  // abort the in-flight create/join that already put this socket into a NEW
+  // room — which would strand a ghost entry there,
   // the exact bug this function exists to prevent. failRoom tears the old room
   // down cleanly instead of leaving a half-mutated/frozen game behind.
   connectionToRoomCode.delete(ws.id);
@@ -450,7 +449,7 @@ wss.on('connection', (ws) => {
           }
           const gameType = payload?.gameType;
           if (
-            !['word-bomb', 'category-blitz', 'imposter-word'].includes(gameType) &&
+            !['word-bomb', 'category-blitz'].includes(gameType) &&
             !T5_MODES[gameType] // [T5] experimental modes are also selectable
           ) {
             sendError(ws, 'Invalid game type.', 'set_game_type');
@@ -458,9 +457,9 @@ wss.on('connection', (ws) => {
           }
           room.gameType = gameType;
           // Difficulty is a Word Bomb concept (its HARD/CRAZY/HELL timer tiers). If
-          // the host set HARD then switched to Blitz/Imposter, drop the stale value
-          // back to medium so it can't drag in — Blitz then gets its 2 rerolls and
-          // Imposter's (inert) difficulty stays neutral. Word Bomb keeps its choice.
+          // the host set HARD then switched to another mode, drop the stale value
+          // back to medium so it can't drag in — Blitz then gets its 2 rerolls.
+          // Word Bomb keeps its choice.
           if (gameType !== 'word-bomb') room.difficultyKey = 'medium';
           // Bots are mode-specific (their own name pool and behavior per mode);
           // if the host switches modes with a bot still in the lobby, drop it so
@@ -544,8 +543,8 @@ wss.on('connection', (ws) => {
           const room = getRoomForConnection(ws);
           if (!room) return;
           // Turn-based games only: getCurrentPlayerId below reads
-          // game.turnOrder, which the round-based modes (Blitz / Imposter /
-          // plugin modes) don't have - without the Array check, skip_turn on
+          // game.turnOrder, which the round-based modes (Blitz / plugin modes)
+          // don't have - without the Array check, skip_turn on
           // one of those games threw a TypeError (caught, but surfaced to the
           // player as a generic server error, plus Sentry noise).
           if (!room.game || !Array.isArray(room.game.turnOrder) || room.game.status !== 'in_progress') {
@@ -614,20 +613,6 @@ wss.on('connection', (ws) => {
           const result = handleRerollCategory(room, ws.id);
           if (result.error) {
             sendError(ws, humanizeError(result.error), 'reroll_category');
-          }
-          break;
-        }
-
-        // Imposter Word: a vote for who the imposter is. Routed through the room
-        // manager, which replies vote_result to the voter and broadcasts a
-        // privacy-safe vote_count (and ends the phase early once everyone's in).
-        case 'submit_vote': {
-          const room = getRoomForConnection(ws);
-          if (!room) return;
-          const suspectId = (payload?.suspectId || '').toString();
-          const result = handleImposterVote(room, ws.id, suspectId);
-          if (result.error) {
-            sendError(ws, humanizeError(result.error), 'submit_vote');
           }
           break;
         }

@@ -3,20 +3,19 @@
 //
 // [T2] Regression tests for the "in_progress means live" family of lifecycle
 // bugs in roomManager.js. Word Bomb is the only mode whose live game has
-// status 'in_progress': Category Blitz also lives in 'between_rounds', and
-// Imposter Word NEVER uses 'in_progress' at all (answering / voting / reveal /
-// between_rounds). Every guard that keyed "is a game running" off
-// status === 'in_progress' therefore had holes:
-//   - joinRoom let players join an Imposter game at ANY point, and a Blitz
-//     game during the 5s intermission -> ghost roster entry (in room.players
-//     but not game.players) that receives broadcasts but can't play or score.
+// status 'in_progress': Category Blitz also lives in 'between_rounds' (its 5s
+// intermission), a live phase that is NOT 'in_progress'. Every guard that keyed
+// "is a game running" off status === 'in_progress' therefore had holes:
+//   - joinRoom let players join a Blitz game during the 5s intermission ->
+//     ghost roster entry (in room.players but not game.players) that receives
+//     broadcasts but can't play or score.
 //   - startGame had no already-running guard at all: a double-fired
 //     start_game (or a mid-game click) silently discarded the live game and
 //     re-initialized, wiping everyone's progress.
 //   - addBot/removeBot allowed roster mutation mid-game during any
 //     non-in_progress live phase.
-//   - reapIdleRooms could reap a live Imposter game (its midGame check only
-//     recognized 'in_progress').
+//   - reapIdleRooms could reap a live game in a non-in_progress phase (its
+//     midGame check only recognized 'in_progress').
 // Plus two adjacent disconnect bugs:
 //   - host reassignment picked players[0], which can be a BOT (join a room
 //     that already has a solo bot, then the host leaves) -> bot host, nobody
@@ -49,19 +48,6 @@ test.beforeEach(() => _resetRoomsForTesting());
 test.after(() => _resetRoomsForTesting());
 
 // ---- joinRoom vs live non-in_progress games --------------------------------
-
-test('joinRoom rejects joining an Imposter Word game mid-round (status answering)', () => {
-  const { room } = createRoom(conn(), 'Host');
-  room.gameType = 'imposter-word';
-  joinRoom(room.code, conn(), 'P1');
-  joinRoom(room.code, conn(), 'P2');
-  assert.equal(startGame(room).error, undefined);
-  assert.equal(room.game.status, 'answering'); // imposter never uses in_progress
-
-  const res = joinRoom(room.code, conn(), 'Latecomer');
-  assert.equal(res.error, 'game_already_started', 'no joining a live imposter round');
-  assert.equal(room.players.length, 3, 'no ghost roster entry');
-});
 
 test('joinRoom rejects joining a Blitz game during the between-rounds intermission', () => {
   const { room } = createRoom(conn(), 'Host');
@@ -116,16 +102,6 @@ test('startGame refuses during a Blitz intermission but allows a re-start after 
   assert.equal(room.game.status, 'in_progress');
 });
 
-test('startGame refuses during a live Imposter phase', () => {
-  const { room } = createRoom(conn(), 'Host');
-  room.gameType = 'imposter-word';
-  joinRoom(room.code, conn(), 'P1');
-  joinRoom(room.code, conn(), 'P2');
-  startGame(room);
-  assert.equal(room.game.status, 'answering');
-  assert.equal(startGame(room).error, 'game_already_started');
-});
-
 // ---- addBot / removeBot mid-game ---------------------------------------------
 
 test('addBot refuses during a Blitz intermission (live game, not in_progress)', () => {
@@ -151,20 +127,19 @@ test('removeBot refuses during a Blitz intermission', () => {
   assert.equal(room.players.some((p) => p.isBot), true, 'the bot stays in the live game');
 });
 
-// ---- idle reaper vs live Imposter game ----------------------------------------
+// ---- idle reaper vs live non-in_progress game ---------------------------------
 
-test('reapIdleRooms never reaps a live Imposter game (no in_progress status exists)', () => {
+test('reapIdleRooms never reaps a live game in a non-in_progress phase (Blitz intermission)', () => {
   const { room } = createRoom(conn(), 'Host');
-  room.gameType = 'imposter-word';
+  room.gameType = 'category-blitz';
   joinRoom(room.code, conn(), 'P1');
-  joinRoom(room.code, conn(), 'P2');
   startGame(room);
-  assert.equal(room.game.status, 'answering');
+  room.game.status = 'between_rounds'; // the 5s intermission - live, but not in_progress
 
   // Simulate 21 minutes of wall-clock with no touched activity.
   const future = Date.now() + 21 * 60 * 1000;
   const reaped = reapIdleRooms(future);
-  assert.deepEqual(reaped, [], 'a live imposter round must never be reaped');
+  assert.deepEqual(reaped, [], 'a live between-rounds game must never be reaped');
   assert.ok(getRoom(room.code), 'room still exists');
 
   // Once the game is finished, the same idle room IS reapable again.

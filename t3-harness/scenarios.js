@@ -402,41 +402,9 @@ function closeAll(clients) {
   });
 
   // ------------------------------------------------------------------
-  await scenario('S10: imposter disconnects mid-round -> round resolves without crash or hang', async () => {
-    const clients = await connectMany(server.url, 4, 'S10-');
-    try {
-      const code = await clients[0].createRoom();
-      for (const c of clients.slice(1)) await c.joinRoom(code);
-      clients[0].send('set_game_type', { gameType: 'imposter-word' });
-      clients[0].send('start_game');
-
-      // Every player gets a private round_start telling them if they're it.
-      const starts = await Promise.all(clients.map((c) => c.waitFor('round_start', { timeoutMs: 5000 })));
-      const imposterIdx = starts.findIndex((m) => m.payload.isImposter);
-      assert(imposterIdx !== -1, 'an imposter was assigned');
-      const imposter = clients[imposterIdx];
-      const others = clients.filter((_, i) => i !== imposterIdx);
-
-      // Everyone answers, then the imposter rage-quits mid-answering phase.
-      others.forEach((c) => c.send('submit_answer', { answer: 'thing' }));
-      imposter.terminate();
-
-      // The answer phase must still close into voting for the remaining players.
-      // Nominal phase is ~33s (30s + countdown); the huge margin absorbs event-
-      // loop stretch when the host machine is busy (timer ticks arrive late).
-      const votePhase = await others[0].waitFor('vote_phase_start', { timeoutMs: 120000 });
-      assert(Array.isArray(votePhase.payload.answers), 'answers revealed');
-
-      // Everyone votes for someone still present; phase should resolve.
-      const suspect = others[1].id;
-      others.forEach((c) => c.send('submit_vote', { suspectId: suspect }));
-      const results = await others[0].waitFor('vote_results', { timeoutMs: 60000 });
-      assert(results.payload, 'vote_results delivered — no hang, no crash');
-    } finally {
-      closeAll(clients);
-      await sleep(200);
-    }
-  });
+  // S10 (imposter disconnects mid-round) was retired with the Imposter Word
+  // mode. The number is intentionally left as a GAP - the T-docs reference
+  // scenarios by number, so S11+ must NOT be renumbered to close it.
 
   // ------------------------------------------------------------------
   await scenario('S11: rapid join/leave churn -> registry returns to baseline, server responsive', async () => {
