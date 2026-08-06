@@ -18,7 +18,6 @@ const {
 
 const wordBombLogic = require('./gameLogic');
 const categoryBlitzLogic = require('./categoryBlitzLogic');
-const imposterWordLogic = require('./imposterWordLogic');
 
 // Solo Word Bomb bot opponent. wordBombBot supplies the fake player (with a
 // mock sink connection), the valid-word lookup, and the difficulty timing; the
@@ -61,7 +60,6 @@ const t5Helpers = {
  */
 function logicForGameType(gameType) {
   if (gameType === 'category-blitz') return categoryBlitzLogic;
-  if (gameType === 'imposter-word') return imposterWordLogic;
   if (t5Modes[gameType]) return t5Modes[gameType].logic; // [T5]
   return wordBombLogic;
 }
@@ -69,11 +67,10 @@ function logicForGameType(gameType) {
 /**
  * True when the room has a LIVE (unfinished) game, in ANY mode's sense of
  * "live". Word Bomb's live game is always status 'in_progress', but Category
- * Blitz also lives in 'between_rounds', and Imposter Word never uses
- * 'in_progress' at all (answering/voting/reveal/between_rounds). Guards that
- * mean "is a game running right now" must use this, not a raw in_progress
- * check - keying off in_progress let players join/mutate/restart mid-game
- * during every non-in_progress live phase.
+ * Blitz also lives in 'between_rounds', so a mode's live game need not carry
+ * the 'in_progress' status at all. Guards that mean "is a game running right
+ * now" must use this, not a raw in_progress check - keying off in_progress let
+ * players join/mutate/restart mid-game during every non-in_progress live phase.
  */
 function isGameLive(room) {
   return !!room.game && room.game.status !== 'finished';
@@ -183,9 +180,9 @@ function joinRoom(code, connection, playerName) {
     return { error: 'room_not_found' };
   }
   // Live in ANY phase (not just in_progress - see isGameLive): joining a
-  // Blitz intermission or an Imposter round produced a ghost roster entry
-  // (in room.players but not game.players) that got broadcasts but couldn't
-  // play or score. A FINISHED game still joins like a lobby.
+  // Blitz intermission produced a ghost roster entry (in room.players but not
+  // game.players) that got broadcasts but couldn't play or score. A FINISHED
+  // game still joins like a lobby.
   if (isGameLive(room)) {
     return { error: 'game_already_started' };
   }
@@ -574,197 +571,11 @@ function scheduleBlitzBotAnswers(room) {
 }
 
 /* ============================================================= */
-/* ===============  IMPOSTER WORD ORCHESTRATION  =============== */
-/* ============================================================= */
-// Imposter Word reuses the room's roundTimer / roundPause / countdown slots
-// (a room only ever runs one game at a time), so clearRoundTimer already tears
-// it all down on reset / disconnect. Each round has two timed phases:
-// answering -> voting, then a reveal pause that starts the next round (or ends).
-
-// Reveal sits a touch longer than the spec's 5s so the frontend can play the
-// ~2s "THE IMPOSTER WAS..." suspense AND its 5s countdown to the next round.
-const IMPOSTER_REVEAL_PAUSE_MS = 7000;
-
-/**
- * Starts a round: sends each player their OWN round_start (the imposter sees a
- * different category from everyone else, so these can't be one broadcast), then
- * starts the answer-phase timer once the 3-2-1 countdown has played.
- */
-function startImposterRound(room) {
-  const { game } = room;
-  const roster = game.players.map((gp) => ({ id: gp.id, name: gp.name }));
-  room.players.forEach((p) => {
-    // Per-recipient try/catch, same rationale as broadcastToRoom: one torn-down
-    // socket must not stop the other players from receiving their round.
-    try {
-      if (p.connection.readyState !== 1) return;
-      const isImposter = p.id === game.imposterId;
-      p.connection.send(
-        JSON.stringify({
-          type: 'round_start',
-          payload: {
-            round: game.currentRound,
-            totalRounds: game.rounds,
-            category: isImposter ? game.imposterCategory : game.currentCategory,
-            isImposter,
-            phase: 'answering',
-            timerSeconds: game.answerPhaseSeconds,
-            players: roster,
-          },
-        })
-      );
-    } catch (err) {
-      logWarn('round_start_send_failed', { roomCode: room.code, playerId: p.id }, err);
-    }
-  });
-  scheduleTimerAfterCountdown(room, startImposterAnswerTimer);
-}
-
-/** Answer phase countdown: broadcasts a tick a second, ends the phase at 0. */
-function startImposterAnswerTimer(room) {
-  clearRoundTimer(room);
-  const { game } = room;
-  let remaining = game.answerPhaseSeconds;
-  room.roundDeadline = Date.now() + remaining * 1000;
-  room.roundTimerInterval = setInterval(() => guardRoom(room, 'imposter_answer_timer_error', () => {
-    remaining -= 1;
-    if (remaining <= 0) {
-      clearRoundTimer(room);
-      endImposterAnswerPhase(room);
-      return;
-    }
-    broadcastToRoom(room, { type: 'timer_tick', payload: { secondsRemaining: remaining } });
-  }), 1000);
-}
-
-/** Closes answering, reveals everyone's answers, and opens voting. */
-function endImposterAnswerPhase(room) {
-  const { game } = room;
-  const result = imposterWordLogic.endAnswerPhase(game);
-  broadcastToRoom(room, {
-    type: 'vote_phase_start',
-    payload: {
-      answers: result.answers,
-      timerSeconds: result.timerSeconds,
-      phase: 'voting',
-      players: game.players.map((p) => ({ id: p.id, name: p.name })),
-    },
-  });
-  startImposterVoteTimer(room);
-}
-
-/** Vote phase countdown: ends at 0 (handleImposterVote ends it early if all in). */
-function startImposterVoteTimer(room) {
-  clearRoundTimer(room);
-  const { game } = room;
-  let remaining = game.votePhaseSeconds;
-  room.roundDeadline = Date.now() + remaining * 1000;
-  room.roundTimerInterval = setInterval(() => guardRoom(room, 'imposter_vote_timer_error', () => {
-    remaining -= 1;
-    if (remaining <= 0) {
-      clearRoundTimer(room);
-      endImposterVotePhase(room);
-      return;
-    }
-    broadcastToRoom(room, { type: 'timer_tick', payload: { secondsRemaining: remaining } });
-  }), 1000);
-}
-
-/** Tallies votes, broadcasts the reveal, then schedules the next round / game over. */
-function endImposterVotePhase(room) {
-  clearRoundTimer(room);
-  const { game } = room;
-  const reveal = imposterWordLogic.endVotePhase(game);
-  broadcastToRoom(room, { type: 'vote_results', payload: { ...reveal, phase: 'reveal' } });
-
-  room.roundPauseTimeout = setTimeout(() => guardRoom(room, 'imposter_reveal_pause_error', () => {
-    room.roundPauseTimeout = null;
-    const next = imposterWordLogic.startNextRound(game);
-    if (next === null) {
-      broadcastToRoom(room, {
-        type: 'game_over',
-        payload: { gameType: 'imposter-word', ...imposterWordLogic.getResults(game) },
-      });
-    } else {
-      startImposterRound(room);
-    }
-  }), IMPOSTER_REVEAL_PAUSE_MS);
-}
-
-/**
- * Handles an Imposter Word answer. Unlike the other modes, answers are PUBLIC:
- * the accept/reject goes back to the submitter, and on acceptance the answer is
- * broadcast to everyone in real time (that's how the imposter reverse-engineers
- * the category). No turn check, no algorithmic validation - players judge.
- */
-function handleImposterAnswer(room, connectionId, answer) {
-  const { game } = room;
-  if (!game || game.gameType !== 'imposter-word') {
-    return { error: 'no_active_game' };
-  }
-  if (game.status !== 'answering') {
-    return { error: 'round_not_active' };
-  }
-  const result = imposterWordLogic.submitAnswer(game, connectionId, answer);
-
-  const connection = room.players.find((p) => p.id === connectionId)?.connection;
-  if (connection && connection.readyState === 1) {
-    connection.send(JSON.stringify({ type: 'answer_result', payload: result }));
-  }
-
-  if (result.accepted) {
-    touchRoom(room); // an accepted answer proves the room is alive
-    const player = game.players.find((p) => p.id === connectionId);
-    broadcastToRoom(room, {
-      type: 'imposter_answer',
-      payload: {
-        playerId: connectionId,
-        playerName: player ? player.name : 'Someone',
-        answer: result.answer,
-      },
-    });
-  }
-
-  return { result };
-}
-
-/**
- * Handles an Imposter Word vote. The accept/reject goes back to the voter, and
- * a privacy-safe vote_count (how many have voted, not who for whom) is broadcast
- * so the UI can show progress. When everyone has voted the phase ends early.
- */
-function handleImposterVote(room, connectionId, suspectId) {
-  const { game } = room;
-  if (!game || game.gameType !== 'imposter-word') {
-    return { error: 'no_active_game' };
-  }
-  if (game.status !== 'voting') {
-    return { error: 'round_not_active' };
-  }
-  const result = imposterWordLogic.submitVote(game, connectionId, suspectId);
-
-  const connection = room.players.find((p) => p.id === connectionId)?.connection;
-  if (connection && connection.readyState === 1) {
-    connection.send(JSON.stringify({ type: 'vote_result', payload: result }));
-  }
-
-  if (result.accepted) {
-    const tally = imposterWordLogic.countVotes(game);
-    broadcastToRoom(room, { type: 'vote_count', payload: tally });
-    if (tally.voted >= tally.total) {
-      endImposterVotePhase(room); // everyone's in - don't wait out the clock
-    }
-  }
-
-  return { result };
-}
-
-/* ============================================================= */
 /* ==================  SOLO BOT OPPONENT (ADD/REMOVE)  ========= */
 /* ============================================================= */
 
 // Which bot module builds the roster entry for each game mode. Modes absent
-// here (imposter-word - a bot can't bluff or vote) don't support bots at all.
+// here don't support bots at all.
 const BOT_FACTORY_BY_GAME_TYPE = {
   'word-bomb': wordBombBot,
   'category-blitz': categoryBlitzBot,
@@ -892,15 +703,11 @@ function startGame(room, opts = {}) {
   const daily = wantDaily ? categoryBlitzLogic.dailyInfo() : null;
 
   if (!isSoloCategoryBlitz) {
-    // Imposter Word needs at least 3 (a 2-player imposter round is pointless);
     // T5 modes declare their own minimum; the rest start at the shared
     // 2-player minimum.
-    const minPlayers =
-      room.gameType === 'imposter-word'
-        ? imposterWordLogic.MIN_PLAYERS_TO_START
-        : t5Modes[room.gameType]
-          ? t5Modes[room.gameType].minPlayers
-          : MIN_PLAYERS_TO_START;
+    const minPlayers = t5Modes[room.gameType]
+      ? t5Modes[room.gameType].minPlayers
+      : MIN_PLAYERS_TO_START;
     if (room.players.length < minPlayers) {
       return { error: 'not_enough_players' };
     }
@@ -954,10 +761,6 @@ function startGame(room, opts = {}) {
       },
     });
     scheduleTimerAfterCountdown(room, startRoundTimer);
-  } else if (room.gameType === 'imposter-word') {
-    // Social deduction: each player gets their OWN round_start (the imposter
-    // sees a different prompt), then the answer-phase timer after the countdown.
-    startImposterRound(room);
   } else if (t5Modes[room.gameType]) {
     // [T5] experimental modes own their opening broadcast + first timer.
     t5Modes[room.gameType].start(room, t5Helpers);
@@ -987,11 +790,6 @@ async function handleWordSubmission(room, connectionId, word, context = {}) {
   // the optional submit-time round tag ({ expectedCategory, expectedRound }).
   if (game.gameType === 'category-blitz') {
     return handleCategoryAnswer(room, connectionId, word, context);
-  }
-
-  // Imposter Word answers are public and judged by players - its own handler.
-  if (game.gameType === 'imposter-word') {
-    return handleImposterAnswer(room, connectionId, word);
   }
 
   // [T5] experimental modes route to their own submit handlers.
@@ -1264,25 +1062,6 @@ function removePlayer(room, connectionId) {
     if (Array.isArray(game.players)) {
       game.players = game.players.filter((p) => p.id !== connectionId);
     }
-  } else if (game && game.gameType === 'imposter-word') {
-    // Also simultaneous-ish: drop the leaver from the roster and the imposter
-    // rotation order. The current phase timer keeps running for everyone else.
-    if (Array.isArray(game.players)) {
-      game.players = game.players.filter((p) => p.id !== connectionId);
-    }
-    if (Array.isArray(game.order)) {
-      game.order = game.order.filter((id) => id !== connectionId);
-    }
-    // If the leaver was the vote phase's last hold-out, the survivors may now
-    // ALL have voted - resolve the phase exactly as the final vote arriving
-    // would have (handleImposterVote's early-end check only runs on votes, so
-    // without this the table stared at a dead clock until the timer expired).
-    if (game.status === 'voting') {
-      const tally = imposterWordLogic.countVotes(game);
-      if (tally.total > 0 && tally.voted >= tally.total) {
-        endImposterVotePhase(room);
-      }
-    }
   } else if (game && t5Modes[game.gameType]) {
     // [T5] experimental modes own their mid-game leave semantics (e.g. Fuse
     // eliminates the leaver and re-lights the fuse if they held the bomb).
@@ -1330,8 +1109,8 @@ function reapIdleRooms(now = Date.now()) {
   const stale = [];
   for (const room of rooms.values()) {
     // Any LIVE game protects the room (see isGameLive) - an in_progress-only
-    // check would let a live Imposter game (which never has that status) or a
-    // Blitz intermission be reaped mid-play.
+    // check would let a live game in a non-in_progress phase (e.g. a Blitz
+    // intermission) be reaped mid-play.
     if (isGameLive(room)) continue;
     const idleFor = now - (room.lastActivity || room.createdAt || now);
     if (idleFor >= ROOM_IDLE_TTL_MS) stale.push(room);
@@ -1438,7 +1217,6 @@ module.exports = {
   handleWordSubmission,
   handleCategoryAnswer,
   handleRerollCategory,
-  handleImposterVote,
   removePlayer,
   broadcastToRoom,
   buildRoomUpdatePayload,

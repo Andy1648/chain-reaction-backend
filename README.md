@@ -3,7 +3,7 @@
 [![CI](https://github.com/Andy1648/chain-reaction-backend/actions/workflows/ci.yml/badge.svg)](https://github.com/Andy1648/chain-reaction-backend/actions/workflows/ci.yml)
 
 WebSocket server for the WordArcade multiplayer word games: Chain Reaction,
-Word Bomb, Category Blitz, and Imposter Word. Deployed on Render; every push
+Word Bomb, and Category Blitz. Deployed on Render; every push
 and PR runs install → lint → test in GitHub Actions.
 
 ## Local setup
@@ -26,7 +26,7 @@ See `CONTRIBUTING.md` for conventions, `T1-ARCHITECTURE.md` and
 `T3-MULTIPLAYER_MAP.md` for architecture maps.
 
 > The protocol tables below cover the original Chain Reaction mode; the
-> newer modes (Word Bomb, Category Blitz, Imposter Word) speak additional
+> newer modes (Word Bomb, Category Blitz) speak additional
 > message types — `server.js` is the routing table of record.
 
 ## Architecture

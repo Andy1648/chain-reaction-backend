@@ -10,8 +10,9 @@
 //
 // There is NO correctness judging anywhere - no dictionary, no AI, no
 // accept-lists. An answer only scores if other humans typed the same thing,
-// so the players themselves are the validator (same trust model as Imposter
-// Word, inverted: you win by converging instead of blending).
+// so the players themselves are the validator: no server-side authority decides
+// a "right" answer, scoring emerges purely from how many players converge on
+// the same thing (here you win by converging with the herd, not standing apart).
 //
 // Layout follows the T5 plugin shape: PURE LOGIC first (no timers/sockets),
 // then the ORCHESTRATOR (owns the answer clock via the room's standard
@@ -29,8 +30,8 @@ const TIME_BY_DIFFICULTY = { easy: 30, medium: 25, hard: 15 };
 
 // Prompts are deliberately CONVERGENT: each has a handful of obvious answers
 // most people reach for, so herds actually form. Divergent/creative prompts
-// (great in Imposter Word) are poison here - if everyone's answer is unique,
-// nobody scores and the mode falls flat. Short named things only.
+// are poison here - if everyone's answer is unique, nobody scores and the mode
+// falls flat. Short named things only.
 const PROMPTS = [
   // Food & drink
   'Name a pizza topping',
