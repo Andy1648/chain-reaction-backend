@@ -44,8 +44,7 @@ Operational events are one **JSON object per line** (from `logger.js`):
   - Lifecycle: `server_listening`, `room_created`, `game_started`, `room_destroyed`, `room_reaped`
   - Handler failures (survived, player got an error reply): `ws_message_error`
   - Timer failures (survived, **that room was closed**): `turn_timer_error`,
-    `round_timer_error`, `round_intermission_error`, `countdown_start_error`,
-    `imposter_answer_timer_error`, `imposter_vote_timer_error`, `imposter_reveal_pause_error`
+    `round_timer_error`, `round_intermission_error`, `countdown_start_error`
   - Disconnect-cleanup failure (room closed): `player_disconnect_error`
   - Socket noise (harmless, ws cleans up): `ws_socket_error`, `ws_send_failed`, `broadcast_send_failed`
   - Bot hiccups (bot just misses its beat): `bot_move_failed`, `blitz_bot_answer_failed`
