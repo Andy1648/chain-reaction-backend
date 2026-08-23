@@ -7,10 +7,10 @@ name: keepalive
 
 on:
   schedule:
-    # every 10 min, 14:00-23:59 UTC
-    - cron: '*/10 14-23 * * *'
-    # every 10 min, 00:00-06:59 UTC (covers through 06:00 ET boundary)
-    - cron: '*/10 0-6 * * *'
+    # every 5 min, 14:00-23:59 UTC
+    - cron: '*/5 14-23 * * *'
+    # every 5 min, 00:00-06:59 UTC (covers through 06:00 ET boundary)
+    - cron: '*/5 0-6 * * *'
   workflow_dispatch:
 
 jobs:
