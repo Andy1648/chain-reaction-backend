@@ -111,6 +111,13 @@ app.get('/version', (req, res) => {
   res.json({ commit: process.env.RENDER_GIT_COMMIT || 'unknown' });
 });
 
+// Bare liveness ping for the keep-warm cron (see .github/workflows/keepalive.yml).
+// Deliberately does zero work: no DB, no Sentry/PostHog, no WS. Just enough to
+// wake the Render free-tier instance from sleep.
+app.get('/healthz', (req, res) => {
+  res.type('text/plain').send('ok');
+});
+
 // Protected operational status endpoint (see ADMIN.md). Enabled ONLY when
 // ADMIN_TOKEN is set; without it the route 404s like any unknown path, so
 // nothing is advertised. Auth: `Authorization: Bearer <token>` header, or

@@ -1,0 +1,24 @@
+name: keepalive
+
+# Pings /healthz to keep the Render free-tier instance from spinning down.
+# Only runs 14:00-06:00 UTC (10am-2am ET) so we stay well under Render's
+# 750 free instance-hours/month. This is a warmer, not a monitor: the job
+# never fails on a bad response.
+
+on:
+  schedule:
+    # every 5 min, 14:00-23:59 UTC
+    - cron: '*/5 14-23 * * *'
+    # every 5 min, 00:00-06:59 UTC (covers through 06:00 ET boundary)
+    - cron: '*/5 0-6 * * *'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Warm /healthz
+        run: >-
+          curl -sS -o /dev/null -w "%{http_code} %{time_total}\n"
+          --max-time 60
+          https://chain-reaction-backend-i6kx.onrender.com/healthz
