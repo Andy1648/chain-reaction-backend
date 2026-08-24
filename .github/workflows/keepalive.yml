@@ -1,16 +1,16 @@
 name: keepalive
 
 # Pings /healthz to keep the Render free-tier instance from spinning down.
-# Only runs 14:00-06:00 UTC (10am-2am ET) so we stay well under Render's
-# 750 free instance-hours/month. This is a warmer, not a monitor: the job
-# never fails on a bad response.
+# Runs 24/7: CrazyGames reviews from Belgium (07:00-16:00 UTC) — exactly the
+# gap the old windowed schedule left cold. 24/7 at one instance is ~730
+# instance-hours/month, under Render's 750 free-tier cap with ~20h headroom.
+# Safe only because this is the sole free service on the account. This is a
+# warmer, not a monitor: the job never fails on a bad response.
 
 on:
   schedule:
-    # every 5 min, 14:00-23:59 UTC
-    - cron: '*/5 14-23 * * *'
-    # every 5 min, 00:00-06:59 UTC (covers through 06:00 ET boundary)
-    - cron: '*/5 0-6 * * *'
+    # every 5 min, all day
+    - cron: '*/5 * * * *'
   workflow_dispatch:
 
 jobs:
