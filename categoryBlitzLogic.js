@@ -28,10 +28,11 @@ const haikuValidator = require('./haikuValidator');
 const TOTAL_ROUNDS = 3;
 const MIN_PLAYERS_TO_START = 2;
 
-// Every round is a flat 20 seconds, for every difficulty and for both solo and
+// Every round is a flat 30 seconds, for every difficulty and for both solo and
 // multiplayer. Difficulty no longer changes the clock - it only sets how many
-// category rerolls a game gets (below).
-const ROUND_TIME_SECONDS = 20;
+// category rerolls a game gets (below). (Was 20s — the leeway pass gives players
+// more time to think of answers.)
+const ROUND_TIME_SECONDS = 30;
 
 const VALID_DIFFICULTIES = ['easy', 'medium', 'hard'];
 
@@ -40,9 +41,10 @@ const VALID_DIFFICULTIES = ['easy', 'medium', 'hard'];
 const MAX_ANSWER_LENGTH = 60;
 
 // Category rerolls allowed PER GAME, by difficulty tier. The tiers are shown to
-// players as HARD / CRAZY / HELL (see the frontend): easy -> HARD (3 rerolls),
-// medium -> CRAZY (2), hard -> HELL (1). Fewer rerolls = harder.
-const REROLLS_BY_DIFFICULTY = { easy: 3, medium: 2, hard: 1 };
+// players as HARD / CRAZY / HELL (see the frontend): easy -> HARD (5 rerolls),
+// medium -> CRAZY (4), hard -> HELL (3). Fewer rerolls = harder. (Was 3/2/1 — the
+// leeway pass gives more rerolls so a bad category is easier to escape.)
+const REROLLS_BY_DIFFICULTY = { easy: 5, medium: 4, hard: 3 };
 
 // ---- Daily Challenge -------------------------------------------------------
 // A once-per-day solo Blitz where EVERYONE on the planet gets the same three
@@ -363,6 +365,162 @@ const QUARANTINED_CATEGORIES = new Set([
   'Famous painters',
   'Things with wheels',
   'Social media apps',
+
+  // ---- AUTO-QUARANTINED: bottom 25% by accept-list size (leeway pass) ----
+  // The 147 smallest playable categories by pre-generated accept-list size (0..16
+  // entries). A tiny accept-list means almost every reasonable answer misses Stage 1
+  // and falls to the AI judge — the exact path that fails closed when the key/billing
+  // is down — so these read as "the judge rejects everything" and/or run dry fast in a
+  // 30s race. Pulled from rotation (reversible: their accept-lists stay on disk; delete
+  // a line here to re-enable). Several 0-size entries are KEY-CASE MISMATCHES with
+  // categoryAnswers/* (e.g. "Pixar Movies" vs "Pixar movies"), which also read as empty.
+  "Active volcanoes", // 0
+  "Ancient wonders", // 0
+  "Breakfast cereal brands", // 0
+  "Citrus fruits", // 0
+  "Classic dystopian novels", // 0
+  "Disney Villains", // 0
+  "Edible berries", // 0
+  "Major League Soccer teams", // 0
+  "Minecraft Mobs", // 0
+  "Mortal Kombat fighters", // 0
+  "Mushrooms and fungi", // 0
+  "Oceans", // 0
+  "Pixar Movies", // 0
+  "Pokemon Gen 1", // 0
+  "Popular spices and herbs", // 0
+  "Rock and Roll Hall of Fame Inductees", // 0
+  "Rolling Stone's 500 Greatest Albums", // 0
+  "Seven Wonders of the Ancient World", // 0
+  "SI units", // 0
+  "SpongeBob SquarePants Characters", // 0
+  "Super Mario power-ups", // 0
+  "The Great Lakes", // 0
+  "Types of mushrooms", // 0
+  "Types of nuts", // 0
+  "Types of rocks", // 0
+  "US state abbreviations", // 0
+  "US states by name", // 0
+  "Video game hardware manufacturers", // 0
+  "Zodiac constellations", // 0
+  "Scandinavian countries", // 3
+  "Dwarf planets", // 5
+  "Pac-Man ghosts", // 5
+  "Scandinavian and Nordic countries", // 5
+  "Types of simple machines", // 6
+  "Among Us maps", // 7
+  "Central American countries", // 7
+  "Harry Potter books", // 7
+  "Layers of the atmosphere", // 7
+  "Beatles songs", // 8
+  "Continents", // 8
+  "Grand Slam tennis tournaments", // 8
+  "Soccer clubs", // 8
+  "Swimming strokes", // 8
+  "Taxonomic kingdoms", // 8
+  "Tour de France Jerseys", // 8
+  "Types of sports rackets", // 8
+  "Volleyball positions", // 8
+  "Airlines", // 9
+  "Camping gear", // 9
+  "Clothing brands", // 9
+  "Cooking methods", // 9
+  "Dragon Ball characters", // 9
+  "Italian dishes", // 9
+  "Jane Austen novels", // 9
+  "Languages", // 9
+  "Major League Baseball awards", // 9
+  "Months of the year", // 9
+  "Naruto characters", // 9
+  "Office supplies", // 9
+  "One Piece characters", // 9
+  "Planets in our solar system", // 9
+  "Team Fortress 2 classes", // 9
+  "Tools in a toolbox", // 9
+  "Baseball positions", // 10
+  "Body parts", // 10
+  "Card games", // 10
+  "Colors", // 10
+  "Disney princesses", // 10
+  "Events in a decathlon", // 10
+  "Great Lakes of North America", // 10
+  "Greek playwrights", // 10
+  "Horror movies", // 10
+  "Inca deities", // 10
+  "Jungle animals", // 10
+  "Kitchen utensils", // 10
+  "Pac-Man maze fruits", // 10
+  "Pixar characters", // 10
+  "Pokemon types", // 10
+  "Professional tennis surface types", // 10
+  "Professional wrestling promotions", // 10
+  "Shapes", // 10
+  "Simpsons characters", // 10
+  "Tennis terms", // 10
+  "Things on a golf course", // 10
+  "US states bordering the Pacific Ocean", // 10
+  "Beatles albums", // 11
+  "C.S. Lewis books", // 11
+  "Caribbean countries", // 11
+  "Mortal Kombat games", // 11
+  "Norse mythological realms", // 11
+  "Roald Dahl books", // 11
+  "Types of chemical bonds", // 11
+  "World oceans", // 11
+  "Agatha Christie detectives", // 12
+  "Art elements", // 12
+  "Chess pieces", // 12
+  "Gothic novels", // 12
+  "South American countries", // 12
+  "The Sims games", // 12
+  "Types of electromagnetic radiation", // 12
+  "Zodiac signs", // 12
+  "Canadian provinces and territories", // 13
+  "Charles Dickens novels", // 13
+  "Cycling disciplines", // 13
+  "Major world peninsulas", // 13
+  "Music streaming services", // 13
+  "Music tempo markings", // 13
+  "Pottery types", // 13
+  "Programming paradigms", // 13
+  "South American capitals", // 13
+  "States of matter", // 13
+  "Street Fighter games", // 13
+  "Types of BBQ sauce", // 13
+  "US states bordering the Atlantic Ocean", // 13
+  "Ancient Persian Kings", // 14
+  "Bears", // 14
+  "Big cats", // 14
+  "Greek epics", // 14
+  "Human endocrine glands", // 14
+  "Noble gases", // 14
+  "Oceanian countries", // 14
+  "Soccer positions", // 14
+  "Table tennis equipment", // 14
+  "Types of dried meat", // 14
+  "Winter Olympic sports", // 14
+  "Electronic music genres", // 15
+  "Famous music festivals", // 15
+  "Greek tragedies", // 15
+  "James Bond Movies", // 15
+  "Milk alternatives", // 15
+  "Mongol Khans", // 15
+  "Music production software", // 15
+  "Pink Floyd albums", // 15
+  "Printmaking techniques", // 15
+  "Taxonomic ranks", // 15
+  "Taylor Swift albums", // 15
+  "Tennis strokes", // 15
+  "TV animation networks", // 15
+  "Types of fossils", // 15
+  "Ancient Mesopotamian Civilizations", // 16
+  "Ancient Mesopotamian Rulers", // 16
+  "Australian states and territories", // 16
+  "Battle royale games", // 16
+  "Electric guitar models", // 16
+  "Gymnastics events", // 16
+  "Half-human half-animal creatures", // 16
+  "Major professional sports leagues", // 16
 ]);
 
 const CATEGORIES = RAW_CATEGORIES.filter((category) => {

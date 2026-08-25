@@ -66,12 +66,29 @@ function underRateLimit(playerId) {
   return true;
 }
 
-// Judge like a FUN PARTY-GAME HOST, not a strict teacher. Players type short
-// 1-3 word answers under time pressure, often abbreviated/informal - be generous
-// and accept anything a group of friends would let slide; only reject answers
-// that genuinely make no sense for the category.
+// Judge like the good-natured host of a casual PARTY game, NOT a strict teacher or
+// quiz show. Players type short answers under time pressure, so the prompt is
+// explicitly, deliberately GENEROUS: the bar is "would a reasonable group of friends
+// count this?", and ties go to the player (when uncertain, ACCEPT). The response
+// contract is unchanged — the model still replies with a single "yes"/"no", parsed
+// by validate() below (startsWith 'yes'/'no').
 function buildPrompt(category, answer) {
-  return `The player is in a fast-paced word game. The category is "${category}". They typed "${answer}". Is this a reasonable or creative answer to this category, even if abbreviated or informal? Be generous - accept anything that a group of friends would accept during a party game. Reply with only "yes" or "no".`;
+  return `You are the good-natured host of a fast, casual PARTY word game — NOT a strict teacher, quiz show, or fact-checker. Players type short answers under time pressure, so give them every reasonable benefit of the doubt.
+
+Category: "${category}"
+Player's answer: "${answer}"
+
+Decide whether "${answer}" could reasonably count as a member of the category "${category}". BE VERY GENEROUS. You MUST accept:
+- regional, colloquial, slang, and brand/nickname names for the same thing (e.g. "soccer" and "football", "cilantro" and "coriander", "chevy" for Chevrolet, "beemer" for BMW, "aubergine" and "eggplant")
+- common misspellings, typos, phonetic spellings, and missing accents/punctuation whenever the intended answer is unmistakable (e.g. "bananna", "spagetti", "jalapeno" for jalapeño, "Pele" for Pelé)
+- singular or plural forms, abbreviations, and partial or last-name-only / first-name-only answers when it is clear who or what is meant (e.g. "Ronaldo", "LeBron", "USA", "VW")
+- anything a reasonable group of friends would happily let slide during a party game
+
+Reject ONLY when the answer is clearly NOT a member of the category — an obvious non-fit, pure gibberish, or an entirely different kind of thing. Do not reject for being informal, misspelled, abbreviated, partial, or uncommon.
+
+When you are unsure, ACCEPT. This is a party game, not a test.
+
+Reply with only one word: "yes" to accept, or "no" to reject.`;
 }
 
 /**
@@ -136,4 +153,4 @@ async function validate(category, answer, playerId) {
   }
 }
 
-module.exports = { validate, isEnabled, RATE_LIMIT_PER_MIN, TIMEOUT_MS };
+module.exports = { validate, isEnabled, buildPrompt, MODEL, RATE_LIMIT_PER_MIN, TIMEOUT_MS };
