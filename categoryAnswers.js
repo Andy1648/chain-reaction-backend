@@ -58,6 +58,8 @@ const supplements = [
   // data/accept-lists batch expansions (union-merged, real entries only).
   require('./categoryAnswers/expand-econ-1'),
   require('./categoryAnswers/expand-econ-2'),
+  require('./categoryAnswers/expand-econ-3'),
+  require('./categoryAnswers/expand-econ-4'),
 ];
 for (const supplement of supplements) {
   for (const [category, extras] of Object.entries(supplement)) {
