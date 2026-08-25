@@ -55,6 +55,9 @@ const answers = Object.assign(
 const supplements = [
   require('./categoryAnswers/expansion'),
   require('./categoryAnswers/expansion2'),
+  // data/accept-lists batch expansions (union-merged, real entries only).
+  require('./categoryAnswers/expand-econ-1'),
+  require('./categoryAnswers/expand-econ-2'),
 ];
 for (const supplement of supplements) {
   for (const [category, extras] of Object.entries(supplement)) {
