@@ -64,6 +64,7 @@ const supplements = [
   // accent-stripped forms, alt/regional names, unambiguous short forms of EXISTING
   // members only (no new members). Batched ~30 categories per file.
   require('./categoryAnswers/variants-1'),
+  require('./categoryAnswers/variants-2'),
 ];
 for (const supplement of supplements) {
   for (const [category, extras] of Object.entries(supplement)) {
