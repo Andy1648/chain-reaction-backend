@@ -65,6 +65,7 @@ const supplements = [
   // members only (no new members). Batched ~30 categories per file.
   require('./categoryAnswers/variants-1'),
   require('./categoryAnswers/variants-2'),
+  require('./categoryAnswers/variants-3'),
 ];
 for (const supplement of supplements) {
   for (const [category, extras] of Object.entries(supplement)) {
