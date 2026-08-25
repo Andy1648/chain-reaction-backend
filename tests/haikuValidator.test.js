@@ -2,11 +2,11 @@
 // Run with: npm test   (node --test discovers this file)
 //
 // Unit tests for haikuValidator.js - the Stage-2 AI judge for Category
-// Blitz. The contract under test is FAIL CLOSED: the ONLY way an answer is
-// accepted is a healthy API reply that starts with "yes". Every failure
+// Blitz. The contract under test is FAIL OPEN: the ONLY way an answer is
+// REJECTED is a healthy API reply that starts with "no". Every infra failure
 // mode - no key, HTTP error, thrown fetch, timeout, garbled reply, rate
-// limit - must reject, and the rate limiter must stop calls from reaching
-// the API at all.
+// limit - ACCEPTS, and the rate limiter must still stop over-cap calls from
+// reaching the API at all (accepting without burning credits).
 //
 // The Anthropic API is stubbed by replacing global.fetch (the module uses
 // the bare global, so this is the real seam). The 3s timeout path is driven
@@ -76,40 +76,40 @@ test('a reply starting with "yes" accepts, "no" rejects (case/punctuation tolera
   assert.equal(await validator.validate('Pizza toppings', 'skateboard', freshPlayer()), false);
 });
 
-test('a garbled / empty / off-script reply fails closed', async (t) => {
+test('a garbled / empty / off-script reply fails OPEN (accepts)', async (t) => {
   withEnv(t, { fetchImpl: okReply('maybe? it depends') });
-  assert.equal(await validator.validate('c', 'a', freshPlayer()), false);
+  assert.equal(await validator.validate('c', 'a', freshPlayer()), true);
 
   global.fetch = okReply('');
-  assert.equal(await validator.validate('c', 'a', freshPlayer()), false);
+  assert.equal(await validator.validate('c', 'a', freshPlayer()), true);
 
   // Missing content array entirely.
   global.fetch = async () => ({ ok: true, status: 200, json: async () => ({}) });
-  assert.equal(await validator.validate('c', 'a', freshPlayer()), false);
+  assert.equal(await validator.validate('c', 'a', freshPlayer()), true);
 });
 
 /* =========================== failure modes ============================== */
 
-test('validate without a key rejects WITHOUT calling the API (defensive gate)', async (t) => {
+test('validate without a key accepts WITHOUT calling the API (fail open, defensive gate)', async (t) => {
   let called = false;
   withEnv(t, { key: null, fetchImpl: async () => { called = true; } });
-  assert.equal(await validator.validate('c', 'a', freshPlayer()), false);
+  assert.equal(await validator.validate('c', 'a', freshPlayer()), true);
   assert.equal(called, false);
 });
 
-test('an HTTP error status fails closed', async (t) => {
-  withEnv(t, {
-    fetchImpl: async () => ({ ok: false, status: 529, json: async () => ({}) }),
-  });
-  assert.equal(await validator.validate('c', 'a', freshPlayer()), false);
+test('an HTTP error status (429 quota / 401 billing / 5xx) fails OPEN (accepts)', async (t) => {
+  for (const status of [429, 401, 403, 529]) {
+    withEnv(t, { fetchImpl: async () => ({ ok: false, status, json: async () => ({}) }) });
+    assert.equal(await validator.validate('c', 'a', freshPlayer()), true, `status ${status} should accept`);
+  }
 });
 
-test('a thrown fetch (network down) fails closed', async (t) => {
+test('a thrown fetch (network down) fails OPEN (accepts)', async (t) => {
   withEnv(t, { fetchImpl: async () => { throw new Error('ECONNRESET'); } });
-  assert.equal(await validator.validate('c', 'a', freshPlayer()), false);
+  assert.equal(await validator.validate('c', 'a', freshPlayer()), true);
 });
 
-test('a reply slower than the 3s cap is aborted and fails closed', async (t) => {
+test('a reply slower than the 3s cap is aborted and fails OPEN (accepts)', async (t) => {
   t.mock.timers.enable({ apis: ['setTimeout'] });
   // A fetch that never resolves on its own - only the abort signal settles it,
   // exactly like a hung API connection.
@@ -126,12 +126,12 @@ test('a reply slower than the 3s cap is aborted and fails closed', async (t) => 
 
   const pending = validator.validate('c', 'a', freshPlayer());
   t.mock.timers.tick(validator.TIMEOUT_MS); // the 3s watchdog fires -> abort
-  assert.equal(await pending, false);
+  assert.equal(await pending, true); // fail open on timeout
 });
 
 /* ============================ rate limiting ============================= */
 
-test('the 11th call inside a minute is rejected without touching the API', async (t) => {
+test('the 11th call inside a minute is ACCEPTED without touching the API (fail open, credits protected)', async (t) => {
   let apiCalls = 0;
   withEnv(t, {
     fetchImpl: async () => {
@@ -146,8 +146,8 @@ test('the 11th call inside a minute is rejected without touching the API', async
   }
   assert.equal(apiCalls, validator.RATE_LIMIT_PER_MIN);
 
-  // Over the cap: rejected AND no extra API call burned.
-  assert.equal(await validator.validate('c', 'one more', player), false);
+  // Over the cap: ACCEPTED (fail open) AND no extra API call burned.
+  assert.equal(await validator.validate('c', 'one more', player), true);
   assert.equal(apiCalls, validator.RATE_LIMIT_PER_MIN);
 });
 
