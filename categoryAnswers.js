@@ -55,6 +55,25 @@ const answers = Object.assign(
 const supplements = [
   require('./categoryAnswers/expansion'),
   require('./categoryAnswers/expansion2'),
+  // data/accept-lists batch expansions (union-merged, real entries only).
+  require('./categoryAnswers/expand-econ-1'),
+  require('./categoryAnswers/expand-econ-2'),
+  require('./categoryAnswers/expand-econ-3'),
+  require('./categoryAnswers/expand-econ-4'),
+  // step-2 VARIANT pass over the ~305 finite categories: misspellings, punctuation/
+  // accent-stripped forms, alt/regional names, unambiguous short forms of EXISTING
+  // members only (no new members). Batched ~30 categories per file.
+  require('./categoryAnswers/variants-1'),
+  require('./categoryAnswers/variants-2'),
+  require('./categoryAnswers/variants-3'),
+  require('./categoryAnswers/variants-4'),
+  require('./categoryAnswers/variants-5'),
+  require('./categoryAnswers/variants-6'),
+  require('./categoryAnswers/variants-7'),
+  require('./categoryAnswers/variants-8'),
+  require('./categoryAnswers/variants-9'),
+  require('./categoryAnswers/variants-10'),
+  require('./categoryAnswers/variants-11'),
 ];
 for (const supplement of supplements) {
   for (const [category, extras] of Object.entries(supplement)) {

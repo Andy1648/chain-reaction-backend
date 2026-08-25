@@ -25,6 +25,37 @@
 const CATEGORY_ANSWERS = require('./categoryAnswers');
 const haikuValidator = require('./haikuValidator');
 
+// CASE/TRIM-INSENSITIVE ACCEPT-LIST LOOKUP.
+// Several CATEGORIES entries differ in case/whitespace from their categoryAnswers
+// key (e.g. CATEGORIES has "Pixar Movies" but the list is keyed "Pixar movies"),
+// so a direct CATEGORY_ANSWERS[category] read returned undefined and the whole
+// category behaved as if it had a size-0 accept-list — every answer fell through to
+// the AI judge. Rather than rename ~500 keys, we normalise the LOOKUP: build one
+// index keyed by lowercase+trimmed+whitespace-collapsed category name. Case-variant
+// keys that collide (e.g. both "Pixar Movies" and "Pixar movies" exist) are UNIONED
+// into a single Set so no entries are lost.
+const normalizeCategoryKey = (s) => String(s || '').trim().toLowerCase().replace(/\s+/g, ' ');
+const ANSWERS_INDEX = new Map();
+for (const [key, set] of Object.entries(CATEGORY_ANSWERS)) {
+  const nk = normalizeCategoryKey(key);
+  const existing = ANSWERS_INDEX.get(nk);
+  if (existing) {
+    for (const a of set) existing.add(a); // union case-variant lists
+  } else {
+    ANSWERS_INDEX.set(nk, new Set(set));
+  }
+}
+/**
+ * The accept-list Set for a category name, case/trim-insensitively, or null.
+ * The normalized index (built once at load, unioning case variants) resolves the
+ * real case-mismatch bug; the live CATEGORY_ANSWERS fallback covers exact-key
+ * entries added AFTER load (e.g. a test injecting its own category), so this stays
+ * a superset of the previous direct-index behaviour.
+ */
+function answersFor(category) {
+  return ANSWERS_INDEX.get(normalizeCategoryKey(category)) || CATEGORY_ANSWERS[category] || null;
+}
+
 const TOTAL_ROUNDS = 3;
 const MIN_PLAYERS_TO_START = 2;
 
@@ -294,7 +325,7 @@ const PACK_IDS = [...new Set(Object.values(CATEGORY_PACKS))];
 const MAX_ANSWER_WORDS = 3;
 const MAX_LONG_ANSWER_RATIO = 0.3; // >30% long = routinely long = not bounded
 function isBoundedCategory(category) {
-  const set = CATEGORY_ANSWERS[category];
+  const set = answersFor(category);
   if (!set || set.size === 0) return true; // no list to measure; trust it
   let longCount = 0;
   for (const answer of set) {
@@ -379,10 +410,11 @@ const QUARANTINED_CATEGORIES = new Set([
   "Breakfast cereal brands", // 0
   "Citrus fruits", // 0
   "Classic dystopian novels", // 0
-  "Disney Villains", // 0
+  // UNQUARANTINED (data/accept-lists step 4): the case-insensitive lookup fix restored
+  // their real accept-lists (Disney Villains 222, Minecraft Mobs 220 entries), so they
+  // now clear 120 real entries and return to the playable pool.
   "Edible berries", // 0
   "Major League Soccer teams", // 0
-  "Minecraft Mobs", // 0
   "Mortal Kombat fighters", // 0
   "Mushrooms and fungi", // 0
   "Oceans", // 0
@@ -827,7 +859,7 @@ async function submitAnswer(game, playerId, rawAnswer, opts = {}) {
   // player was shown - see judgeCategory above). A hit here is instant and free -
   // no API call. A miss does NOT reject; it just means the answer wasn't
   // pre-generated, so we ask the AI judge next.
-  const validAnswers = CATEGORY_ANSWERS[judgeCategory];
+  const validAnswers = answersFor(judgeCategory);
   const onAcceptList = !!validAnswers && validAnswers.has(normalized);
 
   // Stage 1.5: compound leniency. The head noun of an English compound is its
@@ -905,7 +937,7 @@ const SAMPLE_ANSWERS_COUNT = 12;
  * returned. Always an array; [] when the category has no accept-list.
  */
 function buildSampleAnswers(game) {
-  const validAnswers = CATEGORY_ANSWERS[game.currentCategory];
+  const validAnswers = answersFor(game.currentCategory);
   if (!validAnswers || validAnswers.size === 0) return [];
 
   const given = new Set();
@@ -1019,6 +1051,11 @@ function getScoreboard(game) {
 
 module.exports = {
   CATEGORIES,
+  // Exposed for tooling (accept-list expansion / re-ranking).
+  RAW_CATEGORIES,
+  QUARANTINED_CATEGORIES,
+  answersFor,
+  normalizeCategoryKey,
   PACK_IDS,
   TOTAL_ROUNDS,
   MIN_PLAYERS_TO_START,
