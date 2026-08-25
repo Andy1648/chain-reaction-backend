@@ -119,7 +119,7 @@ test('daily game: plays the planned categories in order across all rounds', () =
 
 test('daily game: rerolls are disabled regardless of difficulty', () => {
   const daily = { dayNumber: 193, dateKey: '2026-07-12' };
-  const game = createGame(players(), 'easy', true, null, daily); // easy = 3 rerolls normally
+  const game = createGame(players(), 'easy', true, null, daily); // easy = 5 rerolls normally
   assert.equal(game.rerollsRemaining, 0);
   assert.deepEqual(rerollCategory(game), { error: 'no_rerolls_left' });
 });
@@ -137,7 +137,7 @@ test('normal game: unaffected — random category, difficulty rerolls, no daily'
   const game = createGame(players(), 'easy', true, null);
   assert.equal(game.daily, null);
   assert.equal(game.dailyPlan, null);
-  assert.equal(game.rerollsRemaining, 3);
+  assert.equal(game.rerollsRemaining, 5);
 });
 
 // ---- startGame gate: solo Category Blitz only -------------------------------

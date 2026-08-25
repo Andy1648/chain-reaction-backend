@@ -233,7 +233,7 @@ test('onAiCheck fires exactly when there is judge latency to cover (list-miss + 
 /* ============================ reroll semantics =========================== */
 
 test('rerollCategory reverts this-round points, clears answers, and burns one reroll', async () => {
-  const game = makeGame('easy'); // 3 rerolls
+  const game = makeGame('easy'); // 5 rerolls
   game.players[0].score = 4; // 4 points banked from earlier rounds
   await submitAnswer(game, 'p1', 'olive');
   await submitAnswer(game, 'p1', 'ham');
@@ -245,20 +245,24 @@ test('rerollCategory reverts this-round points, clears answers, and burns one re
   assert.equal(res.error, undefined);
   assert.notEqual(game.currentCategory, before, 'a fresh category is picked');
   assert.equal(res.category, game.currentCategory);
-  assert.equal(res.rerollsRemaining, 2);
+  assert.equal(res.rerollsRemaining, 4);
   assert.equal(game.players[0].score, 4, 'only THIS round\'s points are reverted');
   assert.deepEqual(game.players[0].answers, []);
   assert.ok(game.usedCategories.has(game.currentCategory), 'the new category cannot repeat later');
 });
 
 test('rerollCategory clamps a reverted score at zero and errors when the allowance is spent', () => {
-  const game = makeGame('hard'); // 1 reroll
+  const game = makeGame('hard'); // 3 rerolls
   // Pathological state: more answers than score. The clamp keeps score >= 0.
   game.players[0].answers = ['a1', 'a2', 'a3'];
   game.players[0].score = 1;
   assert.equal(rerollCategory(game).error, undefined);
   assert.equal(game.players[0].score, 0);
+  assert.equal(game.rerollsRemaining, 2);
 
+  // Burn the remaining allowance, then it errors.
+  rerollCategory(game);
+  rerollCategory(game);
   assert.equal(game.rerollsRemaining, 0);
   assert.deepEqual(rerollCategory(game), { error: 'no_rerolls_left' });
 });
