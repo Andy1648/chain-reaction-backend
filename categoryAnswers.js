@@ -60,6 +60,10 @@ const supplements = [
   require('./categoryAnswers/expand-econ-2'),
   require('./categoryAnswers/expand-econ-3'),
   require('./categoryAnswers/expand-econ-4'),
+  // step-2 VARIANT pass over the ~305 finite categories: misspellings, punctuation/
+  // accent-stripped forms, alt/regional names, unambiguous short forms of EXISTING
+  // members only (no new members). Batched ~30 categories per file.
+  require('./categoryAnswers/variants-1'),
 ];
 for (const supplement of supplements) {
   for (const [category, extras] of Object.entries(supplement)) {
