@@ -69,6 +69,7 @@ const supplements = [
   require('./categoryAnswers/variants-4'),
   require('./categoryAnswers/variants-5'),
   require('./categoryAnswers/variants-6'),
+  require('./categoryAnswers/variants-7'),
 ];
 for (const supplement of supplements) {
   for (const [category, extras] of Object.entries(supplement)) {
