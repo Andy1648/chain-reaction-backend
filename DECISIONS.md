@@ -32,3 +32,24 @@
   under-expanded (many "under-40" entries are FINITE domains — Continents=7, Months=12, Chess
   pieces=6, Planets=8 — which CANNOT be expanded without inventing/padding, forbidden; only the
   genuinely open-ended ones are eligible). Next batch continues the same union-merge pattern.
+
+## data/accept-lists-3 — Category Blitz broad-category expansion, batch 3 (2026-08-26)
+- 20 more broad, open-ended categories union-merged via categoryAnswers/expand-broad-3.js
+  (wired into the `supplements` array next to expand-broad-2). Real answers only, <=3 words,
+  lowercase, deduped. No inventions/padding. 0 orphan keys; total categories unchanged at 638.
+- Categories (before -> after Set size):
+  Marsupials 17->48, Primates 20->49, Cat breeds 30->52, Butterfly species 25->59,
+  Flowers 30->50, Fruits 30->51, Cocktails 28->49, Famous landmarks 25->51,
+  Famous museums 28->58, Famous explorers 32->56, Classical composers 29->51,
+  Types of soup 26->51, Types of bread 26->51, Types of beer 31->57,
+  International cuisines 30->51, Programming languages 39->61, Reality TV shows 26->50,
+  Types of seafood 30->50, Guitar brands 25->49, Cattle breeds 20->48.
+- CONSERVATIVE CHOICES: dropped "sex on the beach" (4 words, over the <=3 cap) even though a real
+  cocktail; kept only widely-verifiable species/breeds/names. Museum/landmark/explorer entries
+  trimmed to <=3 words (e.g. "national gallery of art" omitted; "leaning tower" kept short).
+- FINITE / NOT ELIGIBLE (left as-is, cannot expand without padding): the sub-40 pool is now
+  mostly finite domains — Scandinavian countries=3, Pac-Man ghosts=4, Continents=7, Months=12,
+  Chess pieces=6, Planets in our solar system=8, Zodiac signs=12, Noble gases=6, States of
+  matter, Swimming strokes, Great Lakes, Dwarf planets, etc. These are complete real-world sets
+  and were SKIPPED per the no-invention rule.
+- node --test 320/320 green.

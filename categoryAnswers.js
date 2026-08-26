@@ -68,6 +68,12 @@ const supplements = [
   // kitchen utensils, tools, things with wheels, insects, cookies, coffee drinks, sandwiches,
   // venomous animals, mythical monsters, pies, frozen desserts, tacos). Real answers, union-merged.
   require('./categoryAnswers/expand-broad-2'),
+  // batch 3: more broad open-ended categories (marsupials, primates, cat breeds,
+  // butterfly species, flowers, fruits, cocktails, famous landmarks/museums/
+  // explorers, classical composers, soups, breads, beers, cuisines, programming
+  // languages, reality TV shows, seafood, guitar brands, cattle breeds). Real
+  // answers only, union-merged.
+  require('./categoryAnswers/expand-broad-3'),
   // step-2 VARIANT pass over the ~305 finite categories: misspellings, punctuation/
   // accent-stripped forms, alt/regional names, unambiguous short forms of EXISTING
   // members only (no new members). Batched ~30 categories per file.
