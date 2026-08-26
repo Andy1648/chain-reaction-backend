@@ -60,6 +60,10 @@ const supplements = [
   require('./categoryAnswers/expand-econ-2'),
   require('./categoryAnswers/expand-econ-3'),
   require('./categoryAnswers/expand-econ-4'),
+  // broad under-expanded categories (anime rosters, rappers, airlines, languages,
+  // clothing/soccer/food, cooking methods, office/camping/social, action stars, DJs,
+  // dance-music genres, card games). Real answers only, union-merged.
+  require('./categoryAnswers/expand-broad-1'),
   // step-2 VARIANT pass over the ~305 finite categories: misspellings, punctuation/
   // accent-stripped forms, alt/regional names, unambiguous short forms of EXISTING
   // members only (no new members). Batched ~30 categories per file.
