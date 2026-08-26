@@ -19,3 +19,16 @@
 - REMAINING (not done, honest): ~49 other broad under-expanded categories still at single/low
   double digits (e.g. Cocktails, Superheroes, Car brands, Dog breeds variants, etc. — see a
   `node` count scan of Sets under ~15). Next batch should follow the same union-merge pattern.
+
+## data/accept-lists-2 — broad category expansion batch 2 (JOB 6, autonomous 2026-08-26)
+- Shipped expand-broad-2.js: 16 broad categories grown from 9-26 to 46-69 each (jungle animals,
+  horror movies, Simpsons characters, body parts, kitchen utensils, tools, things with wheels,
+  insects, cookies, coffee drinks, sandwiches, venomous animals, mythical monsters, pies, frozen
+  desserts, tacos). Union-merged (never overwrites); 0 orphan categories (total stayed 638).
+- Dropped "Coffee brands" from the batch after verification: no matching existing category (would
+  have created an orphan). Real answers only, <=3 words, deduped by the Set (case-insensitive
+  within-batch since all lowercase). node --test 320/320 green.
+- SCOPE: this is one batch of ~16 of the ~49 remaining broad categories. The other ~33 are still
+  under-expanded (many "under-40" entries are FINITE domains — Continents=7, Months=12, Chess
+  pieces=6, Planets=8 — which CANNOT be expanded without inventing/padding, forbidden; only the
+  genuinely open-ended ones are eligible). Next batch continues the same union-merge pattern.

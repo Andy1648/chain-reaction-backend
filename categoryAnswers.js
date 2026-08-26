@@ -64,6 +64,10 @@ const supplements = [
   // clothing/soccer/food, cooking methods, office/camping/social, action stars, DJs,
   // dance-music genres, card games). Real answers only, union-merged.
   require('./categoryAnswers/expand-broad-1'),
+  // batch 2: more broad categories (jungle animals, horror movies, Simpsons chars, body parts,
+  // kitchen utensils, tools, things with wheels, insects, cookies, coffee drinks, sandwiches,
+  // venomous animals, mythical monsters, pies, frozen desserts, tacos). Real answers, union-merged.
+  require('./categoryAnswers/expand-broad-2'),
   // step-2 VARIANT pass over the ~305 finite categories: misspellings, punctuation/
   // accent-stripped forms, alt/regional names, unambiguous short forms of EXISTING
   // members only (no new members). Batched ~30 categories per file.
