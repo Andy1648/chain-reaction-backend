@@ -7,6 +7,7 @@
 // Results are cached since the same words get checked repeatedly across games.
 
 const { isDisallowedWord, isCommonEnglishWord } = require('./wordFilter');
+const { isSlur } = require('./blockedTerms');
 
 const cache = new Map(); // word (lowercase) -> boolean
 
@@ -34,6 +35,16 @@ async function isValidWord(word) {
   // Blocklist supplement: place names / foreign words that ARE valid English
   // words and so appear in the wordlist below (MOROCCO, PARIS, PAGINA).
   if (isDisallowedWord(normalized)) {
+    cache.set(normalized, false);
+    return false;
+  }
+
+  // SAFETY GATE (fix/dict-safety): slurs/hate terms are present in the underlying
+  // ~275k common-English wordlist, so they'd otherwise validate. They must NEVER be
+  // accepted or scored. Checked BEFORE the cache so a bot's markAsValid() can never
+  // pre-warm a slur as valid. Mild profanity is intentionally NOT gated here — a
+  // player TYPING a rude word is allowed; only DISPLAY/generation assets strip it.
+  if (isSlur(normalized)) {
     cache.set(normalized, false);
     return false;
   }
