@@ -19,6 +19,23 @@ test('botWords.txt (bot DISPLAY pool) contains no slur or profanity', () => {
   assert.equal(bad.length, 0, `bot would display blocked terms: ${bad.slice(0, 8).join(', ')}`);
 });
 
+test('isSlur flags slurs only — not mild profanity, not innocent homographs', () => {
+  // slurs → true (removed from EVERYTHING)
+  assert.equal(isSlur('faggot'), true);
+  assert.equal(isSlur('KIKE'), true, 'case-insensitive');
+  // mild profanity → NOT a slur (it stays typeable; only display assets strip it)
+  assert.equal(isSlur('damn'), false);
+  assert.equal(isSlur('crap'), false);
+  // innocent homographs deliberately omitted from the slur list
+  assert.equal(isSlur('cracker'), false);
+  assert.equal(isSlur('buckwheat'), false);
+  assert.equal(isSlur('sabo'), false, 'One Piece character, not "abo"');
+  // non-string / empty input never throws and is not a slur
+  assert.equal(isSlur(''), false);
+  assert.equal(isSlur(null), false);
+  assert.equal(isSlur(42), false);
+});
+
 test('acceptance gate rejects slurs but accepts ordinary words', async () => {
   const { isValidWord } = require('./dictionary');
   // a real word from the wordlist that is ALSO a slur → must be rejected
