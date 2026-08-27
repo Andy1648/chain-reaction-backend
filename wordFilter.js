@@ -182,13 +182,22 @@ function isCommonEnglishWord(word) {
   return englishWords().has(word.trim().toLowerCase());
 }
 
+// Content-safety gate (fix/dict-safety): the bot must never surface a slur OR
+// any profanity/sexual term (it's a DISPLAY surface), so the bot-pool cleaner
+// drops every blocked term, not just proper nouns.
+const { isBlockedForDisplay } = require('./blockedTerms');
+
 /**
- * Bot-pool cleaner: keep only real common-English words that aren't blocklisted.
+ * Bot-pool cleaner: keep only real common-English words that aren't blocklisted
+ * AND aren't a slur/profanity/sexual term (the bot DISPLAYS these words).
  * The wordlist drops proper nouns the blocklist can't enumerate (e.g. SADDAM);
- * the blocklist drops place names that ARE common English words (e.g. MOROCCO).
+ * the blocklist drops place names that ARE common English words (e.g. MOROCCO);
+ * the moderation list drops slurs + profanity the bot must never show.
  */
 function filterWords(words) {
-  return words.filter((w) => isCommonEnglishWord(w) && !isDisallowedWord(w));
+  return words.filter(
+    (w) => isCommonEnglishWord(w) && !isDisallowedWord(w) && !isBlockedForDisplay(w)
+  );
 }
 
 module.exports = { isDisallowedWord, isCommonEnglishWord, filterWords, BLOCKLIST };
