@@ -115,13 +115,18 @@ function touchRoom(room) {
 }
 
 function generateRoomCode() {
-  let code;
-  do {
-    code = Array.from({ length: ROOM_CODE_LENGTH }, () =>
+  // Defensive guard (fix/backend-safety): the code space is 32^5 ≈ 33.5M, so a collision is
+  // astronomically unlikely — but a bare `do..while (rooms.has(code))` would spin FOREVER if it ever
+  // saturated (a corrupted-state / resource-exhaustion hang). Cap the attempts and fail loudly instead
+  // of hanging the event loop; the caller (createRoom) surfaces the error rather than blocking.
+  const MAX_ATTEMPTS = 100;
+  for (let i = 0; i < MAX_ATTEMPTS; i += 1) {
+    const code = Array.from({ length: ROOM_CODE_LENGTH }, () =>
       ROOM_CODE_CHARS[Math.floor(Math.random() * ROOM_CODE_CHARS.length)]
     ).join('');
-  } while (rooms.has(code));
-  return code;
+    if (!rooms.has(code)) return code;
+  }
+  throw new Error('Unable to generate a unique room code (code space saturated)');
 }
 
 /**

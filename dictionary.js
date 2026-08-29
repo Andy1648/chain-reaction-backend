@@ -9,7 +9,19 @@
 const { isDisallowedWord, isCommonEnglishWord } = require('./wordFilter');
 const { isSlur } = require('./blockedTerms');
 
+// Bounded cache (fix/backend-safety). The same words get checked repeatedly, so a cache pays off —
+// but an UNbounded Map leaked memory: every distinct INVALID token (typos, gibberish — an effectively
+// infinite space) was cached forever (measured +20.8 MB / 50k invalids). Cap it and evict FIFO (Map
+// preserves insertion order, so the first key is the oldest). 50k entries ≈ the measured ~20 MB, but
+// now as a hard ceiling instead of unbounded growth.
+const CACHE_MAX = 50000;
 const cache = new Map(); // word (lowercase) -> boolean
+function cacheSet(word, valid) {
+  if (cache.size >= CACHE_MAX && !cache.has(word)) {
+    cache.delete(cache.keys().next().value); // drop the oldest entry
+  }
+  cache.set(word, valid);
+}
 
 /**
  * Checks whether a word is valid to play. Returns true/false, never throws.
@@ -35,7 +47,7 @@ async function isValidWord(word) {
   // Blocklist supplement: place names / foreign words that ARE valid English
   // words and so appear in the wordlist below (MOROCCO, PARIS, PAGINA).
   if (isDisallowedWord(normalized)) {
-    cache.set(normalized, false);
+    cacheSet(normalized, false);
     return false;
   }
 
@@ -45,7 +57,7 @@ async function isValidWord(word) {
   // pre-warm a slur as valid. Mild profanity is intentionally NOT gated here — a
   // player TYPING a rude word is allowed; only DISPLAY/generation assets strip it.
   if (isSlur(normalized)) {
-    cache.set(normalized, false);
+    cacheSet(normalized, false);
     return false;
   }
 
@@ -57,14 +69,14 @@ async function isValidWord(word) {
   // the wordlist, so multi-client test harnesses (t3-harness/) get deterministic
   // word acceptance for arbitrary tokens. Never set in production.
   if (process.env.FAKE_DICTIONARY === '1') {
-    cache.set(normalized, true);
+    cacheSet(normalized, true);
     return true;
   }
 
   // The authoritative check: is this a real common-English word? Local lookup,
   // no network. Proper nouns / non-English tokens are not in the list -> false.
   const valid = isCommonEnglishWord(normalized);
-  cache.set(normalized, valid);
+  cacheSet(normalized, valid);
   return valid;
 }
 
@@ -74,7 +86,13 @@ async function isValidWord(word) {
  * path off the wordlist lookup for known-good words.
  */
 function markAsValid(word) {
-  cache.set(word.trim().toLowerCase(), true);
+  cacheSet(word.trim().toLowerCase(), true);
 }
 
-module.exports = { isValidWord, markAsValid };
+// Test-only introspection: lets dictSafety.test.js assert the cache stays bounded under a flood of
+// distinct invalids. Not used in production.
+function _cacheStats() {
+  return { size: cache.size, max: CACHE_MAX };
+}
+
+module.exports = { isValidWord, markAsValid, _cacheStats };
