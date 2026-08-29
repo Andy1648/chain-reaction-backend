@@ -58,6 +58,31 @@ test('sanitizeName removes ASCII control characters outright', () => {
   assert.equal(sanitizeName('bell' + BELL + 'char'), 'bellchar');
 });
 
+// ---- MODERATION (JOB 23 A1): a display name that IS a blocked term folds to the default -----
+// Terms are pulled from the shared list at runtime rather than hardcoded, so this source stays
+// clean. A name EQUAL to a blocked display term must never broadcast — it falls back to 'Player'.
+const { ALL_TERMS, PROFANITY } = require('./blockedTerms');
+const BLOCKED_SAMPLE = PROFANITY[0] || ALL_TERMS[0];
+
+test('sanitizeName rejects a name that IS a blocked display term', () => {
+  assert.equal(sanitizeName(BLOCKED_SAMPLE), 'Player');
+  // Case-folded too (isBlockedForDisplay norm()s first).
+  assert.equal(sanitizeName(BLOCKED_SAMPLE.toUpperCase()), 'Player');
+  // The caller's own fallback is honored, not just the default.
+  assert.equal(sanitizeName(BLOCKED_SAMPLE, 'Guest'), 'Guest');
+});
+
+test('sanitizeName allows a name that merely CONTAINS a blocked term (exact-term match only)', () => {
+  // Parity with the answer gate: substring obfuscation is out of scope (the frontend HTML-escapes);
+  // this closes the "name yourself EXACTLY a slur" hole, not a full profanity filter.
+  assert.notEqual(sanitizeName('cool' + BLOCKED_SAMPLE + 'er'), 'Player');
+});
+
+test('sanitizeName still passes ordinary names after the moderation gate', () => {
+  assert.equal(sanitizeName('Alice'), 'Alice');
+  assert.equal(sanitizeName('CoolGamer42'), 'CoolGamer42');
+});
+
 test('sanitizeName removes zero-width and bidi formatting characters', () => {
   // Zero-width space and RTL override are invisible name-spoofing tricks — both
   // are stripped, as is a stray BOM.

@@ -12,6 +12,11 @@
 // render time, but we strip server-side as defense-in-depth so a hostile name
 // can never carry control characters, bidi/zero-width formatting tricks, or raw
 // angle brackets into any client that renders a name less carefully.
+// The one runtime dependency: the shared blocked-terms list (a PURE data module — no ws, timers,
+// or globals — so security.js stays offline-unit-testable). dictionary.js already imports it to gate
+// game ANSWERS; sanitizeName imports it to gate display NAMES with the same list (JOB 23 A1).
+const { isBlockedForDisplay } = require('./blockedTerms');
+
 const MAX_NAME_LENGTH = 20;
 const DEFAULT_NAME = 'Player';
 
@@ -51,7 +56,17 @@ function sanitizeName(raw, fallback = DEFAULT_NAME) {
     .replace(/\s+/g, ' ')
     .trim();
   if (cleaned.length === 0) return fallback;
-  return cleaned.slice(0, MAX_NAME_LENGTH);
+  const capped = cleaned.slice(0, MAX_NAME_LENGTH);
+  // MODERATION (JOB 23 A1): a display name is rebroadcast to every player (room_update /
+  // turn_update / spectator_reaction), so after cleaning we also reject a name that IS a blocked
+  // display term — a slur / hate term / strong profanity — reusing the SAME curated list
+  // dictionary.js already gates game answers with (isBlockedForDisplay). It falls back to the
+  // neutral default rather than broadcasting the name. isBlockedForDisplay norm()s first, so
+  // case + look-alike folds are caught; it's an exact-TERM match (parity with the answer gate),
+  // not a substring filter — the frontend still HTML-escapes, this closes the "name yourself a
+  // slur" hole specifically.
+  if (isBlockedForDisplay(capped)) return fallback;
+  return capped;
 }
 
 // ---- Sliding-window rate limiter (vectors R1, R2, R5, R6) ------------------
