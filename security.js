@@ -3,7 +3,9 @@
 // and dependency-free (no ws, no timers, no globals beyond Date via the caller):
 // every function takes its state in and returns a verdict, so the whole module
 // is unit-testable offline (see security.test.js) and the networking layer in
-// server.js just wires it to real sockets.
+// server.js just wires it to real sockets. The one require below (blockedTerms)
+// is a pure, offline data module — it keeps sanitizeName testable with no I/O.
+const { isBlockedForDisplay } = require('./blockedTerms');
 
 // ---- Display-name sanitization (vector R4: XSS via usernames) --------------
 // Usernames are the only persistent, cross-player, free-text display string in
@@ -51,7 +53,12 @@ function sanitizeName(raw, fallback = DEFAULT_NAME) {
     .replace(/\s+/g, ' ')
     .trim();
   if (cleaned.length === 0) return fallback;
-  return cleaned.slice(0, MAX_NAME_LENGTH);
+  const name = cleaned.slice(0, MAX_NAME_LENGTH);
+  // MODERATION (fix/backend-safety): a name that IS a blocked term (slur / profanity) must never be
+  // broadcast in room_update / turn_update — fall back to the default. Exact-match on the normalized
+  // name via blockedTerms.isBlockedForDisplay (the same set the display/generation assets use).
+  if (isBlockedForDisplay(name)) return fallback;
+  return name;
 }
 
 // ---- Sliding-window rate limiter (vectors R1, R2, R5, R6) ------------------

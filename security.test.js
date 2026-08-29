@@ -42,6 +42,19 @@ test('sanitizeName passes an ordinary name through unchanged', () => {
   assert.equal(sanitizeName('Alice'), 'Alice');
 });
 
+test('sanitizeName falls back to the default when the name IS a blocked term (moderation, fix/backend-safety)', () => {
+  // Pull a clean single-word blocked term from the list itself — no slur is hardcoded in this file.
+  const { ALL_TERMS } = require('./blockedTerms');
+  const blocked = ALL_TERMS.find((t) => /^[a-z]+$/i.test(t));
+  assert.ok(blocked, 'expected at least one alphabetic blocked term to test with');
+  // A name that sanitizes to a blocked term must be replaced with the default, never broadcast.
+  assert.equal(sanitizeName(blocked), 'Player');
+  // Case + surrounding whitespace still fall back (sanitize collapses; isBlockedForDisplay normalizes).
+  assert.equal(sanitizeName('  ' + blocked.toUpperCase() + '  '), 'Player');
+  // An ordinary name is unaffected by the moderation check.
+  assert.equal(sanitizeName('Alice'), 'Alice');
+});
+
 test('sanitizeName strips angle brackets (defuses HTML/script injection)', () => {
   // The classic stored-XSS payload loses its tag delimiters server-side, so it
   // can never reach a client render as markup.
