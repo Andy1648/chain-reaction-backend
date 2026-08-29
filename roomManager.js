@@ -114,14 +114,22 @@ function touchRoom(room) {
   if (room) room.lastActivity = Date.now();
 }
 
+// Hardening (audit/backend-lifecycle F2): defensive cap on collision retries.
+// The code space is 32^5 (~33.5M) and MAX_ACTIVE_ROOMS (500) sits far below it,
+// so a collision is astronomically rare and this cap is unreachable today. It
+// only matters if MAX_ACTIVE_ROOMS were ever raised near the code space: without
+// it, the do/while could spin forever. On exhaustion return null; createRoom
+// surfaces the existing 'server_busy' error rather than hanging.
+const MAX_ROOM_CODE_ATTEMPTS = 1000;
+
 function generateRoomCode() {
-  let code;
-  do {
-    code = Array.from({ length: ROOM_CODE_LENGTH }, () =>
+  for (let i = 0; i < MAX_ROOM_CODE_ATTEMPTS; i++) {
+    const code = Array.from({ length: ROOM_CODE_LENGTH }, () =>
       ROOM_CODE_CHARS[Math.floor(Math.random() * ROOM_CODE_CHARS.length)]
     ).join('');
-  } while (rooms.has(code));
-  return code;
+    if (!rooms.has(code)) return code;
+  }
+  return null;
 }
 
 /**
@@ -137,6 +145,12 @@ function createRoom(hostConnection, hostName, isPublic = false) {
     return { error: 'server_busy' };
   }
   const code = generateRoomCode();
+  // Exhausted the retry cap (see generateRoomCode) — unreachable under the
+  // current MAX_ACTIVE_ROOMS ceiling, but fail closed rather than proceed with a
+  // null code. Reuses the caller's existing 'server_busy' handling.
+  if (code === null) {
+    return { error: 'server_busy' };
+  }
   const now = Date.now();
   const room = {
     code,

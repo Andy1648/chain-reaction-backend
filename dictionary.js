@@ -11,6 +11,27 @@ const { isSlur } = require('./blockedTerms');
 
 const cache = new Map(); // word (lowercase) -> boolean
 
+// Hardening (audit/backend-lifecycle F1 / audit/abuse A3): the WS server is
+// public and unauthenticated, so a client can stream distinct alphabetic
+// non-words indefinitely. Without a bound, every distinct submission (valid OR
+// invalid) is cached forever (~425 B/entry, measured +20.8 MB per 50k invalids)
+// -> monotonic growth toward OOM on a long-lived instance. Cap the cache and
+// evict oldest-first (FIFO). This is a pure memory bound: validation results are
+// deterministic, so an evicted entry is simply recomputed on next lookup — no
+// behaviour or semantics change.
+const CACHE_MAX_ENTRIES = 100000;
+
+// Insert into the bounded cache, evicting the oldest entry (Map preserves
+// insertion order) once the cap is reached. Re-setting an existing key updates
+// its value without growing the map.
+function cacheSet(key, value) {
+  if (!cache.has(key) && cache.size >= CACHE_MAX_ENTRIES) {
+    const oldest = cache.keys().next().value;
+    if (oldest !== undefined) cache.delete(oldest);
+  }
+  cache.set(key, value);
+}
+
 /**
  * Checks whether a word is valid to play. Returns true/false, never throws.
  * A word is valid iff it is purely alphabetic, NOT on the proper-noun/place-name
@@ -35,7 +56,7 @@ async function isValidWord(word) {
   // Blocklist supplement: place names / foreign words that ARE valid English
   // words and so appear in the wordlist below (MOROCCO, PARIS, PAGINA).
   if (isDisallowedWord(normalized)) {
-    cache.set(normalized, false);
+    cacheSet(normalized, false);
     return false;
   }
 
@@ -45,7 +66,7 @@ async function isValidWord(word) {
   // pre-warm a slur as valid. Mild profanity is intentionally NOT gated here — a
   // player TYPING a rude word is allowed; only DISPLAY/generation assets strip it.
   if (isSlur(normalized)) {
-    cache.set(normalized, false);
+    cacheSet(normalized, false);
     return false;
   }
 
@@ -57,14 +78,14 @@ async function isValidWord(word) {
   // the wordlist, so multi-client test harnesses (t3-harness/) get deterministic
   // word acceptance for arbitrary tokens. Never set in production.
   if (process.env.FAKE_DICTIONARY === '1') {
-    cache.set(normalized, true);
+    cacheSet(normalized, true);
     return true;
   }
 
   // The authoritative check: is this a real common-English word? Local lookup,
   // no network. Proper nouns / non-English tokens are not in the list -> false.
   const valid = isCommonEnglishWord(normalized);
-  cache.set(normalized, valid);
+  cacheSet(normalized, valid);
   return valid;
 }
 
@@ -74,7 +95,7 @@ async function isValidWord(word) {
  * path off the wordlist lookup for known-good words.
  */
 function markAsValid(word) {
-  cache.set(word.trim().toLowerCase(), true);
+  cacheSet(word.trim().toLowerCase(), true);
 }
 
 module.exports = { isValidWord, markAsValid };
