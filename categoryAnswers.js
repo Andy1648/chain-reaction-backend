@@ -74,6 +74,12 @@ const supplements = [
   // languages, reality TV shows, seafood, guitar brands, cattle breeds). Real
   // answers only, union-merged.
   require('./categoryAnswers/expand-broad-3'),
+  // batch 4 (data/accept-lists-5): 20 more broad open-ended categories (electronic
+  // music genres, music festivals, milk alternatives, steak/BBQ/potato/rice/squash/
+  // melon/pancake types, energy drinks, cooking & game shows, web browsers, wild
+  // canines, coral, dipping sauces, world deserts, phone brands, Ben & Jerry's).
+  // Real answers only, union-merged.
+  require('./categoryAnswers/expand-broad-4'),
   // step-2 VARIANT pass over the ~305 finite categories: misspellings, punctuation/
   // accent-stripped forms, alt/regional names, unambiguous short forms of EXISTING
   // members only (no new members). Batched ~30 categories per file.
