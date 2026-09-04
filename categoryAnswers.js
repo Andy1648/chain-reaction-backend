@@ -91,6 +91,11 @@ const supplements = [
   // literary devices, art mediums, tech brands, record labels, HBO/streaming
   // series, farm crops, smart-home devices. Real answers only, union-merged.
   require('./categoryAnswers/expand-broad-6'),
+  // batch 4 (data/accept-lists-5): 10 more broad under-40 categories — frozen
+  // treats, condiments, fossils, TV medical dramas + soap operas, video-game
+  // movies, units of measurement, succulents/cacti, cloud types, Apple products.
+  // Real answers only, union-merged.
+  require('./categoryAnswers/expand-broad-7'),
   // step-2 VARIANT pass over the ~305 finite categories: misspellings, punctuation/
   // accent-stripped forms, alt/regional names, unambiguous short forms of EXISTING
   // members only (no new members). Batched ~30 categories per file.
