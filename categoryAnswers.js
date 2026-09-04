@@ -86,6 +86,11 @@ const supplements = [
   // British sitcoms, bowling terms, brass instruments, egg/dried-fruit/jerky types,
   // Roman gods, Greek heroes). Real answers only, union-merged.
   require('./categoryAnswers/expand-broad-5'),
+  // batch 3 (data/accept-lists-5): 20 more broad, open-ended categories under 40
+  // entries — social/streaming/music services, apples, sushi, cake, donuts,
+  // literary devices, art mediums, tech brands, record labels, HBO/streaming
+  // series, farm crops, smart-home devices. Real answers only, union-merged.
+  require('./categoryAnswers/expand-broad-6'),
   // step-2 VARIANT pass over the ~305 finite categories: misspellings, punctuation/
   // accent-stripped forms, alt/regional names, unambiguous short forms of EXISTING
   // members only (no new members). Batched ~30 categories per file.
