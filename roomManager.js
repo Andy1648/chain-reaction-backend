@@ -30,6 +30,22 @@ const { markAsValid } = require('./dictionary');
 // forwards to Sentry, so the guarded failure paths below report with context.
 const { logInfo, logWarn, logError } = require('./logger');
 
+const crypto = require('crypto');
+
+// Grace window (feat/mp-grace): how long a dropped seat is HELD ("RECONNECTING…")
+// before it is finally eliminated. A rejoin_room with the seat's token inside this
+// window restores the player with score/lives/turn intact; past it, the seat is
+// eliminated exactly as an immediate disconnect used to be. 20s covers the common
+// school-wifi / backgrounded-phone blip without stalling the game for long.
+const RECONNECT_GRACE_MS = 20000;
+
+// A persistent seat identity, independent of connection.id (which changes on every
+// reconnect). Issued once per seat at create/join and returned to that client so a
+// reconnect can prove which seat is theirs. 128 bits of randomness = unguessable.
+function generateSeatToken() {
+  return crypto.randomBytes(16).toString('hex');
+}
+
 // Category Blitz bot opponent. Same shape as the Word Bomb bot (mock sink
 // connection, normal roster entry) but no AI anywhere: it draws answers from
 // the category's pre-generated accept-list, so its submissions always resolve
@@ -146,7 +162,7 @@ function createRoom(hostConnection, hostName, isPublic = false) {
   const room = {
     code,
     hostId: hostConnection.id,
-    players: [{ id: hostConnection.id, name: hostName, connection: hostConnection }],
+    players: [{ id: hostConnection.id, name: hostName, connection: hostConnection, token: generateSeatToken() }],
     game: null,
     // Discoverability: private rooms (default) are code-only and never appear in
     // the public list / quick-play; public rooms are joinable by anyone. Set once
@@ -173,6 +189,10 @@ function createRoom(hostConnection, hostName, isPublic = false) {
     // Pending Category Blitz bot "submit an answer" setTimeouts for the current
     // round (one per planned answer). Cleared with the round timer.
     blitzBotTimeouts: [],
+    // Grace window (feat/mp-grace): live map of connectionId -> setTimeout for seats
+    // currently held after a disconnect. A rejoin cancels its entry; expiry finalizes
+    // the removal. Cleared wholesale in destroyRoom so no timer outlives the room.
+    graceTimers: new Map(),
   };
   rooms.set(code, room);
   logInfo('room_created', { roomCode: code, playerId: hostConnection.id, isPublic: room.isPublic });
@@ -194,7 +214,7 @@ function joinRoom(code, connection, playerName) {
   if (room.players.length >= MAX_PLAYERS_PER_ROOM) {
     return { error: 'room_full' };
   }
-  room.players.push({ id: connection.id, name: playerName, connection });
+  room.players.push({ id: connection.id, name: playerName, connection, token: generateSeatToken() });
   touchRoom(room); // a join proves the room is alive
   return { room };
 }
@@ -327,6 +347,9 @@ function buildTurnUpdatePayload(room) {
         name: room.players.find((rp) => rp.id === p.id)?.name || 'Unknown',
         lives: p.lives,
         eliminated: p.eliminated,
+        // Grace window: true while this seat is held after a drop. Others render it
+        // "RECONNECTING…" instead of seeing the player vanish; cleared on rejoin.
+        disconnected: p.disconnected || false,
       })),
     },
   };
@@ -987,6 +1010,11 @@ function destroyRoom(room) {
   clearTurnTimer(room);
   clearRoundTimer(room);
   clearCountdownTimeout(room);
+  // Grace window: cancel any still-pending held-seat timers so none outlives the room.
+  if (room.graceTimers) {
+    for (const t of room.graceTimers.values()) clearTimeout(t);
+    room.graceTimers.clear();
+  }
   rooms.delete(room.code);
   logInfo('room_destroyed', { roomCode: room.code });
 }
@@ -1034,7 +1062,110 @@ function guardRoom(room, event, fn) {
   }
 }
 
-function removePlayer(room, connectionId) {
+/**
+ * A player leaves the room. Two flavours:
+ *   - INTENTIONAL (leave_room / room-hop): immediate removal, exactly as before.
+ *   - GRACEFUL (a socket dropping mid-game, opts.graceful): the seat is HELD for
+ *     RECONNECT_GRACE_MS instead of eliminated, so a blip isn't a silent loss.
+ * Only a real disconnect during a LIVE game graces; a lobby drop, a bot, or an
+ * intentional leave falls straight through to finalizeRemoval (the old behaviour).
+ */
+function removePlayer(room, connectionId, opts = {}) {
+  if (opts.graceful && isGameLive(room)) {
+    const seat = room.players.find((p) => p.id === connectionId);
+    if (seat && !seat.isBot) {
+      beginGraceHold(room, connectionId);
+      return;
+    }
+  }
+  finalizeRemoval(room, connectionId, opts.reason);
+}
+
+/**
+ * Marks a dropped seat "RECONNECTING…" and starts its grace timer instead of
+ * eliminating it. Keeps the seat in room.players AND game.players with its lives
+ * intact; advanceTurn skips it so it can't time out during the hold. If it was the
+ * dropped player's turn we advance once so the game doesn't hang. A rejoin_room with
+ * the seat's token cancels the timer and restores the seat; otherwise graceExpire
+ * eliminates it when the window closes.
+ */
+function beginGraceHold(room, connectionId) {
+  const seat = room.players.find((p) => p.id === connectionId);
+  if (!seat) return;
+  seat.disconnected = true;
+  seat.disconnectedAt = Date.now();
+  touchRoom(room);
+
+  const game = room.game;
+  if (game && Array.isArray(game.players)) {
+    const gp = game.players.find((p) => p.id === connectionId);
+    if (gp) gp.disconnected = true;
+  }
+
+  // Word Bomb only needs turn handling; Blitz is simultaneous (no turn to advance),
+  // so the held seat simply stops answering and its round timer runs down as normal.
+  if (game && game.gameType !== 'category-blitz' && !t5Modes[game.gameType] && game.status === 'in_progress') {
+    if (getCurrentPlayerId(game) === connectionId) {
+      clearTurnTimer(room);
+      advanceTurn(game); // skips the held seat; keeps its lives
+      if (game.status === 'finished') {
+        broadcastToRoom(room, buildGameOverPayload(room));
+      } else {
+        broadcastToRoom(room, buildTurnUpdatePayload(room));
+        startTurnTimer(room);
+      }
+    } else {
+      // Not their turn: nothing to advance, but tell everyone the seat is held.
+      broadcastToRoom(room, buildTurnUpdatePayload(room));
+    }
+  }
+
+  // A mode-agnostic "this player is reconnecting" note for the roster UI.
+  broadcastToRoom(room, {
+    type: 'player_reconnecting',
+    payload: { playerId: connectionId, name: seat.name, graceMs: RECONNECT_GRACE_MS },
+  });
+  broadcastToRoom(room, buildRoomUpdatePayload(room));
+
+  clearGraceTimer(room, connectionId);
+  const timer = setTimeout(() => {
+    guardRoom(room, 'grace_expire_error', () => graceExpire(room, connectionId));
+  }, RECONNECT_GRACE_MS);
+  if (typeof timer.unref === 'function') timer.unref();
+  room.graceTimers.set(connectionId, timer);
+  logInfo('player_grace_start', { roomCode: room.code, playerId: connectionId });
+}
+
+// The grace window closed with no rejoin: finalize the removal (eliminate the seat
+// exactly as an immediate disconnect used to), unless a rejoin already reclaimed it
+// (in which case the seat's id changed / disconnected cleared, so this is a no-op).
+function graceExpire(room, connectionId) {
+  room.graceTimers.delete(connectionId);
+  const seat = room.players.find((p) => p.id === connectionId);
+  if (!seat || !seat.disconnected) return; // rejoined in time — nothing to do
+  logInfo('player_grace_expired', { roomCode: room.code, playerId: connectionId });
+  finalizeRemoval(room, connectionId, 'reconnect_timeout');
+}
+
+function clearGraceTimer(room, connectionId) {
+  const t = room.graceTimers && room.graceTimers.get(connectionId);
+  if (t) {
+    clearTimeout(t);
+    room.graceTimers.delete(connectionId);
+  }
+}
+
+/**
+ * Actually remove a seat: the original disconnect/leave behaviour, now also used by
+ * graceExpire. `reason` (when set, e.g. 'reconnect_timeout') is broadcast so the
+ * remaining players learn WHY the seat went — an eliminated-after-grace player no
+ * longer just silently vanishes.
+ */
+function finalizeRemoval(room, connectionId, reason) {
+  clearGraceTimer(room, connectionId);
+  const leaving = room.players.find((p) => p.id === connectionId);
+  const leavingName = leaving ? leaving.name : null;
+
   room.players = room.players.filter((p) => p.id !== connectionId);
 
   if (room.players.length === 0) {
@@ -1047,6 +1178,13 @@ function removePlayer(room, connectionId) {
   if (room.players.every((p) => p.isBot)) {
     destroyRoom(room);
     return;
+  }
+
+  if (reason) {
+    broadcastToRoom(room, {
+      type: 'player_left',
+      payload: { playerId: connectionId, name: leavingName, reason },
+    });
   }
 
   touchRoom(room); // a leave (with players remaining) proves the room is alive
@@ -1100,6 +1238,56 @@ function removePlayer(room, connectionId) {
   }
 
   broadcastToRoom(room, buildRoomUpdatePayload(room));
+}
+
+/**
+ * The new door into a LIVE room: reclaim a held seat by its persistent token
+ * (feat/mp-grace, pairing with the reconnect flow). Tried BEFORE the
+ * game_already_started gate. Finds the seat by token, cancels its grace timer,
+ * re-points it at the new socket (updating id in the roster, game.players and
+ * turnOrder, and hostId if needed), and clears the disconnected flag — so the
+ * player resumes with score, lives and turn order intact. Resync/broadcast is the
+ * caller's job (server.js) via the existing turn_update/room_update payloads.
+ * Returns { room, seat } on success, or { error } if the token/room is unknown or
+ * the grace window already elapsed (seat gone).
+ */
+function rejoinRoom(code, connection, token) {
+  const room = rooms.get(code);
+  if (!room) return { error: 'room_not_found' };
+  if (!token) return { error: 'cannot_rejoin' };
+
+  const seat = room.players.find((p) => p.token === token);
+  // No seat: grace expired and the seat was removed, or a bad/stale token. Let the
+  // caller surface a clean error rather than silently creating a new seat.
+  if (!seat) return { error: 'cannot_rejoin' };
+
+  const oldId = seat.id;
+  clearGraceTimer(room, oldId);
+
+  // Re-point the seat at the new connection. id is the key EVERYWHERE (roster,
+  // game.players, turnOrder, hostId), so update every reference in lockstep.
+  seat.id = connection.id;
+  seat.connection = connection;
+  delete seat.disconnected;
+  delete seat.disconnectedAt;
+
+  if (room.hostId === oldId) room.hostId = connection.id;
+
+  const game = room.game;
+  if (game && Array.isArray(game.players)) {
+    const gp = game.players.find((p) => p.id === oldId);
+    if (gp) {
+      gp.id = connection.id;
+      gp.disconnected = false;
+    }
+  }
+  if (game && Array.isArray(game.turnOrder)) {
+    game.turnOrder = game.turnOrder.map((id) => (id === oldId ? connection.id : id));
+  }
+
+  touchRoom(room);
+  logInfo('player_rejoined', { roomCode: room.code, playerId: connection.id });
+  return { room, seat };
 }
 
 /**
@@ -1223,6 +1411,8 @@ module.exports = {
   handleCategoryAnswer,
   handleRerollCategory,
   removePlayer,
+  rejoinRoom,
+  RECONNECT_GRACE_MS,
   broadcastToRoom,
   buildRoomUpdatePayload,
   buildTurnUpdatePayload,

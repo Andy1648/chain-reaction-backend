@@ -61,6 +61,7 @@ const {
   handleWordSubmission,
   handleRerollCategory,
   removePlayer,
+  rejoinRoom,
   failRoom,
   getRoomStats,
   broadcastToRoom,
@@ -242,6 +243,12 @@ function sendError(ws, message, context) {
   send(ws, 'error', { message, context });
 }
 
+// The persistent token for a connection's seat in a room, or undefined if not seated.
+// Sent to the client as `you.token` so a reconnect can reclaim the seat (rejoin_room).
+function seatToken(room, connectionId) {
+  return room?.players.find((p) => p.id === connectionId)?.token;
+}
+
 // A server-level error (rare - e.g. the underlying HTTP server erroring) must
 // be visible but must not bring the process down via an unhandled 'error' event.
 wss.on('error', (err) => {
@@ -316,7 +323,9 @@ wss.on('connection', (ws) => {
           // shouldn't kick the player out of the room they're already in.
           leaveCurrentRoom(ws);
           connectionToRoomCode.set(ws.id, room.code);
-          send(ws, 'room_created', { code: room.code });
+          // `you.token` is the persistent seat identity: the client stores it so a
+          // reconnect can rejoin THIS seat via rejoin_room within the grace window.
+          send(ws, 'room_created', { code: room.code, you: { token: seatToken(room, ws.id) } });
           send(ws, ...Object.values(buildRoomUpdatePayload(room)));
           break;
         }
@@ -358,9 +367,9 @@ wss.on('connection', (ws) => {
           // uniformly: a fresh room reports room_created, an existing one
           // room_joined; then everyone in the room gets the updated roster.
           if (result.created) {
-            send(ws, 'room_created', { code: room.code });
+            send(ws, 'room_created', { code: room.code, you: { token: seatToken(room, ws.id) } });
           } else {
-            send(ws, 'room_joined', { code: room.code });
+            send(ws, 'room_joined', { code: room.code, you: { token: seatToken(room, ws.id) } });
           }
           broadcastToRoom(room, buildRoomUpdatePayload(room));
           break;
@@ -390,7 +399,7 @@ wss.on('connection', (ws) => {
           // joinRoom, which re-adds them or returns a clean error.
           const currentRoom = connectionToRoomCode.get(ws.id) === code ? getRoom(code) : null;
           if (currentRoom && currentRoom.players.some((p) => p.id === ws.id)) {
-            send(ws, 'room_joined', { code });
+            send(ws, 'room_joined', { code, you: { token: seatToken(currentRoom, ws.id) } });
             send(ws, ...Object.values(buildRoomUpdatePayload(currentRoom)));
             return;
           }
@@ -405,8 +414,40 @@ wss.on('connection', (ws) => {
           // Only after the join succeeded (see create_room).
           leaveCurrentRoom(ws);
           connectionToRoomCode.set(ws.id, code);
-          send(ws, 'room_joined', { code });
+          send(ws, 'room_joined', { code, you: { token: seatToken(result.room, ws.id) } });
           broadcastToRoom(result.room, buildRoomUpdatePayload(result.room));
+          break;
+        }
+
+        // Reclaim a held seat after a reconnect (feat/mp-grace). The client sends the
+        // room code + the persistent seat token it stored on create/join; if the seat
+        // is still within its grace window this puts the player back in the SAME game
+        // with score, lives and turn order intact. Tried as its own door, BEFORE the
+        // game_already_started gate that a plain join_room would hit.
+        case 'rejoin_room': {
+          if (!allowJoin(ws)) {
+            sendError(ws, humanizeError('rate_limited'), 'rejoin_room');
+            return;
+          }
+          const code = (payload?.code || '').toUpperCase().trim();
+          const token = typeof payload?.token === 'string' ? payload.token : '';
+          const result = rejoinRoom(code, ws, token);
+          if (result.error) {
+            sendError(ws, humanizeError(result.error), 'rejoin_room');
+            return;
+          }
+          const room = result.room;
+          // Bind this socket to the reclaimed seat. NOT leaveCurrentRoom — that would
+          // removePlayer the very seat we just reclaimed back out of the room.
+          connectionToRoomCode.set(ws.id, code);
+          send(ws, 'room_joined', { code, you: { token: seatToken(room, ws.id) } });
+          // Resync: everyone drops the RECONNECTING flag, and the returning client
+          // renders exactly where the game is. A live turn-based game replays the
+          // current turn_update; otherwise the roster update is enough.
+          if (room.game && room.game.status === 'in_progress' && typeof room.game.currentTimerSeconds === 'number') {
+            broadcastToRoom(room, buildTurnUpdatePayload(room));
+          }
+          broadcastToRoom(room, buildRoomUpdatePayload(room));
           break;
         }
 
@@ -698,7 +739,10 @@ wss.on('connection', (ws) => {
     const room = code ? getRoom(code) : null;
     if (!room) return;
     try {
-      removePlayer(room, ws.id);
+      // GRACEFUL: a socket dropping mid-game HOLDS the seat ("RECONNECTING…") for the
+      // grace window instead of eliminating it, so a blip isn't a silent loss. An
+      // intentional leave_room stays immediate (that path calls removePlayer plainly).
+      removePlayer(room, ws.id, { graceful: true });
     } catch (err) {
       // removePlayer advances turns / restarts timers; if it threw, the room's
       // state can't be trusted. Close that one room cleanly (room_closed +
@@ -726,6 +770,7 @@ function humanizeError(code) {
   const messages = {
     room_not_found: 'No room found with that code.',
     game_already_started: 'That game has already started.',
+    cannot_rejoin: 'That game has moved on — your seat is no longer being held.',
     room_full: 'That room is full.',
     not_enough_players: 'You need at least 2 players to start.',
     no_active_game: 'There is no active game in this room.',

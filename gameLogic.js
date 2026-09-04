@@ -296,6 +296,11 @@ function createGame(players, difficultyKey) {
       name: p.name,
       lives: startingLives,
       eliminated: false,
+      // Grace window (feat/mp-grace): a dropped seat is held, not eliminated, for
+      // RECONNECT_GRACE_MS. While disconnected it keeps its lives but is SKIPPED in
+      // the turn rotation (see advanceTurn) so a blip never costs a life; on grace
+      // expiry roomManager eliminates it normally.
+      disconnected: false,
     })),
     turnOrder: players.map((p) => p.id),
     currentPlayerIndex: 0,
@@ -351,10 +356,17 @@ function advanceTurn(game) {
   let nextIndex = (game.currentPlayerIndex + 1) % game.turnOrder.length;
   let safetyCounter = 0;
 
-  // Skip eliminated players. The safety counter prevents an infinite loop
-  // in the pathological case where turnOrder and players get out of sync.
+  // Skip eliminated players AND seats currently in the grace window (disconnected
+  // but not yet eliminated) — a held seat must never be handed the turn, or it would
+  // burn lives to timeouts during the very blip we're protecting it from. The win
+  // check above uses getActivePlayers (non-eliminated), so a held seat still counts
+  // as in the game; it's only skipped for turn-taking. The safety counter prevents an
+  // infinite loop in the pathological case where turnOrder and players get out of sync.
   while (
-    game.players.find((p) => p.id === game.turnOrder[nextIndex])?.eliminated &&
+    (() => {
+      const seat = game.players.find((p) => p.id === game.turnOrder[nextIndex]);
+      return seat && (seat.eliminated || seat.disconnected);
+    })() &&
     safetyCounter < game.turnOrder.length
   ) {
     nextIndex = (nextIndex + 1) % game.turnOrder.length;
