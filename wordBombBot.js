@@ -105,22 +105,31 @@ function createBotPlayer(difficulty) {
 }
 
 /* ========================= DIFFICULTY TIMING ========================= */
-// How fast and how reliably the bot plays, keyed by the bot's OWN difficulty
-// (easy|medium|hard; the frontend surfaces these as the opponent's skill, not
-// the room's timer preset). `delaySec` is the [min,max] ABSOLUTE seconds the
-// bot "thinks" before submitting — humanized reaction time, NOT a fraction of
-// the turn clock, so a medium bot can no longer answer in ~0.2s and win by
-// pure speed. `miss` is the chance it freezes and lets the turn time out,
-// dropping a life, which makes attrition wins possible.
+// HUMAN-LIKE reaction, keyed by difficulty (chill|easy|medium|hard — now aligned
+// with the room presets so the opponent's skill scales with the room). The old
+// uniform [min,max] window read as a metronome; this samples a LOGNORMAL reaction
+// time (most answers near the median, a long right tail of the occasional slow
+// one) and adds occasional THINKING PAUSES, so no two turns look the same.
+//   median      s   the typical reaction (descending: a chill bot mulls, a hard
+//                   bot fires) — the FEEL knob.
+//   sigma           lognormal spread (log-space); bigger = more variance.
+//   choke           per-turn chance it can't find a word and times out (a life) —
+//                   the "bots sometimes lose" knob, TUNED so the human win rate
+//                   lands in band (see _botFeelSim.mjs).
+//   thinkPause      chance a turn carries an extra deliberation (×1.6 time).
+//   nearMiss        chance a slow (would-time-out) answer still lands with <1s
+//                   left instead of choking — a human clutch, not a freeze.
 //
-// Reaction windows (per the balance spec):
-//   easy   4.0-8.0s, ~15% timeout   -> slow, very beatable
-//   medium 2.0-5.0s, ~5%  timeout   -> challenging but attrition-vulnerable
-//   hard   1.0-2.5s, ~1%  timeout   -> fast, near-relentless
+// TUNED to the target human win rates (1,000-game sim, _botFeelSim.mjs):
+//   chill  median 4.5s, choke  4.5%  -> human ~80% (target 75-85)
+//   easy   median 3.4s, choke  3.2%  -> human ~60% (target 55-65)
+//   medium median 2.4s, choke  7.8%  -> human ~45% (target 40-50)
+//   hard   median 1.6s, choke 14.5%  -> human ~25% (target 20-30)
 const BOT_DIFFICULTY = {
-  easy:   { delaySec: [4.0, 8.0], miss: 0.15 },
-  medium: { delaySec: [2.0, 5.0], miss: 0.05 },
-  hard:   { delaySec: [1.0, 2.5], miss: 0.01 },
+  chill:  { median: 4.5, sigma: 0.55, choke: 0.045, thinkPause: 0.14, nearMiss: 0.25 },
+  easy:   { median: 3.4, sigma: 0.5,  choke: 0.032, thinkPause: 0.11, nearMiss: 0.3 },
+  medium: { median: 2.4, sigma: 0.45, choke: 0.078, thinkPause: 0.09, nearMiss: 0.35 },
+  hard:   { median: 1.6, sigma: 0.4,  choke: 0.145, thinkPause: 0.06, nearMiss: 0.45 },
 };
 
 // No difficulty ever reacts faster than this — a sub-second bot feels robotic
@@ -137,17 +146,20 @@ function tuningFor(difficultyKey) {
   return BOT_DIFFICULTY[difficultyKey] || BOT_DIFFICULTY.medium;
 }
 
-/** True if the bot should "choke" this turn (do nothing and time out). */
+/** True if the bot should "choke" this turn (do nothing and time out) — the
+ *  per-difficulty choke rate, tuned so the human win rate lands in band. */
 function rollMiss(difficultyKey) {
-  return Math.random() < tuningFor(difficultyKey).miss;
+  return Math.random() < tuningFor(difficultyKey).choke;
 }
 
-// Approximate a standard normal via the sum-of-uniforms (Bates) method — cheap,
-// no dependency, and bounded to [-1, 1] here so we never produce absurd tails.
-// Returns a value in roughly [-1, 1] clustered around 0.
-function gaussianJitter() {
-  const n = (Math.random() + Math.random() + Math.random()) / 3; // ~[0,1], bell-ish
-  return n * 2 - 1; // shift to ~[-1, 1] centered on 0
+// A standard normal (Box-Muller), CLAMPED to [-2.5, 2.5] so the lognormal reaction
+// never produces an absurd multi-tens-of-seconds tail. Mean 0, unit variance.
+function standardNormal() {
+  let u = 0, v = 0;
+  while (u === 0) u = Math.random();
+  while (v === 0) v = Math.random();
+  const z = Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+  return Math.max(-2.5, Math.min(2.5, z));
 }
 
 /**
@@ -162,12 +174,13 @@ function gaussianJitter() {
  * the submission lands before the deadline.
  */
 function computeDelayMs(difficultyKey, timerSeconds) {
-  const [lo, hi] = tuningFor(difficultyKey).delaySec;
-  const mid = (lo + hi) / 2;
-  const halfSpan = (hi - lo) / 2;
-  // Center on the midpoint, spread out by jitter across (roughly) the full band.
-  let sec = mid + gaussianJitter() * halfSpan;
-  sec = Math.max(lo, Math.min(hi, sec)); // keep within the difficulty window
+  const cfg = tuningFor(difficultyKey);
+  // LOGNORMAL reaction: median * exp(sigma * Z). Most turns cluster near the
+  // median with a natural long right tail (the occasional slow one) — organic,
+  // never the old uniform metronome.
+  let sec = cfg.median * Math.exp(cfg.sigma * standardNormal());
+  // Occasional THINKING PAUSE — a longer deliberation on this particular turn.
+  if (Math.random() < (cfg.thinkPause || 0)) sec *= 1.6;
   let ms = Math.max(MIN_REACTION_MS, sec * 1000);
 
   // On very short rooms (e.g. a slow easy bot on a 7s HELL timer) cap the

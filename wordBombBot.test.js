@@ -58,44 +58,52 @@ test('createBotPlayer has a sink connection and unique ids', () => {
 
 // ---- difficulty timing (absolute humanized reaction, not timer fraction) ---
 
-test('computeDelayMs samples an absolute reaction inside the difficulty window', () => {
-  // Long timer so the deadline ceiling never bites; delay must reflect the
-  // per-difficulty ABSOLUTE second band, independent of the turn length.
-  const timer = 30;
-  for (const key of ['easy', 'medium', 'hard']) {
-    const [lo, hi] = bot.BOT_DIFFICULTY[key].delaySec;
-    for (let i = 0; i < 500; i++) {
+test('computeDelayMs is a LOGNORMAL reaction clustered near the difficulty median', () => {
+  // Long timer so the deadline ceiling never bites. The sample mean should sit
+  // near the median (a lognormal's mean is a bit above its median; well under 2×),
+  // and every draw is a finite positive reaction — organic, not the old uniform band.
+  const timer = 60;
+  for (const key of ['chill', 'easy', 'medium', 'hard']) {
+    const median = bot.BOT_DIFFICULTY[key].median;
+    let sum = 0;
+    const N = 4000;
+    for (let i = 0; i < N; i++) {
       const ms = bot.computeDelayMs(key, timer);
-      assert.ok(ms >= lo * 1000 - 1, `${key}: ${ms} >= ${lo}s`);
-      assert.ok(ms <= hi * 1000 + 1, `${key}: ${ms} <= ${hi}s`);
+      assert.ok(Number.isFinite(ms) && ms > 0, `${key}: ${ms} not a finite positive delay`);
+      sum += ms;
     }
-    assert.ok(lo < hi);
+    const meanSec = sum / N / 1000;
+    assert.ok(meanSec > median * 0.7 && meanSec < median * 2.2, `${key}: mean ${meanSec.toFixed(2)}s off median ${median}s`);
   }
 });
 
 test('computeDelayMs never fires faster than 1s on ANY difficulty (the medium-bot bug)', () => {
-  for (const key of ['easy', 'medium', 'hard']) {
+  for (const key of ['chill', 'easy', 'medium', 'hard']) {
     for (let i = 0; i < 500; i++) {
-      // Even with a generous timer, the hard floor holds.
-      assert.ok(bot.computeDelayMs(key, 30) >= bot.MIN_REACTION_MS, `${key} dipped below 1s`);
+      assert.ok(bot.computeDelayMs(key, 60) >= bot.MIN_REACTION_MS, `${key} dipped below 1s`);
     }
   }
   assert.equal(bot.MIN_REACTION_MS, 1000);
 });
 
-test('the reaction band matches the balance spec', () => {
-  assert.deepEqual(bot.BOT_DIFFICULTY.easy.delaySec, [4.0, 8.0]);
-  assert.deepEqual(bot.BOT_DIFFICULTY.medium.delaySec, [2.0, 5.0]);
-  assert.deepEqual(bot.BOT_DIFFICULTY.hard.delaySec, [1.0, 2.5]);
-  assert.ok(Math.abs(bot.BOT_DIFFICULTY.easy.miss - 0.15) < 1e-9);
-  assert.ok(Math.abs(bot.BOT_DIFFICULTY.medium.miss - 0.05) < 1e-9);
-  assert.ok(Math.abs(bot.BOT_DIFFICULTY.hard.miss - 0.01) < 1e-9);
+test('the tuned reaction spec: median DESCENDS chill>easy>medium>hard; choke is a per-turn rate', () => {
+  const d = bot.BOT_DIFFICULTY;
+  assert.ok(d.chill.median > d.easy.median, 'chill mulls longer than easy');
+  assert.ok(d.easy.median > d.medium.median, 'easy slower than medium');
+  assert.ok(d.medium.median > d.hard.median, 'medium slower than hard');
+  for (const key of ['chill', 'easy', 'medium', 'hard']) {
+    assert.ok(d[key].choke > 0 && d[key].choke < 1, `${key} choke is a probability`);
+    assert.ok(d[key].sigma > 0, `${key} has lognormal spread`);
+  }
+  // the sim-tuned values that put each difficulty's human win rate in band
+  assert.ok(Math.abs(d.chill.median - 4.5) < 1e-9);
+  assert.ok(Math.abs(d.hard.median - 1.6) < 1e-9);
 });
 
 test('computeDelayMs caps a very short floor timer to a safe margin', () => {
-  // On a 7s HELL room a slow easy bot (up to 8s) must still land before timeout.
-  for (let i = 0; i < 200; i++) {
-    const ms = bot.computeDelayMs('easy', 7);
+  // On a 7s HELL room a slow chill bot must still land before timeout.
+  for (let i = 0; i < 500; i++) {
+    const ms = bot.computeDelayMs('chill', 7);
     assert.ok(ms <= 7000 - bot.SAFETY_MARGIN_MS + 1, `expected <= 6100, got ${ms}`);
   }
 });
@@ -103,7 +111,7 @@ test('computeDelayMs caps a very short floor timer to a safe margin', () => {
 test('rollMiss returns a boolean and unknown difficulty falls back to medium', () => {
   assert.equal(typeof bot.rollMiss('hard'), 'boolean');
   assert.equal(typeof bot.rollMiss('nonsense'), 'boolean');
-  assert.deepEqual(bot.BOT_DIFFICULTY.medium.delaySec.length, 2);
+  assert.equal(typeof bot.BOT_DIFFICULTY.medium.choke, 'number');
 });
 
 test('word list loads, is sizable, and excludes proper nouns / place names', () => {
