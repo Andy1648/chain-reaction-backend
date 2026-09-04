@@ -74,6 +74,28 @@ const supplements = [
   // languages, reality TV shows, seafood, guitar brands, cattle breeds). Real
   // answers only, union-merged.
   require('./categoryAnswers/expand-broad-3'),
+  // batch 4 (data/accept-lists-5): 20 more broad open-ended categories (electronic
+  // music genres, music festivals, milk alternatives, steak/BBQ/potato/rice/squash/
+  // melon/pancake types, energy drinks, cooking & game shows, web browsers, wild
+  // canines, coral, dipping sauces, world deserts, phone brands, Ben & Jerry's).
+  // Real answers only, union-merged.
+  require('./categoryAnswers/expand-broad-4'),
+  // batch 5 (data/accept-lists-5): 19 more broad open-ended categories (big cats,
+  // printmaking, music-production software, electric guitar models, potato-chip/
+  // snack-cake/salad-dressing/yogurt brands, breakfast meats, TV westerns, 90s +
+  // British sitcoms, bowling terms, brass instruments, egg/dried-fruit/jerky types,
+  // Roman gods, Greek heroes). Real answers only, union-merged.
+  require('./categoryAnswers/expand-broad-5'),
+  // batch 3 (data/accept-lists-5): 20 more broad, open-ended categories under 40
+  // entries — social/streaming/music services, apples, sushi, cake, donuts,
+  // literary devices, art mediums, tech brands, record labels, HBO/streaming
+  // series, farm crops, smart-home devices. Real answers only, union-merged.
+  require('./categoryAnswers/expand-broad-6'),
+  // batch 4 (data/accept-lists-5): 10 more broad under-40 categories — frozen
+  // treats, condiments, fossils, TV medical dramas + soap operas, video-game
+  // movies, units of measurement, succulents/cacti, cloud types, Apple products.
+  // Real answers only, union-merged.
+  require('./categoryAnswers/expand-broad-7'),
   // step-2 VARIANT pass over the ~305 finite categories: misspellings, punctuation/
   // accent-stripped forms, alt/regional names, unambiguous short forms of EXISTING
   // members only (no new members). Batched ~30 categories per file.
@@ -88,6 +110,11 @@ const supplements = [
   require('./categoryAnswers/variants-9'),
   require('./categoryAnswers/variants-10'),
   require('./categoryAnswers/variants-11'),
+  // batch 12 (data/accept-lists-5): variant pass for proper-noun categories that
+  // lacked one — alt romanizations (Dragon Ball / Naruto / One Piece), alt names +
+  // short forms (founding fathers, Greek gods, Caribbean/Oceanian/Middle-East
+  // countries), common misspellings (South American countries), tempo abbreviations.
+  require('./categoryAnswers/variants-12'),
 ];
 for (const supplement of supplements) {
   for (const [category, extras] of Object.entries(supplement)) {
