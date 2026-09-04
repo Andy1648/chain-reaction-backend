@@ -325,7 +325,19 @@ wss.on('connection', (ws) => {
         // no room membership required, so it doesn't go through
         // getRoomForConnection. Replies straight to the asking socket.
         case 'list_public_rooms': {
-          send(ws, 'public_rooms', { rooms: listPublicRooms() });
+          // feat/lobby-life: ride lobby life-signs on the same poll the browser already makes, so an
+          // empty room list still shows the place is alive — how many people are online right now, how
+          // many are mid-game, and when the last game kicked off. Cheap (one registry pass + a size read).
+          const rs = getRoomStats();
+          send(ws, 'public_rooms', {
+            rooms: listPublicRooms(),
+            stats: {
+              online: wss.clients.size, // every live socket, incl. lobby browsers not yet in a room
+              inGame: rs.players, // real (non-bot) players currently seated in rooms
+              gamesInProgress: rs.gamesInProgress,
+              lastGameStartedAt: rs.lastGameStartedAt, // epoch ms, or null
+            },
+          });
           break;
         }
 

@@ -152,3 +152,29 @@ test('skip_turn from the NON-current player is rejected', async () => {
   const err = await c2.waitFor('error');
   assert.equal(err.payload.message, "It's not your turn.");
 });
+
+// ---- feat/lobby-life: lobby life-signs on the list_public_rooms poll ----
+
+test('list_public_rooms carries lobby life-signs (online + last game started)', async () => {
+  const c1 = await client();
+  c1.send('create_room', { name: 'Host', isPublic: true });
+  await c1.waitFor('room_created');
+
+  c1.send('list_public_rooms', {});
+  const before = await c1.waitFor('public_rooms');
+  assert.ok(before.payload.stats, 'a stats block rides along with the room list');
+  assert.ok(before.payload.stats.online >= 1, 'at least this socket counts as online');
+  // lastGameStartedAt is a process-wide clock (null OR a number depending on earlier tests) — the
+  // meaningful assertion is that a fresh game-start below stamps it to a number.
+
+  // Start a solo Category Blitz (starts with one player) so a game-start stamps the clock.
+  c1.send('set_game_type', { gameType: 'category-blitz' });
+  await c1.waitFor('room_update');
+  c1.send('start_game', {});
+  await c1.waitFor('game_started');
+
+  c1.send('list_public_rooms', {});
+  const after = await c1.waitFor('public_rooms');
+  assert.equal(typeof after.payload.stats.lastGameStartedAt, 'number', 'last-game-started clock is now set');
+  assert.ok(after.payload.stats.gamesInProgress >= 1, 'the live game is counted');
+});

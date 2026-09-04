@@ -106,6 +106,10 @@ const MAX_ACTIVE_ROOMS = 500;
 
 const rooms = new Map(); // roomCode -> room object
 
+// feat/lobby-life: server-wide "a game just started" timestamp (epoch ms), so the lobby can show
+// "last game started 3m ago" instead of a dead empty list. Set in startGame; surfaced via getRoomStats.
+let lastGameStartedAt = null;
+
 // Marks a room as alive. Call from the events that prove a room is in active use
 // (see the call sites: join, leave, game start, an accepted submission, rematch)
 // so the idle reaper only ever removes genuinely dead lobbies. One helper, one
@@ -737,6 +741,7 @@ function startGame(room, opts = {}) {
   // Stamp the type onto the game so payload builders and submission routing
   // know which mode this in-progress game is, independent of the room.
   room.game.gameType = room.gameType;
+  lastGameStartedAt = Date.now(); // feat/lobby-life: lobby "last game started" clock
   touchRoom(room); // starting a game proves the room is alive
   logInfo('game_started', {
     roomCode: room.code,
@@ -1166,6 +1171,9 @@ function getRoomStats() {
     players: 0,
     bots: 0,
     roomsByGameType: {},
+    // feat/lobby-life: epoch ms of the most recent game start (null if none this process), for the
+    // lobby's "last game started N ago" line — makes an empty room list feel populated/recent.
+    lastGameStartedAt,
   };
   for (const room of rooms.values()) {
     if (room.isPublic) stats.publicRooms += 1;
