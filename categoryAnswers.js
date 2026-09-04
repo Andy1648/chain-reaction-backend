@@ -110,6 +110,11 @@ const supplements = [
   require('./categoryAnswers/variants-9'),
   require('./categoryAnswers/variants-10'),
   require('./categoryAnswers/variants-11'),
+  // batch 12 (data/accept-lists-5): variant pass for proper-noun categories that
+  // lacked one — alt romanizations (Dragon Ball / Naruto / One Piece), alt names +
+  // short forms (founding fathers, Greek gods, Caribbean/Oceanian/Middle-East
+  // countries), common misspellings (South American countries), tempo abbreviations.
+  require('./categoryAnswers/variants-12'),
 ];
 for (const supplement of supplements) {
   for (const [category, extras] of Object.entries(supplement)) {
