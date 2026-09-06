@@ -21,7 +21,7 @@ const { once } = require('node:events');
 const WebSocket = require('ws');
 
 const { server, wss } = require('./server');
-const { stopRoomReaper, _resetRoomsForTesting } = require('./roomManager');
+const { stopRoomReaper, _resetRoomsForTesting, getRoom } = require('./roomManager');
 
 let port;
 
@@ -151,4 +151,45 @@ test('skip_turn from the NON-current player is rejected', async () => {
   c2.send('skip_turn', {});
   const err = await c2.waitFor('error');
   assert.equal(err.payload.message, "It's not your turn.");
+});
+
+// ---- mp-audit MEDIUM #3: rematch is no longer strictly host-only post-game ----
+
+test('a NON-host can rematch once the game is over (mp-audit MEDIUM #3)', async () => {
+  const c1 = await client();
+  const c2 = await client();
+  c1.send('create_room', { name: 'Host' });
+  const created = await c1.waitFor('room_created');
+  const code = created.payload.code;
+  c2.send('join_room', { code, name: 'P2' });
+  await c2.waitFor('room_joined');
+  c1.send('start_game', {});
+  await c1.waitFor('game_started');
+  await c1.waitFor('turn_update');
+
+  // Drive the game to a finished state (as if it played out), so the rematch is
+  // post-game — the case where a stranded non-host previously had no way to replay.
+  const room = getRoom(code);
+  room.game.status = 'finished';
+
+  c2.send('rematch', {}); // the NON-host requests the rematch
+  const reset = await c2.waitFor('game_reset');
+  assert.ok(reset, 'a non-host rematch after game-over produces a game_reset');
+  assert.equal(getRoom(code).game, null, 'the game was actually reset');
+});
+
+test('a non-host still CANNOT rematch mid-game (anti-grief preserved)', async () => {
+  const c1 = await client();
+  const c2 = await client();
+  c1.send('create_room', { name: 'Host' });
+  const created = await c1.waitFor('room_created');
+  c2.send('join_room', { code: created.payload.code, name: 'P2' });
+  await c2.waitFor('room_joined');
+  c1.send('start_game', {});
+  await c1.waitFor('game_started');
+  await c2.waitFor('turn_update'); // game is live
+
+  c2.send('rematch', {}); // non-host, mid-game -> rejected
+  const err = await c2.waitFor('error');
+  assert.equal(err.payload.context, 'rematch');
 });

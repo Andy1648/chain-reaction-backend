@@ -538,8 +538,15 @@ wss.on('connection', (ws) => {
         case 'rematch': {
           const room = getRoomForConnection(ws);
           if (!room) return;
-          if (room.hostId !== ws.id) {
-            sendError(ws, 'Only the host can start a rematch.', 'rematch');
+          // Rematch is host-controlled DURING a live game (anti-grief: no yanking the
+          // board out from under players mid-match). But once the game is OVER, ANY seat
+          // still in the room may restart it — otherwise a non-host is stranded at
+          // game-over with no way to play again (mp-audit MEDIUM #3), which bites hardest
+          // when the host bailed after the result. resetGame doesn't depend on hostId, so
+          // a post-game reset by any remaining player is safe.
+          const gameOver = !room.game || room.game.status === 'finished';
+          if (room.hostId !== ws.id && !gameOver) {
+            sendError(ws, 'Only the host can start a rematch mid-game.', 'rematch');
             return;
           }
           resetGame(room);
