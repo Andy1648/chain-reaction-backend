@@ -80,3 +80,75 @@ test('pack filtering (and no-repeat) still holds under tier weighting', () => {
     played.add(c);
   }
 });
+
+// ---- fix/blitz-tiers ----------------------------------------------------------
+
+// Play-tested as enthusiast-only: these read as "medium" on paper but most players
+// stall after one or two answers, so they are niche (tier 3), never round 1/2 material.
+const RETIERED_TO_NICHE = [
+  'Taxonomic domains and phyla', 'Cell organelles', 'Human endocrine hormones',
+  'Historical peace treaties', 'Ancient Greek city-states', 'Greek City-States', 'Famous poets',
+  'Greek and Roman mythology figures', 'Greek gods', 'Operating systems', 'TV soap operas',
+  'Latin American countries',
+];
+
+test('the play-tested medium→niche moves are tier 3 (and still active)', () => {
+  for (const c of RETIERED_TO_NICHE) {
+    assert.ok(blitz.CATEGORIES.includes(c), `"${c}" is an active category`);
+    assert.equal(blitz.tierForCategory(c), 3, `"${c}" is niche`);
+    assert.equal(blitz.CATEGORY_TIER[c], 3, `"${c}" stored tier is niche`);
+    assert.ok(blitz.TIER_POOLS[3].includes(c), `"${c}" is in the niche pool`);
+    assert.ok(!blitz.TIER_POOLS[2].includes(c), `"${c}" left the medium pool`);
+  }
+});
+
+const PLAYERS = [{ id: 'h', name: 'Host' }];
+const firstTier = (opts, packs = null) =>
+  blitz.CATEGORY_TIER[blitz.createGame(PLAYERS, 'medium', true, packs, null, opts).currentCategory];
+
+test('a host with NO prior Blitz record gets a tier-1 (broad) first round, every time', () => {
+  for (let i = 0; i < 500; i++) {
+    assert.equal(firstTier({ hostHasBlitzRecord: false }), 1);
+  }
+  // Under a pack filter that HAS broad categories, the first round is broad AND in-pack.
+  for (let i = 0; i < 300; i++) {
+    const g = blitz.createGame(PLAYERS, 'medium', true, ['food'], null, { hostHasBlitzRecord: false });
+    assert.equal(blitz.CATEGORY_TIER[g.currentCategory], 1);
+    assert.equal(CATEGORY_PACKS[g.currentCategory], 'food');
+  }
+});
+
+test('a fresh host + a pack with no broad category keeps the pack (the filter wins over the tier)', () => {
+  // history has zero tier-1 categories: the tier restriction is dropped, the pack is not.
+  assert.equal(blitz.TIER_POOLS[1].filter((c) => CATEGORY_PACKS[c] === 'history').length, 0);
+  for (let i = 0; i < 200; i++) {
+    const g = blitz.createGame(PLAYERS, 'medium', true, ['history'], null, { hostHasBlitzRecord: false });
+    assert.equal(CATEGORY_PACKS[g.currentCategory], 'history');
+  }
+});
+
+test('a host WITH a record (or an unknown/older client) keeps the weighted first-round draw', () => {
+  for (const opts of [{ hostHasBlitzRecord: true }, {}, undefined]) {
+    const tiers = new Set();
+    for (let i = 0; i < 600; i++) tiers.add(firstTier(opts));
+    // ~50/35/15 over 600 draws: medium AND niche both appear (P(miss) ≈ 0.85^600 / 0.65^600).
+    assert.ok(tiers.has(2) && tiers.has(3), `weighted draw reaches tier 2 and 3 (${[...tiers]})`);
+  }
+});
+
+test('the Daily is untouched by the fresh-host rule (its plan already opens broad)', () => {
+  const daily = { dayNumber: 1, dateKey: '2026-07-25' };
+  const plan = blitz.dailyCategories(daily.dateKey);
+  const g = blitz.createGame(PLAYERS, 'medium', true, null, daily, { hostHasBlitzRecord: false });
+  assert.equal(g.currentCategory, plan[0]);
+});
+
+test('pickRandomCategory(…, onlyTier) draws that tier only, and no-repeat still holds', () => {
+  const played = new Set();
+  for (let i = 0; i < 40; i++) {
+    const c = blitz.pickRandomCategory(played, null, 1);
+    assert.equal(blitz.CATEGORY_TIER[c], 1);
+    assert.ok(!played.has(c));
+    played.add(c);
+  }
+});

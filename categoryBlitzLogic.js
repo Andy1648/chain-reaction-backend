@@ -618,7 +618,7 @@ const TIER_MEDIUM_OVERRIDE = new Set([
   'Mario characters', 'Friends Characters', 'The Office characters', 'Breaking Bad characters',
   'Lord of the Rings characters', 'Batman Characters', 'Batman villains', 'Stranger Things characters',
   'James Bond Movies', 'Harry Potter Characters', 'Harry Potter Spells', 'Pokemon from Gen 1',
-  'Marvel Cinematic Universe Villains', 'Anime Villains', 'Greek gods', 'Studio Ghibli Movies',
+  'Marvel Cinematic Universe Villains', 'Anime Villains', 'Studio Ghibli Movies',
 ]);
 // Explicit niche (specialist/deep-cut) not always caught by the franchise patterns.
 const TIER_NICHE = new Set([
@@ -642,6 +642,12 @@ const TIER_NICHE = new Set([
   'Naruto characters', 'Dragon Ball characters', 'One Piece characters',
   'Elden Ring bosses', 'Half-Life enemies', 'Half-Life weapons', 'Team Fortress 2 classes', 'Pac-Man ghosts',
   'Genshin Impact playable characters', 'League of Legends Champions',
+  // fix/blitz-tiers: play-tested as enthusiast-only (moved from medium) — most players
+  // stall after one or two answers, so they must not land in round 1/2 of a regular room.
+  'Taxonomic domains and phyla', 'Cell organelles', 'Human endocrine hormones',
+  'Historical peace treaties', 'Ancient Greek city-states', 'Greek City-States', 'Famous poets',
+  'Greek and Roman mythology figures', 'Greek gods', 'Operating systems', 'TV soap operas',
+  'Latin American countries',
 ]);
 // Niche franchise/specialist keyword patterns (case-insensitive).
 const TIER_NICHE_PATTERNS = [
@@ -715,11 +721,19 @@ function pickWeightedByTier(pool, rng = Math.random) {
  * one of them, so categories never repeat across rounds. `selectedPacks`
  * (optional) restricts the pool to those packs. Falls back to the (filtered) base
  * list in the impossible case that every option is excluded.
+ * `onlyTier` (optional, 1|2|3) restricts the draw to ONE breadth tier — used for a
+ * fresh host's first round (tier 1 only). If the (pack-filtered, non-repeating)
+ * pool has no category of that tier (e.g. the history pack has no broad category)
+ * the restriction is dropped rather than the pack filter: the pack choice always wins.
  */
-function pickRandomCategory(excludeSet, selectedPacks) {
+function pickRandomCategory(excludeSet, selectedPacks, onlyTier = null) {
   const base = categoriesForPacks(selectedPacks);
   const pool = excludeSet ? base.filter((c) => !excludeSet.has(c)) : base;
-  const choices = pool.length ? pool : base;
+  let choices = pool.length ? pool : base;
+  if (onlyTier) {
+    const tiered = choices.filter((c) => CATEGORY_TIER[c] === onlyTier);
+    if (tiered.length) choices = tiered;
+  }
   return pickWeightedByTier(choices) || choices[Math.floor(Math.random() * choices.length)];
 }
 
@@ -749,14 +763,23 @@ function determineWinner(game) {
  * single-player variant (it bypasses the minimum-player gate); it no longer
  * changes the round count. Every round is ROUND_TIME_SECONDS (20s); difficulty
  * only sets the per-game reroll allowance.
+ *
+ * `opts.hostHasBlitzRecord` (fix/blitz-tiers): the host's client reports whether it
+ * holds a prior Blitz record. When it is EXPLICITLY false (a first-ever Blitz), the
+ * FIRST round draws from tier 1 (broad) only, so a newcomer's opening category is
+ * one anyone can name five of. Absent/true → the normal ~50/35/15 weighted draw.
+ * The Daily's fixed plan is never altered (its round 1 is already tier 1).
  */
-function createGame(players, difficultyKey, solo = false, selectedPacks = null, daily = null) {
+function createGame(players, difficultyKey, solo = false, selectedPacks = null, daily = null, opts = {}) {
   const difficulty = VALID_DIFFICULTIES.includes(difficultyKey) ? difficultyKey : 'medium';
   // Daily Challenge: the whole game's categories are predetermined by the UTC
   // date (same board for everyone), packs are ignored, and rerolls are off —
   // a reroll would fork the board away from everyone else's.
   const dailyPlan = daily ? dailyCategories(daily.dateKey) : null;
-  const firstCategory = dailyPlan ? dailyPlan[0] : pickRandomCategory(null, selectedPacks);
+  const broadFirst = opts && opts.hostHasBlitzRecord === false;
+  const firstCategory = dailyPlan
+    ? dailyPlan[0]
+    : pickRandomCategory(null, selectedPacks, broadFirst ? 1 : null);
 
   return {
     status: 'in_progress', // 'in_progress' | 'between_rounds' | 'finished'

@@ -528,7 +528,11 @@ wss.on('connection', (ws) => {
           // daily:true opts a solo Category Blitz start into the Daily
           // Challenge (date-seeded categories, no rerolls). Anything else
           // about the message is unchanged; startGame validates solo-only.
-          const result = startGame(room, { daily: payload?.daily === true });
+          const result = startGame(room, {
+            daily: payload?.daily === true,
+            // Only a real boolean is forwarded; anything else reads as "unknown" (undefined).
+            hasBlitzRecord: typeof payload?.hasBlitzRecord === 'boolean' ? payload.hasBlitzRecord : undefined,
+          });
           if (result.error) {
             sendError(ws, humanizeError(result.error), 'start_game');
           }
