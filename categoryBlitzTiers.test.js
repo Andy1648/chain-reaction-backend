@@ -102,6 +102,16 @@ test('the play-tested medium→niche moves are tier 3 (and still active)', () =>
   }
 });
 
+test('the re-tier moved ONLY those 12: the tier distribution is exactly 89 / 227 / 130 of 446', () => {
+  // Snapshot of the pool sizes after the 12 moves (main was 89 / 239 / 118 of 446).
+  // A change anywhere else in the tier tables — or a category added/removed —
+  // shifts one of these and must be reviewed on purpose, not by accident.
+  assert.equal(blitz.CATEGORIES.length, 446);
+  assert.equal(blitz.TIER_POOLS[1].length, 89);
+  assert.equal(blitz.TIER_POOLS[2].length, 227);
+  assert.equal(blitz.TIER_POOLS[3].length, 130);
+});
+
 const PLAYERS = [{ id: 'h', name: 'Host' }];
 const firstTier = (opts, packs = null) =>
   blitz.CATEGORY_TIER[blitz.createGame(PLAYERS, 'medium', true, packs, null, opts).currentCategory];
