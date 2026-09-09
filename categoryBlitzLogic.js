@@ -618,7 +618,7 @@ const TIER_MEDIUM_OVERRIDE = new Set([
   'Mario characters', 'Friends Characters', 'The Office characters', 'Breaking Bad characters',
   'Lord of the Rings characters', 'Batman Characters', 'Batman villains', 'Stranger Things characters',
   'James Bond Movies', 'Harry Potter Characters', 'Harry Potter Spells', 'Pokemon from Gen 1',
-  'Marvel Cinematic Universe Villains', 'Anime Villains', 'Greek gods', 'Studio Ghibli Movies',
+  'Marvel Cinematic Universe Villains', 'Anime Villains', 'Studio Ghibli Movies',
 ]);
 // Explicit niche (specialist/deep-cut) not always caught by the franchise patterns.
 const TIER_NICHE = new Set([
@@ -642,6 +642,13 @@ const TIER_NICHE = new Set([
   'Naruto characters', 'Dragon Ball characters', 'One Piece characters',
   'Elden Ring bosses', 'Half-Life enemies', 'Half-Life weapons', 'Team Fortress 2 classes', 'Pac-Man ghosts',
   'Genshin Impact playable characters', 'League of Legends Champions',
+  // fix/blitz-data: quiz-bowl subjects the audit found sitting in MEDIUM by default. Naming 5 of
+  // these needs schooling in the topic, not general knowledge, so they belong in NICHE.
+  // 'Historical peace treaties' is also the typing-cost outlier (85% of its answers are 3+ words).
+  'Taxonomic domains and phyla', 'Cell organelles', 'Human endocrine hormones',
+  'Historical peace treaties', 'Ancient Greek city-states', 'Greek City-States', 'Famous poets',
+  'Greek and Roman mythology figures', 'Greek gods', 'Operating systems', 'TV soap operas',
+  'Latin American countries', 'Professional wrestling championships',
 ]);
 // Niche franchise/specialist keyword patterns (case-insensitive).
 const TIER_NICHE_PATTERNS = [
@@ -709,6 +716,19 @@ function pickWeightedByTier(pool, rng = Math.random) {
 }
 
 /**
+ * Round-1 pick for a host with NO prior Blitz record (fix/blitz-data): tier 1 (BROAD) ONLY, so a
+ * first-ever game opens on something anyone can name 5 of instead of a coin-flip niche category.
+ * Honours the pack filter; if the selected packs contain no tier-1 category at all it falls back
+ * to the normal weighted draw rather than ignoring the packs. `rng` is injectable for tests.
+ */
+function pickBroadCategory(selectedPacks, rng = Math.random) {
+  const base = categoriesForPacks(selectedPacks);
+  const broad = base.filter((c) => CATEGORY_TIER[c] === 1);
+  if (broad.length === 0) return pickWeightedByTier(base, rng);
+  return broad[Math.floor(rng() * broad.length)];
+}
+
+/**
  * Picks a category from the (optionally pack-filtered) pool, WEIGHTED toward
  * broader tiers (see pickWeightedByTier) instead of uniform. If `excludeSet` (a
  * Set of already-played categories) is given, the result is guaranteed not to be
@@ -750,13 +770,19 @@ function determineWinner(game) {
  * changes the round count. Every round is ROUND_TIME_SECONDS (20s); difficulty
  * only sets the per-game reroll allowance.
  */
-function createGame(players, difficultyKey, solo = false, selectedPacks = null, daily = null) {
+function createGame(players, difficultyKey, solo = false, selectedPacks = null, daily = null, opts = {}) {
   const difficulty = VALID_DIFFICULTIES.includes(difficultyKey) ? difficultyKey : 'medium';
   // Daily Challenge: the whole game's categories are predetermined by the UTC
   // date (same board for everyone), packs are ignored, and rerolls are off —
   // a reroll would fork the board away from everyone else's.
   const dailyPlan = daily ? dailyCategories(daily.dateKey) : null;
-  const firstCategory = dailyPlan ? dailyPlan[0] : pickRandomCategory(null, selectedPacks);
+  // ROUND 1 FOR A FRESH HOST (opts.freshHost): tier 1 only — see pickBroadCategory. The Daily's
+  // fixed board always wins, and rounds 2-3 use the normal weighted draw either way.
+  const firstCategory = dailyPlan
+    ? dailyPlan[0]
+    : opts.freshHost
+    ? pickBroadCategory(selectedPacks)
+    : pickRandomCategory(null, selectedPacks);
 
   return {
     status: 'in_progress', // 'in_progress' | 'between_rounds' | 'finished'
@@ -1068,6 +1094,7 @@ module.exports = {
   rerollCategory,
   getScoreboard,
   pickRandomCategory,
+  pickBroadCategory,
   dailyInfo,
   dailyCategories,
   DAILY_EPOCH_UTC,

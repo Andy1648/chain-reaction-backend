@@ -528,7 +528,15 @@ wss.on('connection', (ws) => {
           // daily:true opts a solo Category Blitz start into the Daily
           // Challenge (date-seeded categories, no rerolls). Anything else
           // about the message is unchanged; startGame validates solo-only.
-          const result = startGame(room, { daily: payload?.daily === true });
+          //
+          // freshHost:true (fix/blitz-data) says this host has NO prior Category Blitz record,
+          // so round 1 draws from tier 1 (broad) only. The server keeps no cross-session player
+          // history, so only the client can know this; it is a COSMETIC difficulty hint (it can
+          // only make round 1 easier), never trusted for scoring or eligibility.
+          const result = startGame(room, {
+            daily: payload?.daily === true,
+            freshHost: payload?.freshHost === true,
+          });
           if (result.error) {
             sendError(ws, humanizeError(result.error), 'start_game');
           }

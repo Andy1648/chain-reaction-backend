@@ -732,7 +732,10 @@ function startGame(room, opts = {}) {
     room.difficultyKey,
     isSoloCategoryBlitz,
     room.selectedPacks, // Category Blitz only: host-selected packs (undefined until set_packs); other modes ignore it
-    daily // Category Blitz only: Daily Challenge info ({ dayNumber, dateKey }) or null
+    daily, // Category Blitz only: Daily Challenge info ({ dayNumber, dateKey }) or null
+    // Category Blitz only: { freshHost } — the host has no prior Blitz record, so round 1 draws
+    // tier 1 (broad) only. Other modes ignore the extra argument.
+    { freshHost: opts.freshHost === true }
   );
   // Stamp the type onto the game so payload builders and submission routing
   // know which mode this in-progress game is, independent of the room.
