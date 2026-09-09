@@ -221,25 +221,78 @@ for (const [from, to] of Object.entries(FOLDS)) {
 // fix/blitz-data REMOVALS: answers the category audit flagged as simply WRONG (they are not
 // members of the category). Applied AFTER every merge/fold above, because the on-disk
 // categoryAnswers/* files are append-only and the same entry can be contributed by more than
-// one of them — deleting it here is the only removal that can't be undone by another source
-// file. Category keys are matched case/whitespace-insensitively for the same reason
-// categoryBlitzLogic.js normalises its lookup.
+// one of them — deleting it here is the only removal that can't be undone by another source file.
+//
+// NEAR-VARIANTS GO TOO. Removing "ottoman" while "ottomans" and "ottaman empire" stayed accepted
+// defeated the point — the wrong answer was still one plural away. Each seed below is therefore
+// matched NORMALISED (lowercase → punctuation stripped → spaces collapsed → each word
+// singularised), and EVERY accept in that category whose normalised form matches a seed's is
+// deleted, whichever source file contributed it. So one seed covers its own plural, spacing,
+// punctuation and casing variants; genuinely different wordings still need their own seed.
 const REMOVALS = {
-  'Ancient Empires': ['ottoman'], // the Ottoman Empire is early-modern, not ancient
+  // The Ottoman Empire is early-modern (1299-1922), not ancient. All three spellings the data
+  // carried are seeded: the bare noun, the correct full name, and the misspelling. Their plurals
+  // are picked up by the normalised match.
+  'Ancient Empires': ['ottoman', 'ottoman empire', 'ottaman empire'],
   'Pizza toppings': ['stuffed crust'], // a crust style, not a topping
   'Fast food chains': ['village inn'], // a sit-down diner chain, not fast food
-  'US First Ladies': ['mary harrison'], // never First Lady (Benjamin Harrison's 2nd wife, married after his term)
+  // Never First Lady: Mary Harrison was Benjamin Harrison's second wife, married after his term.
+  'US First Ladies': ['mary harrison'],
 };
+
+// Category keys are matched case/whitespace-insensitively, for the same reason
+// categoryBlitzLogic.js normalises its lookup.
 const normalizeAnswerKey = (s) => String(s || '').trim().toLowerCase().replace(/\s+/g, ' ');
+
+// Answer normalisation for the variant match. Deliberately conservative: it only folds case,
+// punctuation, spacing and plurals, so it can never collapse two genuinely different answers.
+const singularise = (w) => {
+  if (w.length > 4 && w.endsWith('ies')) return `${w.slice(0, -3)}y`;
+  if (w.length > 3 && /(?:s|x|z|ch|sh)es$/.test(w)) return w.slice(0, -2);
+  if (w.length > 3 && w.endsWith('s') && !w.endsWith('ss')) return w.slice(0, -1);
+  return w;
+};
+const normalizeAnswer = (s) =>
+  String(s || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim()
+    .split(' ')
+    // Drop the stray "s" a possessive leaves behind once the apostrophe is stripped, so
+    // "wendy's" and "wendys" agree (this data is full of "mcdonald's"-style brand names).
+    .filter((w) => w && w !== 's')
+    .map(singularise)
+    .join(' ');
+
 const ANSWER_KEY_INDEX = new Map();
 for (const key of Object.keys(answers)) {
   const nk = normalizeAnswerKey(key);
   ANSWER_KEY_INDEX.set(nk, [...(ANSWER_KEY_INDEX.get(nk) || []), key]);
 }
-for (const [category, drop] of Object.entries(REMOVALS)) {
+
+// What actually got deleted, for the test (and for anyone auditing this step): a list of
+// { category, answer, seed } — every concrete accept removed, not just the seeds.
+const REMOVED_LOG = [];
+for (const [category, seeds] of Object.entries(REMOVALS)) {
+  const normSeeds = seeds.map((seed) => [seed, normalizeAnswer(seed)]);
   for (const key of ANSWER_KEY_INDEX.get(normalizeAnswerKey(category)) || []) {
-    for (const entry of drop) answers[key].delete(entry);
+    const set = answers[key];
+    if (!set) continue;
+    for (const entry of [...set]) {
+      const n = normalizeAnswer(entry);
+      const hit = normSeeds.find(([, ns]) => ns === n);
+      if (hit) {
+        set.delete(entry);
+        REMOVED_LOG.push({ category: key, answer: entry, seed: hit[0] });
+      }
+    }
   }
 }
+
+// Exposed as non-enumerable so `answers` still maps category -> Set for every consumer that
+// iterates it (Object.entries/keys in categoryBlitzLogic.js and the tooling scripts).
+Object.defineProperty(answers, '__removed', { value: REMOVED_LOG, enumerable: false });
+Object.defineProperty(answers, '__normalizeAnswer', { value: normalizeAnswer, enumerable: false });
+Object.defineProperty(answers, '__removalSeeds', { value: REMOVALS, enumerable: false });
 
 module.exports = answers;

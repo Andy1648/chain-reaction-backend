@@ -208,3 +208,97 @@ test('removing the wrong answers did not empty or gut those categories', () => {
   assert.ok(CATEGORY_ANSWERS['US First Ladies'].has('michelle obama'), 'first ladies kept michelle obama');
   assert.ok(CATEGORY_ANSWERS['Ancient Empires'].has('rome'), 'ancient empires kept rome');
 });
+
+/* -------------------- 4b. near-variants of the wrong accepts -------------------- */
+// Removing "ottoman" while "ottomans", "ottoman empire" and "ottaman empire" stayed accepted
+// left the wrong answer one plural away. The removal step now matches NORMALISED (case,
+// punctuation, spacing, plurals) and deletes every variant, whichever source file contributed it.
+// These tests assert the whole merge → gen9 → FOLDS → REMOVALS chain ends with none surviving.
+
+// Every concrete answer the step deleted, as { category, answer, seed }.
+const REMOVED = CATEGORY_ANSWERS.__removed;
+const normalizeAnswer = CATEGORY_ANSWERS.__normalizeAnswer;
+const REMOVAL_SEEDS = CATEGORY_ANSWERS.__removalSeeds;
+
+// Variants that MUST be gone even though the audit only named the base answer.
+const KNOWN_VARIANTS = [
+  ['Ancient Empires', 'ottomans'],
+  ['Ancient Empires', 'ottoman empire'],
+  ['Ancient Empires', 'ottaman empire'],
+];
+
+const keysFor = (category) =>
+  Object.keys(CATEGORY_ANSWERS).filter(
+    (k) => blitz.normalizeCategoryKey(k) === blitz.normalizeCategoryKey(category)
+  );
+
+test('the removal step reports what it deleted, and it deleted more than the four seeds', () => {
+  assert.ok(Array.isArray(REMOVED), 'the step exposes a removal log');
+  assert.ok(REMOVED.length >= WRONG_ACCEPTS.length, `removed ${REMOVED.length} answers`);
+  // The log is exposed non-enumerably so `answers` still maps category -> Set for every consumer
+  // that iterates it (categoryBlitzLogic.js builds its index with Object.entries).
+  assert.ok(!Object.keys(CATEGORY_ANSWERS).includes('__removed'), 'the log is not an enumerable category');
+  for (const row of REMOVED) {
+    assert.equal(typeof row.answer, 'string');
+    assert.equal(typeof row.seed, 'string');
+  }
+});
+
+test('no removed answer survives the merge/fold chain — exact form', () => {
+  for (const { category, answer } of REMOVED) {
+    for (const key of keysFor(category)) {
+      assert.ok(!CATEGORY_ANSWERS[key].has(answer), `"${key}" still accepts the removed "${answer}"`);
+    }
+  }
+});
+
+test('no NORMALISED variant of a removed answer survives — plural, spacing, punctuation, case', () => {
+  for (const [category, seeds] of Object.entries(REMOVAL_SEEDS)) {
+    const banned = new Set(seeds.map(normalizeAnswer));
+    for (const key of keysFor(category)) {
+      for (const entry of CATEGORY_ANSWERS[key]) {
+        assert.ok(
+          !banned.has(normalizeAnswer(entry)),
+          `"${key}" still accepts "${entry}", which normalises onto a removed answer`
+        );
+      }
+    }
+  }
+});
+
+test('the specific named variants are gone (the plural/misspelling that made this a bug)', () => {
+  for (const [category, variant] of KNOWN_VARIANTS) {
+    for (const key of keysFor(category)) {
+      assert.ok(!CATEGORY_ANSWERS[key].has(variant), `"${key}" no longer accepts "${variant}"`);
+    }
+    // It really was in the data — otherwise this test would pass vacuously forever.
+    assert.ok(
+      REMOVED.some((r) => r.answer === variant),
+      `"${variant}" appears in the removal log (it was present before the step ran)`
+    );
+  }
+});
+
+test('the normaliser folds only case/punctuation/spacing/plurals, never distinct answers', () => {
+  assert.equal(normalizeAnswer('Ottomans'), normalizeAnswer('ottoman'));
+  assert.equal(normalizeAnswer('  OTTOMAN   EMPIRE '), normalizeAnswer('ottoman empire'));
+  assert.equal(normalizeAnswer("Wendy's"), normalizeAnswer('wendys'));
+  assert.equal(normalizeAnswer('french-fries'), normalizeAnswer('french fries'));
+  // Distinct answers must NOT collapse — the sweep would otherwise eat legitimate entries.
+  assert.notEqual(normalizeAnswer('ottoman empire'), normalizeAnswer('ottaman empire'));
+  assert.notEqual(normalizeAnswer('ottoman'), normalizeAnswer('ottoman empire'));
+  assert.notEqual(normalizeAnswer('thin crust'), normalizeAnswer('stuffed crust'));
+  assert.notEqual(normalizeAnswer('anna harrison'), normalizeAnswer('mary harrison'));
+});
+
+test('the variant sweep did not eat legitimate neighbours', () => {
+  // Ancient empires that ARE ancient must survive the ottoman sweep.
+  for (const keep of ['roman empire', 'persian empire', 'byzantine empire', 'mongol empire', 'aztec empire']) {
+    assert.ok(CATEGORY_ANSWERS['Ancient Empires'].has(keep), `ancient empires kept "${keep}"`);
+  }
+  // Real First Ladies who share a first or last name with the removed one.
+  for (const keep of ['anna harrison', 'caroline harrison', 'mary todd lincoln']) {
+    assert.ok(CATEGORY_ANSWERS['US First Ladies'].has(keep), `first ladies kept "${keep}"`);
+  }
+  assert.ok(CATEGORY_ANSWERS['Pizza toppings'].size > 150, 'pizza toppings kept its list');
+});
