@@ -172,6 +172,12 @@ const FOLDS = {
   'Mortal Kombat fighters': 'Mortal Kombat characters',
   'Fighting games': 'Fighting game franchises',
   // food/nature near-dupes
+  // fix/blitz-data: exact-duplicate categories found by the 446-category audit. The two
+  // case-variants ('Disney Villains', 'Minecraft Mobs') were already folded above; these two
+  // are differently-worded duplicates whose accept-lists merge into the keeper. The loser NAMES
+  // are removed from categoryPacks.js so they leave the draw pool.
+  'Types of donuts': 'Donut types',
+  'World deserts': 'Major world deserts',
   'Popular spices and herbs': 'Herbs and spices',
   'Spices and herbs': 'Herbs and spices',
   'Mushrooms and fungi': 'Types of mushrooms and fungi',
@@ -210,6 +216,30 @@ for (const [from, to] of Object.entries(FOLDS)) {
     answers[to] = answers[from];
   }
   delete answers[from];
+}
+
+// fix/blitz-data REMOVALS: answers the category audit flagged as simply WRONG (they are not
+// members of the category). Applied AFTER every merge/fold above, because the on-disk
+// categoryAnswers/* files are append-only and the same entry can be contributed by more than
+// one of them — deleting it here is the only removal that can't be undone by another source
+// file. Category keys are matched case/whitespace-insensitively for the same reason
+// categoryBlitzLogic.js normalises its lookup.
+const REMOVALS = {
+  'Ancient Empires': ['ottoman'], // the Ottoman Empire is early-modern, not ancient
+  'Pizza toppings': ['stuffed crust'], // a crust style, not a topping
+  'Fast food chains': ['village inn'], // a sit-down diner chain, not fast food
+  'US First Ladies': ['mary harrison'], // never First Lady (Benjamin Harrison's 2nd wife, married after his term)
+};
+const normalizeAnswerKey = (s) => String(s || '').trim().toLowerCase().replace(/\s+/g, ' ');
+const ANSWER_KEY_INDEX = new Map();
+for (const key of Object.keys(answers)) {
+  const nk = normalizeAnswerKey(key);
+  ANSWER_KEY_INDEX.set(nk, [...(ANSWER_KEY_INDEX.get(nk) || []), key]);
+}
+for (const [category, drop] of Object.entries(REMOVALS)) {
+  for (const key of ANSWER_KEY_INDEX.get(normalizeAnswerKey(category)) || []) {
+    for (const entry of drop) answers[key].delete(entry);
+  }
 }
 
 module.exports = answers;
