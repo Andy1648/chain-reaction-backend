@@ -41,7 +41,7 @@ const MOVED_TO_NICHE = [
 
 // Answers that are not members of their category.
 const WRONG_ACCEPTS = [
-  ['Ancient Empires', 'ottoman'],
+  ['Empires and dynasties', 'ottoman'],
   ['Pizza toppings', 'stuffed crust'],
   ['Fast food chains', 'village inn'],
   ['US First Ladies', 'mary harrison'],
@@ -206,7 +206,7 @@ test('removing the wrong answers did not empty or gut those categories', () => {
   assert.ok(CATEGORY_ANSWERS['Pizza toppings'].has('pepperoni'), 'pizza toppings kept pepperoni');
   assert.ok(CATEGORY_ANSWERS['Fast food chains'].has('mcdonalds'), 'fast food chains kept mcdonalds');
   assert.ok(CATEGORY_ANSWERS['US First Ladies'].has('michelle obama'), 'first ladies kept michelle obama');
-  assert.ok(CATEGORY_ANSWERS['Ancient Empires'].has('rome'), 'ancient empires kept rome');
+  assert.ok(CATEGORY_ANSWERS['Empires and dynasties'].has('rome'), 'empires kept rome');
 });
 
 /* -------------------- 4b. near-variants of the wrong accepts -------------------- */
@@ -222,9 +222,9 @@ const REMOVAL_SEEDS = CATEGORY_ANSWERS.__removalSeeds;
 
 // Variants that MUST be gone even though the audit only named the base answer.
 const KNOWN_VARIANTS = [
-  ['Ancient Empires', 'ottomans'],
-  ['Ancient Empires', 'ottoman empire'],
-  ['Ancient Empires', 'ottaman empire'],
+  ['Empires and dynasties', 'ottomans'],
+  ['Empires and dynasties', 'ottoman empire'],
+  ['Empires and dynasties', 'ottaman empire'],
 ];
 
 const keysFor = (category) =>
@@ -294,11 +294,67 @@ test('the normaliser folds only case/punctuation/spacing/plurals, never distinct
 test('the variant sweep did not eat legitimate neighbours', () => {
   // Ancient empires that ARE ancient must survive the ottoman sweep.
   for (const keep of ['roman empire', 'persian empire', 'byzantine empire', 'mongol empire', 'aztec empire']) {
-    assert.ok(CATEGORY_ANSWERS['Ancient Empires'].has(keep), `ancient empires kept "${keep}"`);
+    assert.ok(CATEGORY_ANSWERS['Empires and dynasties'].has(keep), `empires kept "${keep}"`);
   }
   // Real First Ladies who share a first or last name with the removed one.
   for (const keep of ['anna harrison', 'caroline harrison', 'mary todd lincoln']) {
     assert.ok(CATEGORY_ANSWERS['US First Ladies'].has(keep), `first ladies kept "${keep}"`);
   }
   assert.ok(CATEGORY_ANSWERS['Pizza toppings'].size > 150, 'pizza toppings kept its list');
+});
+
+/* ------------------------- 5. the Empires rename ------------------------- */
+// 'Ancient Empires' asked players to know where "ancient" stops, and its own list never agreed:
+// the Ottoman/British/Holy Roman entries were cut as post-500, but Tang, Khmer, Mali, Songhai,
+// Ming, Mongol, Aztec and Inca are post-500 too and are all fair answers. Renaming makes every
+// one of them correct. The rename is a FOLD, so no accept is lost.
+const OLD_NAME = 'Ancient Empires';
+const NEW_NAME = 'Empires and dynasties';
+
+test('the old category name is gone from every map', () => {
+  assert.ok(!blitz.CATEGORIES.includes(OLD_NAME), 'not an active category');
+  assert.ok(!(OLD_NAME in CATEGORY_PACKS), 'not in the pack map (which feeds RAW_CATEGORIES)');
+  assert.ok(!CATEGORY_ANSWERS[OLD_NAME], 'no orphaned accept-list left under the old key');
+  assert.notEqual(blitz.tierForCategory(OLD_NAME), undefined);
+});
+
+test('the new name is live, tier 3, packed, and carries all 25 accepts', () => {
+  assert.ok(blitz.CATEGORIES.includes(NEW_NAME), 'active category');
+  assert.equal(blitz.CATEGORY_TIER[NEW_NAME], 3, 'tier unchanged at 3 (niche)');
+  assert.equal(blitz.tierForCategory(NEW_NAME), 3, 'tierForCategory agrees');
+  assert.ok(blitz.TIER_POOLS[3].includes(NEW_NAME), 'sits in the tier-3 pool');
+  assert.equal(CATEGORY_PACKS[NEW_NAME], 'history', 'kept the history pack');
+  const answers = CATEGORY_ANSWERS[NEW_NAME];
+  assert.ok(answers, 'has an accept-list');
+  assert.equal(answers.size, 25, `kept all 25 accepts (got ${answers.size})`);
+});
+
+test('the rename lost nothing — the post-500 entries are deliberately kept', () => {
+  const answers = CATEGORY_ANSWERS[NEW_NAME];
+  // Ancient by any definition.
+  for (const keep of ['rome', 'roman empire', 'persia', 'han dynasty', 'qin dynasty']) {
+    assert.ok(answers.has(keep), `kept "${keep}"`);
+  }
+  // Post-500, and correct under the new name — this is the point of the rename.
+  for (const keep of ['tang dynasty', 'khmer empire', 'mali empire', 'songhai empire', 'ming dynasty', 'mongol empire', 'aztec empire', 'inca empire']) {
+    assert.ok(answers.has(keep), `kept the post-500 "${keep}"`);
+  }
+});
+
+test('the rename introduced no duplicate normalised name', () => {
+  const seen = new Map();
+  for (const c of blitz.CATEGORIES) {
+    const k = blitz.normalizeCategoryKey(c);
+    seen.set(k, [...(seen.get(k) || []), c]);
+  }
+  assert.deepEqual([...seen.entries()].filter(([, v]) => v.length > 1), []);
+  assert.equal(blitz.CATEGORIES.length, 442, 'the pool size is unchanged by a rename');
+});
+
+test('the sweep-driven removals landed: candy bar / mixed breed', () => {
+  assert.ok(!CATEGORY_ANSWERS['Candy bars'].has('candy bar'), 'Candy bars no longer accepts "candy bar"');
+  assert.ok(!CATEGORY_ANSWERS['Dog breeds'].has('mixed breed'), 'Dog breeds no longer accepts "mixed breed"');
+  // and the categories are still usable
+  assert.ok(CATEGORY_ANSWERS['Candy bars'].has('snickers'), 'Candy bars kept snickers');
+  assert.ok(CATEGORY_ANSWERS['Dog breeds'].has('beagle'), 'Dog breeds kept beagle');
 });

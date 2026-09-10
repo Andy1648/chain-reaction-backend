@@ -410,7 +410,7 @@ const CATEGORY_PACKS = {
   "Egyptian pharaohs": "history",
   "World War II battles": "history",
   "US Founding Fathers": "history",
-  "Ancient Empires": "history",
+  "Empires and dynasties": "history",
   "Renaissance figures": "history",
   "Famous explorers": "history",
   "Historical Eras": "history",
