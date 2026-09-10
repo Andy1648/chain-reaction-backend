@@ -9,9 +9,6 @@
 // word that *contains* that combo, isn't too short, and hasn't been used
 // yet. A fresh combo is rolled after every accepted word.
 
-const fs = require('fs');
-const path = require('path');
-
 // The dictionary dependency is injected rather than hard-required so the
 // test suite can substitute dictionary.mock.js (no network needed) while
 // production code (server.js) continues to wire up the real dictionary.js
@@ -56,7 +53,7 @@ const MAX_WORD_LENGTH = 45;
 // difficulty turn to turn - the shorter ones are gimmes, the 3-letter ones
 // bite. Every entry below is a high-frequency sequence with plenty of common
 // words containing it; nothing here should ever be a dead end.
-const COMBOS = [
+const ALL_COMBOS = [
   // ---- 2-letter (the easier rolls) ----
   'an', 'er', 'in', 'th', 'ou', 'en', 're', 'on', 'at', 'es',
   'or', 'ti', 'al', 'ar', 'te', 'ne', 'de',
@@ -140,6 +137,27 @@ const COMBOS = [
   'ami', 'mal', 'qua', 'sid', 'abi', 'emp',
 ];
 
+// SHIPPED POOL. ALL_COMBOS above is the curated source list; a combo only reaches a player if the
+// committed support table says at least COMBO_MIN_POOL_SUPPORT of the 3,000 commonest words
+// contain it. 39 of the 653 failed that bar — "kle" appears in NONE of them, and "zz", "ung",
+// "ump", "uck", "squ", "oat", "unk" in exactly one each — so a turn on one of those was a dead end
+// dressed as a prompt. The filter is data-driven rather than a hand-edited list, so re-running
+// scripts/build-combo-support.js after a word-list change re-derives it.
+// Falls back to the full list when the table is missing (fresh checkout, pre-build).
+const COMBO_MIN_POOL_SUPPORT = 5;
+const COMBOS = (() => {
+  let table;
+  try {
+    table = require('./comboSupport.json').support || null;
+  } catch {
+    table = null;
+  }
+  if (!table) return ALL_COMBOS;
+  const kept = ALL_COMBOS.filter((c) => (table[c] || 0) >= COMBO_MIN_POOL_SUPPORT);
+  return kept.length ? kept : ALL_COMBOS;
+})();
+
+
 // ---- Escalating combo difficulty ----
 // Difficulty is proxied by combo LENGTH: a 2-letter combo matches far more words
 // than a 3- or 4-letter one. Selection is weighted by length, and the weighting
@@ -159,10 +177,31 @@ const COMBOS = [
 // So the first few turns are clearly-but-not-brutally easy (a length-4 combo is
 // ~e^2 ~7x rarer than a length-2 one), it's roughly even around the mid-game, and
 // late game leans hard. Tune the four constants to taste.
-const COMBO_DIFFICULTY_PIVOT_LEN = 3; // length kept weight-neutral (exp(0) = 1)
-const COMBO_PRESSURE_BASE = -1.0; // pressure at turn 0 (favours short)
+// THE RAMP IS UNCHANGED — same three constants, same shape, still neutral at turn 16 — but what
+// it steers is no longer LENGTH. See the SUPPORT PIVOT block below.
+const COMBO_PRESSURE_BASE = -1.0; // pressure at turn 0 (favours well-supported combos)
 const COMBO_PRESSURE_PER_TURN = 0.0625; // +1.0 over 16 turns -> neutral at ~turn 16
-const COMBO_PRESSURE_MAX = 1.0; // clamp (reached ~turn 32; favours long)
+const COMBO_PRESSURE_MAX = 1.0; // clamp (reached ~turn 32; favours thin combos)
+
+// ---- SUPPORT PIVOT (fix/wb-combo-support) ------------------------------------------------
+// Length was never a difficulty signal. Measured against the 3,000 commonest English words,
+// "kle" (3 letters) sits in ZERO of them while "ion" (3 letters) sits in dozens — the old model
+// weighted the two identically, so at turn 32 it served a combo with under 10 common words 49.4%
+// of the time. SUPPORT = how many of those 3,000 words contain the combo (comboSupport.json,
+// built by scripts/build-combo-support.js). It is the same test a player must satisfy, against
+// the vocabulary a player actually has.
+//
+// The pressure ramp now slides a TARGET support: early turns aim high (plenty of answers), late
+// turns aim thin. Weight falls off with distance from the target in LOG space, because support is
+// log-distributed (median 16, max 353) — a linear distance would make everything above ~60 look
+// equally far away.
+const COMBO_TARGET_SUPPORT_EARLY = 55; // pressure -1 (turn 0): comfortably above the "40+" goal
+const COMBO_TARGET_SUPPORT_LATE = 15; // pressure +1 (turn 32+): inside the 10-25 goal
+const COMBO_SUPPORT_SHARPNESS = 2.0; // how tightly selection concentrates on the target
+// HARD FLOOR: a combo with fewer than this many common words is never served, at any turn. The
+// drop threshold below (5) removes the true dead ends from the pool; this is the stricter bar for
+// what may actually be handed to a player.
+const COMBO_MIN_SERVE_SUPPORT = 8;
 
 /**
  * The length-weighting "pressure" for a given number of completed turns. Pure and
@@ -178,70 +217,39 @@ function comboDifficultyPressure(completedTurnCount) {
   );
 }
 
-// ---- Pool-size-aware combo difficulty ----
-// Length alone is a coarse difficulty proxy: a length-3 combo with a tiny word
-// pool (e.g. 'nti') is far harder to answer than a length-3 with a deep pool
-// (e.g. 'tio'), yet length-only weighting treats them identically. So we fold
-// each combo's POOL SIZE into an "effective length": rarer pool -> higher
-// effective length -> weighted like a longer (harder) combo. Pool size is the
-// number of words in botWords.txt (the ~18k common-word corpus comboExpand.js
-// already used to vet the combo list) that CONTAIN the combo - the same "word
-// contains the combo" test players must satisfy. Computed ONCE, lazily, cached.
-// If the corpus can't be read we fall back to plain length (no behaviour change).
-const COMBO_RARITY_SCALE = 1.0; // ln(baseline/pool) -> bonus, before clamping
-const COMBO_RARITY_BONUS_MAX = 2.0; // a tiny pool adds at most ~2 effective lengths
-// Baseline percentile: pools at/above this are "common" (bonus 0); smaller pools
-// earn a growing bonus. Set high (not the median) because many curated combos are
-// deliberately small-pool, which drags the median down to where a genuinely hard
-// combo like 'nti' already sits - so the median can't separate it from easy ones.
-const COMBO_RARITY_BASELINE_PCT = 0.75;
-
-// null = not yet computed; 'unavailable' = corpus unreadable (length-only fallback);
-// otherwise a Map<combo, effectiveLength>.
-let _effLenCache = null;
-
-function _computeEffLenCache() {
+// ---- Support table -----------------------------------------------------------------------
+// Loaded ONCE from the committed comboSupport.json. Never computed at runtime: the weighting must
+// not depend on reading a word list per request, and the shipped pool has to be reproducible.
+// If the table is missing (a fresh checkout before the build script has run) we fall back to
+// serving every combo with a neutral weight rather than crashing.
+let _supportTable = null;
+function supportTable() {
+  if (_supportTable !== null) return _supportTable;
   try {
-    const words = fs
-      .readFileSync(path.join(__dirname, 'botWords.txt'), 'utf8')
-      .split(/\r?\n/);
-    const poolByCombo = new Map(COMBOS.map((c) => [c, 0]));
-    for (let w of words) {
-      w = w.trim().toLowerCase();
-      if (!w) continue;
-      for (const c of COMBOS) {
-        if (w.includes(c)) poolByCombo.set(c, poolByCombo.get(c) + 1);
-      }
-    }
-    const sizes = COMBOS.map((c) => poolByCombo.get(c)).sort((a, b) => a - b);
-    const baseline =
-      sizes[Math.min(sizes.length - 1, Math.floor(COMBO_RARITY_BASELINE_PCT * sizes.length))] || 1;
-    const cache = new Map();
-    for (const c of COMBOS) {
-      const pool = Math.max(1, poolByCombo.get(c));
-      // log-scaled, never negative (common combos keep plain length), clamped.
-      const bonus = Math.max(
-        0,
-        Math.min(COMBO_RARITY_BONUS_MAX, COMBO_RARITY_SCALE * Math.log(baseline / pool))
-      );
-      cache.set(c, c.length + bonus);
-    }
-    return cache;
+    _supportTable = require('./comboSupport.json').support || {};
   } catch (err) {
-    console.warn(
-      `Combo pool-size weighting unavailable (${err.message}); using length-only weighting.`
-    );
-    return 'unavailable';
+    console.warn(`Combo support table unavailable (${err.message}); serving combos unweighted.`);
+    _supportTable = {};
   }
+  return _supportTable;
 }
 
-// The rarity-adjusted effective length for a combo (>= its real length). Falls
-// back to the plain length if the corpus was unreadable or the combo is unknown.
-function comboEffectiveLength(combo) {
-  if (_effLenCache === null) _effLenCache = _computeEffLenCache();
-  if (_effLenCache === 'unavailable') return combo.length;
-  const v = _effLenCache.get(combo);
-  return v === undefined ? combo.length : v;
+/** How many of the top-3000 common words contain this combo (0 if unknown). */
+function comboSupport(combo) {
+  const v = supportTable()[combo];
+  return typeof v === 'number' ? v : 0;
+}
+
+/**
+ * The target support at a given pressure: COMBO_TARGET_SUPPORT_EARLY at pressure -1, sliding
+ * geometrically to COMBO_TARGET_SUPPORT_LATE at +1. Geometric (not linear) so the target moves
+ * evenly across a log-distributed range.
+ */
+function comboTargetSupport(pressure) {
+  const t = Math.min(1, Math.max(0, (pressure + 1) / 2)); // pressure -1..+1 -> 0..1
+  const lo = Math.log(COMBO_TARGET_SUPPORT_EARLY);
+  const hi = Math.log(COMBO_TARGET_SUPPORT_LATE);
+  return Math.exp(lo + (hi - lo) * t);
 }
 
 /**
@@ -256,16 +264,21 @@ function comboEffectiveLength(combo) {
 function pickRandomCombo(excludeCombo, completedTurnCount = 0) {
   const pool = excludeCombo ? COMBOS.filter((c) => c !== excludeCombo) : COMBOS;
   const pressure = comboDifficultyPressure(completedTurnCount);
+  const target = Math.log(comboTargetSupport(pressure));
 
-  // Weight each combo by exp(pressure * (effectiveLength - pivot)) - always
-  // positive. effectiveLength = real length + a pool-size rarity bonus, so a
-  // small-pool combo is weighted like a longer/harder one (see above).
+  // Weight each combo by how close its SUPPORT sits to the turn's target, in log space. A combo
+  // under the serve floor gets weight 0 — it is in the pool but must never reach a player.
   let total = 0;
   const weights = pool.map((c) => {
-    const w = Math.exp(pressure * (comboEffectiveLength(c) - COMBO_DIFFICULTY_PIVOT_LEN));
+    const sup = comboSupport(c);
+    if (sup < COMBO_MIN_SERVE_SUPPORT) return 0;
+    const w = Math.exp(-COMBO_SUPPORT_SHARPNESS * Math.abs(Math.log(sup) - target));
     total += w;
     return w;
   });
+  // Degenerate safety net: if nothing cleared the floor (an empty/missing table), fall back to a
+  // uniform draw so a game can never stall on a combo it cannot pick.
+  if (total <= 0) return pool[Math.floor(Math.random() * pool.length)];
 
   let r = Math.random() * total;
   for (let i = 0; i < pool.length; i += 1) {
@@ -501,6 +514,11 @@ module.exports = {
   DIFFICULTY_PRESETS,
   MIN_PLAYERS_TO_START,
   COMBOS,
+  ALL_COMBOS, // the unfiltered source list — used by scripts/build-combo-support.js
+  comboSupport,
+  comboTargetSupport,
+  COMBO_MIN_SERVE_SUPPORT,
+  COMBO_MIN_POOL_SUPPORT,
   createGame,
   getCurrentPlayerId,
   getActivePlayers,
