@@ -630,12 +630,13 @@ function clearBotMove(room) {
 }
 
 /**
- * If it's a bot's turn, schedule its move. The bot waits a difficulty-scaled
- * fraction of the turn timer, then submits a real valid word through the SAME
- * handleWordSubmission path a human uses. A difficulty-scaled "miss" chance (or
- * the rare case of no available word) makes it do nothing instead, letting the
- * normal turn timeout fire and cost it a life. Any previously scheduled bot move
- * is cleared first. Word Bomb only; a no-op when the current player is human.
+ * If it's a bot's turn, schedule its move. The bot waits a humanized reaction time, then submits a
+ * real valid word through the SAME handleWordSubmission path a human uses. A "miss" chance (or the
+ * rare case of no available word) makes it do nothing instead, letting the normal turn timeout fire
+ * and cost it a life. BOTH the miss chance and the reaction window scale with the bot's difficulty
+ * AND with the live combo's player-facing support, so a thin combo makes it think longer and choke
+ * more often. Any previously scheduled bot move is cleared first. Word Bomb only; a no-op when the
+ * current player is human.
  */
 function maybeScheduleBotMove(room) {
   const { game } = room;
@@ -651,10 +652,24 @@ function maybeScheduleBotMove(room) {
   // of the room's timer difficulty. Fall back to medium if somehow unset.
   const botDifficulty = rosterEntry.botDifficulty || 'medium';
 
-  // Choke this turn: do nothing, the running turn timer will time it out.
-  if (wordBombBot.rollMiss(botDifficulty)) return;
+  // THE BOT FEELS THE COMBO TOO. Its miss chance and reaction window scale with the live combo's
+  // PLAYER-FACING support (how many of the top-3000 common words contain it) — the same number
+  // gameLogic weights combo selection by. Without this the bot was equally sharp on the game's
+  // hardest rolls, because it draws from a 14,477-word list where the median combo has 84 answers
+  // while the player's median is 15. A missing/unknown combo yields support 0 from the table, so
+  // pass `undefined` rather than 0 in that case: 0 would read as "impossibly thin" and max out
+  // both scalers, when what it actually means is "we don't know".
+  const rawSupport = wordBombLogic.comboSupport(game.currentCombo);
+  const comboSupportValue = rawSupport > 0 ? rawSupport : undefined;
 
-  const delayMs = wordBombBot.computeDelayMs(botDifficulty, game.currentTimerSeconds);
+  // Choke this turn: do nothing, the running turn timer will time it out.
+  if (wordBombBot.rollMiss(botDifficulty, comboSupportValue)) return;
+
+  const delayMs = wordBombBot.computeDelayMs(
+    botDifficulty,
+    game.currentTimerSeconds,
+    comboSupportValue
+  );
   room.botMoveTimeout = setTimeout(async () => {
     // Whole body in try/catch (not just the await) - timer context, so a throw
     // anywhere in here must never reach uncaughtException. A failed bot move is
