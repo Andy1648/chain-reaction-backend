@@ -712,14 +712,20 @@ const TIER1_DEMOTED_BY_LENGTH = CATEGORIES.filter(
  * score. Paying by length restores parity: points per answer scale with how much typing an answer
  * costs, meanLen / MEAN_LEN_ALL.
  *
- * CLAMPED to [0.75, 1.5]. The clamp is a deliberate cap on the correction, not an oversight: an
- * uncapped ratio would fully equalise every category but would also pay 2.2x for a single answer
- * in the longest category, which reads as broken. Inside the clamp band (meanLen roughly 7.1 to
- * 14.2 chars at today's baseline) the normalisation is exact; outside it a residue remains by
- * design. See categoryBlitzLength.test.js, which measures that residue rather than assuming it.
+ * CLAMPED to [0.5, 2.0]. The clamp caps how far the correction can go, so a single answer in the
+ * longest category can pay at most double and one in the shortest at least half. It was [0.75,
+ * 1.5] first, which left a 1.88x score gap between the 10 shortest and 10 longest categories —
+ * the clamp, not the formula, was the binding constraint, because the extremes want multipliers
+ * of ~0.34 and ~2.23. Widening to [0.5, 2.0] brings that gap to 1.14x.
+ *
+ * Inside the clamp band (meanLen roughly 4.7 to 18.9 chars at today's 9.46 baseline) the
+ * normalisation is EXACT — a scripted round scores identically whatever the answer length. Only
+ * the handful of categories past the bounds keep a residue, and that residue is deliberate.
+ * categoryBlitzLength.test.js measures all of it rather than assuming it, and also pins the
+ * uncapped case at 1.000x so a future clamp change cannot drift unnoticed.
  */
-const LENGTH_MULT_MIN = 0.75;
-const LENGTH_MULT_MAX = 1.5;
+const LENGTH_MULT_MIN = 0.5;
+const LENGTH_MULT_MAX = 2.0;
 function lengthMultiplier(category) {
   const mean = CATEGORY_MEAN_LEN[category];
   if (!mean || !MEAN_LEN_ALL) return 1;

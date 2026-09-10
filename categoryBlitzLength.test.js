@@ -96,7 +96,8 @@ test('inside the clamp band the multiplier is the exact ratio', () => {
     const raw = meanLen(c) / blitz.MEAN_LEN_ALL;
     return raw > blitz.LENGTH_MULT_MIN && raw < blitz.LENGTH_MULT_MAX;
   });
-  assert.ok(inBand.length > 100, `most categories sit inside the band (${inBand.length})`);
+  // At [0.5, 2.0] the band covers meanLen ~4.7..18.9 chars, i.e. all but a handful of extremes.
+  assert.ok(inBand.length > 400, `nearly every category sits inside the band (${inBand.length})`);
   for (const c of inBand) {
     assert.equal(blitz.lengthMultiplier(c), meanLen(c) / blitz.MEAN_LEN_ALL, `"${c}" is the raw ratio`);
   }
@@ -107,7 +108,7 @@ test('inside the clamp band the multiplier is the exact ratio', () => {
   assert.ok(spread < 1.0001, `inside the band the spread is 1.00x (got ${spread.toFixed(4)}x)`);
 });
 
-test('a scripted 30s round at 2.9 chars/sec: the short/long gap is at least halved', () => {
+test('a scripted 30s round at 2.9 chars/sec scores within 1.20x, shortest 10 vs longest 10', () => {
   const sorted = byLen();
   const shortest10 = sorted.slice(0, 10);
   const longest10 = sorted.slice(-10);
@@ -119,22 +120,24 @@ test('a scripted 30s round at 2.9 chars/sec: the short/long gap is at least halv
   const beforeRatio = beforeShort / beforeLong;
   const afterRatio = afterShort / afterLong;
 
-
   console.log(
     `[length-spread] BEFORE short ${beforeShort.toFixed(1)} vs long ${beforeLong.toFixed(1)} = ${beforeRatio.toFixed(2)}x` +
-      `  |  AFTER short ${afterShort.toFixed(1)} vs long ${afterLong.toFixed(1)} = ${afterRatio.toFixed(2)}x`
+      `  |  AFTER short ${afterShort.toFixed(1)} vs long ${afterLong.toFixed(1)} = ${afterRatio.toFixed(2)}x` +
+      `  (clamp [${blitz.LENGTH_MULT_MIN}, ${blitz.LENGTH_MULT_MAX}])`
   );
 
   assert.ok(beforeRatio > 3, `flat scoring really is badly skewed (${beforeRatio.toFixed(2)}x)`);
-  assert.ok(afterRatio < beforeRatio / 1.9, `the normaliser at least halves the gap (${afterRatio.toFixed(2)}x)`);
-  // HONEST BOUND. The stated goal was +-20% across these two groups. A [0.75, 1.5] clamp cannot
-  // reach it: the extremes need multipliers of ~0.34 and ~2.23, so the clamp — not the formula —
-  // is the binding constraint. Widening to [0.5, 2.0] measures 1.14x, i.e. inside +-20%. This
-  // asserts what the shipped clamp actually delivers so the number can't rot unnoticed.
-  assert.ok(afterRatio < 2.0, `shipped clamp lands under 2x (${afterRatio.toFixed(2)}x)`);
+  // THE SHIPPED NUMBER. Measures 1.14x at the [0.5, 2.0] clamp. This is the assertion that fails
+  // if someone narrows the clamp again: at [0.75, 1.5] it was 1.88x.
+  assert.ok(
+    afterRatio <= 1.2,
+    `the shipped clamp scores within 1.20x across the two groups (got ${afterRatio.toFixed(3)}x)`
+  );
+  // Symmetry: neither group may be the favoured one.
+  assert.ok(afterRatio >= 1 / 1.2, `and not overshoot the other way (${afterRatio.toFixed(3)}x)`);
 });
 
-test('a wider clamp would reach the +-20% target — the formula is right, the cap is the limit', () => {
+test('uncapped the normaliser is exact at 1.000x — the clamp is the only source of residue', () => {
   const sorted = byLen();
   const shortest10 = sorted.slice(0, 10);
   const longest10 = sorted.slice(-10);
@@ -144,11 +147,20 @@ test('a wider clamp would reach the +-20% target — the formula is right, the c
   };
   const ratioAt = (lo, hi) =>
     avg(shortest10.map((c) => withClamp(c, lo, hi))) / avg(longest10.map((c) => withClamp(c, lo, hi)));
-  const wide = ratioAt(0.5, 2.0);
 
-  console.log(`[length-spread] hypothetical clamp [0.5, 2.0] -> ${wide.toFixed(2)}x (uncapped -> ${ratioAt(0, 99).toFixed(3)}x)`);
-  assert.ok(wide < 1.2, `[0.5, 2.0] lands inside +-20% (${wide.toFixed(2)}x)`);
-  assert.ok(Math.abs(ratioAt(0, 99) - 1) < 0.001, 'uncapped, the normaliser is exact');
+  const uncapped = ratioAt(0, 99);
+  const shipped = ratioAt(blitz.LENGTH_MULT_MIN, blitz.LENGTH_MULT_MAX);
+  const narrow = ratioAt(0.75, 1.5);
+  console.log(
+    `[length-spread] uncapped ${uncapped.toFixed(3)}x · shipped [${blitz.LENGTH_MULT_MIN}, ${blitz.LENGTH_MULT_MAX}] ` +
+      `${shipped.toFixed(3)}x · previous [0.75, 1.5] ${narrow.toFixed(3)}x`
+  );
+
+  // The formula itself is exact; every bit of remaining spread comes from the clamp. Keeping this
+  // beside the shipped assertion is what makes a future clamp change legible instead of silent.
+  assert.ok(Math.abs(uncapped - 1) < 0.001, `uncapped is 1.000x (got ${uncapped.toFixed(4)}x)`);
+  assert.equal(shipped.toFixed(3), ratioAt(0.5, 2.0).toFixed(3), 'the shipped clamp is [0.5, 2.0]');
+  assert.ok(narrow > 1.5, `the old clamp really was the binding constraint (${narrow.toFixed(2)}x)`);
 });
 
 /* ------------------------- scoring through the game ------------------------- */
