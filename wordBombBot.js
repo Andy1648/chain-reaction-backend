@@ -123,6 +123,55 @@ const BOT_DIFFICULTY = {
   hard:   { delaySec: [1.0, 2.5], miss: 0.01 },
 };
 
+/* ---------------------- COMBO SUPPORT SCALING (fix/wb-combo-support) ---------------------- */
+// THE BOT DOES NOT PLAY THE SAME GAME THE PLAYER DOES. It draws from botWords.txt (14,477 words):
+// median support 84, and zero combos it cannot answer. A casual player draws from roughly the
+// 3,000 commonest words — median support 15. On 185 combos the bot holds 5+ answers while the
+// player has fewer than 10. Its miss chance and reaction time were flat constants, so it was
+// exactly as sharp on the game's cruellest roll as on its kindest one: the difficulty ramp was
+// something only the human felt.
+//
+// Both knobs now scale with the PLAYER-FACING support of the live combo — the same `support`
+// number gameLogic weights selection by (comboSupport.json, how many of the top-3000 common words
+// contain the combo). Thin combo -> the bot misses more often and visibly takes longer to think.
+//
+// Support is OPTIONAL everywhere: an absent/unknown support yields a factor of exactly 1.0, so
+// every pre-existing call site and test sees the old constants untouched.
+const MISS_SUPPORT_INTERCEPT = 2.2;
+const MISS_SUPPORT_DIVISOR = 25; // factor reaches its 1.0 floor at support 30
+const DELAY_SUPPORT_INTERCEPT = 1.8;
+const DELAY_SUPPORT_DIVISOR = 40; // factor reaches its 1.0 floor at support 32
+
+const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+
+/**
+ * Miss multiplier for a combo's player-facing support: clamp(2.2 - support/25, 1.0, 2.2).
+ * 1.0 for anything at support 30+, rising as the combo thins out. Unknown support -> 1.0.
+ */
+function missScaleFor(support) {
+  if (!Number.isFinite(support)) return 1;
+  return clamp(MISS_SUPPORT_INTERCEPT - support / MISS_SUPPORT_DIVISOR, 1, MISS_SUPPORT_INTERCEPT);
+}
+
+/**
+ * Reaction-window multiplier: clamp(1.8 - support/40, 1.0, 1.8). Stretches BOTH ends of the
+ * difficulty's [lo, hi] second window, so the whole distribution slides later rather than merely
+ * widening — a thin combo makes the bot visibly think, not just occasionally stall.
+ */
+function delayScaleFor(support) {
+  if (!Number.isFinite(support)) return 1;
+  return clamp(DELAY_SUPPORT_INTERCEPT - support / DELAY_SUPPORT_DIVISOR, 1, DELAY_SUPPORT_INTERCEPT);
+}
+
+/**
+ * The bot's miss probability on this combo. Base rate from the difficulty, scaled by support.
+ * Medium: 5.0% at support 30+, 8.0% at 15, 9.4% at the serve floor of 8. Hard stays under 3%
+ * at every support in range — it is meant to be brutal, and only the tail of its 1% base moves.
+ */
+function missFor(difficultyKey, support) {
+  return tuningFor(difficultyKey).miss * missScaleFor(support);
+}
+
 // No difficulty ever reacts faster than this — a sub-second bot feels robotic
 // and denies the human any chance to type. Absolute floor applied after jitter.
 const MIN_REACTION_MS = 1000;
@@ -137,9 +186,12 @@ function tuningFor(difficultyKey) {
   return BOT_DIFFICULTY[difficultyKey] || BOT_DIFFICULTY.medium;
 }
 
-/** True if the bot should "choke" this turn (do nothing and time out). */
-function rollMiss(difficultyKey) {
-  return Math.random() < tuningFor(difficultyKey).miss;
+/**
+ * True if the bot should "choke" this turn (do nothing and time out). `support` is the live
+ * combo's player-facing support; omit it and the bot uses its flat base rate exactly as before.
+ */
+function rollMiss(difficultyKey, support) {
+  return Math.random() < missFor(difficultyKey, support);
 }
 
 // Approximate a standard normal via the sum-of-uniforms (Bates) method — cheap,
@@ -160,9 +212,19 @@ function gaussianJitter() {
  * `timerSeconds` is optional and now only acts as a ceiling: the reaction time
  * is independent of the turn length, but on very short rooms we still guarantee
  * the submission lands before the deadline.
+ *
+ * `support` is the live combo's player-facing support. It stretches the window (see
+ * delayScaleFor) — but the deadline clamp below is applied AFTER the stretch and is the last
+ * word, so no amount of stretching can push the bot past the turn timeout. Omit it and the
+ * window is the difficulty's own constants, unchanged.
  */
-function computeDelayMs(difficultyKey, timerSeconds) {
-  const [lo, hi] = tuningFor(difficultyKey).delaySec;
+function computeDelayMs(difficultyKey, timerSeconds, support) {
+  const [baseLo, baseHi] = tuningFor(difficultyKey).delaySec;
+  // Stretch the whole window by the support factor before sampling, so the sampled reaction is
+  // drawn from a later band on a thin combo rather than merely having a longer tail.
+  const stretch = delayScaleFor(support);
+  const lo = baseLo * stretch;
+  const hi = baseHi * stretch;
   const mid = (lo + hi) / 2;
   const halfSpan = (hi - lo) / 2;
   // Center on the midpoint, spread out by jitter across (roughly) the full band.
@@ -186,6 +248,9 @@ module.exports = {
   createBotPlayer,
   rollMiss,
   computeDelayMs,
+  missFor,
+  missScaleFor,
+  delayScaleFor,
   randomBotName,
   BOT_NAMES,
   BOT_DIFFICULTY,
