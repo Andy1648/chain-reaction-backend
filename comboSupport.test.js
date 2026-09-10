@@ -58,16 +58,17 @@ function servedDistribution(turn) {
 
 /* ----------------------------- the shipped pool ----------------------------- */
 
-test('no shipped combo has support < 5, and the drop is recorded', () => {
-  assert.equal(COMBO_MIN_POOL_SUPPORT, 5);
+test('no shipped combo has support < 8, and the drop is recorded', () => {
+  assert.equal(COMBO_MIN_POOL_SUPPORT, 8);
   for (const c of COMBOS) {
-    assert.ok(comboSupport(c) >= 5, `"${c}" has support ${comboSupport(c)}`);
+    assert.ok(comboSupport(c) >= 8, `"${c}" has support ${comboSupport(c)}`);
   }
   // The pool really is the source list minus the dead ends — not a hand-edited list that could
   // drift from the table.
   assert.equal(COMBOS.length, ALL_COMBOS.length - TABLE.dropped.length);
+  assert.equal(TABLE.minSupport, COMBO_MIN_POOL_SUPPORT, 'the committed table was built at this threshold');
   console.log(
-    `[combo] pool ${ALL_COMBOS.length} -> ${COMBOS.length} (dropped ${TABLE.dropped.length} with support < 5)`
+    `[combo] pool ${ALL_COMBOS.length} -> ${COMBOS.length} (dropped ${TABLE.dropped.length} with support < 8)`
   );
   const worst = TABLE.dropped.slice().sort((a, b) => a.support - b.support).slice(0, 8);
   console.log(`[combo] worst dropped: ${worst.map((d) => `${d.combo}=${d.support}`).join(' ')}`);
@@ -76,6 +77,15 @@ test('no shipped combo has support < 5, and the drop is recorded', () => {
     assert.ok(!COMBOS.includes(dead), `"${dead}" is no longer shipped`);
   }
   assert.equal(TABLE.dropped.find((d) => d.combo === 'kle').support, 0, 'kle appears in none of the 3000');
+});
+
+test('the pool threshold and the serve floor are the SAME number', () => {
+  // The floor is the authority; the pool threshold mirrors it. When they diverged (pool 5, floor 8)
+  // every combo at support 5/6/7 sat in the pool weighted at zero — unservable, but still walked on
+  // every draw and re-filtered on every excludeCombo reroll. Pinned so they can't drift apart again.
+  assert.equal(COMBO_MIN_POOL_SUPPORT, COMBO_MIN_SERVE_SUPPORT);
+  const strays = COMBOS.filter((c) => comboSupport(c) < COMBO_MIN_SERVE_SUPPORT);
+  assert.deepEqual(strays, [], 'no combo sits in the pool that the floor would refuse to serve');
 });
 
 test('every shipped combo is in the support table and the table has no strays', () => {
@@ -96,6 +106,49 @@ test('served support by turn — the report', () => {
         `${`${d.belowTenPct.toFixed(1)}%`.padStart(9)} | ${`${d.belowFloorPct.toFixed(1)}%`.padStart(8)}`
     );
   }
+});
+
+test('raising the pool threshold 5 -> 8 did not move the served distribution at all', () => {
+  // The pool drop is free by construction: a combo under the floor already carried weight 0, and
+  // removing zero-weight entries cannot change a normalised distribution. This RE-DERIVES the old
+  // pool (the kept combos plus every dropped one at support >= 5, which is what the 5 threshold
+  // shipped) and checks the two distributions agree exactly — not to 1dp, exactly.
+  const oldPool = [
+    ...COMBOS.map((c) => ({ combo: c, support: comboSupport(c) })),
+    ...TABLE.dropped.filter((d) => d.support >= 5),
+  ];
+  assert.equal(oldPool.length, 614, 'the pre-change pool was 614 combos');
+
+  const distOf = (pool, turn) => {
+    const target = Math.log(comboTargetSupport(comboDifficultyPressure(turn)));
+    const w = pool.map((x) =>
+      x.support < COMBO_MIN_SERVE_SUPPORT ? 0 : Math.exp(-2.0 * Math.abs(Math.log(x.support) - target))
+    );
+    const total = w.reduce((a, b) => a + b, 0);
+    const rows = pool.map((x, i) => ({ s: x.support, p: w[i] / total })).sort((a, b) => a.s - b.s);
+    let cum = 0;
+    let median = null;
+    let belowTen = 0;
+    let mean = 0;
+    for (const r of rows) {
+      cum += r.p;
+      if (median === null && cum >= 0.5) median = r.s;
+      if (r.s < 10) belowTen += r.p;
+      mean += r.s * r.p;
+    }
+    return { median, mean, belowTenPct: 100 * belowTen };
+  };
+
+  const now = COMBOS.map((c) => ({ combo: c, support: comboSupport(c) }));
+  for (let turn = 0; turn <= 60; turn += 1) {
+    const before = distOf(oldPool, turn);
+    const after = distOf(now, turn);
+    assert.equal(after.median, before.median, `turn ${turn} median moved`);
+    assert.equal(after.mean, before.mean, `turn ${turn} mean moved`);
+    assert.equal(after.belowTenPct, before.belowTenPct, `turn ${turn} under-10 share moved`);
+  }
+  const t32 = distOf(now, 32);
+  console.log(`[combo] turn 32 share <10, before vs after the pool drop: ${distOf(oldPool, 32).belowTenPct.toFixed(4)}% -> ${t32.belowTenPct.toFixed(4)}% (unchanged)`);
 });
 
 test('turn 0: median served support >= 35 and under-10 share < 2%', () => {

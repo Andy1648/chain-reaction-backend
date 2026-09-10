@@ -139,12 +139,21 @@ const ALL_COMBOS = [
 
 // SHIPPED POOL. ALL_COMBOS above is the curated source list; a combo only reaches a player if the
 // committed support table says at least COMBO_MIN_POOL_SUPPORT of the 3,000 commonest words
-// contain it. 39 of the 653 failed that bar — "kle" appears in NONE of them, and "zz", "ung",
+// contain it. 129 of the 653 fail that bar — "kle" appears in NONE of them, and "zz", "ung",
 // "ump", "uck", "squ", "oat", "unk" in exactly one each — so a turn on one of those was a dead end
 // dressed as a prompt. The filter is data-driven rather than a hand-edited list, so re-running
 // scripts/build-combo-support.js after a word-list change re-derives it.
 // Falls back to the full list when the table is missing (fresh checkout, pre-build).
-const COMBO_MIN_POOL_SUPPORT = 5;
+//
+// THE THRESHOLD MATCHES THE SERVE FLOOR (COMBO_MIN_SERVE_SUPPORT, below). It was 5, which kept
+// combos at support 5/6/7 in the pool even though the floor already refuses to serve anything
+// under 8 — they were carried, weighted at zero, and re-filtered on every excludeCombo reroll,
+// i.e. pure dead weight. Dropping at 8 makes the pool exactly the set that is servable. This is a
+// POOL change only: the served distribution is unchanged, because those combos never reached a
+// player in the first place (comboSupport.test.js asserts both the equality and the distribution).
+// Written as a literal rather than a reference because COMBOS is built at module-eval time, before
+// COMBO_MIN_SERVE_SUPPORT's declaration is initialised; a test pins the two to the same number.
+const COMBO_MIN_POOL_SUPPORT = 8;
 const COMBOS = (() => {
   let table;
   try {
@@ -198,9 +207,10 @@ const COMBO_PRESSURE_MAX = 1.0; // clamp (reached ~turn 32; favours thin combos)
 const COMBO_TARGET_SUPPORT_EARLY = 55; // pressure -1 (turn 0): comfortably above the "40+" goal
 const COMBO_TARGET_SUPPORT_LATE = 15; // pressure +1 (turn 32+): inside the 10-25 goal
 const COMBO_SUPPORT_SHARPNESS = 2.0; // how tightly selection concentrates on the target
-// HARD FLOOR: a combo with fewer than this many common words is never served, at any turn. The
-// drop threshold below (5) removes the true dead ends from the pool; this is the stricter bar for
-// what may actually be handed to a player.
+// HARD FLOOR: a combo with fewer than this many common words is never served, at any turn. This is
+// the authority — COMBO_MIN_POOL_SUPPORT above mirrors it so the pool holds nothing that can never
+// be handed to a player. Raise this and the pool threshold together, or the pool grows dead weight
+// again.
 const COMBO_MIN_SERVE_SUPPORT = 8;
 
 /**
