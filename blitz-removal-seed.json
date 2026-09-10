@@ -1,0 +1,221 @@
+{
+  "_meta": {
+    "generated": "2026-09-10",
+    "source": "overnight two-pass audit of the Category Blitz accept-lists",
+    "method": "Every answer judged by one agent; every proposed drop AND every unsure re-judged by a second agent instructed to refute. ONLY entries both agents independently agreed to remove are listed here. No unsure was ever promoted to a removal.",
+    "coverage": "27 of 31 batches (batches 00-26): 24,807 of 28,913 answers across the 446 live categories. Batches 27-30 were not judged (session limit).",
+    "survival": "114 proposed drops -> 45 agreed removals (39%). The refutation pass rejected 69 proposals, i.e. a single-pass audit would have written 69 wrong removals.",
+    "IMPORTANT_removals_do_not_block_acceptance": "Verified in categoryBlitzLogic.js submitAnswer(): a list MISS does not reject. It falls through to compound-head leniency and then the Haiku judge, and in list-only mode (no API key) the miss is ACCEPTED outright. Deleting these entries will NOT stop them scoring. Their real value is that accept-list contents are PLAYER-VISIBLE: buildSampleAnswers() reveals entries at round end as \"what would have counted\", and categoryBlitzBot.pickAnswer() draws the bot answers from the same list.",
+    "not_applied": "This file is a SEED, not a patch. Nothing has been removed from categoryAnswers/*.",
+    "categories": 13,
+    "total": 45
+  },
+  "removals": {
+    "McDonald's menu items": [
+      {
+        "answer": "baked goods",
+        "reason": "Counter-argument considered: a player blanking might type a catch-all for cookies/pies/danish. It fails because baked goods is not McDonald's-specific in any way - it would be an equally valid answer in a supermarket, bakery or grocery category, which is the signature of a non-answer. No item, product line or menu-board heading at McDonald's carries this name, and every actual baked item (apple pie, cinnamon melts, cookies, danish) is already listed separately, so nothing legitimate is lost."
+      }
+    ],
+    "SpongeBob characters": [
+      {
+        "answer": "puff daddy",
+        "reason": "Counter-argument considered: fans might jokingly call Mrs. Puff's late husband this. It fails because the husband's name in the show is Mr. Puff, no character named Puff Daddy appears in any episode, and the string has an overwhelming real-world referent in the rapper. Nobody reaching for Mr. Puff types Daddy, so this accepts a musician in a cartoon-character category."
+      },
+      {
+        "answer": "the algae are always greener",
+        "reason": "Counter-argument considered (principle 4): some SpongeBob titles double as character names. It fails here - The Algae's Always Greener is a season 2 episode title built on a grass proverb pun, with no character, creature or entity bearing the name. No player types a seven-word episode title when asked for a character."
+      },
+      {
+        "answer": "tartar sauce",
+        "reason": "Counter-argument considered (principle 4): SpongeBob foods do sometimes appear as animate characters. It fails for tartar sauce specifically - it appears only as a condiment and as Mr. Krabs' catchphrase exclamation, never personified with a name, face or role. A player typing it is quoting an exclamation and would not expect character credit for it."
+      },
+      {
+        "answer": "salty spitoon",
+        "reason": "Counter-argument considered: Bikini Bottom objects can be personified (Bubble Buddy, the Magic Conch). It fails because the Salty Spitoon is a tough-guy club building that never speaks or acts, and the show gives its personified element a separate name - Reg the bouncer, which the list already accepts on its own line."
+      },
+      {
+        "answer": "chum",
+        "reason": "Counter-argument considered: chum is central to Plankton's restaurant and might be a shorthand a kid types. It fails because chum in the show is consistently inanimate slop, never named, voiced or animated as an entity, and the real chum-adjacent characters (Plankton, Karen) are accepted under their own names. There is no character this word could be a typing path to."
+      },
+      {
+        "answer": "hooky",
+        "reason": "Counter-argument considered: single-word episode titles are sometimes character names in this show (Wormy, Clamu). It fails for Hooky - the season 1 episode is named for the idiom playing hooky, and no entity, animal or fish named Hooky exists in it or anywhere else in the series."
+      },
+      {
+        "answer": "the hooks",
+        "reason": "Counter-argument considered: inanimate objects genuinely can be characters here (Bubble Buddy, the Magic Conch). It fails because the hooks in Hooky are ordinary fishing hooks on lines - never animated, never speaking, never named. The episode's actual antagonist is the unseen fisherman, not the hooks."
+      },
+      {
+        "answer": "aquatic adventures",
+        "reason": "Counter-argument considered: it might be an obscure in-universe show with a host character. It fails because no character of that name exists, and even read as a title it names a programme, not a person. Unlike the incidentals it points at no on-screen entity at all, and no player types it when asked for a character."
+      },
+      {
+        "answer": "super weenie hut juniors",
+        "reason": "Counter-argument considered: the Weenie Hut restaurants are strongly associated with named characters. It fails because those characters have their own names (Reg, Don the whale - Don is already listed), while Super Weenie Hut Jr's is a building in No Weenies Allowed that is never personified. It is a location answer in a character category."
+      },
+      {
+        "answer": "normal",
+        "reason": "Counter-argument considered: the Not Normal episode produced a widely memed Normal SpongeBob design. It fails because that meme names SpongeBob, not a separate character, and the bare adjective normal has no referent in the show at all. Nobody types normal when asked for a SpongeBob character, so removal cannot reject a genuine answer while keeping it accepts pure noise."
+      },
+      {
+        "answer": "bubble guppy",
+        "reason": "Counter-argument considered, and it is a real one: a player fumbling for Bubble Buddy or Bubble Bass might land near this. It fails because Bubble Guppies is a separate, very famous Nickelodeon series, guppy is not a misspelling of buddy or bass in either direction, and both genuine bubble characters are already accepted under their correct names. This accepts another franchise, not a typing variant."
+      }
+    ],
+    "Minecraft mobs": [
+      {
+        "answer": "piglin bartering",
+        "reason": "Counter-argument considered: the string contains piglin, a real mob, so it might be a typing path to it. It fails because a player reaching for the mob types piglin and stops - piglin and piglins are both already accepted - and bartering is unambiguously a mechanic name. Nothing in the game is a piglin bartering."
+      },
+      {
+        "answer": "nether mob",
+        "reason": "Counter-argument considered (principle 3): some Minecraft group words are genuine player vocabulary. It fails for this one - nether mob is a descriptive phrase rather than an in-game proper noun, no entity is called that, and a player naming mobs types blaze or ghast. The dimension-prefix template also hands out three free points from one pattern, which cheapens the round."
+      },
+      {
+        "answer": "overworld mob",
+        "reason": "Counter-argument considered: it describes a real set of mobs. It fails for the same reason as nether mob - a descriptive dimension phrase names no entity, is not how players refer to any individual mob, and is part of an exploitable template rather than an answer anyone genuinely types."
+      },
+      {
+        "answer": "end mob",
+        "reason": "Counter-argument considered: the End has few mobs so a player might generalise. It fails because the End's mobs (enderman, shulker, ender dragon, endermite) are all separately accepted and are what a player actually types. End mob is a phrase about mobs, not a mob."
+      },
+      {
+        "answer": "hostile mob",
+        "reason": "Counter-argument considered: hostile is an official wiki classification, so unlike a made-up phrase it is real game terminology. It fails because being a real classification is exactly the problem - it is a category OF mobs, not a mob, in a category that asks the player to name mobs. No player under a timer types hostile mob instead of creeper, so removal cannot reject a genuine answer."
+      },
+      {
+        "answer": "passive mob",
+        "reason": "Counter-argument considered: same official-classification defence as hostile mob. It fails identically - it denotes a behaviour class containing cow, pig and sheep, all already accepted, and nobody points at a cow and gives passive mob as its name."
+      },
+      {
+        "answer": "neutral mob",
+        "reason": "Counter-argument considered: neutral is real wiki terminology covering wolves, endermen and bees. It fails because the term describes aggression behaviour rather than identity, and every neutral mob is already in the list under its own name."
+      },
+      {
+        "answer": "tameable mob",
+        "reason": "Counter-argument considered: tameable is a meaningful in-game property. It fails because a property shared by wolf, cat, horse, llama and parrot - all separately accepted - is an adjective phrase, not the name of any entity."
+      },
+      {
+        "answer": "utility mob",
+        "reason": "Counter-argument considered: utility mob is genuine wiki terminology for the golems. It fails because the class has two members, iron golem and snow golem, both already accepted under the names players actually say; nobody types the classification instead."
+      },
+      {
+        "answer": "boss mob",
+        "reason": "Counter-argument considered: boss is real in-game terminology backed by the boss health bar. It fails because the two bosses, the Wither and the Ender Dragon, are already accepted by name; boss mob names neither of them and is not what a player types when asked to name a mob."
+      },
+      {
+        "answer": "flying mob",
+        "reason": "Counter-argument considered: flight is a real mob property. It fails harder than the others - flying mob is not even a wiki classification, just an adjective phrase, and every flying mob (ghast, phantom, blaze, bat, allay, bee, parrot) is separately accepted."
+      },
+      {
+        "answer": "undead mob",
+        "reason": "Counter-argument considered: undead is a real mechanical classification with actual game effects (Smite, reversed healing). It fails for the standard reason - it groups zombie, skeleton, husk, drowned, stray, phantom and the Wither, all accepted individually, and names no entity itself."
+      },
+      {
+        "answer": "arthropod",
+        "reason": "Counter-argument considered, and it is the real one (principle 3): arthropod is an in-game classification with mechanical force via Bane of Arthropods, so it is not merely descriptive. It still fails the player test that decides these cases - players never say an arthropod spawned or point at a spider and call it an arthropod; the word lives only inside an enchantment name. That is the line separating it from illager, which I keep: illager is everyday spoken player vocabulary for individual mobs, arthropod is mechanic-side jargon."
+      },
+      {
+        "answer": "raid mob",
+        "reason": "Counter-argument considered: raids are a real game event and this sits next to illager, which I keep. It fails because raid mob is a descriptive phrase rather than a game noun the way illager is - the game and its players name the participants pillager, vindicator, evoker, ravager and witch, all separately accepted. Nobody calls a ravager a raid mob."
+      },
+      {
+        "answer": "aquatic mob",
+        "reason": "Counter-argument considered: the list already accepts the class word fish, so class terms are clearly tolerated here. It fails because fish is a thing in the world you can catch and hold, while aquatic mob describes a habitat grouping with no in-game presence; every member (dolphin, squid, guardian, turtle, cod, axolotl) is accepted under a name players actually say."
+      }
+    ],
+    "Fortnite skins": [
+      {
+        "answer": "tomato temple",
+        "reason": "Counter-argument considered and rejected. The best defence would be principle 5 - that durrr burger is kept nearby, so a brand/place token is apparently acceptable here. But that comparison fails: Durrr Burger is a mascot HEAD that is literally the identity of a released outfit (Beef Boss), so a player typing it is naming a skin by its most recognisable feature. Tomato Temple is only a named map POI (the renamed Tomato Town); no outfit, back bling or set carries that name, and the tomato-headed outfit is already accepted under its real name Tomatohead. There is no reading of the string under which a player is naming a skin, so nothing legitimate is lost. Earned."
+      }
+    ],
+    "Mario power-ups and items": [
+      {
+        "answer": "snifit",
+        "reason": "Counter-argument considered and rejected. The strongest defence is principle 3: this list already accepts enemy names (boo, blooper, piranha plant, bullet bill). But every one of those is a literal Mario Kart ITEM with its own item entry in the list (boo item, blooper item, bullet bill item, piranha plant pot), so they are items that happen to share a name with an enemy. Snifit has no item form in any Mario title - it is only ever an enemy or a shopkeeper NPC. The comparability test therefore fails rather than saves it, and a player typing an enemy into an items category is giving a genuinely wrong answer. Earned."
+      }
+    ],
+    "Disney villains": [
+      {
+        "answer": "mr toad villains",
+        "reason": "Counter-argument considered and rejected. The defence would be that it is an alias for the weasel gang. But villains is not part of any character name here - the string is a group/category label of the form no player types under time pressure, and the actual characters (mr winkie, winkie, weasels) are already accepted separately. Distinguish this from kovu villain and mater villain, where villain is a disambiguation suffix on a real character name; here there is no character name at all. Earned."
+      },
+      {
+        "answer": "mater villain",
+        "reason": "Counter-argument considered and rejected. The suffix pattern is legitimate in this list (kovu villain, bruce the shark, darla finding nemo, auto wall-e), so the form is not the problem. The problem is the referent: Mater is the deuteragonist of Cars and Cars 2 and is never an antagonist in any scene - he is the mistaken-for-a-spy hero. The real Cars villains (professor z, miles axlerod, chick hicks) are already listed. Unlike Kovu, there is no act in which Mater opposes the protagonists, so no correct reading exists. Earned."
+      },
+      {
+        "answer": "the grand duke of owls",
+        "reason": "Wrong-franchise claim verified. The Grand Duke of Owls is the antagonist of Rock-a-Doodle (1991), a Don Bluth film released through Goldcrest/Samuel Goldwyn, not Disney. Principle 4 explicitly sanctions this class of removal. The generosity counter-argument (players confuse Bluth with Disney because Bluth was ex-Disney) actually cuts the other way in a competitive scoring game: accepting a non-Disney answer penalises the player who correctly excluded it. The rest of this 231-entry list is otherwise Disney-clean, so this is an error, not a policy."
+      },
+      {
+        "answer": "grand duke of owls",
+        "reason": "Article variant of the same Rock-a-Doodle character. Principle 2 protects article forms of VALID entries; it cannot resurrect an entry whose referent is confirmed to belong to another studio. Both forms go together or neither does."
+      },
+      {
+        "answer": "lord shen",
+        "reason": "Wrong-franchise claim verified. Lord Shen is the peacock antagonist of Kung Fu Panda 2, a DreamWorks Animation film. The category names a specific studio, and principle 4 makes a confirmed studio mismatch a legitimate removal. I checked for a Disney character of this name and found none - there is no correct reading to protect."
+      },
+      {
+        "answer": "tai lung",
+        "reason": "Wrong-franchise claim verified. Tai Lung is the snow leopard antagonist of Kung Fu Panda (2008), DreamWorks. No Disney character carries the name. Same principle 4 basis as Lord Shen; the three Kung Fu Panda villains are clearly one contamination event in this list."
+      },
+      {
+        "answer": "kai",
+        "reason": "Wrong-franchise claim verified, and I tested the strongest counter: Kai is ALSO the name of a Disney character - the Arendelle castle steward in Frozen. That rescue fails, because the Frozen Kai is a minor servant, not a villain, so no reading of the string yields a Disney VILLAIN. The intended referent is the yak spirit antagonist of Kung Fu Panda 3 (DreamWorks). Earned under principle 4."
+      }
+    ],
+    "Fast food chains": [
+      {
+        "answer": "buffet",
+        "reason": "REMOVE - upheld. It names no entity at all: not a chain, not a nickname of one, not a misspelling of one. It sits between \"golden corral\" and \"hooters\" as an obvious slot-filler artifact. A player typing it has named nothing, and seeing \"buffet\" credited as a fast food CHAIN is the one accept in this category that reads as a bug rather than as looseness."
+      },
+      {
+        "answer": "whatchamacallit",
+        "reason": "REMOVE - upheld. Whatchamacallit is a Hershey candy bar; there is no restaurant chain by that name, no chain it is a nickname or misspelling of, and no other confectionery anywhere in the 216-entry list for it to belong to. It is an isolated generation artifact and no player types it in good faith for this category."
+      }
+    ],
+    "Things with a drive-through": [
+      {
+        "answer": "mcflurry stand",
+        "reason": "REMOVE - upheld, the one clean drop in this category. Unlike the two entries above it names NO real business - no such establishment exists - so it is not a loose accept but a fabricated one. It is also the only member of the deliberate \"___ stand\" family (milkshake stand, ice cream stand, lemonade stand, fireworks stand, produce stand) that names a place which does not exist. No player types it in good faith, so removal costs nothing and takes an invented entity off the list."
+      }
+    ],
+    "Subscription services": [
+      {
+        "answer": "fashion nova",
+        "reason": "REMOVE - upheld. Every neighbour in its block (stitch fix, rent the runway, nuuly, thredup, trunk club) is a genuine recurring clothing subscription or rental plan; Fashion Nova is a pure one-off e-commerce retailer with no subscription product, making it adjacent-slot contamination inside an otherwise coherent themed block. It is not a variant, nickname or misspelling of anything listed, and no player types it here in good faith."
+      },
+      {
+        "answer": "epic games store",
+        "reason": "REMOVE - upheld. It is a storefront, not a plan: Epic’s actual subscription (Fortnite Crew) is a different product under a different name, and every gaming subscription that does belong here - game pass, ps plus, google play pass, humble choice, nvidia geforce now - is already listed separately. Nothing on the list is a variant of it, so removal strands no player input."
+      }
+    ],
+    "Candy bars": [
+      {
+        "answer": "candy bar",
+        "reason": "UPHELD - the one removal the reviewer earned. Verified unique: this is the ONLY verbatim category-name self-reference across all four lists in this batch (no ice cream flavor, pizza topping or dog breed self-reference exists), so dropping it is principled rather than arbitrary. And unlike every other proposal, keeping it has a cost beyond taxonomy: the category name typed back is a zero-knowledge answer available instantly on the prompt, an exploit rather than a generous accept. Note the vending-machine list keeps a candy bar, correctly, because there it is a genuine instance."
+      }
+    ],
+    "Disney movies": [
+      {
+        "answer": "home",
+        "reason": "UPHELD - I tried to save it and could not. Studio verified: Home (2015, dir. Tim Johnson, from The True Meaning of Smekday) is DreamWorks Animation, released by 20th Century Fox; there is no Disney feature titled 'Home' (Home Sweet Home Alone and Homeward Bound are different strings that would not match anyway). The stem defence is refuted by the list's own convention: EVERY stem pair among the 195 entries is ADJACENT (9/10 little mermaid, 16/17 lion king, 20/21 princess and the frog, 23/24 raya, 25/26 wreck-it ralph, 33/34, 37/38, 39/40, 41/42, 50/51, 52/53, 55/56, 61/62, 81/82, 87/88, 98/99, 100/101, 102/103, 105/106, 117/118 mufasa) - 100% adjacency, no exceptions - while 'home' is #137 (between brother bear and the rescuers down under) and 'home on the range' is #67, in a different chunk entirely. Exclusion evidence: the list contains NOT ONE other non-Disney animated title (no shrek, how to train your dragon, madagascar, kung fu panda, despicable me) and its long live-action tail is studio-accurate throughout (tron, john carter, prince of persia, sky high, cool runnings, the mighty ducks, air bud are Disney; narnia and bridge to terabithia were Disney-distributed) - so this is the single wrong-studio entry in an otherwise clean list, not a house style. The cost test also inverts here: 'home' is a four-letter extremely common word, the one entry shape a time-pressured player can hit by fishing, and the only player a drop rejects is one who is factually mistaken about the studio - which is the correct behaviour for a category named 'Disney movies'."
+      }
+    ],
+    "Star Wars Planets": [
+      {
+        "answer": "xanadu",
+        "reason": "UPHELD - the only drop in this batch that was earned. I re-verified rather than taking the reviewer's word: a domain-restricted Wookieepedia search for Xanadu returns only the Xanadu Blood (Cad Bane's Rogue-class starfighter) and the xandu (bat creature from Iego); a second search explicitly excluding the ship still surfaced no world; the canon and Legends planet lists have no Xanadu. Unlike weesas/opol this is not an unverifiable alien string - it is a famous English word meaning an exotic idyllic place (Coleridge's Kubla Khan, Kane's estate in Citizen Kane, the 1980 film), i.e. exactly the word a player throws at Star Wars Planets on vibes alone. Principle 1's asymmetry does not shelter it: rejecting a genuine non-planet is correct behaviour, not a broken-feeling rejection."
+      }
+    ],
+    "Types of blood vessels": [
+      {
+        "answer": "blood vessel",
+        "reason": "UPHELD - the reviewer earned this one, and it passes the same two-part test that carried 'candy bar' and that 'monster' failed. (a) UNIQUENESS VERIFIED against the full 19-entry list (chunk 0 of 1, complete): blood vessel, capilary, capilaries, artery, arteries, vein, veins, capillary, capillaries, arteriole, arterioles, venule, venules, aorta, vena cava, superior vena cava, inferior vena cava, sinusoid, sinusoids. Nothing else echoes the category; every other entry is a genuine vessel class, a named vessel, or a misspelling of one, and there is no generic-descriptor family for it to head, so removal is principled rather than a selection. (b) THE 'MONSTER' DEFENCE IS UNAVAILABLE: 'The Monster' is a real Universal screen credit and a variant of the already-accepted 'frankenstein's monster', whereas there is no vessel, structure or eponym called 'blood vessel' in any anatomical register - this echo is not also an instance in any sense. (c) THE LOOSENESS ARGUMENT CUTS THE WRONG WAY: aorta, vena cava and superior/inferior vena cava are indeed named individual vessels rather than types, so the list is not strictly type-only - but that generosity runs DOWNWARD in specificity (they are hyponyms of artery and vein). 'blood vessel' is the sole entry that is a hypernym co-extensive with the category itself, the one direction the list never otherwise goes. Corroborating that it is a stray rather than a deliberate accept: every genuine type here is authored as a singular/plural pair (artery/arteries, vein/veins, capillary/capillaries, arteriole/arterioles, venule/venules, sinusoid/sinusoids) yet 'blood vessels' is absent - an intentional echo-accept would have been pluralised like the rest. (d) FISHING VALUE IS MAXIMAL AND VERIFIED IN CODE rather than assumed: GameScreen.jsx renders the category verbatim inside .cb-category-display via (categoryRound.category || '').toUpperCase(), so the player is shown 'TYPES OF BLOOD VESSELS' and can copy two common English words straight off the prompt for a guaranteed score. That is an exploit, not a generous accept, and no knowledgeable player is harmed by the reject since eighteen correct alternatives remain."
+      }
+    ]
+  }
+}
