@@ -20,7 +20,12 @@ const path = require('path');
 const ROOT = path.join(__dirname, '..');
 const { ALL_COMBOS: COMBOS } = require(path.join(ROOT, 'gameLogic.js'));
 
-const MIN_SUPPORT = 5; // a combo with fewer than this many common words is a dead end
+// MIN_SUPPORT MIRRORS THE SERVE FLOOR (gameLogic.js COMBO_MIN_SERVE_SUPPORT = 8). It used to be 5,
+// which left combos at support 5/6/7 in the shipped pool — but the floor already refuses to serve
+// anything under 8, so those combos could never reach a player. They were dead weight: carried in
+// the pool, weighted at zero, and filtered out again on every excludeCombo reroll. Dropping at the
+// same number the floor enforces means the pool contains exactly what is servable, nothing more.
+const MIN_SUPPORT = 8; // a combo with fewer than this many common words can never be served
 
 function readTop3k() {
   const raw = fs.readFileSync(path.join(ROOT, 'data', 'top3k.txt'), 'utf8');
