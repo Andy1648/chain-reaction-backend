@@ -224,7 +224,13 @@ test('Category Blitz: two players race through all 3 rounds to the final scorebo
       assert.equal(end.payload.category, categoriesPlayed[i]);
       const aliceResult = end.payload.playerResults.find((p) => p.id === alice.id);
       const bobResult = end.payload.playerResults.find((p) => p.id === bob.id);
-      assert.equal(aliceResult.roundScore, 2, `round ${i + 1}: Alice scored her 2 answers`);
+      // roundScore is LENGTH-WEIGHTED now (points per answer scale with the category's mean
+      // answer length, clamped to [0.75, 1.5]), so two answers are worth 2 points only in a
+      // mid-length category. Assert the band those two answers can land in.
+      assert.ok(
+        aliceResult.roundScore >= 2 && aliceResult.roundScore <= 3,
+        `round ${i + 1}: Alice's 2 answers scored ${aliceResult.roundScore} (2 x 0.75..1.5, rounded)`
+      );
       assert.equal(bobResult.roundScore, 1);
       assert.ok(Array.isArray(end.payload.sampleAnswers), 'samples revealed at round end');
       // The reveal never includes an answer someone actually gave.
@@ -243,11 +249,21 @@ test('Category Blitz: two players race through all 3 rounds to the final scorebo
   for (const c of [alice, bob]) {
     const over = lastOfType(c, 'game_over');
     assert.ok(over, 'game_over reached every player');
-    assert.equal(over.payload.winnerId, alice.id, 'Alice won 6-3');
-    assert.deepEqual(
-      over.payload.finalScores.map((p) => ({ id: p.id, score: p.score })),
-      [{ id: alice.id, score: 6 }, { id: bob.id, score: 3 }],
-      'scoreboard sorted highest first with cumulative scores'
+    assert.equal(over.payload.winnerId, alice.id, 'Alice won: twice as many answers every round');
+    // Scores are LENGTH-WEIGHTED (points per answer scale with the category's mean answer length,
+    // clamped to [0.75, 1.5]), so the old flat 6-3 is now a band. What must hold is the SHAPE:
+    // sorted highest first, Alice ahead, and Alice ~2x Bob because she answered twice as much.
+    const board = over.payload.finalScores.map((p) => ({ id: p.id, score: p.score }));
+    assert.equal(board.length, 2);
+    assert.equal(board[0].id, alice.id, 'scoreboard sorted highest first');
+    assert.equal(board[1].id, bob.id);
+    assert.ok(board[0].score > board[1].score, `Alice ${board[0].score} > Bob ${board[1].score}`);
+    // 6 answers x [0.75, 1.5] and 3 answers x [0.75, 1.5], each rounded.
+    assert.ok(board[0].score >= 4 && board[0].score <= 9, `Alice in band (${board[0].score})`);
+    assert.ok(board[1].score >= 2 && board[1].score <= 5, `Bob in band (${board[1].score})`);
+    assert.ok(
+      Math.abs(board[0].score / board[1].score - 2) <= 0.75,
+      `Alice scored about twice Bob (${board[0].score} vs ${board[1].score})`
     );
   }
   assert.equal(room.roundTimerInterval, null, 'no round timer left after game over');
