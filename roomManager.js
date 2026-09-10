@@ -765,6 +765,9 @@ function startGame(room, opts = {}) {
         category: room.game.currentCategory,
         timerSeconds: room.game.roundTimeSeconds,
         rerollsRemaining: room.game.rerollsRemaining,
+        // Length-normalised points per answer for this category (see lengthMultiplier).
+        // Sent so the client can surface it later; nothing reads it yet.
+        lengthMult: categoryBlitzLogic.lengthMultiplier(room.game.currentCategory),
         ...(room.game.daily ? { daily: room.game.daily } : {}),
       },
     });

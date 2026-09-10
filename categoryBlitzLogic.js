@@ -666,9 +666,68 @@ function tierForCategory(name) {
   if (TIER_NICHE_PATTERNS.some((re) => re.test(name))) return 3;
   return 2;
 }
-// The stored tier for every ACTIVE category (name -> 1|2|3), computed once.
+/* ===================== ANSWER LENGTH ===================== */
+// Tiering above measures KNOWLEDGE — do you know five of these. It says nothing about how long
+// they take to TYPE, and that turned out to decide both who can play a category and what it pays.
+//
+// meanLen = the mean character count over a category's whole accept set. Computed once at load
+// from the same answersFor() index the judge uses, so it can never drift from the live lists.
+const CATEGORY_MEAN_LEN = {};
+for (const c of CATEGORIES) {
+  const set = answersFor(c);
+  let total = 0;
+  let n = 0;
+  if (set) for (const a of set) { total += String(a).length; n += 1; }
+  CATEGORY_MEAN_LEN[c] = n ? total / n : 0;
+}
+// The corpus-wide mean of the per-category means (each category weighted equally, so one huge
+// accept-list can't drag the baseline). This is the pivot the scoring normaliser divides by.
+const MEAN_LEN_ALL =
+  CATEGORIES.reduce((sum, c) => sum + CATEGORY_MEAN_LEN[c], 0) / (CATEGORIES.length || 1);
+
+// TIER-1 LENGTH GATE. Tier 1 is what a stranger meets in their first rounds, and a category whose
+// answers are film titles, brand product names or multi-word phrases ("Wonders of the World",
+// "McDonald's menu items") is a typing test before it is a knowledge test — you know the answers
+// and still score badly. Knowledge tiering is unchanged; a category that fails the gate is simply
+// not allowed to be a FIRST-ROUND category and drops to tier 2.
+const TIER1_MAX_MEAN_LEN = 11;
+
+// The stored tier for every ACTIVE category (name -> 1|2|3), computed once. Knowledge tier first,
+// then the length gate demotes tier 1 -> 2.
 const CATEGORY_TIER = {};
-for (const c of CATEGORIES) CATEGORY_TIER[c] = tierForCategory(c);
+for (const c of CATEGORIES) {
+  const t = tierForCategory(c);
+  CATEGORY_TIER[c] = t === 1 && CATEGORY_MEAN_LEN[c] > TIER1_MAX_MEAN_LEN ? 2 : t;
+}
+// Which categories the gate moved, exposed for the tests and the tooling report.
+const TIER1_DEMOTED_BY_LENGTH = CATEGORIES.filter(
+  (c) => tierForCategory(c) === 1 && CATEGORY_TIER[c] === 2
+).sort((a, b) => CATEGORY_MEAN_LEN[b] - CATEGORY_MEAN_LEN[a]);
+
+/**
+ * The per-answer SCORE multiplier for a category, normalising away typing cost.
+ *
+ * A 30s round is a fixed CHARACTER budget, so a category with short answers yields far more
+ * accepts than one with long answers — flat 1-point-per-answer scoring turned that straight into
+ * score. Paying by length restores parity: points per answer scale with how much typing an answer
+ * costs, meanLen / MEAN_LEN_ALL.
+ *
+ * CLAMPED to [0.75, 1.5]. The clamp is a deliberate cap on the correction, not an oversight: an
+ * uncapped ratio would fully equalise every category but would also pay 2.2x for a single answer
+ * in the longest category, which reads as broken. Inside the clamp band (meanLen roughly 7.1 to
+ * 14.2 chars at today's baseline) the normalisation is exact; outside it a residue remains by
+ * design. See categoryBlitzLength.test.js, which measures that residue rather than assuming it.
+ */
+const LENGTH_MULT_MIN = 0.75;
+const LENGTH_MULT_MAX = 1.5;
+function lengthMultiplier(category) {
+  const mean = CATEGORY_MEAN_LEN[category];
+  if (!mean || !MEAN_LEN_ALL) return 1;
+  const raw = mean / MEAN_LEN_ALL;
+  return Math.min(LENGTH_MULT_MAX, Math.max(LENGTH_MULT_MIN, raw));
+}
+// Rounded for payloads/scoring so a float never leaks into a score or a wire message.
+const roundMult = (m) => Math.round(m * 100) / 100;
 // Tier -> sorted category pool (sorted so the seeded daily picks are stable across
 // deploys regardless of declaration order).
 const TIER_POOLS = { 1: [], 2: [], 3: [] };
@@ -947,7 +1006,13 @@ async function submitAnswer(game, playerId, rawAnswer, opts = {}) {
   }
 
   player.answers.push(answer);
-  player.score += 1;
+  // LENGTH-NORMALISED POINTS. `points` is the exact running total (float); `score` stays an
+  // INTEGER so every existing consumer — the scoreboard payload, the client, the win check —
+  // sees the same shape it always did.
+  const mult = roundMult(lengthMultiplier(game.currentCategory));
+  player.roundPoints = (player.roundPoints || 0) + mult;
+  player.points = (player.points || 0) + mult;
+  player.score = Math.round(player.points);
 
   return { accepted: true, answer, playerId };
 }
@@ -993,7 +1058,8 @@ function endRound(game) {
       id: p.id,
       name: p.name,
       answers: [...p.answers],
-      roundScore: p.answers.length,
+      // Points earned this round (length-normalised), not the raw answer count.
+      roundScore: Math.round(p.roundPoints || 0),
     })),
     sampleAnswers: buildSampleAnswers(game),
   };
@@ -1023,6 +1089,7 @@ function startNextRound(game) {
   game.usedCategories.add(category);
   game.players.forEach((p) => {
     p.answers = [];
+    p.roundPoints = 0;
   });
   game.status = 'in_progress';
 
@@ -1031,6 +1098,9 @@ function startNextRound(game) {
     category,
     timerSeconds: game.roundTimeSeconds,
     rerollsRemaining: game.rerollsRemaining,
+    // What each accepted answer is worth this round. Sent so the client can surface it later;
+    // nothing on the client reads it yet.
+    lengthMult: roundMult(lengthMultiplier(category)),
     ...(game.daily ? { daily: game.daily } : {}),
   };
 }
@@ -1050,8 +1120,11 @@ function rerollCategory(game) {
     return { error: 'no_rerolls_left' };
   }
   game.players.forEach((p) => {
-    p.score -= p.answers.length;
-    if (p.score < 0) p.score = 0;
+    // Revert the POINTS earned on the old category (they were length-weighted), not the raw
+    // answer count — otherwise a reroll off a 1.5x category would hand back a profit.
+    p.points = Math.max(0, (p.points || 0) - (p.roundPoints || 0));
+    p.roundPoints = 0;
+    p.score = Math.round(p.points);
     p.answers = [];
   });
   const category = pickRandomCategory(game.usedCategories, game.selectedPacks);
@@ -1063,6 +1136,7 @@ function rerollCategory(game) {
     category,
     timerSeconds: game.roundTimeSeconds,
     rerollsRemaining: game.rerollsRemaining,
+    lengthMult: roundMult(lengthMultiplier(category)),
   };
 }
 
@@ -1101,6 +1175,13 @@ module.exports = {
   // Category tiering (breadth) — exposed for tests + tooling.
   tierForCategory,
   CATEGORY_TIER,
+  CATEGORY_MEAN_LEN,
+  MEAN_LEN_ALL,
+  TIER1_MAX_MEAN_LEN,
+  TIER1_DEMOTED_BY_LENGTH,
+  lengthMultiplier,
+  LENGTH_MULT_MIN,
+  LENGTH_MULT_MAX,
   TIER_POOLS,
   TIER_WEIGHTS,
 };

@@ -234,10 +234,15 @@ test('onAiCheck fires exactly when there is judge latency to cover (list-miss + 
 
 test('rerollCategory reverts this-round points, clears answers, and burns one reroll', async () => {
   const game = makeGame('easy'); // 5 rerolls
-  game.players[0].score = 4; // 4 points banked from earlier rounds
+  // `points` is the exact running total and the source of truth; `score` is its rounded view.
+  // (Answers are LENGTH-WEIGHTED now, so seeding `score` alone would no longer bank anything.)
+  game.players[0].points = 4; // 4 points banked from earlier rounds
+  game.players[0].score = 4;
   await submitAnswer(game, 'p1', 'olive');
   await submitAnswer(game, 'p1', 'ham');
-  assert.equal(game.players[0].score, 6);
+  const earned = game.players[0].roundPoints;
+  assert.ok(earned > 0, 'the two accepts paid something');
+  assert.equal(game.players[0].score, Math.round(4 + earned));
 
   const before = game.currentCategory;
   const res = rerollCategory(game);
@@ -255,6 +260,8 @@ test('rerollCategory clamps a reverted score at zero and errors when the allowan
   const game = makeGame('hard'); // 3 rerolls
   // Pathological state: more answers than score. The clamp keeps score >= 0.
   game.players[0].answers = ['a1', 'a2', 'a3'];
+  game.players[0].roundPoints = 3; // more banked this round than the player's whole total
+  game.players[0].points = 1;
   game.players[0].score = 1;
   assert.equal(rerollCategory(game).error, undefined);
   assert.equal(game.players[0].score, 0);
