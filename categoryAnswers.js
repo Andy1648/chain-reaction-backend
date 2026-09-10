@@ -230,11 +230,43 @@ for (const [from, to] of Object.entries(FOLDS)) {
 // deleted, whichever source file contributed it. So one seed covers its own plural, spacing,
 // punctuation and casing variants; genuinely different wordings still need their own seed.
 const REMOVALS = {
-  // The Ottoman Empire is early-modern (1299-1922), not ancient. All three spellings the data
-  // carried are seeded: the bare noun, the correct full name, and the misspelling. Their plurals
-  // are picked up by the normalised match.
-  'Ancient Empires': ['ottoman', 'ottoman empire', 'ottaman empire'],
-  'Pizza toppings': ['stuffed crust'], // a crust style, not a topping
+  // NOT ANCIENT — every one of these is post-500 AD. The Ottoman Empire is early-modern
+  // (1299-1922) and all three spellings the data carried are seeded: the bare noun, the correct
+  // full name, and the misspelling. The rest are medieval or later: Holy Roman (800-1806),
+  // Spanish (1492-1976), British (1583-1997), Napoleonic (1804-1815), Austro-Hungarian
+  // (1867-1918), Soviet (1922-1991). Plurals and punctuation variants are picked up by the
+  // normalised match; 'austro-hungarian' is seeded both ways only for readability (the hyphen
+  // is stripped either way).
+  'Ancient Empires': [
+    'ottoman',
+    'ottoman empire',
+    'ottaman empire',
+    'british empire',
+    'holy roman empire',
+    'soviet union',
+    'napoleonic empire',
+    'austro hungarian empire',
+    'austro-hungarian empire',
+    'spanish empire',
+    // SHORT FORMS of two of the above. The normalised matcher folds plurals and punctuation, not
+    // abbreviations or bare nouns, so deleting 'holy roman empire' while 'hre' stayed accepted
+    // would have been the same "one variant away" bug in a new coat. 'britain' is wrong here
+    // either way: as an empire it means the British Empire, and Roman Britain was a province.
+    'hre',
+    'britain',
+  ],
+  // Crust styles, pizza FORMATS and other menu items — none of them is a topping. Same class of
+  // error as 'stuffed crust': the thing you put ON a pizza vs. the kind of pizza it is.
+  'Pizza toppings': [
+    'stuffed crust',
+    'thin crust',
+    'deep dish',
+    'hand tossed',
+    'new york style',
+    'sicilian',
+    'calzone',
+    'garlic knots',
+  ],
   'Fast food chains': ['village inn'], // a sit-down diner chain, not fast food
   // Never First Lady: Mary Harrison was Benjamin Harrison's second wife, married after his term.
   'US First Ladies': ['mary harrison'],
