@@ -149,6 +149,12 @@ for (const [category, set] of Object.entries(gen9)) {
 // category name. Keys must match RAW_CATEGORIES / categoryPacks.js exactly.
 const FOLDS = {
   // renames (salvageable categories, broader/easier phrasing)
+  // 'Ancient Empires' asked players to know where "ancient" stops, and the list never agreed with
+  // itself: the Ottoman/British/Holy Roman entries were removed as post-500, but Tang, Khmer,
+  // Mali, Songhai, Ming, Mongol, Aztec and Inca are all post-500 too and are all fair game. The
+  // broader name makes every one of them correct instead of arguable. Accepts fold across, so
+  // nothing is lost.
+  'Ancient Empires': 'Empires and dynasties',
   'SI units': 'Units of measurement',
   "Rolling Stone's 500 Greatest Albums": 'Iconic albums',
   'Rock and Roll Hall of Fame Inductees': 'Classic rock artists',
@@ -237,7 +243,7 @@ const REMOVALS = {
   // (1867-1918), Soviet (1922-1991). Plurals and punctuation variants are picked up by the
   // normalised match; 'austro-hungarian' is seeded both ways only for readability (the hyphen
   // is stripped either way).
-  'Ancient Empires': [
+  'Empires and dynasties': [
     'ottoman',
     'ottoman empire',
     'ottaman empire',
@@ -268,6 +274,11 @@ const REMOVALS = {
     'garlic knots',
   ],
   'Fast food chains': ['village inn'], // a sit-down diner chain, not fast food
+  // From the tier-1 class-error sweep: the answer restates the category instead of naming a
+  // member of it. A "candy bar" is not a candy bar you can name; a "mixed breed" is the absence
+  // of a breed. Their plurals are picked up by the normalised match.
+  'Candy bars': ['candy bar'],
+  'Dog breeds': ['mixed breed'],
   // Never First Lady: Mary Harrison was Benjamin Harrison's second wife, married after his term.
   'US First Ladies': ['mary harrison'],
 };

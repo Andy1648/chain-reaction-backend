@@ -628,7 +628,7 @@ const TIER_NICHE = new Set([
   'Famous paintings', 'Famous museums', 'Art movements', 'Roman gods', 'Egyptian gods', 'Norse gods',
   'Greek heroes', 'Greek monsters and beasts', 'Greek Titans', 'Trojan War figures',
   'Japanese yokai', 'US First Ladies', 'US Founding Fathers', 'Roman emperors', 'Egyptian pharaohs',
-  'Renaissance figures', 'World War II battles', 'Medieval titles', 'Ancient Empires', 'Famous explorers',
+  'Renaissance figures', 'World War II battles', 'Medieval titles', 'Empires and dynasties', 'Famous explorers',
   'British monarchs', 'US presidents', 'Subatomic particles', 'Types of electromagnetic radiation',
   'Programming languages', 'Computer ports and connectors', 'Cryptocurrencies',
   'File sharing and cloud storage services', 'Formula 1 constructors', 'Active Formula 1 tracks',
