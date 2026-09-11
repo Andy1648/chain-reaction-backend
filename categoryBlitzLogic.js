@@ -659,6 +659,8 @@ const TIER_NICHE_PATTERNS = [
   /roman emperor|egyptian pharaoh|renaissance|founding father|first ladies|world war|medieval title|ancient empire|greek titan|norse god|hindu deit|egyptian god|greek god|greek hero|greek monster|trojan|yokai|arthurian|knights of the round|subatomic|electromagnetic|programming language|computer ports|cryptocurrenc|scandinavian|central american|caribbean countr|oceanian|famous volcano|prehistoric|constellations|titans/i,
 ];
 /** Breadth tier (1 broad / 2 medium / 3 niche) for a category name. */
+// NOTE: this is the PRE-gate knowledge tier. The draw never reads it directly — it uses
+// CATEGORY_TIER / TIER_POOLS, the stored values after the TIER1_MAX_MEAN_LEN length gate.
 function tierForCategory(name) {
   if (TIER_BROAD.has(name)) return 1;
   if (TIER_MEDIUM_OVERRIDE.has(name)) return 2;
@@ -694,6 +696,8 @@ const TIER1_MAX_MEAN_LEN = 11;
 
 // The stored tier for every ACTIVE category (name -> 1|2|3), computed once. Knowledge tier first,
 // then the length gate demotes tier 1 -> 2.
+// NOTE: these (and TIER_POOLS built from them) are the GATED values the draw actually uses —
+// tierForCategory() above is only the pre-gate knowledge tier; TIER1_MAX_MEAN_LEN is the gate.
 const CATEGORY_TIER = {};
 for (const c of CATEGORIES) {
   const t = tierForCategory(c);
