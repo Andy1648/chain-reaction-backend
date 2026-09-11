@@ -221,3 +221,65 @@ test('a reroll reverts the POINTS earned, not the raw answer count', () => {
   assert.deepEqual(p.answers, []);
   assert.equal(typeof res.lengthMult, 'number', 'the reroll payload carries the new multiplier');
 });
+
+/* ------------------- the gate's SHAPE, pinned to exact numbers -------------------
+   The tests above prove the gate's RULE (no tier-1 category over meanLen 11, and the demotion
+   set is exactly the long ones). They do not pin the resulting DISTRIBUTION, and that is the
+   half a silent rebuild can move: regenerate the tier map from a source that predates the
+   demotion, or reorder the gate relative to the map, and every rule test above still passes
+   while tier 1 quietly refills with 15 typing tests.
+
+   Concretely, the module carries two different tier answers on purpose:
+     tierForCategory(c)  KNOWLEDGE only, pre-gate  -> 89 / 223 / 130
+     CATEGORY_TIER[c]    knowledge THEN the gate   -> 74 / 238 / 130
+   Reading the first one and concluding the gate is missing is an easy and expensive mistake, so
+   the numbers are written down here, both of them, with the delta named. */
+
+const TIER_COUNTS_GATED = { 1: 74, 2: 238, 3: 130 };
+const TIER_COUNTS_KNOWLEDGE = { 1: 89, 2: 223, 3: 130 };
+
+test('the GATED tier distribution is exactly 74 / 238 / 130', () => {
+  for (const t of [1, 2, 3]) {
+    assert.equal(
+      blitz.TIER_POOLS[t].length,
+      TIER_COUNTS_GATED[t],
+      `tier ${t} pool size (if this moved, the gate or the corpus changed — check which)`,
+    );
+  }
+  const fromMap = { 1: 0, 2: 0, 3: 0 };
+  for (const c of blitz.CATEGORIES) fromMap[blitz.CATEGORY_TIER[c]] += 1;
+  assert.deepEqual(fromMap, TIER_COUNTS_GATED, 'CATEGORY_TIER agrees with TIER_POOLS');
+
+  const total = [1, 2, 3].reduce((n, t) => n + blitz.TIER_POOLS[t].length, 0);
+  assert.equal(total, blitz.CATEGORIES.length, 'the pools partition the corpus exactly');
+});
+
+test('the PRE-GATE knowledge tiering is 89 / 223 / 130, and the gate is the whole difference', () => {
+  const fromFn = { 1: 0, 2: 0, 3: 0 };
+  for (const c of blitz.CATEGORIES) fromFn[blitz.tierForCategory(c)] += 1;
+  assert.deepEqual(fromFn, TIER_COUNTS_KNOWLEDGE, 'tierForCategory() is the knowledge tier, pre-gate');
+
+  // 89 - 74 = 15 demotions, and they are exactly the ones the gate reports.
+  assert.equal(
+    TIER_COUNTS_KNOWLEDGE[1] - TIER_COUNTS_GATED[1],
+    blitz.TIER1_DEMOTED_BY_LENGTH.length,
+    'every knowledge-tier-1 category missing from the gated tier 1 was demoted BY THE GATE',
+  );
+  assert.equal(blitz.TIER1_DEMOTED_BY_LENGTH.length, 15);
+});
+
+test('the RUNTIME draw buckets on the gated tier — a demoted category can never open a game', () => {
+  // pickBroadCategory is the round-1 draw for a host with no Blitz record: tier 1 ONLY. If it
+  // ever selected on tierForCategory() instead of CATEGORY_TIER, the 15 long-answer categories
+  // would be exactly what a first-time player met, which is the outcome the gate exists to stop.
+  const demoted = new Set(blitz.TIER1_DEMOTED_BY_LENGTH);
+  const seen = new Set();
+  for (let i = 0; i < 4000; i++) {
+    const c = blitz.pickBroadCategory(null, () => (i + 0.5) / 4000);
+    seen.add(c);
+    assert.ok(!demoted.has(c), `round-1 draw returned the length-demoted "${c}"`);
+    assert.equal(blitz.CATEGORY_TIER[c], 1, `round-1 draw returned non-tier-1 "${c}"`);
+  }
+  // and the sweep really did cover the pool, so the assertion above had something to bite on
+  assert.ok(seen.size > 60, `the sweep covered ${seen.size} of the ${blitz.TIER_POOLS[1].length} tier-1 categories`);
+});
