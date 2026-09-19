@@ -6,6 +6,7 @@
 // cannot see `wss.clients`. This one captures them. Production code is
 // untouched — this file is the only thing that knows the stats port exists.
 const http = require('http');
+const v8 = require('v8');
 const roomManager = require('../roomManager');
 
 const { wss } = require('../server.js'); // starts express + wss on process.env.PORT
@@ -51,6 +52,11 @@ if (statsPort) {
           activeTimeouts,
           rssBytes: mem.rss,
           heapUsedBytes: mem.heapUsed,
+          // heapTotal is the COMMITTED V8 arena. Without it, a run can only say
+          // "RSS grew" and not whether live objects grew with it — the whole
+          // difference between a leak and an allocator holding onto its arena.
+          heapTotalBytes: mem.heapTotal,
+          heapLimitBytes: v8.getHeapStatistics().heap_size_limit,
           externalBytes: mem.external,
           arrayBuffersBytes: mem.arrayBuffers,
           cpuUser: process.cpuUsage().user,

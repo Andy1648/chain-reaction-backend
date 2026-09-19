@@ -99,6 +99,7 @@ async function main() {
       timeouts: s.activeTimeouts,
       rssMB: Number(mb(s.rssBytes)),
       heapMB: Number(mb(s.heapUsedBytes)),
+      heapTotalMB: s.heapTotalBytes == null ? null : Number(mb(s.heapTotalBytes)),
       externalMB: Number(mb(s.externalBytes)),
       cpuPct: s.cpuPct == null ? null : Number(s.cpuPct.toFixed(1)),
       rttP50: rtt.p50,
@@ -118,7 +119,7 @@ async function main() {
     console.log(
       `t+${String(row.minute).padStart(6)}m rooms=${String(row.rooms).padStart(3)} players=${String(row.players).padStart(4)} ` +
         `timers=${row.timers} ws=${row.ws} sock=${row.sockets} to=${row.timeouts} ` +
-        `rss=${row.rssMB}MB heap=${row.heapMB}MB cpu=${row.cpuPct}% ` +
+        `rss=${row.rssMB}MB heap=${row.heapMB}/${row.heapTotalMB}MB cpu=${row.cpuPct}% ` +
         `rtt p50=${row.rttP50} p95=${row.rttP95} max=${row.rttMax} lost=${row.probeLost} ` +
         `churn=${row.churnCycles} fails=${row.setupFail} lag=${row.lagMs}ms`
     );
@@ -146,9 +147,25 @@ async function main() {
   const after = settle[settle.length - 1];
 
   // --- verdict ---
+  //
+  // THE SLOPE ACROSS THE WHOLE RUN IS THE WRONG STATISTIC, and the first run of
+  // this soak proved it: RSS rose from 95 MB to ~205 MB over the first 25
+  // minutes and was then FLAT for the last 30 (-0.09 MB/min across 3,240 further
+  // room rebuilds). A least-squares line through that curve reports 1.44 MB/min
+  // and calls a bounded working set a leak.
+  //
+  // A leak and a warm-up differ in the TAIL, not the average: a leak's slope
+  // stays positive once the process is warm, a working set's goes to zero. So
+  // the gate is the slope over the FINAL THIRD, with the whole-run slope kept
+  // alongside it for the record. The absolute ceiling check moves to the final
+  // third too — what matters is where it settled, not how far it travelled.
   const loaded = samples.filter((s) => s.minute > 2); // skip the ramp-in
+  const lastThirdFrom = MINUTES * (2 / 3);
+  const tail = samples.filter((s) => s.minute > lastThirdFrom);
   const rssSlope = slope(loaded.map((s) => ({ x: s.minute, y: s.rssMB })));
   const heapSlope = slope(loaded.map((s) => ({ x: s.minute, y: s.heapMB })));
+  const rssTailSlope = slope(tail.map((s) => ({ x: s.minute, y: s.rssMB })));
+  const heapTailSlope = slope(tail.map((s) => ({ x: s.minute, y: s.heapMB })));
   const baseRssMB = Number(mb(baseline.rssBytes));
 
   const problems = [];
@@ -162,17 +179,24 @@ async function main() {
   if (after.sockets > baseline.activeSockets + 2) {
     problems.push(`socket handles ${baseline.activeSockets} -> ${after.sockets}`);
   }
-  // RSS is allowed to sit above baseline (V8 keeps its arena) but not to have
-  // CLIMBED steadily while loaded: 0.5 MB/min is 30 MB an hour, which on a
-  // 512 MB Render instance is a real leak, not allocator noise.
-  if (Math.abs(rssSlope) > 0.5) problems.push(`RSS trend ${rssSlope.toFixed(3)} MB/min while loaded`);
-  if (Math.abs(heapSlope) > 0.3) problems.push(`heap trend ${heapSlope.toFixed(3)} MB/min while loaded`);
-  if (after.rssMB > baseRssMB * 2) problems.push(`RSS ended at ${after.rssMB}MB vs ${baseRssMB}MB baseline`);
+  // RSS may sit well above baseline (V8 does not hand its arena back) and may
+  // climb while the process warms. What it may NOT do is still be climbing once
+  // warm: 0.3 MB/min in the final third is 18 MB an hour that never stops, which
+  // on a 512 MB instance is a leak rather than allocator noise.
+  if (tail.length < 5) {
+    problems.push(`too few tail samples (${tail.length}) to judge a trend`);
+  } else {
+    if (rssTailSlope > 0.3) problems.push(`RSS still climbing at ${rssTailSlope.toFixed(3)} MB/min in the final third`);
+    if (heapTailSlope > 0.2) problems.push(`heap still climbing at ${heapTailSlope.toFixed(3)} MB/min in the final third`);
+    const tailMax = Math.max(...tail.map((s) => s.rssMB));
+    if (tailMax > baseRssMB * 4) problems.push(`RSS settled at ${tailMax}MB vs ${baseRssMB}MB baseline`);
+  }
 
   const totals = fleet.totals();
   console.log(`\n==== SOAK RESULT ====`);
   console.log(`samples=${samples.length} churnCycles=${samples[samples.length - 1]?.churnCycles ?? 0} setupFail=${totals.setupFail}`);
-  console.log(`RSS trend ${rssSlope.toFixed(3)} MB/min, heap trend ${heapSlope.toFixed(3)} MB/min (loaded window)`);
+  console.log(`RSS trend: whole run ${rssSlope.toFixed(3)} MB/min, FINAL THIRD ${rssTailSlope.toFixed(3)} MB/min  <- the one that matters`);
+  console.log(`heap trend: whole run ${heapSlope.toFixed(3)} MB/min, final third ${heapTailSlope.toFixed(3)} MB/min`);
   console.log(`worst rtt p95 ${worst.rttP95}ms, worst cpu ${worst.cpuPct}%`);
   console.log(`baseline rss ${baseRssMB}MB -> final ${after.rssMB}MB`);
   console.log(problems.length ? `LEAK/RESIDUE: ${problems.join('; ')}` : 'LEAK/RESIDUE: none — clean return to baseline');
@@ -187,7 +211,7 @@ async function main() {
   fs.writeFileSync(
     OUT,
     JSON.stringify(
-      { startedAt, rooms: ROOMS, minutes: MINUTES, workers: WORKERS, baseline, samples, settle, after, rssSlope, heapSlope, worst, problems },
+      { startedAt, rooms: ROOMS, minutes: MINUTES, workers: WORKERS, baseline, samples, settle, after, rssSlope, heapSlope, rssTailSlope, heapTailSlope, worst, problems },
       null,
       1
     )

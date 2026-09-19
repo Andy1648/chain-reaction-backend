@@ -1,0 +1,49 @@
+
+=== A1: start_game alone in the room ===
+--- PASS (2753ms)
+
+=== A2: start_game spammed 10x — one game, timers stay bounded ===
+--- PASS (3420ms)
+
+=== A3: out-of-turn submit does not move the turn ===
+--- PASS (15785ms)
+
+=== A4: skip_turn by the wrong player is refused ===
+--- PASS (15800ms)
+
+=== A5: set_game_type mid-game does not swap the live board ===
+--- PASS (15835ms)
+
+=== A6: rematch spammed 20x mid-game — bounded timers, room intact ===
+--- PASS (3726ms)
+
+=== A7: joining an in-progress game does not corrupt the turn order ===
+--- PASS (15815ms)
+
+=== A8: add_bot/remove_bot spam mid-game keeps the roster consistent ===
+--- PASS (3718ms)
+
+=== A9: the host hard-drops during the countdown — no orphan countdown timer ===
+--- PASS (7425ms)
+
+=== A10: all humans leave a bot game — the room and its bot timers go ===
+--- PASS (5624ms)
+
+=== A11: submits after game_over are inert ===
+--- PASS (25175ms)
+
+=== A12: reroll_category spammed on a live round stays coherent ===
+--- PASS (3720ms)
+
+=== A13: leave_room when not in a room, repeatedly ===
+--- PASS (2026ms)
+
+=== A14: create_room x60 from one socket — throttled, no orphans ===
+--- PASS (4223ms)
+
+=== A15: simultaneous submits — exactly one turn advance ===
+--- PASS (15831ms)
+
+final: rooms=0 timers=0 players=0 crashes=0
+==== ADVERSARIAL: 15/15 passed ====
+JSON {"results":[{"name":"A1: start_game alone in the room","ok":true,"ms":2753},{"name":"A2: start_game spammed 10x — one game, timers stay bounded","ok":true,"ms":3420},{"name":"A3: out-of-turn submit does not move the turn","ok":true,"ms":15785},{"name":"A4: skip_turn by the wrong player is refused","ok":true,"ms":15800},{"name":"A5: set_game_type mid-game does not swap the live board","ok":true,"ms":15835},{"name":"A6: rematch spammed 20x mid-game — bounded timers, room intact","ok":true,"ms":3726},{"name":"A7: joining an in-progress game does not corrupt the turn order","ok":true,"ms":15815},{"name":"A8: add_bot/remove_bot spam mid-game keeps the roster consistent","ok":true,"ms":3718},{"name":"A9: the host hard-drops during the countdown — no orphan countdown timer","ok":true,"ms":7425},{"name":"A10: all humans leave a bot game — the room and its bot timers go","ok":true,"ms":5624},{"name":"A11: submits after game_over are inert","ok":true,"ms":25175},{"name":"A12: reroll_category spammed on a live round stays coherent","ok":true,"ms":3720},{"name":"A13: leave_room when not in a room, repeatedly","ok":true,"ms":2026},{"name":"A14: create_room x60 from one socket — throttled, no orphans","ok":true,"ms":4223},{"name":"A15: simultaneous submits — exactly one turn advance","ok":true,"ms":15831}],"after":{"rooms":0,"roomTimers":0,"playersTotal":0,"polluted":[],"protoOwnKeys":12,"wsClients":0,"wsOpen":0,"activeSockets":3,"activeTimeouts":0,"rssBytes":80814080,"heapUsedBytes":28249200,"externalBytes":2718662,"arrayBuffersBytes":45011,"cpuUser":984000,"cpuSystem":406000,"uptimeSec":143.6543363,"at":1789772661333},"crashes":[],"fatal":false}

@@ -21,7 +21,11 @@ const { Fleet, Probe, makeSampler, mb, sleep } = require('./fleet');
 
 const MAX_ROOMS = Number(process.argv[2] || 200);
 const WORKERS = Number(process.argv[3] || 6);
-const ROOM_SIZE = 4;
+// Rooms hold up to MAX_PLAYERS_PER_ROOM (8). T8_ROOM_SIZE re-runs the ladder at
+// a different size, which is how "the ceiling in PLAYERS" gets tested rather
+// than assumed: if the cost were purely per-player, 150x8 and 300x4 (both 1200
+// players) would land in the same place.
+const ROOM_SIZE = Number(process.env.T8_ROOM_SIZE || 4);
 const HOLD_MS = Number(process.env.T8_HOLD_MS || 20000);
 // The default ladder. T8_STEPS overrides it (comma-separated) so the run that
 // FINDS the ceiling can keep climbing past 200 without re-walking the bottom.
