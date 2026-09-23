@@ -868,9 +868,10 @@ async function handleCategoryAnswer(room, connectionId, answer, context = {}) {
     // legacy clients (falls back to the live category).
     expectedCategory: context.expectedCategory,
     expectedRound: context.expectedRound,
-    // Fires only on a list-miss with AI enabled, right before the ~0.5-1.5s Haiku
-    // call. Tells the submitter to show a brief loading state; the authoritative
-    // answer_result below always follows.
+    // Fires only on a list-miss with AI enabled, right before the Haiku call. Tells the
+    // submitter to show a brief loading state; the authoritative answer_result below
+    // always follows, and now carries a `code` (list_hit / judge_yes / judge_no /
+    // judge_unavailable / rate_limited) saying whether anybody actually judged it.
     onAiCheck: () => {
       if (connection && connection.readyState === 1) {
         connection.send(JSON.stringify({ type: 'answer_checking', payload: { answer } }));

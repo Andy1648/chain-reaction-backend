@@ -26,6 +26,9 @@ const ORIGINAL_KEY = process.env.ANTHROPIC_API_KEY;
 // Pass key: null to run with NO key set (a bare undefined would just
 // trigger the destructuring default).
 function withEnv(t, { key = 'test-key-t1', fetchImpl } = {}) {
+  // The verdict cache is module-level; a ruling cached by one test would otherwise
+  // satisfy the next one without an API call and quietly break its call counting.
+  validator._resetVerdictCache();
   if (key === null) delete process.env.ANTHROPIC_API_KEY;
   else process.env.ANTHROPIC_API_KEY = key;
   if (fetchImpl) global.fetch = fetchImpl;
@@ -146,9 +149,15 @@ test('the 11th call inside a minute is ACCEPTED without touching the API (fail o
   }
   assert.equal(apiCalls, validator.RATE_LIMIT_PER_MIN);
 
-  // Over the cap: ACCEPTED (fail open) AND no extra API call burned.
+  // Over the cap: still no API call burned, and validate()'s boolean view is still
+  // fail-open (true) - that policy is unchanged on this branch. What changed is that
+  // judge() no longer CLAIMS a verdict it never got.
   assert.equal(await validator.validate('c', 'one more', player), true);
   assert.equal(apiCalls, validator.RATE_LIMIT_PER_MIN);
+
+  const over = await validator.judge('c', 'another', player);
+  assert.equal(over.verdict, null, 'over the cap there is NO VERDICT, not a yes');
+  assert.equal(over.code, 'rate_limited');
 });
 
 test('the rate limit is per player - another player is unaffected', async (t) => {
@@ -190,4 +199,104 @@ test('the API request carries the key, the model prompt mentions category and an
   assert.ok(body.messages[0].content.includes('Dog breeds'));
   assert.ok(body.messages[0].content.includes('xoloitzcuintli'));
   assert.ok(body.max_tokens <= 20, 'a yes/no needs only a tiny completion');
+});
+
+/* =============== the cap must never launder a "no" into a "yes" ========== */
+
+// THE BUG THIS BRANCH EXISTS FOR. The old cap returned a bare `true` once a player
+// ran past 10 calls/minute, while the model was answering "no" to every one of them:
+// type fast enough and junk started scoring. Two things stop that now - the cap is
+// above human range, and a verdict the model already gave is REUSED rather than
+// re-asked, so a known "no" keeps rejecting even with every slot spent.
+test('a cached "no" still rejects after the player is over the rate cap', async (t) => {
+  let apiCalls = 0;
+  withEnv(t, {
+    fetchImpl: async () => {
+      apiCalls += 1;
+      return { ok: true, status: 200, json: async () => ({ content: [{ text: 'no' }] }) };
+    },
+  });
+
+  const player = freshPlayer();
+  // One real "no" for this exact (category, answer) - now cached.
+  const first = await validator.judge('Fruits', 'afdsaada', player);
+  assert.equal(first.verdict, false);
+  assert.equal(first.code, 'judge_no');
+  assert.equal(apiCalls, 1);
+
+  // Burn the whole cap on OTHER answers.
+  for (let i = 0; i < validator.RATE_LIMIT_PER_MIN; i += 1) {
+    await validator.judge('Fruits', `filler${i}`, player);
+  }
+  const callsAfterBurn = apiCalls;
+
+  // Over the cap, the SAME junk is still rejected - from the cached real verdict,
+  // with no API call and no slot. This is the exact path that used to return true.
+  const repeat = await validator.judge('Fruits', 'afdsaada', player);
+  assert.equal(repeat.verdict, false, 'a known "no" must stay a "no" past the cap');
+  assert.equal(repeat.code, 'judge_no');
+  assert.equal(repeat.cached, true);
+  assert.equal(apiCalls, callsAfterBurn, 'a cached verdict costs no API call');
+  assert.equal(await validator.validate('Fruits', 'afdsaada', player), false);
+});
+
+test('the cap is above human range so honest fast play never reaches it', () => {
+  // A 30s Blitz round; even a very fast player submitting every ~2s produces ~15
+  // answers, and only the list-MISSES reach the judge at all.
+  assert.ok(
+    validator.RATE_LIMIT_PER_MIN >= 25,
+    `cap ${validator.RATE_LIMIT_PER_MIN}/min must sit above a human's list-miss rate in a 30s round`
+  );
+});
+
+/* ===================== judge() codes and http status ==================== */
+
+test('judge() reports WHY there is no verdict, and carries the HTTP status', async (t) => {
+  withEnv(t, { fetchImpl: async () => ({ ok: false, status: 401, json: async () => ({}) }) });
+  const r = await validator.judge('c', 'a', freshPlayer());
+  assert.equal(r.verdict, null, '401 is not a verdict');
+  assert.equal(r.code, 'judge_unavailable');
+  assert.equal(r.httpStatus, 401, 'the status is what tells billing apart from quota');
+  assert.equal(r.detail, 'http_401');
+});
+
+test('judge() distinguishes a model "no" from a judge that never ran', async (t) => {
+  withEnv(t, { fetchImpl: okReply('no') });
+  const said = await validator.judge('c', 'a', freshPlayer());
+  assert.equal(said.verdict, false);
+  assert.equal(said.code, 'judge_no');
+
+  global.fetch = async () => ({ ok: false, status: 429, json: async () => ({}) });
+  const never = await validator.judge('c', 'b', freshPlayer());
+  assert.equal(never.verdict, null);
+  assert.equal(never.code, 'judge_unavailable');
+  assert.equal(never.httpStatus, 429);
+
+  // The whole point: these two are no longer the same observable.
+  assert.notEqual(said.code, never.code);
+});
+
+test('no key reports judge_unavailable/no_key rather than a silent accept', async (t) => {
+  withEnv(t, { key: null });
+  const r = await validator.judge('c', 'a', freshPlayer());
+  assert.equal(r.verdict, null);
+  assert.equal(r.code, 'judge_unavailable');
+  assert.equal(r.detail, 'no_key');
+  assert.equal(r.httpStatus, null);
+});
+
+test('an outage is never cached - the judge is re-asked once it recovers', async (t) => {
+  let status = 429;
+  withEnv(t, {
+    fetchImpl: async () => (status === 200
+      ? { ok: true, status: 200, json: async () => ({ content: [{ text: 'no' }] }) }
+      : { ok: false, status, json: async () => ({}) }),
+  });
+  const player = freshPlayer();
+  assert.equal((await validator.judge('c', 'x', player)).code, 'judge_unavailable');
+  status = 200;
+  const after = await validator.judge('c', 'x', player);
+  assert.equal(after.verdict, false, 'the recovered judge gets to rule');
+  assert.equal(after.code, 'judge_no');
+  assert.notEqual(after.cached, true);
 });

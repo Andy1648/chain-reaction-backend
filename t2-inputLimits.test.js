@@ -63,13 +63,13 @@ test('Blitz rejects an oversized answer without consulting the AI judge', async 
   const game = blitz.createGame([{ id: 'p1', name: 'A' }, { id: 'p2', name: 'B' }], 'medium');
   const p1 = game.players.find((p) => p.id === 'p1');
 
-  const realValidate = haikuValidator.validate;
+  const realJudge = haikuValidator.judge;
   const realIsEnabled = haikuValidator.isEnabled;
   let aiCalled = false;
   haikuValidator.isEnabled = () => true;
-  haikuValidator.validate = async () => {
+  haikuValidator.judge = async () => {
     aiCalled = true;
-    return true;
+    return { verdict: true, code: 'judge_yes' };
   };
 
   try {
@@ -80,7 +80,7 @@ test('Blitz rejects an oversized answer without consulting the AI judge', async 
     assert.deepEqual(p1.answers, []);
     assert.equal(p1.score, 0);
   } finally {
-    haikuValidator.validate = realValidate;
+    haikuValidator.judge = realJudge;
     haikuValidator.isEnabled = realIsEnabled;
   }
 });

@@ -54,12 +54,14 @@ function makeGame(difficulty = 'medium') {
 
 // Temporarily stub the AI judge; returns a restore function.
 function stubJudge({ enabled, verdict }) {
-  const orig = { isEnabled: haikuValidator.isEnabled, validate: haikuValidator.validate };
+  const orig = { isEnabled: haikuValidator.isEnabled, judge: haikuValidator.judge };
   haikuValidator.isEnabled = () => enabled;
-  haikuValidator.validate = async () => verdict;
+  haikuValidator.judge = async () => (verdict
+    ? { verdict: true, code: 'judge_yes' }
+    : { verdict: false, code: 'judge_no' });
   return () => {
     haikuValidator.isEnabled = orig.isEnabled;
-    haikuValidator.validate = orig.validate;
+    haikuValidator.judge = orig.judge;
   };
 }
 
@@ -140,10 +142,12 @@ test('an accept-list hit is accepted as typed (trimmed) and scores +1, with no A
   const game = makeGame();
   let judgeCalled = false;
   const restore = stubJudge({ enabled: true, verdict: false });
-  haikuValidator.validate = async () => { judgeCalled = true; return false; };
+  haikuValidator.judge = async () => { judgeCalled = true; return { verdict: false, code: 'judge_no' }; };
   try {
     const res = await submitAnswer(game, 'p1', '  Pepperoni ');
-    assert.deepEqual(res, { accepted: true, answer: 'Pepperoni', playerId: 'p1' });
+    // `code` rides alongside the result now: list_hit says this never reached the judge,
+    // which is the same fact `judgeCalled` asserts below - one observable, two witnesses.
+    assert.deepEqual(res, { accepted: true, answer: 'Pepperoni', code: 'list_hit', playerId: 'p1' });
     assert.equal(game.players[0].score, 1);
     assert.deepEqual(game.players[0].answers, ['Pepperoni']);
     assert.equal(judgeCalled, false, 'a list hit must never reach the judge');
@@ -198,7 +202,9 @@ test('a list-miss with the AI ENABLED is judged: yes accepts, no rejects with no
   restore = stubJudge({ enabled: true, verdict: false });
   try {
     const res = await submitAnswer(game, 'p2', 'skateboard');
-    assert.deepEqual(res, { accepted: false, reason: 'not_in_category', playerId: 'p2' });
+    // reason is unchanged (the client copy keys off it); code distinguishes a real model
+    // "no" from a judge that never ran, which reason alone cannot.
+    assert.deepEqual(res, { accepted: false, reason: 'not_in_category', code: 'judge_no', playerId: 'p2' });
     assert.equal(game.players[1].score, 0);
     assert.deepEqual(game.players[1].answers, []);
   } finally {
@@ -366,3 +372,106 @@ test('every active category with an accept-list stores lowercase entries (Stage-
     }
   }
 });
+
+/* ============ answer outcome codes + the round-end reveal =============== */
+
+// WHY THESE EXIST. Before this, a rejected answer and an answer nobody judged were
+// the same observable: `reason: 'not_in_category'` or a plain accept. A completely
+// dead API key produced exactly what a healthy judge produced, so Blitz ran for weeks
+// accepting gibberish with nothing in the payload that could show it.
+
+test('a list hit is coded list_hit and never reaches the judge', async () => {
+  const game = makeGame();
+  const restore = stubJudge({ enabled: true, verdict: false });
+  try {
+    const res = await submitAnswer(game, 'p1', 'pepperoni');
+    assert.equal(res.accepted, true);
+    assert.equal(res.code, 'list_hit');
+  } finally {
+    restore();
+  }
+});
+
+test('a model "no" and a judge that never ran are DIFFERENT codes', async () => {
+  const orig = { isEnabled: haikuValidator.isEnabled, judge: haikuValidator.judge };
+  haikuValidator.isEnabled = () => true;
+  try {
+    // A real "no" -> rejected, coded judge_no.
+    haikuValidator.judge = async () => ({ verdict: false, code: 'judge_no' });
+    const said = await submitAnswer(makeGame(), 'p1', 'skateboard');
+    assert.equal(said.accepted, false);
+    assert.equal(said.reason, 'not_in_category', 'the wire reason is unchanged');
+    assert.equal(said.code, 'judge_no');
+
+    // A 401 -> NO verdict. Scoring policy is unchanged on this branch, so it is still
+    // accepted - but it is coded as unjudged, not as a model yes.
+    haikuValidator.judge = async () => ({
+      verdict: null, code: 'judge_unavailable', detail: 'http_401', httpStatus: 401,
+    });
+    const never = await submitAnswer(makeGame(), 'p1', 'afdsaada');
+    assert.equal(never.accepted, true, 'fail-open policy is deliberately unchanged here');
+    assert.equal(never.code, 'judge_unavailable');
+    assert.notEqual(never.code, said.code, 'the two must not be the same observable');
+  } finally {
+    haikuValidator.isEnabled = orig.isEnabled;
+    haikuValidator.judge = orig.judge;
+  }
+});
+
+test('the rate cap is coded rate_limited, not judge_yes', async () => {
+  const orig = { isEnabled: haikuValidator.isEnabled, judge: haikuValidator.judge };
+  haikuValidator.isEnabled = () => true;
+  haikuValidator.judge = async () => ({ verdict: null, code: 'rate_limited' });
+  try {
+    const res = await submitAnswer(makeGame(), 'p1', 'afdsaada');
+    assert.equal(res.code, 'rate_limited');
+    assert.notEqual(res.code, 'judge_yes', 'the cap may never present itself as a verdict');
+  } finally {
+    haikuValidator.isEnabled = orig.isEnabled;
+    haikuValidator.judge = orig.judge;
+  }
+});
+
+test('endRound reveals a judgement per answer, in the same order as answers', async () => {
+  const orig = { isEnabled: haikuValidator.isEnabled, judge: haikuValidator.judge };
+  haikuValidator.isEnabled = () => true;
+  haikuValidator.judge = async () => ({
+    verdict: null, code: 'judge_unavailable', detail: 'http_401', httpStatus: 401,
+  });
+  try {
+    const game = makeGame();
+    await submitAnswer(game, 'p1', 'pepperoni'); // list hit
+    await submitAnswer(game, 'p1', 'afdsaada'); // judge down
+
+    const round = endRound(game);
+    const me = round.playerResults.find((r) => r.id === 'p1');
+    assert.deepEqual(me.answers, ['pepperoni', 'afdsaada']);
+    assert.equal(me.judgements.length, me.answers.length, 'one judgement per answer');
+    assert.equal(me.judgements[0].code, 'list_hit');
+    assert.equal(me.judgements[0].answer, 'pepperoni');
+    assert.equal(me.judgements[1].code, 'judge_unavailable');
+    assert.equal(me.judgements[1].httpStatus, 401, 'the reveal can say WHICH failure');
+  } finally {
+    haikuValidator.isEnabled = orig.isEnabled;
+    haikuValidator.judge = orig.judge;
+  }
+});
+
+test('judgements are cleared with answers when the next round starts', async () => {
+  const game = makeGame();
+  await submitAnswer(game, 'p1', 'pepperoni');
+  assert.equal(game.players[0].answerJudgements.length, 1);
+  endRound(game);
+  startNextRound(game);
+  assert.deepEqual(game.players[0].answers, []);
+  assert.deepEqual(game.players[0].answerJudgements, [], 'judgements must not leak rounds');
+});
+
+test('the fail-open policy lives in exactly one exported switch', () => {
+  // If this flips, scoring changed - which this branch deliberately does not do.
+  assert.equal(logic.ACCEPT_WITHOUT_VERDICT, true);
+  assert.deepEqual(Object.values(logic.ANSWER_CODES).sort(), [
+    'judge_no', 'judge_unavailable', 'judge_yes', 'list_hit', 'rate_limited',
+  ]);
+});
+

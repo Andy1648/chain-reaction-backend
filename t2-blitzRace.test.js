@@ -27,16 +27,21 @@ const haikuValidator = require('./haikuValidator');
 
 const { createGame, endRound, startNextRound, rerollCategory } = blitz;
 
-const realValidate = haikuValidator.validate;
+const realJudge = haikuValidator.judge;
 const realIsEnabled = haikuValidator.isEnabled;
 
+// Tests here pass a validate-shaped impl (async -> boolean); adapt it to the judge()
+// contract so the race scenarios keep reading the way they did.
 function patchValidator(validateImpl) {
   haikuValidator.isEnabled = () => true;
-  haikuValidator.validate = validateImpl;
+  haikuValidator.judge = async (category, answer, playerId) => {
+    const ok = await validateImpl(category, answer, playerId);
+    return ok ? { verdict: true, code: 'judge_yes' } : { verdict: false, code: 'judge_no' };
+  };
 }
 
 function restoreValidator() {
-  haikuValidator.validate = realValidate;
+  haikuValidator.judge = realJudge;
   haikuValidator.isEnabled = realIsEnabled;
 }
 
