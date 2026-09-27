@@ -20,9 +20,11 @@
 const fuseMode = require('./t5FuseMode');
 const letterStormMode = require('./t5LetterStormMode');
 const herdMindMode = require('./t5HerdMindMode');
+// WORD RACE rides the same plugin hooks (additive: its own game type + messages).
+const wordRaceMode = require('./wordRaceMode');
 
 const MODES = {};
-for (const mode of [fuseMode, letterStormMode, herdMindMode]) {
+for (const mode of [fuseMode, letterStormMode, herdMindMode, wordRaceMode]) {
   MODES[mode.gameType] = mode;
 }
 
@@ -31,6 +33,8 @@ for (const mode of [fuseMode, letterStormMode, herdMindMode]) {
 const ERROR_MESSAGES = {
   not_holding_bomb: "You're not holding the bomb.",
   submission_pending: 'Your last word is still being checked - one at a time!',
+  not_a_racer: "You're not in this race.",
+  not_a_race_room: 'That room is not a Word Race.',
 };
 
 module.exports = { MODES, ERROR_MESSAGES };
