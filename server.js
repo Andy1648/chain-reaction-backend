@@ -93,6 +93,8 @@ const {
 // [T5] Experimental mode registry: extra gameTypes accepted by set_game_type
 // and extra error strings consulted by humanizeError. See t5Modes.js.
 const { MODES: T5_MODES, ERROR_MESSAGES: T5_ERROR_MESSAGES } = require('./t5Modes');
+// WORD RACE quick-match queue (additive: its own messages, see wordRaceMatch.js).
+const wordRaceMatch = require('./wordRaceMatch');
 
 // Pre-warm the dictionary cache with our starter words so the very first
 // move of any game doesn't depend on the Dictionary API being reachable.
@@ -677,6 +679,59 @@ wss.on('connection', (ws) => {
           if (!room) return;
           removePlayer(room, ws.id);
           connectionToRoomCode.delete(ws.id);
+          break;
+        }
+
+        // WORD RACE quick-match: join the fullest waiting race room or open one.
+        // Same join + create throttles and room-hop cleanup as quick_play.
+        case 'race_quick_match': {
+          if (!allowJoin(ws)) {
+            sendError(ws, humanizeError('rate_limited'), 'race_quick_match');
+            return;
+          }
+          const name = sanitizeName(payload?.name);
+          leaveCurrentRoom(ws);
+          const result = wordRaceMatch.quickMatch(ws, name, () => allowCreateRoom(ws));
+          if (result.error) {
+            sendError(ws, humanizeError(result.error), 'race_quick_match');
+            return;
+          }
+          const room = result.room;
+          connectionToRoomCode.set(ws.id, room.code);
+          T5_MODES['word-race'].setPace(room, ws.id, payload?.pace);
+          send(ws, result.created ? 'room_created' : 'room_joined', { code: room.code });
+          broadcastToRoom(room, buildRoomUpdatePayload(room));
+          wordRaceMatch.afterJoin(room);
+          break;
+        }
+
+        // WORD RACE: the host seats an extra bot racer in the lobby.
+        case 'race_add_bot': {
+          const room = getRoomForConnection(ws);
+          if (!room) return;
+          if (room.hostId !== ws.id) {
+            sendError(ws, 'Only the host can add a bot.', 'race_add_bot');
+            return;
+          }
+          const result = T5_MODES['word-race'].addLobbyBot(room);
+          if (result.error) {
+            sendError(ws, humanizeError(result.error), 'race_add_bot');
+            return;
+          }
+          broadcastToRoom(room, buildRoomUpdatePayload(room));
+          break;
+        }
+
+        // WORD RACE: a racer reports their recent ms/word so launch-time bots can
+        // be paced to them. Lobby-only; silently ignored outside a race room.
+        case 'race_pace': {
+          const room = getRoomForConnection(ws);
+          if (!room) return;
+          if (room.gameType !== 'word-race') {
+            sendError(ws, humanizeError('not_a_race_room'), 'race_pace');
+            return;
+          }
+          T5_MODES['word-race'].setPace(room, ws.id, payload?.pace);
           break;
         }
 
