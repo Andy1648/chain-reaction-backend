@@ -333,14 +333,30 @@ function isBoundedCategory(category) {
   }
   return longCount / set.size <= MAX_LONG_ANSWER_RATIO;
 }
-// QUARANTINED — un-enumerable, re-enable after judge fix.
+// QUARANTINED — un-enumerable.
 // These categories have an OPEN-ENDED / subjective answer space (no finite set of
-// NAMED things), so almost every reasonable answer misses the Stage-1 accept-list
-// and falls through to the Haiku judge — which currently FAILS CLOSED (rejects on
-// timeout / rate-limit / error), killing valid answers. They are pulled from the
-// active pool (filtered out below) but NOT deleted: the category names stay right
-// here and their accept-lists stay on disk in categoryAnswers/*, so re-enabling one
-// is just deleting its line from this set.
+// NAMED things), so almost every reasonable answer misses the Stage-1 accept-list and
+// falls through to the Haiku judge.
+//
+// CORRECTED 2026-09-23 (fix/blitz-failopen-honesty). This comment used to say the judge
+// "currently FAILS CLOSED (rejects on timeout / rate-limit / error), killing valid
+// answers". THAT IS THE OPPOSITE OF WHAT IT DOES. haikuValidator FAILS OPEN: the only
+// thing that has ever rejected an answer is a genuine model "no", and every infra
+// failure — dead key, 401, 429, timeout, network, garbled reply, over the rate cap —
+// ACCEPTS. The validator was flipped to fail-open and this note was never updated, so the
+// file has been describing the reverse of its own behaviour to everyone who read it.
+//
+// The live consequence, measured against production on 2026-09-23: the key IS set, the
+// judge IS called, and it returns an HTTP error in ~140ms on every call, so EVERY
+// list-miss is accepted without a verdict — "afdsaada" scores. These categories are
+// therefore NOT quarantined because the judge is too harsh on them; they are quarantined
+// because their answer space cannot be enumerated by a list, which matters whichever way
+// the judge fails. Keep them out until the judge genuinely works or their lists can
+// stand alone.
+//
+// They are pulled from the active pool (filtered out below) but NOT deleted: the category
+// names stay right here and their accept-lists stay on disk in categoryAnswers/*, so
+// re-enabling one is just deleting its line from this set.
 //
 // NOTE: the quarantine is applied HERE, at the play pool, NOT by dropping the
 // expansion/expansion2 accept-list imports in categoryAnswers.js. Those files are
@@ -400,9 +416,12 @@ const QUARANTINED_CATEGORIES = new Set([
   // ---- AUTO-QUARANTINED: bottom 25% by accept-list size (leeway pass) ----
   // The 147 smallest playable categories by pre-generated accept-list size (0..16
   // entries). A tiny accept-list means almost every reasonable answer misses Stage 1
-  // and falls to the AI judge — the exact path that fails closed when the key/billing
-  // is down — so these read as "the judge rejects everything" and/or run dry fast in a
-  // 30s race. Pulled from rotation (reversible: their accept-lists stay on disk; delete
+  // and falls to the AI judge. (CORRECTED 2026-09-23: this used to say that path "fails
+  // closed when the key/billing is down", so these read as "the judge rejects
+  // everything". It fails OPEN — with the key down these categories accept everything,
+  // including gibberish. The reason to keep them out is unchanged and is the second half
+  // below: a list this thin runs dry in a 30s race and leaves the round to a judge that
+  // is not currently answering.) Pulled from rotation (reversible: their accept-lists stay on disk; delete
   // a line here to re-enable). Several 0-size entries are KEY-CASE MISMATCHES with
   // categoryAnswers/* (e.g. "Pixar Movies" vs "Pixar movies"), which also read as empty.
   "Active volcanoes", // 0
@@ -781,6 +800,12 @@ function createGame(players, difficultyKey, solo = false, selectedPacks = null, 
       id: p.id,
       name: p.name,
       answers: [], // answers for the CURRENT round only (cleared each round)
+      // WHY each of those answers landed, same order, same length (fix/blitz-failopen-honesty).
+      // Kept PARALLEL to `answers` rather than replacing it with objects: `answers` is read as
+      // an array of strings by the dupe check, the bot, buildSampleAnswers, the payloads and a
+      // dozen tests, and changing its shape to thread metadata would be a much larger blast
+      // radius than the problem deserves. See ANSWER_CODES.
+      answerJudgements: [],
       score: 0, // cumulative across all rounds
     })),
     usedCategories: new Set([firstCategory]), // so categories never repeat
@@ -804,6 +829,52 @@ function createGame(players, difficultyKey, solo = false, selectedPacks = null, 
  * Returns { accepted: true, answer, playerId } or
  *         { accepted: false, reason, playerId }.
  */
+/* ===================== ANSWER OUTCOME CODES ===================== */
+// WHY an answer was accepted or rejected, recorded per answer and carried to the
+// round-end reveal. (fix/blitz-failopen-honesty)
+//
+// The bug this exists to prevent: `judge_no` and `judge_unavailable` were the same
+// observable outcome. A dead API key produced exactly what a working judge produced,
+// so a completely non-functioning judge looked normal for weeks. These codes are the
+// difference between "the judge rejected this" and "the judge never ran".
+//
+//   list_hit          on the pre-generated accept-list (or its head word - `via`
+//                     says which). Instant, free, no judge involved.
+//   judge_yes         the model was asked and said yes.
+//   judge_no          the model was asked and said no. The ONLY real rejection.
+//   judge_unavailable the judge could not answer - no key, HTTP error (httpStatus
+//                     carries 401/429/5xx), timeout, network, garbled reply.
+//   rate_limited      the per-player cap meant we never asked.
+//
+// The last two mean NOBODY JUDGED THE ANSWER. What happens to it then is
+// ACCEPT_WITHOUT_VERDICT below - the one and only policy switch.
+const ANSWER_CODES = Object.freeze({
+  LIST_HIT: 'list_hit',
+  JUDGE_YES: 'judge_yes',
+  JUDGE_NO: 'judge_no',
+  JUDGE_UNAVAILABLE: 'judge_unavailable',
+  RATE_LIMITED: 'rate_limited',
+});
+
+// THE POLICY SWITCH, and the only one. When the judge produced no verdict
+// (judge_unavailable / rate_limited), does the answer stand?
+//
+// TRUE today - UNCHANGED BEHAVIOUR. This branch deliberately does not touch scoring:
+// a list-miss still ends up accepted exactly as it does on main. What changed is that
+// the accept is now attributable - it is recorded as "nobody judged this", not as a
+// model "yes" - so the reveal, the logs and any future policy flip have something
+// honest to read. Flipping this to false is the whole of the fail-closed change, and
+// it must not be flipped while the judge is erroring on every call and the accept-lists
+// are seed-sized: it would reject nearly every real answer. See the play-test notes.
+const ACCEPT_WITHOUT_VERDICT = true;
+
+// Append one answer's outcome to the player's parallel judgement log. Tolerates a
+// player object built before this field existed (older saved games / test fixtures).
+function recordJudgement(player, answer, outcome) {
+  if (!Array.isArray(player.answerJudgements)) player.answerJudgements = [];
+  player.answerJudgements.push({ answer, ...outcome });
+}
+
 async function submitAnswer(game, playerId, rawAnswer, opts = {}) {
   // Normalize for lookup: trim, then lowercase. Accept-list entries are all
   // stored lowercase, so this is a case-insensitive match.
@@ -861,6 +932,9 @@ async function submitAnswer(game, playerId, rawAnswer, opts = {}) {
   // pre-generated, so we ask the AI judge next.
   const validAnswers = answersFor(judgeCategory);
   const onAcceptList = !!validAnswers && validAnswers.has(normalized);
+  // How this answer resolved, filled in by whichever stage decides it. Defaults to the
+  // list hit; Stage 2 overwrites it with the judge's code when the list misses.
+  let outcome = { code: ANSWER_CODES.LIST_HIT, via: 'list' };
 
   // Stage 1.5: compound leniency. The head noun of an English compound is its
   // LAST word - "socket wrench" IS a wrench, "ball-peen hammer" IS a hammer - so
@@ -874,6 +948,7 @@ async function submitAnswer(game, playerId, rawAnswer, opts = {}) {
     if (tokens.length >= 2) {
       const head = tokens[tokens.length - 1];
       compoundHeadHit = head.length >= 3 && validAnswers.has(head);
+      if (compoundHeadHit) outcome = { code: ANSWER_CODES.LIST_HIT, via: 'compound' };
     }
   }
 
@@ -890,12 +965,34 @@ async function submitAnswer(game, playerId, rawAnswer, opts = {}) {
       const roundAtSubmit = liveRound;
       const categoryAtSubmit = judgeCategory;
 
-      // Tell the client we're checking, THEN await the judge (fail-OPEN,
-      // 3s-timeout, rate-limited - all handled inside validate()).
+      // Tell the client we're checking, THEN await the judge. judge() returns a VERDICT
+      // (true / false / null-for-no-verdict) plus the code saying which; it no longer
+      // decides anything on our behalf.
       if (typeof opts.onAiCheck === 'function') opts.onAiCheck();
-      const aiAccepted = await haikuValidator.validate(categoryAtSubmit, answer, playerId);
-      if (!aiAccepted) {
-        return { accepted: false, reason: 'not_in_category', playerId };
+      const ruling = await haikuValidator.judge(categoryAtSubmit, answer, playerId);
+      outcome = {
+        code: ruling.code,
+        via: 'judge',
+        ...(ruling.httpStatus != null ? { httpStatus: ruling.httpStatus } : {}),
+        ...(ruling.detail ? { detail: ruling.detail } : {}),
+        ...(ruling.cached ? { cached: true } : {}),
+      };
+
+      // A REAL "no" is the only thing that has ever rejected an answer here, and it
+      // still is. `reason` stays 'not_in_category' so the existing client copy
+      // (GameScreen.jsx: "DOESN'T FIT THE CATEGORY") is untouched; `code` rides
+      // alongside it so a later build can say something different for a judge that
+      // never ran without another protocol change.
+      if (ruling.verdict === false) {
+        recordJudgement(player, answer, outcome);
+        return { accepted: false, reason: 'not_in_category', code: outcome.code, playerId };
+      }
+
+      // NO VERDICT (judge_unavailable / rate_limited). One switch decides, and it is
+      // not this line - see ACCEPT_WITHOUT_VERDICT. Today it accepts, unchanged.
+      if (ruling.verdict === null && !ACCEPT_WITHOUT_VERDICT) {
+        recordJudgement(player, answer, outcome);
+        return { accepted: false, reason: 'not_in_category', code: outcome.code, playerId };
       }
 
       // RACE GUARD check: if the round this answer belonged to is no longer the
@@ -921,9 +1018,10 @@ async function submitAnswer(game, playerId, rawAnswer, opts = {}) {
   }
 
   player.answers.push(answer);
+  recordJudgement(player, answer, outcome);
   player.score += 1;
 
-  return { accepted: true, answer, playerId };
+  return { accepted: true, answer, code: outcome.code, playerId };
 }
 
 // How many sample acceptable answers to reveal at round end, so players who
@@ -967,6 +1065,11 @@ function endRound(game) {
       id: p.id,
       name: p.name,
       answers: [...p.answers],
+      // Same order and length as `answers`: why each one counted. The reveal is the
+      // one place a player sees the round adjudicated, so it is the place that has to
+      // be able to say "we could not verify this" instead of silently implying a judge
+      // agreed. `answers` is unchanged for every existing consumer.
+      judgements: [...(p.answerJudgements || [])],
       roundScore: p.answers.length,
     })),
     sampleAnswers: buildSampleAnswers(game),
@@ -997,6 +1100,7 @@ function startNextRound(game) {
   game.usedCategories.add(category);
   game.players.forEach((p) => {
     p.answers = [];
+    p.answerJudgements = [];
   });
   game.status = 'in_progress';
 
@@ -1027,6 +1131,7 @@ function rerollCategory(game) {
     p.score -= p.answers.length;
     if (p.score < 0) p.score = 0;
     p.answers = [];
+    p.answerJudgements = [];
   });
   const category = pickRandomCategory(game.usedCategories, game.selectedPacks);
   game.currentCategory = category;
@@ -1076,4 +1181,7 @@ module.exports = {
   CATEGORY_TIER,
   TIER_POOLS,
   TIER_WEIGHTS,
+  // Answer-outcome vocabulary + the single fail-open/fail-closed switch.
+  ANSWER_CODES,
+  ACCEPT_WITHOUT_VERDICT,
 };

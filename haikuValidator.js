@@ -4,44 +4,97 @@
 // lists in categoryAnswers.js resolve the common answers first, instantly and
 // for free); this judges the creative/uncommon-but-possibly-valid answers.
 //
-// Design decisions (per the product spec):
-//   - FAIL OPEN. The ONLY thing that rejects an answer is a genuine model "no".
-//     Every INFRA failure - timeout, network error, HTTP 429 (quota), 401/403
-//     (bad key / billing), any other non-2xx, an unparseable/empty reply, or the
-//     per-player rate cap - ACCEPTS the answer. Rationale: a false accept costs
-//     nothing in a party game, but a false reject makes the game look broken (and
-//     a dead key / spent quota would otherwise reject EVERY list-miss). This
-//     reverses the earlier fail-closed contract.
-//   - LOG THE ERROR TYPE. Each infra fail-open is logged (console.warn) with its
-//     type, so a burst of them in the logs clearly distinguishes "the judge is
-//     degraded and waving everything through" from real model "no" rejections.
+// THIS MODULE REPORTS VERDICTS. IT DOES NOT SET POLICY. (fix/blitz-failopen-honesty)
+// That split is the point of this file's current shape. `judge()` returns one of
+// three things and never guesses:
+//     verdict === true   the model said yes
+//     verdict === false  the model said no
+//     verdict === null   THERE IS NO VERDICT - nobody judged this answer
+// and a `code` saying exactly which of those happened and why:
+//     judge_yes | judge_no | judge_unavailable (+ httpStatus/detail) | rate_limited
+// What to DO with a null verdict is the caller's decision, made in exactly one
+// place (categoryBlitzLogic.js). Today that policy is still FAIL OPEN - a null
+// verdict is accepted - which is unchanged by this file. The difference is that
+// an infra failure can no longer masquerade as a model "yes": it is reported as
+// the absence of a verdict, so the logs, the submit result and the round-end
+// reveal can all tell "the judge rejected this" apart from "the judge never ran".
+// Conflating those two is why a dead API key went unnoticed for weeks.
+//
+// `validate()` is kept as a thin boolean wrapper over `judge()` for callers that
+// only want the fail-open answer; it is byte-for-byte the old contract
+// (reject ONLY on a genuine model "no").
+//
 //   - HARD 3s TIMEOUT. A slow API never blocks gameplay; past 3s we abort and
-//     ACCEPT (fail open).
-//   - PER-PLAYER RATE LIMIT (10 calls / rolling minute). Still protects API
-//     credits by NOT calling the API over the cap - but now ACCEPTS rather than
-//     rejects, so a fast player is never wrongly told a valid answer is wrong.
-//   - KEY IS ENV-ONLY (ANTHROPIC_API_KEY). Never hardcoded. When it's unset the
-//     whole fallback is disabled (see isEnabled) and the caller keeps the
-//     list-only behaviour (which also ACCEPTS list-misses) instead of calling this.
+//     report judge_unavailable (no verdict).
+//   - VERDICT CACHE. A (category, answer) pair the model has already ruled on is
+//     reused instead of re-asked. It costs no API call and - critically - takes no
+//     rate-limit slot, so a REAL "no" keeps rejecting the same junk even after a
+//     player runs past the cap. This is what stops the cap from laundering a "no"
+//     into a "yes" (see RATE_LIMIT_PER_MIN below).
+//   - PER-PLAYER RATE LIMIT. Protects API credits from a scripted abuser. It no
+//     longer manufactures an accept: over the cap we return NO VERDICT
+//     (rate_limited), we do not claim the model said yes.
+//   - KEY IS ENV-ONLY (ANTHROPIC_API_KEY). Never hardcoded. When it is unset the
+//     fallback is disabled (see isEnabled) and the caller keeps list-only
+//     behaviour; a direct call without a key reports judge_unavailable/no_key.
 //
 // Uses the global fetch + AbortController (Node 18+, matching package.json
-// engines and the existing aiValidator.js), so there's no SDK dependency.
+// engines), so there's no SDK dependency.
 
 const ANTHROPIC_API_URL = 'https://api.anthropic.com/v1/messages';
 const MODEL = 'claude-haiku-4-5-20251001';
-const TIMEOUT_MS = 3000; // hard cap on the API call; slower than this -> reject
+const TIMEOUT_MS = 3000; // hard cap on the API call; slower than this -> no verdict
 const MAX_TOKENS = 10; // we only need "yes"/"no"
-const RATE_LIMIT_PER_MIN = 10; // max AI calls per player per rolling 60s
+// THE CAP WAS 10/MIN AND THAT WAS INSIDE REAL HUMAN RANGE. A Blitz round is 30s and a
+// fast player types 10-15 answers in it; on a thin accept-list most of those are
+// list-misses, so an honest player hit the cap MID-ROUND and everything after it was
+// waved through. A cap that fires during normal play is not protecting credits, it is
+// deciding correctness by typing speed. 30/min sits above any human's list-miss rate
+// while still stopping a scripted abuser, and the verdict cache below means repeats
+// (the actual abuse shape) cost neither a call nor a slot.
+const RATE_LIMIT_PER_MIN = 30; // max NEW AI calls per player per rolling 60s
 const RATE_WINDOW_MS = 60000;
+// Verdict cache: "category\u0000answer" -> { verdict: boolean, at: ms }. Only REAL model
+// verdicts are stored; a null verdict is never cached (we would be caching an outage).
+const VERDICT_TTL_MS = 10 * 60 * 1000;
+const VERDICT_CACHE_MAX = 5000;
+const verdictCache = new Map();
 
-// Log every INFRA fail-open with its error type, so the logs distinguish a
-// degraded judge (dead key, spent quota, timeouts) from real model "no" verdicts.
-// A genuine "no" and a healthy "yes" are NOT logged (normal outcomes) - only the
-// fail-open paths, where each line names WHY we accepted without a real verdict.
-// Always on (not DEBUG-gated): a burst of these IS the alarm that the judge is down.
-function logInfraFailOpen(type, answer, extra = '') {
+function cacheKey(category, answer) {
+  return `${String(category).toLowerCase()}\u0000${String(answer).trim().toLowerCase()}`;
+}
+function cacheGet(category, answer) {
+  const k = cacheKey(category, answer);
+  const hit = verdictCache.get(k);
+  if (!hit) return null;
+  if (Date.now() - hit.at > VERDICT_TTL_MS) {
+    verdictCache.delete(k);
+    return null;
+  }
+  // Refresh recency (Map preserves insertion order, so re-set moves it to the end).
+  verdictCache.delete(k);
+  verdictCache.set(k, hit);
+  return hit;
+}
+function cacheSet(category, answer, verdict) {
+  const k = cacheKey(category, answer);
+  verdictCache.delete(k);
+  verdictCache.set(k, { verdict, at: Date.now() });
+  // Bounded: drop the least recently used entries once over the cap.
+  while (verdictCache.size > VERDICT_CACHE_MAX) {
+    verdictCache.delete(verdictCache.keys().next().value);
+  }
+}
+
+// Log every NO-VERDICT outcome with its type, so the logs distinguish a degraded
+// judge (dead key, spent quota, timeouts) from real model "no" verdicts. A genuine
+// "no" and a healthy "yes" are NOT logged (normal outcomes) - only the paths where
+// nobody actually judged the answer. Always on (not DEBUG-gated): a burst of these
+// IS the alarm that the judge is down, and it is the alarm that did not get heard
+// last time because the wording implied a decision had been made.
+function logNoVerdict(type, answer, extra = '') {
   console.warn(
-    `[haikuValidator] FAIL-OPEN (${type}) - accepting "${answer}" without a model verdict${extra ? ` - ${extra}` : ''}`
+    `[haikuValidator] NO VERDICT (${type}) - "${answer}" was never judged${extra ? ` - ${extra}` : ''}`
   );
 }
 
@@ -103,28 +156,49 @@ Reply with only one word: "yes" to accept, or "no" to reject.`;
 }
 
 /**
- * Judge one answer with Claude Haiku. Returns a boolean, FAIL OPEN:
- *   false -> reject: ONLY when the model gives a genuine "no".
- *   true  -> accept: the model said "yes", OR any infra failure (no key, rate
- *            cap, HTTP error / 429 quota / 401-403 billing, timeout, network
- *            error, unparseable reply). Infra fail-opens are logged with their type.
+ * Judge one answer with Claude Haiku. Returns a VERDICT, never a policy decision:
+ *
+ *   { verdict: true,  code: 'judge_yes' }                      the model said yes
+ *   { verdict: false, code: 'judge_no' }                       the model said no
+ *   { verdict: null,  code: 'judge_unavailable', httpStatus }  nobody judged it
+ *   { verdict: null,  code: 'rate_limited' }                   nobody judged it
+ *
+ * A null verdict means THERE IS NO VERDICT. It is not an accept and not a reject -
+ * deciding what to do with it is the caller's job (categoryBlitzLogic.js), which is
+ * the one place the fail-open/fail-closed policy lives.
+ *
+ * `cached: true` marks a verdict reused from a previous identical (category, answer)
+ * ruling. Cached verdicts are checked BEFORE the rate limit on purpose: that is what
+ * lets a real "no" keep rejecting the same junk after a player runs past the cap.
  *
  * `playerId` keys the per-player rate limit.
  */
-async function validate(category, answer, playerId) {
+async function judge(category, answer, playerId) {
   const apiKey = process.env.ANTHROPIC_API_KEY;
-  // Defensive: callers gate on isEnabled(). If somehow called without a key we
-  // have no judge - fail open (accept) rather than reject a possibly-valid answer.
+  // Defensive: callers gate on isEnabled(). Without a key there is no judge at all.
   if (!apiKey) {
-    logInfraFailOpen('no_key', answer);
-    return true;
+    logNoVerdict('no_key', answer);
+    return { verdict: null, code: 'judge_unavailable', detail: 'no_key', httpStatus: null };
+  }
+
+  // CACHE FIRST, BEFORE THE RATE LIMIT. A pair the model has already ruled on costs
+  // no call and no slot, so the cap can never downgrade a known "no" into "we did not
+  // check" - which was the exploit: spam the same junk past 10/min and it all landed.
+  const hit = cacheGet(category, answer);
+  if (hit) {
+    return {
+      verdict: hit.verdict,
+      code: hit.verdict ? 'judge_yes' : 'judge_no',
+      httpStatus: null,
+      cached: true,
+    };
   }
 
   if (!underRateLimit(playerId)) {
-    // Over the per-player cap: skip the API (protects credits) but ACCEPT - a fast
-    // player must never be told a valid answer is wrong just for answering quickly.
-    logInfraFailOpen('rate_limited', answer, `player ${playerId}`);
-    return true;
+    // Over the per-player cap: skip the API (protects credits) and report that NOBODY
+    // JUDGED THIS. We do not claim a "yes" we never got.
+    logNoVerdict('rate_limited', answer, `player ${playerId}`);
+    return { verdict: null, code: 'rate_limited', httpStatus: null };
   }
 
   const controller = new AbortController();
@@ -147,25 +221,58 @@ async function validate(category, answer, playerId) {
 
     if (!res.ok) {
       // 429 = quota/rate, 401/403 = bad key / billing not set up, 5xx = outage.
-      // None of these are the player's fault - fail open (accept).
-      logInfraFailOpen(`http_${res.status}`, answer);
-      return true;
+      // The STATUS is carried through so the caller and the logs can say which.
+      logNoVerdict(`http_${res.status}`, answer);
+      return { verdict: null, code: 'judge_unavailable', detail: `http_${res.status}`, httpStatus: res.status };
     }
 
     const data = await res.json();
     const text = (data.content?.[0]?.text || '').trim().toLowerCase();
-    // The ONE and only rejection path: a genuine model "no".
-    if (text.startsWith('no')) return false;
-    if (text.startsWith('yes')) return true;
-    // Empty / refusal / garbled: not a real verdict - fail open (accept).
-    logInfraFailOpen('unparseable', answer, `reply="${text}"`);
-    return true;
+    if (text.startsWith('no')) {
+      cacheSet(category, answer, false);
+      return { verdict: false, code: 'judge_no', httpStatus: res.status };
+    }
+    if (text.startsWith('yes')) {
+      cacheSet(category, answer, true);
+      return { verdict: true, code: 'judge_yes', httpStatus: res.status };
+    }
+    // Empty / refusal / garbled: not a real verdict. Never cached.
+    logNoVerdict('unparseable', answer, `reply="${text}"`);
+    return { verdict: null, code: 'judge_unavailable', detail: 'unparseable', httpStatus: res.status };
   } catch (err) {
-    logInfraFailOpen(err.name === 'AbortError' ? 'timeout' : 'network', answer, err.message);
-    return true; // fail open on timeout / network error
+    const detail = err.name === 'AbortError' ? 'timeout' : 'network';
+    logNoVerdict(detail, answer, err.message);
+    return { verdict: null, code: 'judge_unavailable', detail, httpStatus: null };
   } finally {
     clearTimeout(timer);
   }
 }
 
-module.exports = { validate, isEnabled, buildPrompt, MODEL, RATE_LIMIT_PER_MIN, TIMEOUT_MS };
+/**
+ * Boolean, FAIL-OPEN view of judge() - the original contract, unchanged:
+ *   false -> ONLY when the model gave a genuine "no"
+ *   true  -> the model said yes, OR there is no verdict at all
+ * Kept for callers that only want the yes/no. New code should prefer judge(), whose
+ * `code` says whether anybody actually made a decision.
+ */
+async function validate(category, answer, playerId) {
+  const { verdict } = await judge(category, answer, playerId);
+  return verdict !== false;
+}
+
+/** Test seam: drop every cached verdict. */
+function _resetVerdictCache() {
+  verdictCache.clear();
+}
+
+module.exports = {
+  judge,
+  validate,
+  isEnabled,
+  buildPrompt,
+  MODEL,
+  RATE_LIMIT_PER_MIN,
+  TIMEOUT_MS,
+  VERDICT_TTL_MS,
+  _resetVerdictCache,
+};

@@ -17,10 +17,12 @@ const haikuValidator = require('./haikuValidator');
 
 const { createGame, submitAnswer, endRound, startNextRound, getScoreboard } = blitz;
 
-const realValidate = haikuValidator.validate;
+// The seam is judge(), not validate(): submitAnswer consults judge() so it can tell a
+// model "no" apart from "the judge never ran" (fix/blitz-failopen-honesty).
+const realJudge = haikuValidator.judge;
 const realIsEnabled = haikuValidator.isEnabled;
 function restore() {
-  haikuValidator.validate = realValidate;
+  haikuValidator.judge = realJudge;
   haikuValidator.isEnabled = realIsEnabled;
 }
 
@@ -34,9 +36,9 @@ test('compound answer with a listed HEAD noun is accepted without the AI judge',
   // and we can prove the compound was accepted BEFORE the judge.
   let aiCalls = 0;
   haikuValidator.isEnabled = () => true;
-  haikuValidator.validate = async () => {
+  haikuValidator.judge = async () => {
     aiCalls += 1;
-    return false;
+    return { verdict: false, code: 'judge_no' };
   };
 
   try {
