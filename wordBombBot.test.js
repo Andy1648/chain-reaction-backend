@@ -117,3 +117,73 @@ test('word list loads, is sizable, and excludes proper nouns / place names', () 
     assert.ok(!wordSet.has(banned), `bot pool still contains "${banned}"`);
   }
 });
+
+// ---- visible choke (fumble) ------------------------------------------------------------------
+{
+  const { test: t } = require('node:test');
+  const assert = require('node:assert/strict');
+  const bot = require('./wordBombBot');
+  const { fumblePlan, deadEndAttempt, isAnswerPrefix, FUMBLE_GAP_MS, FUMBLE_MAX_TRIES, FUMBLE_TYPE_MS, SAFETY_MARGIN_MS } = bot;
+  // Each attempt's full text = the step right before the first backspace.
+  const attemptsOf = (plan) => plan.filter((s, i) => plan[i + 1] && plan[i + 1].text.length < s.text.length && s.text.length > 0 && (i === 0 || plan[i - 1].text.length < s.text.length)).map((s) => s.text);
+  const startsOf = (plan) => plan.filter((s, i) => s.text.length === 1 && (i === 0 || plan[i - 1].text === ''));
+
+  t('fumblePlan: letters type in one at a time, hold, backspace out; attempts span the whole turn', () => {
+    const plan = fumblePlan(['ANX', 'DIZ', 'PEQ'], 3000, 20);
+    assert.deepEqual(plan.slice(0, 6).map((s) => s.text), ['A', 'AN', 'ANX', 'AN', 'A', '']);
+    assert.equal(plan[1].at - plan[0].at, FUMBLE_TYPE_MS);
+    const starts = startsOf(plan);
+    assert.equal(starts.length, 5); // 3000..15000; an 18000 start would finish at 19190 > 19100
+    starts.forEach((s, k) => assert.equal(s.at, 3000 + k * FUMBLE_GAP_MS));
+    for (const s of plan) assert.ok(s.at <= 20000 - SAFETY_MARGIN_MS);
+    assert.ok(starts.length <= FUMBLE_MAX_TRIES);
+  });
+
+  t('fumblePlan: consecutive attempts differ; short turns get fewer tries', () => {
+    const a = attemptsOf(fumblePlan(['ABC', 'ABC', 'XYZ'], 2000, 20));
+    assert.ok(a.length >= 2);
+    for (let k = 1; k < a.length; k++) assert.notEqual(a[k], a[k - 1]);
+    const tight = fumblePlan(['ANX', 'DIZ'], 5000, 7);
+    for (const s of tight) assert.ok(s.at <= 7000 - SAFETY_MARGIN_MS, JSON.stringify(s));
+    assert.equal(startsOf(tight).length, 0); // 5000 + 3*140 + 500 + 3*90 = 6190 > 6100
+    assert.deepEqual(fumblePlan([null, undefined], 1000, 20), []);
+  });
+
+  t('isAnswerPrefix is fast: 1,000 checks well under 50 ms once warm', () => {
+    bot.warmFumbleIndex();
+    const t0 = Date.now();
+    for (let i = 0; i < 1000; i++) isAnswerPrefix(['inx', 'sta', 'qu', 'zz', 'ing'][i % 5], ['in', 'ing', 're', 'er', 'st'][i % 5]);
+    assert.ok(Date.now() - t0 < 50, `${Date.now() - t0} ms`);
+    assert.equal(isAnswerPrefix('st', 'ing'), true); // string, sting...
+    assert.equal(isAnswerPrefix('zq', 'ing'), false);
+  });
+
+  t('NO FREE ANSWERS: no dead-end attempt is the start of any valid word containing the fragment', () => {
+    const combos = ['nc', 'ing', 'ou', 'et', 'com', 'ri', 'tion', 'ab', 'pl', 'st', 'ea', 'ght', 'qu', 'ss', 'er', 'an', 'ive', 'ly'];
+    let checked = 0;
+    for (const c of combos) {
+      for (let i = 0; i < 20; i++) {
+        const seed = bot.pickWord(c, []);
+        if (!seed) continue;
+        const attempt = deadEndAttempt(seed, c);
+        assert.ok(attempt, `no dead end for ${c}/${seed}`);
+        assert.ok(attempt.length >= 2 && attempt.length <= 4, attempt);
+        assert.equal(isAnswerPrefix(attempt, c), false, `${attempt} is a prefix of a valid ${c} word`);
+        checked++;
+      }
+    }
+    assert.ok(checked > 200);
+  });
+}
+
+// Batch A (Andy oct2): the bot feels the fuse — median human vs MEDIUM lands at ~51% (was 18.6%).
+test('missChance: MEDIUM is 5% on a full 20 s fuse, 13% at 8 s and below, linear between', () => {
+  const near = (a, b) => Math.abs(a - b) < 1e-9;
+  assert.ok(near(bot.missChance('medium', 20), 0.05));
+  assert.ok(near(bot.missChance('medium', 25), 0.05));
+  assert.ok(near(bot.missChance('medium', 8), 0.13));
+  assert.ok(near(bot.missChance('medium', 4), 0.13));
+  assert.ok(near(bot.missChance('medium', 14), 0.09));
+  assert.ok(near(bot.missChance('medium'), 0.05), 'no timer → the preset rate');
+  assert.ok(bot.missChance('easy', 8) > bot.missChance('medium', 8) && bot.missChance('medium', 8) > bot.missChance('hard', 8));
+});
