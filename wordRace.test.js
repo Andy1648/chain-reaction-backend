@@ -174,3 +174,44 @@ test('bot pace seeds from the humans and is clamped', () => {
   assert.ok(slow > fast * 3);
   assert.ok(race.botWordDelayMs(2000, 1, 'h', () => 0.5) > race.botWordDelayMs(2000, 1, 'e', () => 0.5));
 });
+
+// ---- WHOLE-WORD variant (Andy oct2 A6) ----
+test('words variant: deterministic sequence of common whole words, no repeats', () => {
+  const a = race.buildWordSequence(123);
+  const b = race.buildWordSequence(123);
+  assert.deepEqual(a, b);
+  assert.notDeepEqual(race.buildWordSequence(124).words, a.words);
+  assert.equal(a.words.length, race.WORDS_TARGET);
+  assert.equal(new Set(a.words).size, a.words.length);
+  for (const w of a.words) assert.match(w, /^[a-z]{3,8}$/);
+  for (const w of race.getWordPool()) assert.match(w, /^[a-z]{3,8}$/);
+});
+
+test('words variant: exact word only; finishing at the target wins; at the cap most words wins', () => {
+  const g = race.createRace([{ id: 'a', name: 'A' }, { id: 'b', name: 'B' }], { seed: 9 });
+  assert.equal(race.useWordsVariant(g), true);
+  race.goLive(g, 1000);
+  assert.equal(race.useWordsVariant(g), false, 'not once it is live');
+  assert.equal(race.checkWord(g, 'a', g.words[1]).reason, 'wrong_word');
+  assert.equal(race.checkWord(g, 'a', ` ${g.words[0].toUpperCase()}`).reason, null);
+  race.applyAccept(g, 'a', g.words[0], 2000);
+  race.applyAccept(g, 'b', g.words[0], 2500);
+  race.applyAccept(g, 'b', g.words[1], 2600);
+  race.finish(g, 'cap', 61000);
+  assert.equal(g.winnerId, 'b');
+  const h = race.createRace([{ id: 'a', name: 'A' }, { id: 'b', name: 'B' }], { seed: 9 });
+  race.useWordsVariant(h);
+  race.goLive(h, 0);
+  let done = null;
+  for (const w of h.words) done = race.applyAccept(h, 'a', w, 10);
+  assert.equal(done.finished, true);
+  assert.equal(h.winnerId, 'a');
+});
+
+test('words variant: bot typing time grows with word length and spreads by bot', () => {
+  const fixed = () => 0.5;
+  assert.ok(race.botTypeDelayMs('elephant', 1, fixed) > race.botTypeDelayMs('cat', 1, fixed));
+  assert.ok(race.botTypeDelayMs('house', 0.88, fixed) < race.botTypeDelayMs('house', 1.12, fixed));
+  const fiveLetter = race.botTypeDelayMs('house', 1, fixed); // ~45 WPM medium
+  assert.ok(fiveLetter > 1000 && fiveLetter < 2000, String(fiveLetter));
+});

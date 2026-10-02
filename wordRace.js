@@ -7,6 +7,11 @@
 // First to TARGET_WORDS wins. No lives, no per-word timer - a single race cap
 // (CAP_MS); at the cap, most words wins (tie -> whoever reached that count first).
 //
+// WHOLE-WORD VARIANT (Andy oct2 A6, `variant: 'words'`): like monkeytype / TypeRacer. Every racer
+// gets the SAME seeded sequence of WHOLE common words and must type each one exactly to advance; no
+// dictionary, no fragments. First to WORDS_TARGET wins; at WORDS_CAP_MS most words wins. Opt-in per
+// room (race_quick_match { variant: 'words' }), so the fragment race above is untouched.
+//
 // Words are per-racer: a word racer A played is still legal for racer B. The
 // dictionary check is async and lives in the orchestrator (wordRaceMode.js); this
 // module owns every rule that can be decided from state alone, so the whole state
@@ -16,6 +21,11 @@ const RAW_POOLS = require('./wordRaceFragments.json');
 const { isBlockedForDisplay } = require('./blockedTerms');
 
 const TARGET_WORDS = 12;
+const WORDS_TARGET = 25; // whole-word variant: 25 words (~35 s at 45 WPM)
+const WORDS_CAP_MS = 60 * 1000;
+const WORDS_MIN_LEN = 3;
+const WORDS_MAX_LEN = 8;
+const WORDS_RANK = 2500; // drawn from the 2,500 most common bot words — everyday words only
 const CAP_MS = 90 * 1000;
 const MIN_WORD_LEN = 3;
 const MAX_RACERS = 5;
@@ -112,6 +122,60 @@ function buildSequence(seed, count = TARGET_WORDS, pools = getPools()) {
   return { fragments, tiers };
 }
 
+let _wordPool = null;
+/** The whole-word pool: common, lowercase a-z, 3-8 letters, nothing on the display blocklist. */
+function getWordPool(words) {
+  if (!words && _wordPool) return _wordPool;
+  const list = (words || require('./wordBombBot')._loadWords()).slice(0, WORDS_RANK);
+  const seen = new Set();
+  const pool = [];
+  for (const w of list) {
+    if (!/^[a-z]+$/.test(w) || w.length < WORDS_MIN_LEN || w.length > WORDS_MAX_LEN) continue;
+    if (seen.has(w) || isBlockedForDisplay(w)) continue;
+    seen.add(w);
+    pool.push(w);
+  }
+  if (!words) _wordPool = pool;
+  return pool;
+}
+
+/** A word's tier, by length (drives bot pacing + the client's tier colour). */
+function wordTier(w) {
+  return w.length <= 4 ? 'e' : w.length <= 6 ? 'm' : 'h';
+}
+
+/**
+ * The whole-word sequence: same seed -> identical words, no repeats within a race.
+ */
+function buildWordSequence(seed, count = WORDS_TARGET, pool = getWordPool()) {
+  const rng = mulberry32(seed ^ 0x9e3779b9);
+  const bag = pool.slice();
+  const words = [];
+  for (let i = 0; i < count && bag.length; i++) {
+    const j = Math.floor(rng() * bag.length);
+    words.push(bag[j]);
+    bag[j] = bag[bag.length - 1];
+    bag.pop();
+  }
+  return { words, tiers: words.map(wordTier) };
+}
+
+/**
+ * Turns a freshly created race into the WHOLE-WORD variant (before it goes live). `fragments`
+ * carries the same words so any reader of `fragments[index]` shows the word to type.
+ */
+function useWordsVariant(race, { pool, target = WORDS_TARGET, capMs = WORDS_CAP_MS } = {}) {
+  if (race.status !== 'countdown') return false;
+  const { words, tiers } = buildWordSequence(race.seed, target, pool);
+  race.variant = 'words';
+  race.words = words;
+  race.fragments = words.slice();
+  race.tiers = tiers;
+  race.target = words.length;
+  race.capMs = capMs;
+  return true;
+}
+
 function newSeed() {
   return Math.floor(Math.random() * 0x100000000) >>> 0;
 }
@@ -124,6 +188,7 @@ function createRace(racers, { seed = newSeed(), target = TARGET_WORDS, capMs = C
   const { fragments, tiers } = buildSequence(seed, target, pools);
   return {
     status: 'countdown', // 'countdown' | 'in_progress' | 'finished'
+    variant: 'fragments', // 'fragments' | 'words' (useWordsVariant)
     seed,
     target,
     capMs,
@@ -190,6 +255,8 @@ function checkWord(race, racerId, raw) {
   if (!racer || racer.left) return { word, reason: 'not_a_racer' };
   const fragment = currentFragment(race, racer);
   if (!fragment) return { word, reason: 'race_not_live' };
+  // WHOLE WORDS: the only legal word is the current one, exactly.
+  if (race.variant === 'words') return { word, reason: word === fragment ? null : 'wrong_word' };
   if (word.length < MIN_WORD_LEN) return { word, reason: 'too_short' };
   if (!word.includes(fragment)) return { word, reason: 'missing_combo' };
   if (racer.used.has(word)) return { word, reason: 'already_used' };
@@ -296,6 +363,16 @@ function botWordDelayMs(paceMs, factor, tier, rng = Math.random) {
   return Math.max(900, Math.round(paceMs * factor * (BOT_TIER_MULT[tier] || 1) * jitter));
 }
 
+// WHOLE-WORD bots type, they don't search: a reaction beat, then per-letter time. MEDIUM ~ 45 WPM
+// (5 letters + a space at ~220 ms/char), spread per bot by botFactor() like the fragment race.
+const BOT_REACT_MS = 260;
+const BOT_MS_PER_CHAR = 210;
+function botTypeDelayMs(word, factor, rng = Math.random) {
+  const jitter = 0.8 + rng() * 0.45; // 0.80 .. 1.25
+  const n = String(word || '').length + 1; // + the space / enter
+  return Math.max(450, Math.round((BOT_REACT_MS + n * BOT_MS_PER_CHAR) * factor * jitter));
+}
+
 /** Bots needed to launch: fill to BOT_FILL_TO when fewer than MIN_HUMANS humans. */
 function botsNeeded(humanCount) {
   if (humanCount >= MIN_HUMANS) return 0;
@@ -304,6 +381,13 @@ function botsNeeded(humanCount) {
 
 module.exports = {
   TARGET_WORDS,
+  WORDS_TARGET,
+  WORDS_CAP_MS,
+  getWordPool,
+  buildWordSequence,
+  useWordsVariant,
+  wordTier,
+  botTypeDelayMs,
   CAP_MS,
   MIN_WORD_LEN,
   MAX_RACERS,
