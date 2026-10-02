@@ -9,6 +9,20 @@
 const { isDisallowedWord, isCommonEnglishWord } = require('./wordFilter');
 const { isSlur } = require('./blockedTerms');
 
+// STEP 55 (Andy oct2: "expand accept lists for every mode ... months, days, countries, major cities,
+// mild insults"). A CURATED allowlist of common proper nouns (626 words, the same list the solo
+// modes accept: frontend src/solo/words.common.txt), accepted for HUMAN submissions even though
+// the proper-noun blocklist / lowercase dictionary would refuse them. The open-ended proper-noun
+// long tail (SADDAM, …) is still refused — only these exact words get in. The bot's word pool is
+// unchanged (wordFilter.filterWords), so the bot never plays them. Slurs are still checked first.
+const COMMON_PROPER = new Set(
+  require('fs')
+    .readFileSync(require('path').join(__dirname, 'commonProperWords.txt'), 'utf8')
+    .split(/\s+/)
+    .map((w) => w.trim().toLowerCase())
+    .filter((w) => /^[a-z]+$/.test(w))
+);
+
 // Bounded cache (fix/backend-safety). The same words get checked repeatedly, so a cache pays off —
 // but an UNbounded Map leaked memory: every distinct INVALID token (typos, gibberish — an effectively
 // infinite space) was cached forever (measured +20.8 MB / 50k invalids). Cap it and evict FIFO (Map
@@ -42,6 +56,12 @@ async function isValidWord(word) {
   // This also blocks people trying to break the chain logic with weird input.
   if (!/^[a-z]+$/.test(normalized)) {
     return false;
+  }
+
+  // STEP 55: the curated common proper nouns are accepted (never a slur — checked anyway).
+  if (COMMON_PROPER.has(normalized) && !isSlur(normalized)) {
+    cacheSet(normalized, true);
+    return true;
   }
 
   // Blocklist supplement: place names / foreign words that ARE valid English
