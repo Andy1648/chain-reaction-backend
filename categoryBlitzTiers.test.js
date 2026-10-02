@@ -11,7 +11,7 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 
 const blitz = require('./categoryBlitzLogic');
-const CATEGORY_PACKS = require('./categoryPacks');
+const CATEGORY_PACKS = blitz.CATEGORY_PACK; // STEP 9: the curated pool's packs
 
 test('every active category has a tier 1/2/3 and all tiers are populated', () => {
   for (const c of blitz.CATEGORIES) {
@@ -66,15 +66,15 @@ test('regular-room draws are weighted ~50/35/15 across tiers (within tolerance)'
 });
 
 test('pack filtering (and no-repeat) still holds under tier weighting', () => {
-  const allowed = new Set(['food', 'animals']);
+  const allowed = new Set(['sports', 'mythology']); // STEP 9: packs that exist in the curated pool
   for (let i = 0; i < 1500; i++) {
-    const c = blitz.pickRandomCategory(null, ['food', 'animals']);
+    const c = blitz.pickRandomCategory(null, ['sports', 'mythology']);
     assert.ok(allowed.has(CATEGORY_PACKS[c]), `"${c}" (${CATEGORY_PACKS[c]}) leaked past the pack filter`);
   }
   // A full game's worth of picks never repeats a category, even pack-filtered.
   const played = new Set();
   for (let r = 0; r < blitz.TOTAL_ROUNDS; r++) {
-    const c = blitz.pickRandomCategory(played, ['food', 'animals']);
+    const c = blitz.pickRandomCategory(played, ['sports', 'mythology']);
     assert.ok(!played.has(c), 'no repeated category across rounds');
     assert.ok(allowed.has(CATEGORY_PACKS[c]));
     played.add(c);

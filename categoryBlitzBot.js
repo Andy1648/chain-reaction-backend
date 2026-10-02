@@ -15,6 +15,7 @@
 // answers during a round.
 
 const CATEGORY_ANSWERS = require('./categoryAnswers');
+const BLITZ_LISTS = require('./blitzLists');
 
 /* ============================== IDENTITY ============================== */
 // Fun, on-brand opponent names (same Newgrounds/FNF energy as the Word Bomb
@@ -112,7 +113,9 @@ function buildAnswerSchedule(difficultyKey, roundSeconds) {
  * picked answer is accepted by construction.
  */
 function pickAnswer(category, alreadyGiven) {
-  const set = CATEGORY_ANSWERS[category];
+  // STEP 9: the curated list when the category has one (it always does in play).
+  const curated = BLITZ_LISTS.listFor(category);
+  const set = curated ? new Set(curated.answers) : CATEGORY_ANSWERS[category];
   if (!set || set.size === 0) return null;
   const given = new Set((alreadyGiven || []).map((a) => String(a).toLowerCase()));
   const pool = [];

@@ -22,8 +22,12 @@
 //      is set the fallback is disabled and list-misses are accepted (list-only).
 // The former Groq/Gemini fallback (aiValidator.js + gemini.js) was removed in
 // chore/backend-cleanup - haikuValidator.js owns the AI fallback now.
+// STEP 9 (Andy oct2) — LIST-ONLY. The two-stage hybrid above is retired: the curated, COMPLETE lists
+// in blitzLists.json are the only thing that scores an answer, and a list-miss is rejected as
+// 'not_on_list' ("NOT ON THE LIST"). The AI judge is no longer consulted in scoring. The categories in
+// play are exactly the curated ones; the old accept-lists stay on disk for tooling only.
 const CATEGORY_ANSWERS = require('./categoryAnswers');
-const haikuValidator = require('./haikuValidator');
+const BLITZ_LISTS = require('./blitzLists');
 
 // CASE/TRIM-INSENSITIVE ACCEPT-LIST LOOKUP.
 // Several CATEGORIES entries differ in case/whitespace from their categoryAnswers
@@ -53,7 +57,24 @@ for (const [key, set] of Object.entries(CATEGORY_ANSWERS)) {
  * a superset of the previous direct-index behaviour.
  */
 function answersFor(category) {
+  const curated = BLITZ_LISTS.listFor(category);
+  if (curated) return new Set(curated.answers);
   return ANSWERS_INDEX.get(normalizeCategoryKey(category)) || CATEGORY_ANSWERS[category] || null;
+}
+
+/**
+ * LIST-ONLY membership (STEP 9). A curated category answers from blitzLists; any other category that
+ * still has an accept-list (tooling, tests injecting their own) is matched against that list with the
+ * same answerKey normalisation. Never a judge.
+ */
+function listHas(category, answer) {
+  if (BLITZ_LISTS.listFor(category)) return BLITZ_LISTS.onList(category, answer);
+  const set = answersFor(category);
+  if (!set || set.size === 0) return false;
+  const k = BLITZ_LISTS.answerKey(answer);
+  if (!k) return false;
+  for (const a of set) if (BLITZ_LISTS.answerKey(a) === k) return true;
+  return false;
 }
 
 const TOTAL_ROUNDS = 3;
@@ -313,7 +334,15 @@ for (const name of Object.keys(CATEGORY_PACKS)) {
 
 // The distinct pack ids — the contract shared with the frontend (set_packs). Derived
 // from CATEGORY_PACKS so it can never drift from the actual pack assignments.
-const PACK_IDS = [...new Set(Object.values(CATEGORY_PACKS))];
+// STEP 9: derived from the CURATED categories, and only packs that can fill a game.
+const PACK_IDS = (() => {
+  const n = {};
+  for (const name of BLITZ_LISTS.NAMES) {
+    const p = BLITZ_LISTS.listFor(name).pack;
+    if (p) n[p] = (n[p] || 0) + 1;
+  }
+  return Object.keys(n).filter((p) => n[p] >= 3).sort(); // 3 = TOTAL_ROUNDS (declared below)
+})();
 
 // ---- Post-generation guardrail (enforces THE CATEGORY RULE) ----
 // Drop any category whose pre-generated accept-list shows it's NOT bounded/short:
@@ -324,6 +353,7 @@ const PACK_IDS = [...new Set(Object.values(CATEGORY_PACKS))];
 // judged during a round.
 const MAX_ANSWER_WORDS = 3;
 const MAX_LONG_ANSWER_RATIO = 0.3; // >30% long = routinely long = not bounded
+// eslint-disable-next-line no-unused-vars -- kept for tooling; the curated pool replaced it in play (STEP 9)
 function isBoundedCategory(category) {
   const set = answersFor(category);
   if (!set || set.size === 0) return true; // no list to measure; trust it
@@ -574,15 +604,13 @@ const QUARANTINED_CATEGORIES = new Set([
   "Major professional sports leagues", // 16
 ]);
 
-const CATEGORIES = RAW_CATEGORIES.filter((category) => {
-  // Pulled from rotation until the judge fail-closed path is fixed (see above).
-  if (QUARANTINED_CATEGORIES.has(category)) return false;
-  if (isBoundedCategory(category)) return true;
-  console.warn(
-    `[categoryBlitz] dropped category (answers routinely > ${MAX_ANSWER_WORDS} words, not bounded): "${category}"`
-  );
-  return false;
-});
+// STEP 9: the categories in play are EXACTLY the curated, complete lists (blitzLists.json). Everything
+// above (RAW_CATEGORIES, the quarantine, the bounded filter) is kept for tooling, not for play.
+const CATEGORIES = BLITZ_LISTS.NAMES.slice();
+// Pack of each curated category, and the packs offered to players: only a pack with enough curated
+// categories to fill a game (TOTAL_ROUNDS) exists at all — NO EMPTY PACKS.
+const CURATED_PACK = {};
+for (const c of CATEGORIES) CURATED_PACK[c] = BLITZ_LISTS.listFor(c).pack || null;
 
 /* ============================ CATEGORY TIERS ============================ */
 // Every category is tiered by BREADTH so the Daily can escalate (round 1 broad ->
@@ -700,7 +728,7 @@ const TIER_WEIGHTS = { 1: 0.5, 2: 0.35, 3: 0.15 };
 function categoriesForPacks(selectedPacks) {
   if (!Array.isArray(selectedPacks) || selectedPacks.length === 0) return CATEGORIES;
   const set = new Set(selectedPacks);
-  const pool = CATEGORIES.filter((c) => set.has(CATEGORY_PACKS[c]));
+  const pool = CATEGORIES.filter((c) => set.has(CURATED_PACK[c]));
   return pool.length >= TOTAL_ROUNDS ? pool : CATEGORIES;
 }
 
@@ -850,6 +878,7 @@ function createGame(players, difficultyKey, solo = false, selectedPacks = null, 
 // ACCEPT_WITHOUT_VERDICT below - the one and only policy switch.
 const ANSWER_CODES = Object.freeze({
   LIST_HIT: 'list_hit',
+  NOT_ON_LIST: 'not_on_list', // STEP 9: list-only — the only rejection for a well-formed answer
   JUDGE_YES: 'judge_yes',
   JUDGE_NO: 'judge_no',
   JUDGE_UNAVAILABLE: 'judge_unavailable',
@@ -879,7 +908,6 @@ async function submitAnswer(game, playerId, rawAnswer, opts = {}) {
   // Normalize for lookup: trim, then lowercase. Accept-list entries are all
   // stored lowercase, so this is a case-insensitive match.
   const answer = rawAnswer.trim();
-  const normalized = answer.toLowerCase();
   const player = game.players.find((p) => p.id === playerId);
 
   if (!player) {
@@ -901,19 +929,17 @@ async function submitAnswer(game, playerId, rawAnswer, opts = {}) {
 
   // Only THIS player's answers for THIS round block a resubmission - two
   // different players naming the same thing both score (they're racing
-  // independently), and the same word is fair game again next round.
-  if (player.answers.some((a) => a.toLowerCase() === normalized)) {
+  // independently), and the same word is fair game again next round. Compared by
+  // the list's matching key, so "Spider-Man" then "spiderman" is the same answer.
+  const key = BLITZ_LISTS.answerKey(answer);
+  if (player.answers.some((a) => BLITZ_LISTS.answerKey(a) === key)) {
     return { accepted: false, reason: 'already_said', playerId };
   }
 
   // SUBMIT-TIME ROUND CONTEXT (protocol): the client may tag a submission with the
   // round/category it was DISPLAYING when the player typed (opts.expectedCategory,
-  // opts.expectedRound). Judge against THAT, not against whatever game.currentCategory
-  // happens to be now - otherwise an answer typed against category X can get judged
-  // against a category the game has since moved to (drift / boundary rotation),
-  // scoring 0 and showing a misleading "doesn't fit". If the tagged context no longer
-  // matches the live round we return a distinct `stale_round` (the caller/client can
-  // resync and re-show), rather than silently judging it against the wrong list.
+  // opts.expectedRound). Judge against THAT; if it no longer matches the live round
+  // return `stale_round` (the client resyncs) rather than judging the wrong list.
   // Legacy clients that send no context fall back to the live category unchanged.
   const liveCategory = game.currentCategory;
   const liveRound = game.currentRound;
@@ -926,95 +952,13 @@ async function submitAnswer(game, playerId, rawAnswer, opts = {}) {
     judgeCategory = opts.expectedCategory;
   }
 
-  // Stage 1: the pre-generated accept-list for the round's category (the one the
-  // player was shown - see judgeCategory above). A hit here is instant and free -
-  // no API call. A miss does NOT reject; it just means the answer wasn't
-  // pre-generated, so we ask the AI judge next.
-  const validAnswers = answersFor(judgeCategory);
-  const onAcceptList = !!validAnswers && validAnswers.has(normalized);
-  // How this answer resolved, filled in by whichever stage decides it. Defaults to the
-  // list hit; Stage 2 overwrites it with the judge's code when the list misses.
-  let outcome = { code: ANSWER_CODES.LIST_HIT, via: 'list' };
-
-  // Stage 1.5: compound leniency. The head noun of an English compound is its
-  // LAST word - "socket wrench" IS a wrench, "ball-peen hammer" IS a hammer - so
-  // a multi-word answer whose head word is itself a listed answer is clearly
-  // in-category. Accept it without troubling the AI judge, which was wrongly
-  // rejecting these valid compounds with "doesn't fit the category". Using the
-  // head word (not any word) keeps "apple pie" out of a Fruits round.
-  let compoundHeadHit = false;
-  if (!onAcceptList && validAnswers) {
-    const tokens = normalized.split(/\s+/).filter(Boolean);
-    if (tokens.length >= 2) {
-      const head = tokens[tokens.length - 1];
-      compoundHeadHit = head.length >= 3 && validAnswers.has(head);
-      if (compoundHeadHit) outcome = { code: ANSWER_CODES.LIST_HIT, via: 'compound' };
-    }
-  }
-
-  if (!onAcceptList && !compoundHeadHit) {
-    // Stage 2: Haiku AI fallback. Judges creative/uncommon answers that aren't
-    // on the list. Only runs when an API key is configured; otherwise we stay in
-    // list-only mode and ACCEPT the miss (no judge available to fairly reject it).
-    if (haikuValidator.isEnabled()) {
-      // RACE GUARD snapshot: the validate() await below takes 0.5-3s, and the
-      // room's timers keep running while we wait - the round can end, the next
-      // round can start, the category can be rerolled, the game can finish, or
-      // the player can leave. Snapshot which round/category this answer was FOR
-      // so we can tell whether the world moved on during the await.
-      const roundAtSubmit = liveRound;
-      const categoryAtSubmit = judgeCategory;
-
-      // Tell the client we're checking, THEN await the judge. judge() returns a VERDICT
-      // (true / false / null-for-no-verdict) plus the code saying which; it no longer
-      // decides anything on our behalf.
-      if (typeof opts.onAiCheck === 'function') opts.onAiCheck();
-      const ruling = await haikuValidator.judge(categoryAtSubmit, answer, playerId);
-      outcome = {
-        code: ruling.code,
-        via: 'judge',
-        ...(ruling.httpStatus != null ? { httpStatus: ruling.httpStatus } : {}),
-        ...(ruling.detail ? { detail: ruling.detail } : {}),
-        ...(ruling.cached ? { cached: true } : {}),
-      };
-
-      // A REAL "no" is the only thing that has ever rejected an answer here, and it
-      // still is. `reason` stays 'not_in_category' so the existing client copy
-      // (GameScreen.jsx: "DOESN'T FIT THE CATEGORY") is untouched; `code` rides
-      // alongside it so a later build can say something different for a judge that
-      // never ran without another protocol change.
-      if (ruling.verdict === false) {
-        recordJudgement(player, answer, outcome);
-        return { accepted: false, reason: 'not_in_category', code: outcome.code, playerId };
-      }
-
-      // NO VERDICT (judge_unavailable / rate_limited). One switch decides, and it is
-      // not this line - see ACCEPT_WITHOUT_VERDICT. Today it accepts, unchanged.
-      if (ruling.verdict === null && !ACCEPT_WITHOUT_VERDICT) {
-        recordJudgement(player, answer, outcome);
-        return { accepted: false, reason: 'not_in_category', code: outcome.code, playerId };
-      }
-
-      // RACE GUARD check: if the round this answer belonged to is no longer the
-      // live one (ended / advanced / rerolled / finished), or the player left
-      // mid-await, DISCARD the answer without mutating anything - otherwise a
-      // round-N answer would land (and score) in round N+1, on a rerolled
-      // category, or on a finished game's final scoreboard.
-      if (
-        game.status !== 'in_progress' ||
-        game.currentRound !== roundAtSubmit ||
-        game.currentCategory !== categoryAtSubmit ||
-        !game.players.includes(player)
-      ) {
-        return { accepted: false, reason: 'round_over', playerId };
-      }
-      // Duplicate-in-flight guard: a second submission of the same answer can
-      // pass the already_said check above while this one is still awaiting the
-      // judge. Re-check so one word can never score twice.
-      if (player.answers.some((a) => a.toLowerCase() === normalized)) {
-        return { accepted: false, reason: 'already_said', playerId };
-      }
-    }
+  // LIST-ONLY (STEP 9): on the category's complete list, or not. No judge, no head-word leniency
+  // (it let "zzzz cowboys" score on an NFL list). Synchronous, so no round can move under it.
+  const outcome = { code: ANSWER_CODES.LIST_HIT, via: 'list' };
+  if (!listHas(judgeCategory, answer)) {
+    const miss = { code: ANSWER_CODES.NOT_ON_LIST, via: 'list' };
+    recordJudgement(player, answer, miss);
+    return { accepted: false, reason: 'not_on_list', code: miss.code, playerId };
   }
 
   player.answers.push(answer);
@@ -1160,6 +1104,8 @@ module.exports = {
   RAW_CATEGORIES,
   QUARANTINED_CATEGORIES,
   answersFor,
+  listHas,
+  CATEGORY_PACK: CURATED_PACK, // STEP 9: category -> pack, for the curated pool
   normalizeCategoryKey,
   PACK_IDS,
   TOTAL_ROUNDS,

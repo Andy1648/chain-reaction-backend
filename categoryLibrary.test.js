@@ -27,6 +27,7 @@ test('the accept-list library is populated at load, mapping each category to a S
 
 test('the live play pool loads once, is sizable, and never repeats a category', () => {
   const { CATEGORIES } = require('./categoryBlitzLogic');
-  assert.ok(Array.isArray(CATEGORIES) && CATEGORIES.length >= 400, `pool too small: ${CATEGORIES.length}`);
+  // STEP 9 (list-only): the pool is the curated, COMPLETE lists only — fewer, all trustworthy.
+  assert.ok(Array.isArray(CATEGORIES) && CATEGORIES.length >= 60, `pool too small: ${CATEGORIES.length}`);
   assert.equal(new Set(CATEGORIES).size, CATEGORIES.length, 'the live pool must not contain duplicate categories');
 });

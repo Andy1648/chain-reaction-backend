@@ -101,13 +101,7 @@ test('Blitz rejects an oversized answer in list-only mode too (no key set)', asy
 
 test('Blitz still accepts a normal multi-word answer', async () => {
   const game = blitz.createGame([{ id: 'p1', name: 'A' }, { id: 'p2', name: 'B' }], 'medium');
-  const realIsEnabled = haikuValidator.isEnabled;
-  haikuValidator.isEnabled = () => false; // list-only: any reasonable miss lands
-
-  try {
-    const res = await blitz.submitAnswer(game, 'p1', 'deep dish pepperoni');
-    assert.equal(res.accepted, true, 'normal answers are unaffected');
-  } finally {
-    haikuValidator.isEnabled = realIsEnabled;
-  }
+  game.currentCategory = 'NFL teams'; // STEP 9 list-only: a real multi-word member of a curated list
+  const res = await blitz.submitAnswer(game, 'p1', 'dallas cowboys');
+  assert.equal(res.accepted, true, 'normal answers are unaffected');
 });
