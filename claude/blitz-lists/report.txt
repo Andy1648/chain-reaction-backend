@@ -1,0 +1,170 @@
+KEPT 88
+  African countries [world] 54 members, 78 answers
+  American football positions [sports] 30 members, 71 answers
+  Among Us colors [gaming] 18 members, 19 answers
+  Among Us tasks (The Skeld) [gaming] 19 members, 33 answers
+  Angry Birds birds [gaming] 26 members, 37 answers
+  Apex Legends legends [gaming] 27 members, 32 answers
+  Asian countries [world] 50 members, 68 answers
+  Basketball positions [sports] 12 members, 25 answers
+  Bones of the human body [science] 58 members, 136 answers
+  Boxing weight classes [sports] 20 members, 31 answers
+  Call of Duty games [gaming] 42 members, 90 answers
+  Dark Souls 1 bosses [gaming] 26 members, 47 answers
+  Declaration of Independence signers [world] 56 members, 101 answers
+  Donkey Kong's Kong family [gaming] 14 members, 28 answers
+  English & British monarchs [world] 44 members, 223 answers
+  European national capitals [world] 51 members, 78 answers
+  F1 circuits (2026 calendar) [sports] 24 members, 67 answers
+  F1 teams (2026 grid) [sports] 11 members, 30 answers
+  French kings & emperors [history] 40 members, 237 answers
+  Girl Scout cookies [food] 41 members, 50 answers
+  Grand Theft Auto games [gaming] 19 members, 57 answers
+  Greek Olympian gods [mythology] 14 members, 22 answers
+  Greek Titans [mythology] 24 members, 36 answers
+  Half-Life enemies [gaming] 70 members, 91 answers
+  Half-Life weapons [gaming] 40 members, 67 answers
+  Heisman Trophy Winners [sports] 90 members, 148 answers
+  Human body systems [science] 11 members, 33 answers
+  Inca emperors [history] 20 members, 38 answers
+  Irish counties [world] 32 members, 38 answers
+  James Bond films [movies] 27 members, 35 answers
+  Japanese prefectures [world] 47 members, 57 answers
+  Japanese shoguns [history] 39 members, 86 answers
+  Latin American countries [world] 20 members, 24 answers
+  League of Legends Champions [gaming] 172 members, 223 answers
+  Major and minor keys [music] 30 members, 39 answers
+  Major human organs [science] 30 members, 58 answers
+  Mario Kart items [gaming] 45 members, 69 answers
+  Middle Eastern countries [world] 17 members, 27 answers
+  Minecraft biomes [gaming] 110 members, 115 answers
+  Minecraft mobs [gaming] 89 members, 184 answers
+  Minecraft Ore Blocks [gaming] 19 members, 30 answers
+  Minecraft potions [gaming] 24 members, 60 answers
+  Minecraft tools & weapons [gaming] 74 members, 105 answers
+  MLB teams [sports] 30 members, 73 answers
+  MLS teams [sports] 30 members, 85 answers
+  Musical note values [music] 12 members, 35 answers
+  NBA arenas [sports] 30 members, 72 answers
+  NBA teams [sports] 30 members, 164 answers
+  NCAA Division I conferences [sports] 34 members, 99 answers
+  NFL stadiums [sports] 30 members, 78 answers
+  NFL teams [sports] 32 members, 114 answers
+  NHL teams [sports] 32 members, 82 answers
+  Nintendo, PlayStation, Xbox & Sega consoles [gaming] 38 members, 99 answers
+  Norse gods and goddesses [mythology] 46 members, 74 answers
+  Olympic track and field events [sports] 24 members, 56 answers
+  Organs of the human digestive system [science] 25 members, 39 answers
+  Overwatch heroes [gaming] 50 members, 75 answers
+  Parts of a plant cell [science] 36 members, 76 answers
+  Pixar feature films [movies] 31 members, 43 answers
+  Pokemon from Gen 1 [gaming] 151 members, 200 answers
+  Pokémon starters [gaming] 29 members, 41 answers
+  Portal test elements [gaming] 36 members, 63 answers
+  Premier League clubs (all-time) [sports] 51 members, 97 answers
+  Resident Evil games [gaming] 36 members, 64 answers
+  Roman emperors [history] 94 members, 193 answers
+  Rugby union positions [sports] 15 members, 50 answers
+  Russian tsars [history] 24 members, 137 answers
+  Shakespeare plays [literature] 39 members, 101 answers
+  Sherlock Holmes stories [literature] 60 members, 143 answers
+  Skyrim races [gaming] 10 members, 25 answers
+  Star Wars theatrical films [movies] 13 members, 41 answers
+  Stardew Valley villagers [gaming] 34 members, 42 answers
+  Street Fighter fighters [gaming] 90 members, 110 answers
+  Studio Ghibli Movies [movies] 25 members, 47 answers
+  Summer Olympic sports [sports] 46 members, 79 answers
+  Super Smash Bros. fighters [gaming] 89 members, 130 answers
+  Tennis Slams & Masters 1000s [sports] 13 members, 45 answers
+  Types of blood cells [science] 13 members, 53 answers
+  Types of human teeth [science] 13 members, 45 answers
+  US First Ladies [history] 54 members, 74 answers
+  US National Parks [world] 63 members, 82 answers
+  US presidents [world] 45 members, 110 answers
+  US state capitals [world] 50 members, 60 answers
+  US states [world] 50 members, 61 answers
+  US states bordering Canada [geography] 13 members, 15 answers
+  Valorant agents [gaming] 29 members, 32 answers
+  WNBA teams [sports] 27 members, 55 answers
+  Wonders of the World (Ancient & New 7) [world] 14 members, 41 answers
+
+DROPPED 71
+  SpongeBob characters â€” Open-ended: hundreds of named one-off characters across 15+ seasons and spin-offs; no canonical roster and not completely listable.
+  Disney villains â€” Fuzzy membership (henchmen, Pixar, live-action, sidekicks, ambiguous antagonists) with no canonical roster; current list already mixes in Pixar/Kung Fu Panda/non-villains.
+  Farm animals â€” Subjective membership (is an alpaca, rabbit, bee, ostrich, fish a farm animal?) plus open-ended sex/age terms (ewe, gilt, wether...); not a closed set.
+  Mario characters â€” Hundreds of characters/enemies across 200+ games with fuzzy membership (enemy species vs characters, crossovers); no natural closed rename that keeps the spirit.
+  String instruments â€” Open-ended: hundreds of folk string instruments worldwide; orchestral-only rename would leave ~5 members.
+  Egyptian gods â€” Open-ended: well over a thousand named Egyptian deities and local forms; cannot list every member, and the Ennead-only rename would be too small.
+  Minecraft blocks â€” Roughly 1000+ blocks and variants that change every update; cannot list completely.
+  Stranger Things characters â€” Fuzzy/large: 100+ named characters across 5 seasons + spin-offs, no canonical "main" roster; not completely listable with confidence.
+  Marvel Cinematic Universe Villains â€” Subjective membership (antiheroes, reformed villains like Nebula/Loki, minor henchmen) and roster keeps growing with every release; no canonical list
+  Star Wars Planets â€” Canon alone has hundreds of named planets (plus Legends); cannot list completely, and a films-only version would wrongly reject Mandalore/Lothal etc.
+  Harry Potter spells & incantations — review pass: completeness doubt
+  Star Wars Ships â€” Hundreds of ship classes and named vessels across canon/Legends; fuzzy (class vs named ship vs variant) and not completely listable
+  Harry Potter Characters â€” Several hundred named characters across books/films/spin-offs; cannot list completely with confidence
+  Breaking Bad main-cast characters — review pass: completeness doubt
+  The Office characters â€” Long tail of recurring/one-off characters (temps, warehouse staff, family) with no canonical cutoff, and the credited main cast shifted every season
+  Batman villains â€” Batman's rogues gallery spans hundreds of comic villains over 85 years; cannot list completely
+  Star Wars Characters â€” Thousands of named characters; cannot list completely
+  Batman Characters â€” Hundreds of allies and villains across comics/films/TV; cannot list completely
+  James Bond villains & henchmen (Eon films) — review pass: completeness doubt
+  Legend of Zelda characters â€” Hundreds of named characters across 20+ games; cannot list completely
+  Sonic the Hedgehog characters â€” Hundreds of characters across games, comics and cartoons; membership fuzzy (comic-only, cartoon-only)
+  Animal Crossing Villagers â€” 413 villagers in New Horizons alone (more across the series); too large to guarantee a complete list
+  PlayStation Exclusive Games â€” 'Exclusive' is fuzzy (timed exclusives, PC ports, multiplatform sequels) and the catalogue spans hundreds of titles across five consoles
+  Mortal Kombat fighters — review pass: completeness doubt
+  Halo weapons — review pass: completeness doubt
+  Metroid bosses â€” Series spans 15+ games (incl. Prime 4: Beyond, Dec 2025) with 100+ bosses and mini-bosses; cannot list every one with confidence.
+  Final Fantasy summons (mainline I-XVI) — review pass: completeness doubt
+  Elden Ring bosses â€” 200+ boss encounters (base + Shadow of the Erdtree) with many generic/duplicate names; cannot list every one with confidence.
+  Kingdom Hearts characters â€” Hundreds of characters (every Disney/FF cameo across many worlds); open-ended, cannot list completely.
+  Genshin Impact playable characters â€” Roster grows every 6-week patch; 2026 additions are beyond what can be listed with confidence, so newest characters would be wrongly rejected.
+  Street Fighter moves â€” Hundreds of specials/supers across ~100 characters and many games, with inconsistent naming; not completely listable.
+  Fall Guys rounds â€” Round pool is continually added to/vaulted (plus Creative); cannot list every official round as of 2026.
+  Fallout factions â€” Fuzzy and very large across 10+ games (gangs, tribes, families, settlements); no canonical closed roster.
+  Dark Souls weapons â€” Hundreds of weapons across the series (150+ in DS1 alone); cannot list completely with confidence.
+  Call of Duty weapons â€” Thousands of weapons across 20+ games and seasonal additions; not completely listable.
+  Nintendo consoles and handhelds — review pass: completeness doubt
+  Fallout creatures â€” Very large across 10+ games incl. ongoing Fallout 76 additions, with fuzzy creature/robot/humanoid boundaries; not completely listable.
+  Pac-Man Characters â€” Open-ended across dozens of spin-offs and the Ghostly Adventures TV series; only the 4 classic ghosts are a clean closed set, too small for a round
+  Nintendo Switch Games â€” Thousands of titles; cannot be listed completely
+  Tekken characters â€” ~100 playable characters across 30 years incl. obscure Jack variants, bosses and 2025-26 Tekken 8 DLC; cannot guarantee completeness
+  Tennis equipment â€” Open-ended gear/apparel list with fuzzy membership (courts, clothing, accessories)
+  Types of sports balls â€” Open-ended and fuzzy (bouncy/rubber/beach balls are not sports balls; endless regional variants)
+  Cricket fielding positions — review pass: completeness doubt
+  Professional cycling teams â€” Rosters, names and WorldTour licences churn every season (2025-26 mergers/relegations: Arkea, Cofidis, Lotto/Intermarche, Israel-PT renaming); cannot list the 2026 set with confidence.
+  Tracks that have hosted a NASCAR Cup race since 2020 — review pass: completeness doubt
+  Badminton equipment â€” Open-ended/fuzzy: shoes, bags, grips, headbands, court mats etc. have no canonical roster.
+  Professional tennis equipment â€” Open-ended/fuzzy: apparel and accessories (visors, bags, hoppers, machines) have no canonical roster.
+  Professional wrestling championships â€” Hundreds of titles across WWE/AEW/TNA/NWA/ROH/NJPW/indies, constantly renamed and retired; not completable.
+  US state nicknames — review pass: completeness doubt
+  Aztec deities â€” Open-ended: the Aztec pantheon has hundreds of deities and aspects with many spellings; no canonical closed roster.
+  Orchestra sections â€” Actual sections are only 4 (strings/woodwinds/brass/percussion); the instrument version has fuzzy membership (occasional instruments) and overlaps the woodwind/percussion categories.
+  Musical note names (letters and solfège) — review pass: completeness doubt
+  Woodwind instruments — review pass: completeness doubt
+  Percussion instruments â€” Open-ended: hundreds of world/orchestral/kit percussion instruments; cannot list completely (and "bass" in current is wrong).
+  Human endocrine hormones â€” Not closed: dozens of hormones (releasing hormones, GI hormones, ANP, IGF-1, inhibin, calcitriol...) with no textbook boundary; cannot list every member confidently.
+  Parts of the human brain â€” Not closed: no textbook boundary on which structures count (lobes, nuclei, tracts, ventricles, coverings); a short list would wrongly reject real parts.
+  Brass instruments — review pass: completeness doubt
+  Drum kit parts — review pass: completeness doubt
+  Keyboard instruments — review pass: completeness doubt
+  Egyptian pharaohs â€” ~170+ rulers across 30+ dynasties, many obscure/disputed; cannot list every member with confidence
+  US Founding Fathers â€” No canonical roster (opinion-based); signer-list renames would reject core answers like Jay, Monroe, Patrick Henry
+  English monarchs 1066-1485 (Harold II to Henry VII) — review pass: completeness doubt
+  Greek City-States â€” Hundreds of poleis (1000+ known); no canonical closed roster
+  Ancient Greek city-states â€” Duplicate of Greek City-States; 1000+ poleis, no closed roster (current list also includes sanctuaries like Delphi/Olympia)
+  Knights of the Round Table â€” Membership varies by source (Malory names 100+ knights); no canonical closed roster
+  Trojan War figures â€” Open-ended: hundreds of named figures across the Iliad, Odyssey, Aeneid and the Epic Cycle; fuzzy membership
+  Beatrix Potter characters (the Peter Rabbit tales) — review pass: completeness doubt
+  Web browsers â€” Open-ended and ever-growing (hundreds of forks/niche browsers); no canonical roster
+  Operating systems â€” Open-ended: thousands of OSes, distros and versions; fuzzy granularity (Linux vs Ubuntu vs Windows 11)
+  Apple products â€” Open-ended granularity (lines vs models vs accessories vs software) and constantly growing
+  Gaming Consoles â€” Hundreds of consoles incl. obscure/regional/microconsoles and fuzzy handheld-PC membership; cannot list all with confidence
+
+FAILED CHECKS 6
+  Friends: the six main friends: only 6 members (a 30 s round needs 10+)
+  Members of the Fellowship of the Ring: only 9 members (a 30 s round needs 10+)
+  Ice hockey positions: only 5 members (a 30 s round needs 10+)
+  College football New Year's Six bowls: only 6 members (a 30 s round needs 10+)
+  Types of blood vessels: only 6 members (a 30 s round needs 10+)
+  US states: duplicate category, skipped

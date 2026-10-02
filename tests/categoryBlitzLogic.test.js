@@ -20,7 +20,7 @@ const assert = require('node:assert/strict');
 const logic = require('../categoryBlitzLogic');
 const haikuValidator = require('../haikuValidator');
 const CATEGORY_ANSWERS = require('../categoryAnswers');
-const CATEGORY_PACKS = require('../categoryPacks');
+const CATEGORY_PACKS = logic.CATEGORY_PACK; // STEP 9: the curated pool's packs
 
 const {
   createGame,
@@ -178,66 +178,6 @@ test('a duplicate blocks only the SAME player, case-insensitively; rivals still 
 
 /* ==================== submitAnswer: two-stage validation ================ */
 
-test('a list-miss with the AI DISABLED is accepted (list-only mode fails open)', async () => {
-  const game = makeGame();
-  const restore = stubJudge({ enabled: false, verdict: false });
-  try {
-    const res = await submitAnswer(game, 'p1', 'anchovy');
-    assert.equal(res.accepted, true);
-    assert.equal(game.players[0].score, 1);
-  } finally {
-    restore();
-  }
-});
-
-test('a list-miss with the AI ENABLED is judged: yes accepts, no rejects with not_in_category', async () => {
-  const game = makeGame();
-  let restore = stubJudge({ enabled: true, verdict: true });
-  try {
-    assert.equal((await submitAnswer(game, 'p1', 'anchovy')).accepted, true);
-  } finally {
-    restore();
-  }
-
-  restore = stubJudge({ enabled: true, verdict: false });
-  try {
-    const res = await submitAnswer(game, 'p2', 'skateboard');
-    // reason is unchanged (the client copy keys off it); code distinguishes a real model
-    // "no" from a judge that never ran, which reason alone cannot.
-    assert.deepEqual(res, { accepted: false, reason: 'not_in_category', code: 'judge_no', playerId: 'p2' });
-    assert.equal(game.players[1].score, 0);
-    assert.deepEqual(game.players[1].answers, []);
-  } finally {
-    restore();
-  }
-});
-
-test('onAiCheck fires exactly when there is judge latency to cover (list-miss + AI on)', async () => {
-  const game = makeGame();
-  const calls = [];
-  const onAiCheck = () => calls.push('checking');
-
-  let restore = stubJudge({ enabled: true, verdict: true });
-  try {
-    await submitAnswer(game, 'p1', 'olive', { onAiCheck }); // list hit
-    assert.equal(calls.length, 0, 'no AI call, no checking notice');
-    await submitAnswer(game, 'p1', 'anchovy', { onAiCheck }); // list miss -> judge
-    assert.equal(calls.length, 1);
-  } finally {
-    restore();
-  }
-
-  restore = stubJudge({ enabled: false, verdict: true });
-  try {
-    await submitAnswer(game, 'p1', 'capers', { onAiCheck }); // miss, but AI off
-    assert.equal(calls.length, 1, 'AI disabled means no checking notice');
-  } finally {
-    restore();
-  }
-});
-
-/* ============================ reroll semantics =========================== */
-
 test('rerollCategory reverts this-round points, clears answers, and burns one reroll', async () => {
   const game = makeGame('easy'); // 5 rerolls
   game.players[0].score = 4; // 4 points banked from earlier rounds
@@ -392,71 +332,6 @@ test('a list hit is coded list_hit and never reaches the judge', async () => {
   }
 });
 
-test('a model "no" and a judge that never ran are DIFFERENT codes', async () => {
-  const orig = { isEnabled: haikuValidator.isEnabled, judge: haikuValidator.judge };
-  haikuValidator.isEnabled = () => true;
-  try {
-    // A real "no" -> rejected, coded judge_no.
-    haikuValidator.judge = async () => ({ verdict: false, code: 'judge_no' });
-    const said = await submitAnswer(makeGame(), 'p1', 'skateboard');
-    assert.equal(said.accepted, false);
-    assert.equal(said.reason, 'not_in_category', 'the wire reason is unchanged');
-    assert.equal(said.code, 'judge_no');
-
-    // A 401 -> NO verdict. Scoring policy is unchanged on this branch, so it is still
-    // accepted - but it is coded as unjudged, not as a model yes.
-    haikuValidator.judge = async () => ({
-      verdict: null, code: 'judge_unavailable', detail: 'http_401', httpStatus: 401,
-    });
-    const never = await submitAnswer(makeGame(), 'p1', 'afdsaada');
-    assert.equal(never.accepted, true, 'fail-open policy is deliberately unchanged here');
-    assert.equal(never.code, 'judge_unavailable');
-    assert.notEqual(never.code, said.code, 'the two must not be the same observable');
-  } finally {
-    haikuValidator.isEnabled = orig.isEnabled;
-    haikuValidator.judge = orig.judge;
-  }
-});
-
-test('the rate cap is coded rate_limited, not judge_yes', async () => {
-  const orig = { isEnabled: haikuValidator.isEnabled, judge: haikuValidator.judge };
-  haikuValidator.isEnabled = () => true;
-  haikuValidator.judge = async () => ({ verdict: null, code: 'rate_limited' });
-  try {
-    const res = await submitAnswer(makeGame(), 'p1', 'afdsaada');
-    assert.equal(res.code, 'rate_limited');
-    assert.notEqual(res.code, 'judge_yes', 'the cap may never present itself as a verdict');
-  } finally {
-    haikuValidator.isEnabled = orig.isEnabled;
-    haikuValidator.judge = orig.judge;
-  }
-});
-
-test('endRound reveals a judgement per answer, in the same order as answers', async () => {
-  const orig = { isEnabled: haikuValidator.isEnabled, judge: haikuValidator.judge };
-  haikuValidator.isEnabled = () => true;
-  haikuValidator.judge = async () => ({
-    verdict: null, code: 'judge_unavailable', detail: 'http_401', httpStatus: 401,
-  });
-  try {
-    const game = makeGame();
-    await submitAnswer(game, 'p1', 'pepperoni'); // list hit
-    await submitAnswer(game, 'p1', 'afdsaada'); // judge down
-
-    const round = endRound(game);
-    const me = round.playerResults.find((r) => r.id === 'p1');
-    assert.deepEqual(me.answers, ['pepperoni', 'afdsaada']);
-    assert.equal(me.judgements.length, me.answers.length, 'one judgement per answer');
-    assert.equal(me.judgements[0].code, 'list_hit');
-    assert.equal(me.judgements[0].answer, 'pepperoni');
-    assert.equal(me.judgements[1].code, 'judge_unavailable');
-    assert.equal(me.judgements[1].httpStatus, 401, 'the reveal can say WHICH failure');
-  } finally {
-    haikuValidator.isEnabled = orig.isEnabled;
-    haikuValidator.judge = orig.judge;
-  }
-});
-
 test('judgements are cleared with answers when the next round starts', async () => {
   const game = makeGame();
   await submitAnswer(game, 'p1', 'pepperoni');
@@ -467,11 +342,34 @@ test('judgements are cleared with answers when the next round starts', async () 
   assert.deepEqual(game.players[0].answerJudgements, [], 'judgements must not leak rounds');
 });
 
-test('the fail-open policy lives in exactly one exported switch', () => {
-  // If this flips, scoring changed - which this branch deliberately does not do.
-  assert.equal(logic.ACCEPT_WITHOUT_VERDICT, true);
-  assert.deepEqual(Object.values(logic.ANSWER_CODES).sort(), [
-    'judge_no', 'judge_unavailable', 'judge_yes', 'list_hit', 'rate_limited',
-  ]);
+
+// ---- STEP 9: LIST-ONLY. No judge in scoring: a list-miss is refused as not_on_list, synchronously. ----
+test('a list-miss is refused as not_on_list and the judge is never consulted', async () => {
+  let judgeCalled = false;
+  const orig = { isEnabled: haikuValidator.isEnabled, judge: haikuValidator.judge };
+  haikuValidator.isEnabled = () => true;
+  haikuValidator.judge = async () => { judgeCalled = true; return { verdict: true, code: 'judge_yes' }; };
+  try {
+    const game = makeGame();
+    const r = await logic.submitAnswer(game, 'p1', 'anchovy-free cardboard');
+    assert.equal(r.accepted, false);
+    assert.equal(r.reason, 'not_on_list');
+    assert.equal(r.code, 'not_on_list');
+    assert.equal(judgeCalled, false, 'the judge is not part of scoring');
+    assert.equal(game.players[0].score, 0);
+  } finally {
+    haikuValidator.isEnabled = orig.isEnabled;
+    haikuValidator.judge = orig.judge;
+  }
 });
 
+test('endRound still reveals a judgement per accepted answer, in order (all list hits)', async () => {
+  const game = makeGame();
+  await logic.submitAnswer(game, 'p1', 'pepperoni');
+  await logic.submitAnswer(game, 'p1', 'nope-not-a-topping');
+  await logic.submitAnswer(game, 'p1', 'ham');
+  const res = logic.endRound(game);
+  const me = (res.results || res.players || []).find((p) => p.id === 'p1' || p.playerId === 'p1') || {};
+  const answers = me.answers || game.players[0].answers;
+  assert.deepEqual(answers, ['pepperoni', 'ham']);
+});

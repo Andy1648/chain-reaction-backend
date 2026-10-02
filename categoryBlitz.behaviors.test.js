@@ -28,36 +28,14 @@ function restore() {
 
 const TOOLS = 'Tools in a toolbox'; // accept-list includes "wrench", "hammer", "saw"
 
-test('compound answer with a listed HEAD noun is accepted without the AI judge', async () => {
+test('STEP 9 list-only: a compound whose HEAD noun is listed is NOT on the list (no head-word leniency)', async () => {
   const game = createGame([{ id: 'p1', name: 'A' }, { id: 'p2', name: 'B' }], 'medium');
-  game.currentCategory = TOOLS;
-
-  // AI enabled but always REJECTS + counts calls, so anything reaching it fails
-  // and we can prove the compound was accepted BEFORE the judge.
-  let aiCalls = 0;
-  haikuValidator.isEnabled = () => true;
-  haikuValidator.judge = async () => {
-    aiCalls += 1;
-    return { verdict: false, code: 'judge_no' };
-  };
-
-  try {
-    // "socket wrench": head = "wrench" is on the list -> accepted, no AI call.
-    const r1 = await submitAnswer(game, 'p1', 'socket wrench');
-    assert.equal(r1.accepted, true, 'socket wrench should be accepted (head=wrench)');
-    assert.equal(aiCalls, 0, 'the AI judge must not be consulted for a listed-head compound');
-
-    // "wrench holder": head = "holder" is NOT on the list -> falls to the AI,
-    // which rejects. Proves it is the HEAD word that matters, not any word.
-    const r2 = await submitAnswer(game, 'p1', 'wrench holder');
-    assert.equal(r2.accepted, false, 'wrench holder should NOT auto-pass (head=holder)');
-    assert.equal(r2.reason, 'not_in_category');
-    assert.equal(aiCalls, 1, 'the AI judge should have been consulted for the non-head compound');
-  } finally {
-    restore();
-  }
+  game.currentCategory = 'NFL teams';
+  // the head word "cowboys" is listed; the compound is not — it used to score without a verdict
+  const r = await submitAnswer(game, 'p1', 'zzzz cowboys');
+  assert.equal(r.accepted, false);
+  assert.equal(r.reason, 'not_on_list');
 });
-
 test('final headline (getScoreboard) equals the sum of per-round scores (endRound)', async () => {
   // List-only mode (no AI) so accept-list answers score deterministically offline.
   haikuValidator.isEnabled = () => false;

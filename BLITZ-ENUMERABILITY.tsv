@@ -1,0 +1,447 @@
+verdict	size	tier	category	why
+OPEN	213	T1	McDonald's menu items	pattern /\bitems$/i
+OPEN	252	T1	School cafeteria foods	pattern /\bfoods$/i
+ENUMERABLE	240	T2	SpongeBob characters	pattern /\bcharacters$/i
+ENUMERABLE	225	T3	Minecraft mobs	judgement: closed named set
+ENUMERABLE	223	T2	Pokemon from Gen 1	judgement: closed named set
+OPEN	289	T3	Fortnite skins	judgement: unbounded / no agreed membership
+OPEN	214	T3	Mario power-ups and items	pattern /\bitems$/i
+ENUMERABLE	231	T2	Disney villains	pattern /\bvillains$/i
+ENUMERABLE	53	T1	Pixar movies	judgement: closed named set
+OPEN	228	T3	Roblox games	pattern /\bgames$/i
+OPEN	208	T1	Shoe brands	pattern /\bbrands?$/i
+OPEN	230	T1	Car brands	pattern /\bbrands?$/i
+OPEN	216	T1	Fast food chains	default: unclassified treated as open
+OPEN	242	T1	Things with a drive-through	pattern /\bthings\b/i
+OPEN	231	T1	Subscription services	pattern /\bservices$/i
+OPEN	211	T1	Things that come in a vending machine	pattern /\bthings\b/i
+OPEN	264	T3	Ways to die in Minecraft	judgement: unbounded / no agreed membership
+OPEN	161	T1	Pizza toppings	default: unclassified treated as open
+OPEN	180	T1	Dog breeds	pattern /\bbreeds$/i
+OPEN	178	T1	Candy bars	default: unclassified treated as open
+OPEN	152	T1	Ice cream flavors	pattern /\bflavors$/i
+OPEN	181	T1	Cereal brands	pattern /\bbrands?$/i
+OPEN	191	T1	Soda brands	pattern /\bbrands?$/i
+OPEN	152	T1	Superheroes	judgement: unbounded / no agreed membership
+OPEN	161	T1	Halloween costumes	judgement: unbounded / no agreed membership
+OPEN	192	T1	Sports	judgement: unbounded / no agreed membership
+OPEN	196	T1	Musical instruments	judgement: unbounded / no agreed membership
+OPEN	174	T1	Starbucks drinks	pattern /\bdrinks$/i
+ENUMERABLE	165	T3	NBA teams	pattern /\bteams$/i
+OPEN	195	T1	Disney movies	pattern /\bmovies$/i
+OPEN	155	T2	Anime shows	pattern /\bshows?$/i
+OPEN	156	T1	Chip & snack brands	pattern /\bbrands?$/i
+OPEN	188	T2	Video games	judgement: unbounded / no agreed membership
+OPEN	170	T1	Zoo animals	judgement: unbounded / no agreed membership
+OPEN	203	T1	Breakfast foods	pattern /\bfoods$/i
+OPEN	195	T2	Board games	judgement: unbounded / no agreed membership
+OPEN	199	T1	Types of pasta	pattern /^types? of /i
+ENUMERABLE	67	T2	European capitals	pattern /\bcapitals$/i
+ENUMERABLE	73	T2	African countries	pattern /\bcountries$/i
+ENUMERABLE	69	T2	Asian countries	pattern /\bcountries$/i
+ENUMERABLE	109	T1	US states	judgement: closed named set
+OPEN	164	T1	Ocean animals	judgement: unbounded / no agreed membership
+OPEN	196	T1	Birds	judgement: unbounded / no agreed membership
+OPEN	57	T1	Insects	judgement: unbounded / no agreed membership
+OPEN	52	T1	Cat breeds	pattern /\bbreeds$/i
+OPEN	41	T1	Dinosaurs	judgement: unbounded / no agreed membership
+ENUMERABLE	32	T1	Farm animals	judgement: closed named set
+OPEN	132	T1	Trees	judgement: unbounded / no agreed membership
+OPEN	50	T1	Flowers	judgement: unbounded / no agreed membership
+OPEN	51	T1	Fruits	judgement: unbounded / no agreed membership
+OPEN	135	T1	Vegetables	judgement: unbounded / no agreed membership
+OPEN	52	T1	Types of cheese	pattern /^types? of /i
+OPEN	48	T1	Cocktails	judgement: unbounded / no agreed membership
+OPEN	46	T1	Coffee drinks	judgement: unbounded / no agreed membership
+OPEN	50	T2	Sushi types	judgement: unbounded / no agreed membership
+ENUMERABLE	43	T2	Mario characters	pattern /\bcharacters$/i
+ENUMERABLE	52	T3	Street Fighter characters	pattern /\bcharacters$/i
+ENUMERABLE	19	T3	Among Us colors	judgement: closed named set
+ENUMERABLE	32	T1	String instruments	judgement: closed named set
+ENUMERABLE	55	T1	Olympic sports	judgement: closed named set
+ENUMERABLE	41	T3	NFL teams	pattern /\bteams$/i
+OPEN	33	T1	Martial arts	judgement: unbounded / no agreed membership
+OPEN	34	T1	Water sports	judgement: unbounded / no agreed membership
+OPEN	35	T1	Weather phenomena	judgement: unbounded / no agreed membership
+OPEN	48	T1	Gemstones	judgement: unbounded / no agreed membership
+ENUMERABLE	38	T2	Greek gods	judgement: closed named set
+ENUMERABLE	32	T3	Norse gods	judgement: closed named set
+ENUMERABLE	33	T3	Egyptian gods	judgement: closed named set
+OPEN	162	T2	Mythical creatures	judgement: unbounded / no agreed membership
+ENUMERABLE	95	T3	US presidents	pattern /\bpresidents$/i
+OPEN	45	T1	Phone brands	pattern /\bbrands?$/i
+ENUMERABLE	39	T3	Pokémon starters	judgement: closed named set
+ENUMERABLE	56	T3	Video game consoles	judgement: closed named set
+ENUMERABLE	196	T3	Minecraft blocks	judgement: closed named set
+OPEN	30	T3	Video game villains	judgement: unbounded / no agreed membership
+ENUMERABLE	26	T2	Stranger Things characters	pattern /\bcharacters$/i
+ENUMERABLE	29	T1	Wonders of the World	judgement: closed named set
+OPEN	46	T2	Donut types	judgement: unbounded / no agreed membership
+ENUMERABLE	39	T2	Marvel Cinematic Universe Villains	pattern /\bvillains$/i
+OPEN	190	T2	Sitcoms	pattern /\bsitcoms?\b/i
+OPEN	187	T1	Animated Movies	pattern /\bmovies$/i
+OPEN	191	T2	DC Comics Superheroes	judgement: unbounded / no agreed membership
+ENUMERABLE	111	T2	Star Wars Planets	judgement: closed named set
+OPEN	43	T2	Anime Villains	judgement: unbounded / no agreed membership
+OPEN	201	T2	Disney Animated Movie Characters	judgement: unbounded / no agreed membership
+OPEN	185	T2	Horror Movie Monsters	judgement: unbounded / no agreed membership
+ENUMERABLE	20	T2	Studio Ghibli Movies	judgement: closed named set
+OPEN	30	T2	Famous TV Detectives	judgement: unbounded / no agreed membership
+OPEN	229	T2	Marvel Superheroes	judgement: unbounded / no agreed membership
+OPEN	38	T2	Video Game Movies	judgement: unbounded / no agreed membership
+ENUMERABLE	31	T2	Friends Characters	pattern /\bcharacters$/i
+ENUMERABLE	33	T2	Harry Potter Spells	judgement: closed named set
+ENUMERABLE	42	T2	Star Wars Ships	judgement: closed named set
+OPEN	177	T2	Animated Movie Characters	judgement: unbounded / no agreed membership
+OPEN	150	T2	Animated TV Shows	judgement: unbounded / no agreed membership
+OPEN	149	T2	Horror Movie Characters	judgement: unbounded / no agreed membership
+ENUMERABLE	186	T2	Harry Potter Characters	pattern /\bcharacters$/i
+OPEN	220	T2	Sitcom Characters	judgement: unbounded / no agreed membership
+ENUMERABLE	141	T2	Lord of the Rings characters	pattern /\bcharacters$/i
+ENUMERABLE	53	T2	Breaking Bad characters	pattern /\bcharacters$/i
+ENUMERABLE	46	T2	The Office characters	pattern /\bcharacters$/i
+ENUMERABLE	49	T2	Batman villains	pattern /\bvillains$/i
+ENUMERABLE	160	T2	Star Wars Characters	pattern /\bcharacters$/i
+ENUMERABLE	42	T2	Batman Characters	pattern /\bcharacters$/i
+ENUMERABLE	35	T3	James Bond Villains	pattern /\bvillains$/i
+ENUMERABLE	231	T2	Disney Villains	pattern /\bvillains$/i
+ENUMERABLE	41	T3	Mario Kart Items	judgement: closed named set
+ENUMERABLE	38	T3	Legend of Zelda characters	pattern /\bcharacters$/i
+OPEN	39	T3	Fortnite weapons	judgement: unbounded / no agreed membership
+ENUMERABLE	40	T3	Sonic the Hedgehog characters	pattern /\bcharacters$/i
+ENUMERABLE	56	T3	Overwatch heroes	pattern /\bheroes$/i
+ENUMERABLE	36	T3	Call of Duty games	judgement: closed named set
+ENUMERABLE	101	T3	Super Smash Bros. fighters	pattern /\bfighters$/i
+ENUMERABLE	29	T3	Grand Theft Auto games	judgement: closed named set
+ENUMERABLE	99	T3	Animal Crossing Villagers	pattern /\bvillagers$/i
+ENUMERABLE	100	T3	League of Legends Champions	pattern /\bchampions$/i
+ENUMERABLE	78	T3	PlayStation Exclusive Games	judgement: closed named set
+ENUMERABLE	71	T3	Mortal Kombat characters	pattern /\bcharacters$/i
+ENUMERABLE	48	T3	Halo weapons	judgement: closed named set
+ENUMERABLE	28	T3	Resident Evil games	judgement: closed named set
+ENUMERABLE	27	T3	Metroid bosses	pattern /\bbosses$/i
+ENUMERABLE	35	T3	Final Fantasy summons	judgement: closed named set
+ENUMERABLE	29	T3	Elden Ring bosses	judgement: closed named set
+ENUMERABLE	57	T3	Kingdom Hearts characters	pattern /\bcharacters$/i
+ENUMERABLE	83	T3	Genshin Impact playable characters	pattern /\bcharacters$/i
+ENUMERABLE	43	T3	Street Fighter moves	judgement: closed named set
+ENUMERABLE	46	T3	Minecraft biomes	judgement: closed named set
+ENUMERABLE	37	T3	Portal items and elements	judgement: closed named set
+ENUMERABLE	40	T3	Half-Life weapons	judgement: closed named set
+ENUMERABLE	25	T3	Skyrim races	judgement: closed named set
+ENUMERABLE	39	T3	Dark Souls bosses	pattern /\bbosses$/i
+ENUMERABLE	35	T3	Fall Guys rounds	judgement: closed named set
+ENUMERABLE	37	T3	Stardew Valley villagers	pattern /\bvillagers$/i
+ENUMERABLE	32	T3	Fallout factions	judgement: closed named set
+ENUMERABLE	39	T3	Dark Souls weapons	judgement: closed named set
+ENUMERABLE	58	T3	Call of Duty weapons	judgement: closed named set
+ENUMERABLE	31	T3	Valorant agents	pattern /\bagents$/i
+ENUMERABLE	77	T3	Minecraft tools and weapons	judgement: closed named set
+ENUMERABLE	38	T3	Angry Birds birds	judgement: closed named set
+ENUMERABLE	57	T3	Nintendo consoles and handhelds	judgement: closed named set
+ENUMERABLE	38	T3	Half-Life enemies	judgement: closed named set
+ENUMERABLE	39	T3	Fallout creatures	judgement: closed named set
+ENUMERABLE	34	T3	Among Us tasks	judgement: closed named set
+ENUMERABLE	24	T3	Minecraft Ore Blocks	judgement: closed named set
+ENUMERABLE	36	T3	Pac-Man Characters	pattern /\bcharacters$/i
+ENUMERABLE	73	T3	Nintendo Switch Games	judgement: closed named set
+ENUMERABLE	53	T3	Minecraft potions	judgement: closed named set
+ENUMERABLE	37	T3	Apex Legends characters	pattern /\bcharacters$/i
+ENUMERABLE	41	T3	Donkey Kong characters	pattern /\bcharacters$/i
+ENUMERABLE	71	T3	Tekken characters	pattern /\bcharacters$/i
+OPEN	30	T3	Fighting game franchises	judgement: unbounded / no agreed membership
+OPEN	65	T3	Video game hardware	judgement: unbounded / no agreed membership
+ENUMERABLE	225	T3	Minecraft Mobs	judgement: closed named set
+ENUMERABLE	20	T2	Girl Scout cookies	judgement: closed named set
+OPEN	52	T1	Sandwich types	pattern /\btypes$/i
+OPEN	46	T2	Potato chip brands	pattern /\bbrands?$/i
+OPEN	37	T2	Bakery items	judgement: unbounded / no agreed membership
+OPEN	49	T2	Types of apples	pattern /^types? of /i
+OPEN	50	T1	Types of pie	pattern /^types? of /i
+OPEN	47	T2	Energy drink brands	pattern /\bbrands?$/i
+OPEN	50	T1	Types of seafood	pattern /^types? of /i
+OPEN	35	T1	Types of tea	pattern /^types? of /i
+OPEN	46	T1	Popular condiments	pattern /^popular /i
+OPEN	45	T2	Types of melon	pattern /^types? of /i
+OPEN	51	T1	Types of bread	pattern /^types? of /i
+OPEN	60	T2	Popular snack cakes	pattern /\bsnack/i
+OPEN	50	T2	Types of steak	pattern /^types? of /i
+OPEN	61	T2	Types of pancakes	pattern /^types? of /i
+OPEN	47	T2	Popular salad dressings	pattern /^popular /i
+OPEN	49	T2	Types of tacos	pattern /^types? of /i
+OPEN	46	T2	Types of peppers	pattern /^types? of /i
+OPEN	50	T2	Popular yogurt brands	pattern /\bbrands?$/i
+OPEN	43	T2	Types of beans	pattern /^types? of /i
+OPEN	48	T2	Types of squash	pattern /^types? of /i
+OPEN	48	T2	Types of BBQ meat	pattern /^types? of /i
+OPEN	39	T2	Popular food brands	pattern /\bbrands?$/i
+OPEN	57	T2	Types of beer	pattern /^types? of /i
+OPEN	51	T1	International cuisines	default: unclassified treated as open
+OPEN	31	T2	Types of citrus fruit	pattern /^types? of /i
+OPEN	45	T2	Types of donuts	pattern /^types? of /i
+OPEN	20	T2	Popular sports drinks	pattern /\bdrinks$/i
+OPEN	47	T2	Types of rice	pattern /^types? of /i
+OPEN	36	T1	Types of berries	pattern /^types? of /i
+OPEN	49	T2	Popular dipping sauces	pattern /^popular /i
+OPEN	50	T1	Types of cookies	pattern /^types? of /i
+OPEN	58	T1	Types of eggs	pattern /^types? of /i
+OPEN	48	T2	Types of potatoes	pattern /^types? of /i
+OPEN	63	T2	Types of jerky	pattern /^types? of /i
+OPEN	51	T1	Types of soup	pattern /^types? of /i
+OPEN	54	T1	Types of cake	pattern /^types? of /i
+OPEN	49	T2	Ben & Jerry's flavors	pattern /\bflavors$/i
+OPEN	52	T2	Types of soup dumplings & dim sum	pattern /^types? of /i
+OPEN	43	T2	Hot sauce brands	pattern /\bbrands?$/i
+OPEN	154	T2	Mexican food dishes	judgement: unbounded / no agreed membership
+OPEN	38	T2	Italian pasta sauces	default: unclassified treated as open
+OPEN	52	T2	Herbal teas & infusions	default: unclassified treated as open
+OPEN	68	T2	Dried fruits	judgement: unbounded / no agreed membership
+OPEN	44	T1	Frozen treats	judgement: unbounded / no agreed membership
+OPEN	38	T2	Breakfast pastries	judgement: unbounded / no agreed membership
+OPEN	50	T2	Breakfast meats	judgement: unbounded / no agreed membership
+OPEN	222	T2	Indian food dishes	judgement: unbounded / no agreed membership
+OPEN	41	T2	Types of pasta sauces	pattern /^types? of /i
+OPEN	50	T2	Frozen desserts	judgement: unbounded / no agreed membership
+OPEN	34	T1	Reptiles and amphibians	default: unclassified treated as open
+OPEN	48	T2	Marsupials	judgement: unbounded / no agreed membership
+OPEN	30	T2	Coniferous trees	default: unclassified treated as open
+OPEN	26	T2	Predatory mammals	default: unclassified treated as open
+OPEN	59	T1	Nuts and seeds	judgement: unbounded / no agreed membership
+OPEN	49	T1	Primates	judgement: unbounded / no agreed membership
+OPEN	47	T2	Succulents and cacti	judgement: unbounded / no agreed membership
+OPEN	25	T1	Horses and ponies	default: unclassified treated as open
+OPEN	38	T1	Rodents	judgement: unbounded / no agreed membership
+OPEN	40	T2	Aquarium fish	judgement: unbounded / no agreed membership
+OPEN	32	T2	Venomous snakes	default: unclassified treated as open
+OPEN	123	T1	Herbs and spices	judgement: unbounded / no agreed membership
+OPEN	39	T1	Marine mammals	judgement: unbounded / no agreed membership
+OPEN	48	T2	Wild canines	default: unclassified treated as open
+OPEN	42	T2	Arachnids	judgement: unbounded / no agreed membership
+OPEN	26	T2	Bovine breeds	pattern /\bbreeds$/i
+OPEN	37	T2	Types of clouds	pattern /^types? of /i
+OPEN	52	T2	Birds of prey	default: unclassified treated as open
+OPEN	134	T1	Houseplants	judgement: unbounded / no agreed membership
+OPEN	41	T3	Prehistoric creatures	judgement: unbounded / no agreed membership
+OPEN	37	T2	Nocturnal animals	judgement: unbounded / no agreed membership
+OPEN	49	T2	Antelope and deer species	pattern /\bspecies$/i
+OPEN	39	T2	Marine invertebrates	default: unclassified treated as open
+OPEN	32	T2	Landforms	judgement: unbounded / no agreed membership
+OPEN	162	T2	Freshwater fish	default: unclassified treated as open
+OPEN	119	T2	Flightless birds	default: unclassified treated as open
+OPEN	33	T1	Root vegetables	default: unclassified treated as open
+OPEN	39	T2	Wildflowers	judgement: unbounded / no agreed membership
+OPEN	73	T2	Types of Sharks	pattern /^types? of /i
+OPEN	64	T1	Types of Natural Disasters	pattern /^types? of /i
+OPEN	30	T1	Wild animals of the savanna	pattern /^wild animals/i
+OPEN	59	T2	Butterfly species	pattern /\bspecies$/i
+OPEN	49	T2	Types of coral	pattern /^types? of /i
+OPEN	51	T2	Farm crops	judgement: unbounded / no agreed membership
+OPEN	48	T2	Cattle breeds	pattern /\bbreeds$/i
+OPEN	49	T2	Venomous or poisonous animals	default: unclassified treated as open
+OPEN	35	T2	Natural landscape features	judgement: unbounded / no agreed membership
+OPEN	46	T2	Types of mushrooms and fungi	pattern /^types? of /i
+OPEN	26	T1	Wild animals of the desert	pattern /^wild animals/i
+OPEN	32	T2	Types of deciduous trees	pattern /^types? of /i
+ENUMERABLE	52	T3	NHL teams	pattern /\bteams$/i
+ENUMERABLE	32	T2	Tennis equipment	judgement: closed named set
+ENUMERABLE	68	T3	Major League Baseball teams	pattern /\bteams$/i
+ENUMERABLE	57	T3	English Premier League clubs	pattern /\bclubs$/i
+ENUMERABLE	58	T3	Formula 1 constructors	pattern /\bconstructors$/i
+ENUMERABLE	49	T3	WNBA teams	pattern /\bteams$/i
+ENUMERABLE	74	T3	MLS teams	pattern /\bteams$/i
+OPEN	52	T2	Golf clubs	judgement: unbounded / no agreed membership
+ENUMERABLE	38	T2	Track and field events	judgement: closed named set
+ENUMERABLE	75	T1	Types of sports balls	judgement: closed named set
+ENUMERABLE	66	T3	Active Formula 1 tracks	judgement: closed named set
+OPEN	53	T2	Bowling terms	judgement: unbounded / no agreed membership
+ENUMERABLE	29	T2	Boxing weight classes	judgement: closed named set
+ENUMERABLE	36	T2	Football positions	judgement: closed named set
+ENUMERABLE	22	T2	Basketball positions	judgement: closed named set
+OPEN	45	T2	Extreme sports	judgement: unbounded / no agreed membership
+ENUMERABLE	28	T2	Ice hockey positions	judgement: closed named set
+ENUMERABLE	78	T3	Active NFL stadiums	judgement: closed named set
+ENUMERABLE	56	T3	Active NBA Arenas	judgement: closed named set
+ENUMERABLE	42	T3	Professional tennis tournaments	judgement: closed named set
+ENUMERABLE	36	T2	Cricket fielding positions	judgement: closed named set
+ENUMERABLE	29	T2	Rugby positions	judgement: closed named set
+ENUMERABLE	53	T2	College football bowl games	judgement: closed named set
+ENUMERABLE	26	T2	Professional cycling teams	pattern /\bteams$/i
+ENUMERABLE	32	T2	NCAA Division I conferences	pattern /\bconferences$/i
+ENUMERABLE	77	T2	Heisman Trophy Winners	judgement: closed named set
+ENUMERABLE	32	T3	NASCAR Cup Series tracks	judgement: closed named set
+ENUMERABLE	27	T2	Badminton equipment	judgement: closed named set
+ENUMERABLE	22	T2	Professional tennis equipment	judgement: closed named set
+ENUMERABLE	46	T2	Professional wrestling championships	judgement: closed named set
+OPEN	40	T2	Major world rivers	judgement: unbounded / no agreed membership
+OPEN	51	T3	Roman gods	judgement: unbounded / no agreed membership
+ENUMERABLE	60	T2	US state capitals	judgement: closed named set
+OPEN	43	T2	World mountain ranges	judgement: unbounded / no agreed membership
+ENUMERABLE	27	T2	Latin American countries	pattern /\bcountries$/i
+ENUMERABLE	52	T2	US National Parks	judgement: closed named set
+OPEN	40	T2	Ancient civilizations	judgement: unbounded / no agreed membership
+ENUMERABLE	40	T2	US state nicknames	judgement: closed named set
+ENUMERABLE	27	T2	Middle Eastern countries	pattern /\bcountries$/i
+OPEN	34	T3	Arthurian legend characters	judgement: unbounded / no agreed membership
+OPEN	49	T3	Greek heroes	judgement: unbounded / no agreed membership
+OPEN	53	T2	Major world deserts	judgement: unbounded / no agreed membership
+ENUMERABLE	50	T3	British monarchs	pattern /\bmonarchs$/i
+OPEN	47	T2	Major world islands	judgement: unbounded / no agreed membership
+OPEN	115	T3	Greek monsters and beasts	judgement: unbounded / no agreed membership
+OPEN	38	T2	World seas	judgement: unbounded / no agreed membership
+OPEN	33	T3	Hindu deities	judgement: unbounded / no agreed membership
+OPEN	35	T2	World deserts	judgement: unbounded / no agreed membership
+ENUMERABLE	54	T2	Japanese prefectures	judgement: closed named set
+ENUMERABLE	62	T2	Signers of the US Declaration of Independence	judgement: closed named set
+ENUMERABLE	35	T2	Irish counties	judgement: closed named set
+ENUMERABLE	24	T2	Aztec deities	judgement: closed named set
+OPEN	28	T2	Historical capitals	judgement: unbounded / no agreed membership
+ENUMERABLE	35	T2	Orchestra sections	judgement: closed named set
+ENUMERABLE	37	T1	Musical notes	judgement: closed named set
+ENUMERABLE	32	T2	Woodwind instruments	judgement: closed named set
+OPEN	51	T3	Classical composers	judgement: unbounded / no agreed membership
+ENUMERABLE	50	T1	Percussion instruments	judgement: closed named set
+ENUMERABLE	51	T2	Brass instruments	judgement: closed named set
+OPEN	49	T3	Guitar brands	pattern /\bbrands?$/i
+OPEN	48	T3	Major record labels	default: unclassified treated as open
+OPEN	41	T3	Electronic music subgenres	pattern /\bsubgenres?$/i
+ENUMERABLE	30	T2	Standard drum kit components	judgement: closed named set
+ENUMERABLE	27	T2	Keyboard instruments	judgement: closed named set
+OPEN	37	T3	Music awards	judgement: unbounded / no agreed membership
+OPEN	114	T3	Boy bands	judgement: unbounded / no agreed membership
+OPEN	54	T2	Types of guitars	pattern /^types? of /i
+ENUMERABLE	48	T2	Key signatures	judgement: closed named set
+ENUMERABLE	41	T2	Music notation symbols	judgement: closed named set
+ENUMERABLE	140	T2	Chemical elements	judgement: closed named set
+ENUMERABLE	111	T2	Human bones	judgement: closed named set
+OPEN	36	T2	Types of rock	pattern /^types? of /i
+ENUMERABLE	33	T1	Human organs	judgement: closed named set
+OPEN	40	T2	Lab equipment	judgement: unbounded / no agreed membership
+ENUMERABLE	32	T3	Subatomic particles	judgement: closed named set
+ENUMERABLE	29	T1	Human body systems	judgement: closed named set
+ENUMERABLE	40	T2	Types of vitamins	judgement: closed named set
+ENUMERABLE	29	T2	Types of biomes	judgement: closed named set
+ENUMERABLE	33	T2	Cell organelles	judgement: closed named set
+ENUMERABLE	23	T2	Greenhouse gases	judgement: closed named set
+OPEN	29	T2	Types of telescopes	judgement: unbounded / no agreed membership
+OPEN	27	T2	Laboratory safety gear	judgement: unbounded / no agreed membership
+ENUMERABLE	34	T2	Human teeth	judgement: closed named set
+OPEN	59	T2	Scientific fields	judgement: unbounded / no agreed membership
+ENUMERABLE	40	T2	Parts of a flower	judgement: closed named set
+ENUMERABLE	25	T2	Parts of an atom	judgement: closed named set
+ENUMERABLE	51	T2	Human endocrine hormones	judgement: closed named set
+OPEN	66	T2	Human muscles	judgement: unbounded / no agreed membership
+OPEN	164	T2	Human infectious diseases	judgement: unbounded / no agreed membership
+ENUMERABLE	42	T2	Types of blood cells	judgement: closed named set
+ENUMERABLE	34	T2	Parts of the human brain	judgement: closed named set
+OPEN	64	T2	Scientific laws and principles	judgement: unbounded / no agreed membership
+ENUMERABLE	30	T2	Human digestive system parts	judgement: closed named set
+ENUMERABLE	31	T2	Types of chemical reactions	judgement: closed named set
+ENUMERABLE	34	T2	SI derived units	judgement: closed named set
+ENUMERABLE	19	T2	Types of blood vessels	judgement: closed named set
+ENUMERABLE	42	T2	Taxonomic domains and phyla	judgement: closed named set
+ENUMERABLE	38	T2	Parts of a plant cell	judgement: closed named set
+ENUMERABLE	73	T3	Roman emperors	pattern /\bemperors$/i
+ENUMERABLE	57	T3	Egyptian pharaohs	pattern /\bpharaohs$/i
+OPEN	54	T3	World War II battles	judgement: unbounded / no agreed membership
+ENUMERABLE	25	T3	US Founding Fathers	judgement: closed named set
+OPEN	33	T3	Ancient Empires	judgement: unbounded / no agreed membership
+OPEN	43	T3	Renaissance figures	judgement: unbounded / no agreed membership
+OPEN	56	T3	Famous explorers	judgement: unbounded / no agreed membership
+OPEN	39	T2	Historical Eras	judgement: unbounded / no agreed membership
+OPEN	27	T3	Medieval titles	judgement: unbounded / no agreed membership
+ENUMERABLE	54	T3	US First Ladies	pattern /\bfirst ladies$/i
+ENUMERABLE	26	T2	Medieval English Monarchs	pattern /\bmonarchs$/i
+ENUMERABLE	55	T2	US states by admission order	judgement: closed named set
+ENUMERABLE	36	T2	Japanese Shoguns	pattern /\bshoguns$/i
+ENUMERABLE	32	T2	Greek City-States	judgement: closed named set
+OPEN	36	T2	US Civil War Battles	judgement: unbounded / no agreed membership
+ENUMERABLE	27	T2	Ancient Greek city-states	judgement: closed named set
+OPEN	29	T2	Cold War events	judgement: unbounded / no agreed membership
+OPEN	41	T2	US Civil War Generals	judgement: unbounded / no agreed membership
+ENUMERABLE	24	T2	Russian Tsars	pattern /\btsars$/i
+ENUMERABLE	20	T2	Inca emperors	pattern /\bemperors$/i
+ENUMERABLE	42	T2	French monarchs	pattern /\bmonarchs$/i
+OPEN	27	T2	Historical peace treaties	judgement: unbounded / no agreed membership
+ENUMERABLE	24	T2	US states bordering Canada	judgement: closed named set
+OPEN	36	T3	Japanese yokai	judgement: unbounded / no agreed membership
+OPEN	28	T2	Mythical birds	judgement: unbounded / no agreed membership
+OPEN	37	T2	Mythological locations	judgement: unbounded / no agreed membership
+ENUMERABLE	28	T3	Greek Titans	judgement: closed named set
+OPEN	40	T3	Constellations	judgement: unbounded / no agreed membership
+OPEN	37	T2	Mythical weapons and artifacts	judgement: unbounded / no agreed membership
+OPEN	45	T2	Mythical creatures by culture	judgement: unbounded / no agreed membership
+OPEN	34	T2	Mythical swords and blades	judgement: unbounded / no agreed membership
+OPEN	23	T2	Mythical horses and steeds	judgement: unbounded / no agreed membership
+OPEN	47	T3	Mythological figures in Marvel and Disney	default: unclassified treated as open
+OPEN	51	T3	Mythical creatures in Percy Jackson	default: unclassified treated as open
+OPEN	69	T2	Mythical monsters in pop culture	judgement: unbounded / no agreed membership
+OPEN	38	T2	Mythical creatures in fairy tales	default: unclassified treated as open
+OPEN	44	T2	Mythical creatures in video games	judgement: unbounded / no agreed membership
+ENUMERABLE	34	T3	Knights of the Round Table	judgement: closed named set
+ENUMERABLE	26	T3	Trojan War figures	judgement: closed named set
+OPEN	46	T2	Famous dragons in myth and fiction	judgement: unbounded / no agreed membership
+ENUMERABLE	34	T3	Shakespeare plays	judgement: closed named set
+OPEN	31	T2	Literary genres	pattern /\bgenres?$/i
+OPEN	54	T3	Literary devices	judgement: unbounded / no agreed membership
+OPEN	32	T3	Dystopian novels	pattern /\bnovels$/i
+OPEN	40	T2	Famous poets	judgement: unbounded / no agreed membership
+OPEN	39	T2	Greek and Roman mythology figures	judgement: unbounded / no agreed membership
+OPEN	34	T2	Classic novels	judgement: unbounded / no agreed membership
+OPEN	39	T2	Literary characters	judgement: unbounded / no agreed membership
+ENUMERABLE	28	T2	Sherlock Holmes stories	judgement: closed named set
+OPEN	31	T2	Literary Nobel Prize winners	judgement: unbounded / no agreed membership
+OPEN	30	T2	Fairy tales	judgement: unbounded / no agreed membership
+ENUMERABLE	37	T2	Beatrix Potter characters	pattern /\bcharacters$/i
+OPEN	38	T3	Video Game Genres	pattern /\bgenres?$/i
+OPEN	61	T3	Programming languages	judgement: unbounded / no agreed membership
+ENUMERABLE	47	T1	Web browsers	judgement: closed named set
+OPEN	53	T1	Social media platforms	judgement: unbounded / no agreed membership
+OPEN	39	T2	Computer components	judgement: unbounded / no agreed membership
+ENUMERABLE	42	T2	Operating systems	judgement: closed named set
+OPEN	53	T3	Cryptocurrencies	judgement: unbounded / no agreed membership
+ENUMERABLE	37	T1	Apple products	judgement: closed named set
+OPEN	39	T2	File formats	judgement: unbounded / no agreed membership
+OPEN	141	T2	Tech companies	pattern /\bcompanies$/i
+OPEN	152	T2	Keyboard keys	judgement: unbounded / no agreed membership
+OPEN	43	T1	Video streaming services	judgement: unbounded / no agreed membership
+OPEN	55	T2	Smart home devices	judgement: unbounded / no agreed membership
+OPEN	41	T3	Computer ports and connectors	judgement: unbounded / no agreed membership
+OPEN	42	T2	E-commerce websites	judgement: unbounded / no agreed membership
+OPEN	34	T3	File sharing and cloud storage services	pattern /\bservices$/i
+ENUMERABLE	37	T2	Gaming Consoles	judgement: closed named set
+OPEN	41	T2	Cybersecurity terms	judgement: unbounded / no agreed membership
+OPEN	32	T2	Database management systems	judgement: unbounded / no agreed membership
+OPEN	40	T2	Programming frameworks	judgement: unbounded / no agreed membership
+OPEN	47	T2	Tech hardware brands	pattern /\bbrands?$/i
+OPEN	31	T2	Internet protocols	judgement: unbounded / no agreed membership
+OPEN	46	T2	Tech job titles	judgement: unbounded / no agreed membership
+OPEN	60	T2	Internet top-level domains	judgement: unbounded / no agreed membership
+OPEN	32	T2	Web development languages	judgement: unbounded / no agreed membership
+OPEN	32	T2	Tech input devices	judgement: unbounded / no agreed membership
+OPEN	51	T3	Art movements	judgement: unbounded / no agreed membership
+OPEN	37	T1	Painting tools	judgement: unbounded / no agreed membership
+OPEN	58	T3	Famous museums	judgement: unbounded / no agreed membership
+OPEN	32	T2	Sculpture materials	judgement: unbounded / no agreed membership
+OPEN	37	T2	Architecture styles	judgement: unbounded / no agreed membership
+OPEN	52	T2	Art mediums	judgement: unbounded / no agreed membership
+OPEN	30	T1	Drawing tools	judgement: unbounded / no agreed membership
+OPEN	55	T2	Photography terms	judgement: unbounded / no agreed membership
+OPEN	192	T3	Famous paintings	judgement: unbounded / no agreed membership
+OPEN	40	T2	Famous sculptures	judgement: unbounded / no agreed membership
+OPEN	31	T2	Art periods	judgement: unbounded / no agreed membership
+OPEN	58	T1	Game shows	pattern /\bshows?$/i
+OPEN	41	T3	HBO series	pattern /\bseries$/i
+OPEN	51	T1	Cooking shows	pattern /\bshows?$/i
+OPEN	47	T2	Streaming original series	pattern /\bseries$/i
+OPEN	50	T1	Reality TV shows	pattern /\bshows?$/i
+OPEN	30	T1	TV networks	default: unclassified treated as open
+OPEN	40	T1	Talk shows	pattern /\bshows?$/i
+OPEN	25	T3	TV award shows	pattern /\bshows?$/i
+OPEN	48	T2	Sitcoms from the 90s	pattern /\bsitcoms?\b/i
+OPEN	30	T2	TV science fiction series	pattern /\bseries$/i
+OPEN	30	T2	TV crime dramas	default: unclassified treated as open
+OPEN	35	T2	TV medical dramas	default: unclassified treated as open
+OPEN	30	T2	TV game show hosts	default: unclassified treated as open
+OPEN	56	T2	British sitcoms	pattern /\bsitcoms?\b/i
+OPEN	46	T2	TV westerns	default: unclassified treated as open
+OPEN	30	T2	TV soap operas	default: unclassified treated as open

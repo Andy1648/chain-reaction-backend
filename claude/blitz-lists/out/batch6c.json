@@ -1,0 +1,87 @@
+[
+ {
+  "category": "Brass instruments",
+  "verdict": "KEEP",
+  "reason": "Lip-vibrated (brass family) aerophones are a well-documented set; list covers modern, historical and folk members, misspellings removed.",
+  "size": 52,
+  "answers": [
+   "trumpet", "piccolo trumpet", "pocket trumpet", "bass trumpet", "alto trumpet", "slide trumpet", "natural trumpet", "baroque trumpet", "herald trumpet", "fanfare trumpet",
+   "cornet", "flugelhorn", "fluegelhorn", "flugel", "flumpet",
+   "trombone", "alto trombone", "tenor trombone", "bass trombone", "contrabass trombone", "soprano trombone", "valve trombone", "superbone", "sackbut", "cimbasso",
+   "french horn", "horn", "double horn", "descant horn", "natural horn", "hand horn", "wagner tuba", "wagner tube", "mellophone", "mellophonium",
+   "tuba", "bass tuba", "contrabass tuba", "tenor tuba", "sousaphone", "helicon", "euphonium", "baritone horn", "baritone", "marching baritone", "marching euphonium", "tenor horn", "alto horn", "saxhorn", "fiscorn", "contrabass bugle",
+   "bugle", "keyed bugle", "post horn", "posthorn", "coach horn", "hunting horn",
+   "ophicleide", "serpent", "cornett", "cornetto", "zink",
+   "alphorn", "alpenhorn", "lur", "carnyx", "buccina", "cornu", "lituus",
+   "conch", "conch shell", "shofar", "didgeridoo", "didjeridu", "vuvuzela"
+  ],
+  "good": ["trumpet", "trombone", "tuba", "french horn", "euphonium", "sousaphone", "cornet", "flugelhorn"],
+  "junk": ["saxophone", "clarinet", "flute", "oboe", "harmonica", "bagpipes", "kazoo", "zzzzzzzz"]
+ },
+ {
+  "category": "Standard drum kit components",
+  "rename": "Drum kit parts",
+  "verdict": "KEEP",
+  "reason": "Drum set drums, cymbals and core hardware form a small, well-known set; renamed so common add-ons (splash, china, cowbell) fairly count.",
+  "size": 22,
+  "answers": [
+   "bass drum", "kick drum", "kick", "snare drum", "snare", "tom", "toms", "tom tom", "rack tom", "mounted tom", "floor tom",
+   "hi hat", "hi hats", "high hat", "hihat cymbals", "crash cymbal", "crash", "ride cymbal", "ride", "splash cymbal", "splash", "china cymbal", "china", "cowbell",
+   "bass drum pedal", "kick pedal", "double bass pedal", "double kick pedal", "hi hat stand", "cymbal stand", "snare stand", "drum throne", "throne", "drum stool",
+   "drumsticks", "sticks", "brushes", "beater", "drumhead", "drum head"
+  ],
+  "good": ["snare", "kick drum", "hi hat", "crash cymbal", "ride", "floor tom", "bass drum", "drumsticks"],
+  "junk": ["timpani", "conga", "bongo", "xylophone", "triangle", "marimba", "djembe", "zzzzzzzz"]
+ },
+ {
+  "category": "Keyboard instruments",
+  "verdict": "KEEP",
+  "reason": "Instruments played via a keyboard are a bounded, well-known set; misspellings removed, historical members added.",
+  "size": 34,
+  "answers": [
+   "piano", "pianoforte", "grand piano", "baby grand", "upright piano", "square piano", "toy piano", "player piano", "pianola", "fortepiano", "digital piano", "stage piano",
+   "electric piano", "rhodes", "fender rhodes", "wurlitzer", "clavinet",
+   "organ", "pipe organ", "hammond organ", "hammond", "electric organ", "theatre organ", "reed organ", "pump organ", "harmonium", "calliope", "carillon",
+   "harpsichord", "clavichord", "virginal", "virginals", "spinet", "celesta", "celeste",
+   "synthesizer", "synth", "keyboard", "keytar", "mellotron", "ondes martenot",
+   "accordion", "piano accordion", "melodica"
+  ],
+  "good": ["piano", "organ", "harpsichord", "synthesizer", "accordion", "keytar", "celesta", "clavichord"],
+  "junk": ["xylophone", "marimba", "harp", "guitar", "vibraphone", "steel drum", "typewriter", "zzzzzzzz"]
+ },
+ {
+  "category": "Key signatures",
+  "rename": "Major and minor keys",
+  "verdict": "KEEP",
+  "reason": "Exactly 15 major + 15 minor standard keys; '#' forms omitted since punctuation stripping would collide them with natural keys.",
+  "size": 30,
+  "answers": [
+   "c major", "g major", "d major", "a major", "e major", "b major", "f sharp major", "c sharp major",
+   "f major", "b flat major", "bb major", "e flat major", "eb major", "a flat major", "ab major", "d flat major", "db major", "g flat major", "gb major", "c flat major", "cb major",
+   "a minor", "e minor", "b minor", "f sharp minor", "c sharp minor", "g sharp minor", "d sharp minor", "a sharp minor",
+   "d minor", "g minor", "c minor", "f minor", "b flat minor", "bb minor", "e flat minor", "eb minor", "a flat minor", "ab minor"
+  ],
+  "good": ["c major", "a minor", "g major", "e minor", "b flat major", "f sharp minor", "eb major", "d minor"],
+  "junk": ["h major", "e sharp major", "f flat major", "b sharp minor", "d flat minor", "g sharp major", "c dorian", "zzzzzzzz"]
+ },
+ {
+  "category": "Music notation symbols",
+  "rename": "Note values (US or UK names)",
+  "verdict": "KEEP",
+  "reason": "Notation symbols overall are open-ended (dynamics, ornaments, articulations...); renamed to the closed set of note durations.",
+  "size": 12,
+  "answers": [
+   "maxima", "octuple whole note", "longa", "quadruple whole note",
+   "breve", "double whole note", "semibreve", "whole note", "whole",
+   "minim", "half note", "half", "crotchet", "quarter note", "quarter",
+   "quaver", "eighth note", "8th note", "eighth",
+   "semiquaver", "sixteenth note", "16th note", "sixteenth",
+   "demisemiquaver", "thirty second note", "32nd note",
+   "hemidemisemiquaver", "sixty fourth note", "64th note",
+   "semihemidemisemiquaver", "quasihemidemisemiquaver", "hundred twenty eighth note", "128th note",
+   "demisemihemidemisemiquaver", "256th note"
+  ],
+  "good": ["whole note", "half note", "quarter note", "eighth note", "crotchet", "quaver", "minim", "semibreve"],
+  "junk": ["dotted quarter note", "triplet", "half rest", "treble clef", "fermata", "tie", "sharp", "zzzzzzzz"]
+ }
+]
