@@ -155,3 +155,11 @@ test('MEDIUM draws only from the best-known 60% of members', () => {
   const top = new Set(states.slice(0, Math.ceil(states.length * 0.6)).map((m) => m.canon));
   for (let i = 0; i < 200; i++) assert.ok(top.has(bot.pickAnswer('US states', [], 'medium')));
 });
+
+test('picks lean famous: most MEDIUM answers come from the best-known quarter', () => {
+  const members = CANON_DATA['Girl Scout cookies'];
+  const top = new Set(members.slice(0, Math.ceil(members.length * 0.25)).map((m) => m.canon));
+  let hits = 0;
+  for (let i = 0; i < 2000; i++) if (top.has(bot.pickAnswer('Girl Scout cookies', [], 'medium'))) hits += 1;
+  assert.ok(hits / 2000 > 0.55, `${hits / 20}% from the top quarter`);
+});
