@@ -588,7 +588,7 @@ function scheduleBlitzBotAnswers(room) {
           const gamePlayer = room.game.players.find((p) => p.id === bot.id);
           if (!gamePlayer) return;
 
-          const answer = categoryBlitzBot.pickAnswer(roundCategory, gamePlayer.answers);
+          const answer = categoryBlitzBot.pickAnswer(roundCategory, gamePlayer.answers, bot.botDifficulty || 'medium');
           if (!answer) return; // no accept-list / nothing left -> the bot blanks this beat
 
           await handleCategoryAnswer(room, bot.id, answer);

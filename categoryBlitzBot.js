@@ -114,7 +114,26 @@ function buildAnswerSchedule(difficultyKey, roundSeconds) {
  * bot "blanks". Entries under submitAnswer's 2-char floor are skipped so a
  * picked answer is accepted by construction.
  */
-function pickAnswer(category, alreadyGiven) {
+// BA1 (oct2): the bot answers from the CANON — one correctly spelled form per member, members in
+// popularity order (blitzCanon.json; every accept-list entry is a member's canon or one of its
+// aliases). The raw accept-list mixes in aliases and the deliberate misspelling-catchers, so the bot
+// used to play "conneticut" / "squirtel" (shown at the round-end reveal as its answers) and double-
+// score one member as "nervous" + "nervous system". A MEDIUM bot draws from the best-known 60% of
+// members, EASY 40%, HARD all — so on a niche prompt it no longer reaches for the obscure tail.
+const CANON = require('./blitzCanon.json');
+const CANON_SHARE = { easy: 0.4, medium: 0.6, hard: 1 };
+
+function pickAnswer(category, alreadyGiven, difficultyKey = 'medium') {
+  const members = CANON[category];
+  if (Array.isArray(members) && members.length) {
+    const givenKeys = new Set((alreadyGiven || []).map((a) => BLITZ_LISTS.answerKey(String(a))));
+    const share = CANON_SHARE[difficultyKey] || CANON_SHARE.medium;
+    const known = members.slice(0, Math.max(1, Math.ceil(members.length * share)));
+    const open = known.filter((m) => m.canon.length >= 2
+      && ![m.canon, ...(m.aliases || [])].some((f) => givenKeys.has(BLITZ_LISTS.answerKey(f))));
+    if (open.length === 0) return null;
+    return open[Math.floor(Math.random() * open.length)].canon;
+  }
   // STEP 9: the curated list when the category has one (it always does in play).
   const curated = BLITZ_LISTS.listFor(category);
   const set = curated ? new Set(curated.answers) : CATEGORY_ANSWERS[category];

@@ -117,3 +117,41 @@ test('buildAnswerSchedule falls back to medium pacing for unknown difficulty', (
   const { answers } = bot.BOT_DIFFICULTY.medium;
   assert.ok(offsets.length >= 1 && offsets.length <= answers[1]);
 });
+
+// ---- BA1: the canon -----------------------------------------------------------------------------
+const CANON_DATA = require('./blitzCanon.json');
+const BLITZ = require('./blitzLists');
+test('canon covers every curated list: each answer is exactly one member\'s canon or alias', () => {
+  for (const name of BLITZ.NAMES) {
+    const members = CANON_DATA[name];
+    assert.ok(Array.isArray(members) && members.length > 0, `${name} has a canon`);
+    const seen = new Set();
+    for (const m of members) for (const f of [m.canon, ...(m.aliases || [])]) {
+      assert.ok(!seen.has(f), `${name}: "${f}" twice`);
+      seen.add(f);
+    }
+    assert.deepEqual([...seen].sort(), [...BLITZ.listFor(name).answers].sort(), name);
+  }
+});
+test('the bot never plays a misspelling or a second alias of a member it already named', () => {
+  const states = CANON_DATA['US states'];
+  const canons = new Set(states.map((m) => m.canon));
+  const given = [];
+  for (let i = 0; i < states.length + 5; i++) {
+    const a = bot.pickAnswer('US states', given, 'hard');
+    if (!a) break;
+    assert.ok(canons.has(a), `"${a}" is not a canonical spelling`);
+    given.push(a);
+  }
+  assert.equal(given.length, states.length, 'HARD reaches every member exactly once');
+  const sys = CANON_DATA['Human body systems'].find((m) => m.aliases.includes('nervous') || m.canon.includes('nervous'));
+  const after = bot.pickAnswer('Human body systems', [...sys.aliases, sys.canon].slice(0, 1), 'hard');
+  const forms = new Set([sys.canon, ...sys.aliases]);
+  for (let i = 0; i < 50; i++) assert.ok(!forms.has(bot.pickAnswer('Human body systems', [[...forms][0]], 'hard')), 'no second form of a named system');
+  assert.ok(after === null || !forms.has(after));
+});
+test('MEDIUM draws only from the best-known 60% of members', () => {
+  const states = CANON_DATA['US states'];
+  const top = new Set(states.slice(0, Math.ceil(states.length * 0.6)).map((m) => m.canon));
+  for (let i = 0; i < 200; i++) assert.ok(top.has(bot.pickAnswer('US states', [], 'medium')));
+});
