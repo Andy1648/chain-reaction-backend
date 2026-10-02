@@ -815,6 +815,8 @@ function humanizeError(code) {
 
 const PORT = process.env.PORT || 3001;
 server.listen(PORT, () => {
+  // Build the bot-fumble prefix index now, off any turn timer (wordBombBot.warmFumbleIndex).
+  setImmediate(() => { try { require('./wordBombBot').warmFumbleIndex(); } catch { /* best effort */ } });
   console.log(`Chain Reaction server listening on port ${server.address().port}`);
   logInfo('server_listening', { port: server.address().port });
   // Surface whether the Category Blitz AI fallback is active. With no key the

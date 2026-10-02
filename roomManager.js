@@ -170,6 +170,7 @@ function createRoom(hostConnection, hostName, isPublic = false) {
     countdownTimeout: null,
     // Pending solo-bot "submit a word" setTimeout, if the current turn is a bot.
     botMoveTimeout: null,
+    botFumbleTimeouts: null,
     // Pending Category Blitz bot "submit an answer" setTimeouts for the current
     // round (one per planned answer). Cleared with the round timer.
     blitzBotTimeouts: [],
@@ -642,6 +643,45 @@ function clearBotMove(room) {
     clearTimeout(room.botMoveTimeout);
     room.botMoveTimeout = null;
   }
+  // A choking bot's visible fumble (scheduleBotFumble) dies with the move it stands in for.
+  if (room.botFumbleTimeouts) {
+    room.botFumbleTimeouts.forEach(clearTimeout);
+    room.botFumbleTimeouts = null;
+  }
+}
+
+/**
+ * A choking bot still visibly TRIES (wordBombBot.fumblePlan): a couple of abandoned starts relayed
+ * over typing_update, then the normal turn timeout. Display-only: no game-state mutation, the
+ * same frame a human's keystrokes travel on. Every step re-checks that the bot still holds the turn.
+ */
+function scheduleBotFumble(room, botId, botDifficulty) {
+  const { game } = room;
+  // A choke starts fumbling at the bot's normal reaction delay, but never later than 30% into the
+  // turn: on a fast room (7 s HELL) an easy bot's 4-8 s delay would otherwise leave no room for a
+  // single attempt and the board would sit frozen again.
+  const turnMs = Math.max(0, (game.currentTimerSeconds || 0) * 1000);
+  const first = Math.min(
+    wordBombBot.computeDelayMs(botDifficulty, game.currentTimerSeconds),
+    Math.max(wordBombBot.MIN_REACTION_MS, Math.round(turnMs * 0.3)),
+  );
+  // Dead-end attempts only: never the start of a playable word (see wordBombBot NO FREE ANSWERS).
+  const attempts = [];
+  for (let i = 0; i < wordBombBot.FUMBLE_MAX_TRIES; i++) {
+    const seed = wordBombBot.pickWord(game.currentCombo, game.usedWords);
+    const attempt = seed && wordBombBot.deadEndAttempt(seed, game.currentCombo);
+    if (attempt) attempts.push(attempt);
+  }
+  const plan = wordBombBot.fumblePlan(attempts, first, game.currentTimerSeconds);
+  room.botFumbleTimeouts = plan.map((step) => setTimeout(() => {
+    try {
+      if (!room.game || room.game.status !== 'in_progress') return;
+      if (getCurrentPlayerId(room.game) !== botId) return;
+      broadcastToRoom(room, { type: 'typing_update', payload: { playerId: botId, text: step.text } });
+    } catch (err) {
+      logError('bot_fumble_failed', { roomCode: room.code, playerId: botId }, err);
+    }
+  }, step.at));
 }
 
 /**
@@ -666,8 +706,12 @@ function maybeScheduleBotMove(room) {
   // of the room's timer difficulty. Fall back to medium if somehow unset.
   const botDifficulty = rosterEntry.botDifficulty || 'medium';
 
-  // Choke this turn: do nothing, the running turn timer will time it out.
-  if (wordBombBot.rollMiss(botDifficulty)) return;
+  // Choke this turn: the running turn timer will time it out. It still visibly tries (a fumble),
+  // so the board never sits frozen for the whole fuse.
+  if (wordBombBot.rollMiss(botDifficulty, game.currentTimerSeconds)) {
+    scheduleBotFumble(room, currentId, botDifficulty);
+    return;
+  }
 
   const delayMs = wordBombBot.computeDelayMs(botDifficulty, game.currentTimerSeconds);
   room.botMoveTimeout = setTimeout(async () => {
@@ -1212,6 +1256,7 @@ function _getStatsForTesting() {
     if (room.roundPauseTimeout) timers += 1;
     if (room.countdownTimeout) timers += 1;
     if (room.botMoveTimeout) timers += 1;
+    if (Array.isArray(room.botFumbleTimeouts)) timers += room.botFumbleTimeouts.length;
     if (Array.isArray(room.blitzBotTimeouts)) timers += room.blitzBotTimeouts.length;
     playersTotal += room.players.length;
   }
