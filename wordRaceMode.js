@@ -12,7 +12,8 @@
 //   blitzBotTimeouts  - each bot's next-word timeout (cleared by clearRoundTimer)
 //
 // WIRE (all additive message types):
-//   race_start       -> room  { seed, fragments, tiers, target, capMs, racers, serverNow, goAt }
+//   race_start       -> room  { seed, fragments, tiers, target, capMs, racers, serverNow, goAt,
+//                               variant ('fragments' | 'words'), words (whole-word variant only) }
 //   race_go          -> room  { goAt, endsAt, serverNow }
 //   race_progress    -> room  { racerId, index, word, fragment, t, serverNow }
 //   race_word_result -> submitter only { accepted, word, reason, fragment, index }
@@ -76,6 +77,7 @@ function overPayload(room) {
     standings: race.standings(g),
     target: g.target,
     capMs: g.capMs,
+    variant: g.variant,
     fragments: g.fragments,
     serverNow: Date.now(),
   };
@@ -105,6 +107,8 @@ const logic = {
 
 function start(room, helpers) {
   const g = room.game;
+  // WHOLE-WORD variant (Andy oct2 A6): opt-in per room (race_quick_match { variant: 'words' }).
+  if (room.raceVariant === 'words') race.useWordsVariant(g);
   // Mark roster bots (a rematch keeps the bots from the previous race).
   for (const r of g.racers) {
     const rp = room.players.find((p) => p.id === r.id);
@@ -130,6 +134,8 @@ function start(room, helpers) {
     type: 'race_start',
     payload: {
       seed: g.seed,
+      variant: g.variant,
+      ...(g.variant === 'words' ? { words: g.words } : {}),
       fragments: g.fragments,
       tiers: g.tiers,
       target: g.target,
@@ -172,17 +178,23 @@ function scheduleBot(room, botId, botIndex, helpers) {
   const racer = race.getRacer(g, botId);
   if (!racer || racer.left) return;
   const tier = g.tiers[racer.index] || 'h';
-  const delay = race.botWordDelayMs(g.botPaceMs, race.botFactor(botIndex), tier);
+  const delay = g.variant === 'words'
+    ? race.botTypeDelayMs(race.currentFragment(g, racer), race.botFactor(botIndex))
+    : race.botWordDelayMs(g.botPaceMs, race.botFactor(botIndex), tier);
   if (!Array.isArray(room.blitzBotTimeouts)) room.blitzBotTimeouts = [];
   const handle = setTimeout(async () => {
     try {
       if (room.game !== g || g.status !== 'in_progress') return;
       const fragment = race.currentFragment(g, racer);
       if (!fragment) return;
-      const word = wordBombBot.pickWord(fragment, racer.used);
-      if (word) {
-        markAsValid(word); // curated real word: skip the lookup, guaranteed accept
-        await handleSubmit(room, botId, word, helpers);
+      if (g.variant === 'words') {
+        await handleSubmit(room, botId, fragment, helpers); // a whole-word bot types the word itself
+      } else {
+        const word = wordBombBot.pickWord(fragment, racer.used);
+        if (word) {
+          markAsValid(word); // curated real word: skip the lookup, guaranteed accept
+          await handleSubmit(room, botId, word, helpers);
+        }
       }
       scheduleBot(room, botId, botIndex, helpers);
     } catch (err) {
@@ -221,12 +233,15 @@ async function handleSubmit(room, connectionId, text, helpers) {
   if (reason) return reject(word, reason, fragment);
 
   const index = racer.index;
-  g._pending.add(connectionId);
-  let valid;
-  try {
-    valid = await isValidWord(word);
-  } finally {
-    g._pending.delete(connectionId);
+  let valid = true;
+  // WHOLE WORDS need no dictionary: checkWord already demanded the exact sequence word.
+  if (g.variant !== 'words') {
+    g._pending.add(connectionId);
+    try {
+      valid = await isValidWord(word);
+    } finally {
+      g._pending.delete(connectionId);
+    }
   }
   // The world may have moved while we awaited (race ended, room reset).
   if (room.game !== g || g.status !== 'in_progress' || racer.index !== index) {

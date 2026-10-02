@@ -698,7 +698,7 @@ wss.on('connection', (ws) => {
           }
           const name = sanitizeName(payload?.name);
           leaveCurrentRoom(ws);
-          const result = wordRaceMatch.quickMatch(ws, name, () => allowCreateRoom(ws));
+          const result = wordRaceMatch.quickMatch(ws, name, () => allowCreateRoom(ws), payload?.variant);
           if (result.error) {
             sendError(ws, humanizeError(result.error), 'race_quick_match');
             return;

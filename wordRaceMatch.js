@@ -53,7 +53,15 @@ function launch(room) {
  * Drops the connection into a race room. Returns { room, created } or { error }.
  * `allowCreate` is the caller's per-connection create throttle.
  */
-function quickMatch(connection, playerName, allowCreate) {
+// The race variants a client may ask for; anything else is the original fragment race. Rooms only
+// match racers of the SAME variant (a whole-word racer never lands in a fragment race).
+const VARIANTS = new Set(['fragments', 'words']);
+function variantOf(v) {
+  return VARIANTS.has(v) ? v : 'fragments';
+}
+
+function quickMatch(connection, playerName, allowCreate, variant) {
+  const want = variantOf(variant);
   const candidates = [];
   for (const code of queue) {
     const room = getRoom(code);
@@ -62,6 +70,7 @@ function quickMatch(connection, playerName, allowCreate) {
       continue;
     }
     if (room.players.length >= race.MAX_RACERS) continue;
+    if (variantOf(room.raceVariant) !== want) continue;
     candidates.push(room);
   }
   candidates.sort((a, b) => b.players.length - a.players.length);
@@ -77,6 +86,7 @@ function quickMatch(connection, playerName, allowCreate) {
   const room = res.room;
   room.gameType = raceMode.gameType;
   room.raceQueue = true;
+  room.raceVariant = want;
   room.raceFillAt = Date.now() + FILL_WAIT_MS;
   queue.add(room.code);
   room.countdownTimeout = setTimeout(
