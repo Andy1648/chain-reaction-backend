@@ -397,7 +397,7 @@ wss.on('connection', (ws) => {
             return;
           }
 
-          const result = joinRoom(code, ws, name);
+          const result = joinRoom(code, ws, name, { allowSpectate: true }); // STEP 54: code-join may spectate
 
           if (result.error) {
             sendError(ws, humanizeError(result.error), 'join_room');
@@ -409,6 +409,13 @@ wss.on('connection', (ws) => {
           connectionToRoomCode.set(ws.id, code);
           send(ws, 'room_joined', { code });
           broadcastToRoom(result.room, buildRoomUpdatePayload(result.room));
+          // STEP 54: joined a Word Bomb round in progress → put the joiner straight into the game
+          // view as a spectator (dealt in next turn): the same game_started + turn_update frames
+          // everyone else got, sent to this socket only.
+          if (result.spectator) {
+            send(ws, 'game_started', { difficultyKey: result.room.difficultyKey, gameType: result.room.gameType, spectator: true });
+            send(ws, ...Object.values(buildTurnUpdatePayload(result.room)));
+          }
           break;
         }
 
