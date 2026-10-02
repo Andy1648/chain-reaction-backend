@@ -132,7 +132,9 @@ function pickAnswer(category, alreadyGiven, difficultyKey = 'medium') {
     const open = known.filter((m) => m.canon.length >= 2
       && ![m.canon, ...(m.aliases || [])].some((f) => givenKeys.has(BLITZ_LISTS.answerKey(f))));
     if (open.length === 0) return null;
-    return open[Math.floor(Math.random() * open.length)].canon;
+    // Skewed toward the famous end (index ∝ u²: half the picks from the best-known quarter) — a
+    // uniform draw over 60% of a 42-cookie list played "toast-yay" and "cinna-spins" on prod.
+    return open[Math.floor(open.length * Math.random() ** 2)].canon;
   }
   // STEP 9: the curated list when the category has one (it always does in play).
   const curated = BLITZ_LISTS.listFor(category);
