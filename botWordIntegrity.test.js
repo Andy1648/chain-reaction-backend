@@ -48,8 +48,9 @@ test('bot pool satisfies the same predicate isValidWord enforces (invariant pin)
 
 test('markAsValid() cannot poison the human path — isDisallowedWord is checked before the cache', async () => {
   // Pre-warm a disallowed proper noun as if a bad bot word had been cached.
-  markAsValid('france');
-  assert.equal(await isValidWord('france'), false, 'a disallowed word must stay rejected even if cached true');
+  // ('pagina': still blocklisted — STEP 55 made common proper nouns like 'france' acceptable)
+  markAsValid('pagina');
+  assert.equal(await isValidWord('pagina'), false, 'a disallowed word must stay rejected even if cached true');
 });
 
 test('the hardcoded server starter words are all human-valid (no back-door words)', async () => {
