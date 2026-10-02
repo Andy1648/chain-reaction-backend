@@ -103,7 +103,7 @@ test('real turn-timer expiries cost exactly one life each, and the eliminating e
     const { room } = createRoom(host, 'Host');
     const p2 = recordingConn('p2');
     joinRoom(room.code, p2, 'P2');
-    room.difficultyKey = 'chill'; // 3 lives, 20s turns
+    room.difficultyKey = 'chill'; // 3 lives, 15s turns
     startGame(room); // broadcasts game_started + the opening turn_update, then a 3s countdown
 
     // Never submit for anyone -> every turn ends in a real timer expiry. Tick 1s
@@ -449,4 +449,40 @@ test('blitz bot submits scored accept-list answers during a live round and stops
 
   await new Promise((r) => setTimeout(r, 2000));
   assert.equal(gameBot.answers.length, scoreAtRoundEnd, 'no submissions after round end');
+});
+
+test('BA1: a choking bot CONCEDES within ~6 s instead of sitting out the whole 15 s fuse (same life lost)', () => {
+  const bot = require('./wordBombBot');
+  const realRollMiss = bot.rollMiss;
+  bot.rollMiss = () => true; // every bot turn is a choke
+  test.mock.timers.enable({ apis: ['setTimeout', 'setInterval'] });
+  try {
+    const host = recordingConn('host');
+    const { room } = createRoom(host, 'Host');
+    room.difficultyKey = 'chill'; // 15 s turns
+    const res = addBot(room, 'medium');
+    const botId = (res && res.bot && res.bot.id) || room.players.find((p) => p.isBot).id;
+    startGame(room);
+    let now = 0;
+    let botTurnAt = null;
+    const botTurnMs = [];
+    let seen = 0;
+    for (let guard = 0; guard < 4000 && botTurnMs.length < 2 && !host.received.some((m) => m.type === 'game_over'); guard++) {
+      test.mock.timers.tick(100);
+      now += 100;
+      for (; seen < host.received.length; seen++) {
+        const m = host.received[seen];
+        if (m.type === 'turn_update' && m.payload.currentPlayerId === botId && botTurnAt === null) botTurnAt = now;
+        if (m.type === 'turn_timeout' && botTurnAt !== null) { botTurnMs.push(now - botTurnAt); botTurnAt = null; }
+      }
+    }
+    assert.ok(botTurnMs.length >= 1, 'the bot had a choking turn that ended');
+    for (const ms of botTurnMs) assert.ok(ms <= 6600, `the choking bot held the turn ${ms} ms (> ~6 s)`);
+    const botLives = [...host.received].reverse().find((m) => m.type === 'turn_update').payload.players.find((p) => p.id === botId).lives;
+    assert.ok(botLives < 3, 'the concede cost the bot a life, like a timeout');
+  } finally {
+    bot.rollMiss = realRollMiss;
+    test.mock.timers.reset();
+    _resetRoomsForTesting();
+  }
 });
