@@ -122,6 +122,24 @@ function buildSequence(seed, count = TARGET_WORDS, pools = getPools()) {
   return { fragments, tiers };
 }
 
+// The bot list is WEB-frequency ordered, so its top words include things no typing race should ever
+// show: adult terms the display blocklist doesn't cover, first names / places / brands (proper
+// nouns typed lowercase), and web jargon. Reviewed by hand against the whole pool (Oct 2).
+const RACE_STOP = new Set(`
+nude gay lesbian anal milf hardcore bondage voyeur lingerie breast breasts sexual sex ass naked teen teens
+adult adults mature girls porn xxx dating escort erotic penis kinky fetish horny strip cum boobs tits slut
+abuse violence suicide kill drugs drug rape nazi
+john james michael paul peter mary mike tom jack bob joe dan lee ann frank harry henry william williams
+joseph johnson jones smith kelly martin louis david richard robert george steve chris kevin
+york china french jersey vegas hong wales texas london paris america american europe san los las del les
+cape turkey canada india japan german english florida california washington
+yahoo linux amazon cisco dell canon ford google ebay java dvd sony nokia intel microsoft
+mon tue wed thu fri sat sun jan feb mar apr jun jul aug sep sept oct nov dec pst est tel fax vol dev devel
+doc var null ave bin sub pre pro info pics pic zip logo login username homepage website websites email
+online forum forums blog blogs thread posted posts url html http www faq php rss usr pdf jpg gif ups ads
+gratis non inc ltd misc enlarge bookmark keyword keywords spam bytes del est inn
+`.split(/\s+/).filter(Boolean));
+
 let _wordPool = null;
 /** The whole-word pool: common, lowercase a-z, 3-8 letters, nothing on the display blocklist. */
 function getWordPool(words) {
@@ -131,7 +149,7 @@ function getWordPool(words) {
   const pool = [];
   for (const w of list) {
     if (!/^[a-z]+$/.test(w) || w.length < WORDS_MIN_LEN || w.length > WORDS_MAX_LEN) continue;
-    if (seen.has(w) || isBlockedForDisplay(w)) continue;
+    if (seen.has(w) || isBlockedForDisplay(w) || RACE_STOP.has(w)) continue;
     seen.add(w);
     pool.push(w);
   }
@@ -384,6 +402,7 @@ module.exports = {
   WORDS_TARGET,
   WORDS_CAP_MS,
   getWordPool,
+  RACE_STOP,
   buildWordSequence,
   useWordsVariant,
   wordTier,

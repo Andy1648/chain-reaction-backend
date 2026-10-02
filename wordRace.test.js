@@ -215,3 +215,13 @@ test('words variant: bot typing time grows with word length and spreads by bot',
   const fiveLetter = race.botTypeDelayMs('house', 1, fixed); // ~45 WPM medium
   assert.ok(fiveLetter > 1000 && fiveLetter < 2000, String(fiveLetter));
 });
+
+test('words variant pool: no adult terms, names, places, brands or web jargon', () => {
+  const pool = new Set(race.getWordPool());
+  for (const w of ['nude', 'milf', 'bondage', 'voyeur', 'lesbian', 'anal', 'naked', 'john', 'mike', 'joe', 'york', 'china', 'yahoo', 'linux', 'amazon', 'login', 'email', 'pst', 'fax', 'dvd']) {
+    assert.equal(pool.has(w), false, w);
+  }
+  for (const w of race.RACE_STOP) assert.equal(pool.has(w), false, w);
+  assert.ok(pool.size > 1800, `still a deep pool (${pool.size})`);
+  for (const w of ['house', 'water', 'music', 'river', 'happy']) assert.ok(pool.has(w), w);
+});
