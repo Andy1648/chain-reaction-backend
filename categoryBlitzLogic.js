@@ -606,7 +606,14 @@ const QUARANTINED_CATEGORIES = new Set([
 
 // STEP 9: the categories in play are EXACTLY the curated, complete lists (blitzLists.json). Everything
 // above (RAW_CATEGORIES, the quarantine, the bounded filter) is kept for tooling, not for play.
-const CATEGORIES = BLITZ_LISTS.NAMES.slice();
+// BA1 (oct2): BENCHED — curated lists a median player can't name 3 of in 30 s more than half the time
+// (bot-playtest sim: Japanese shoguns 1.00, Inca emperors 0.99, Skyrim races 0.75, ...). Kept in
+// blitzLists.json (tooling, the judge), out of rotation.
+const BENCHED = new Set([
+  'Japanese shoguns', 'Inca emperors', 'Skyrim races', 'Minecraft Ore Blocks', 'Dark Souls 1 bosses',
+  "Donkey Kong's Kong family", 'Pokémon starters',
+]);
+const CATEGORIES = BLITZ_LISTS.NAMES.filter((c) => !BENCHED.has(c));
 // Pack of each curated category, and the packs offered to players: only a pack with enough curated
 // categories to fill a game (TOTAL_ROUNDS) exists at all — NO EMPTY PACKS.
 const CURATED_PACK = {};
@@ -657,6 +664,12 @@ const TIER_BROAD = new Set([
   'Colors', 'Drawing tools', 'Painting tools',
   // tv basics
   'TV networks', 'Reality TV shows', 'Game shows', 'Talk shows', 'Cooking shows',
+  // BA1 (oct2): STEP 9 cut play to the curated lists, and only 2 of the names above survived — so
+  // "US states" and "Human body systems" were each in ~69% of games (TIER_WEIGHTS gives tier 1 half
+  // of every draw). These curated, broad lists spread it: the most common category falls to ~11%.
+  'Asian countries', 'European national capitals', 'African countries', 'US state capitals', 'US presidents',
+  'Summer Olympic sports', 'Major human organs', 'Pixar feature films', 'Latin American countries',
+  'NBA teams', 'NFL teams', 'English & British monarchs',
 ]);
 // Mainstream franchises where naming a few is EASY (not enthusiasts-only): they
 // match a niche franchise pattern below but belong in MEDIUM, not NICHE.
@@ -689,6 +702,8 @@ const TIER_NICHE = new Set([
   'Naruto characters', 'Dragon Ball characters', 'One Piece characters',
   'Elden Ring bosses', 'Half-Life enemies', 'Half-Life weapons', 'Team Fortress 2 classes', 'Pac-Man ghosts',
   'Genshin Impact playable characters', 'League of Legends Champions',
+  // BA1 (oct2): specialist lists that defaulted to MEDIUM
+  'Boxing weight classes', 'Major and minor keys',
 ]);
 // Niche franchise/specialist keyword patterns (case-insensitive).
 const TIER_NICHE_PATTERNS = [

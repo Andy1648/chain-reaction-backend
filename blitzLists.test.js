@@ -13,13 +13,15 @@ function freshGame(category) {
 }
 
 test('every category in play is a curated list (no judge, no open categories)', () => {
-  assert.deepEqual([...L.CATEGORIES].sort(), [...NAMES].sort());
-  assert.ok(NAMES.length >= 60, `${NAMES.length} categories`);
+  // every category in play is a curated list; BA1 benched a few curated lists out of rotation
+  for (const c of L.CATEGORIES) assert.ok(NAMES.includes(c), `${c} is not a curated list`);
+  assert.ok(L.CATEGORIES.length >= 60, `${L.CATEGORIES.length} categories in play`);
+  for (const c of ['Japanese shoguns', 'Inca emperors']) assert.ok(!L.CATEGORIES.includes(c), `${c} is benched (BA1)`);
 });
 
 test('no empty packs: every offered pack fills a 3-round game', () => {
   for (const p of L.PACK_IDS) {
-    const n = NAMES.filter((c) => LISTS.get(c).pack === p).length;
+    const n = L.CATEGORIES.filter((c) => LISTS.get(c).pack === p).length;
     assert.ok(n >= L.TOTAL_ROUNDS, `${p}: ${n}`);
   }
 });
@@ -55,4 +57,8 @@ test('no head-word leniency: "zzzz cowboys" is not an NFL team', async () => {
   const r = await L.submitAnswer(freshGame('NFL teams'), 'p1', 'zzzz cowboys');
   assert.equal(r.accepted, false);
   assert.equal(r.reason, 'not_on_list');
+});
+
+test('BA1: tier 1 holds enough broad lists that no category dominates (was 2 → ~69% of games each)', () => {
+  assert.ok(L.TIER_POOLS[1].length >= 10, `${L.TIER_POOLS[1].length} tier-1 categories`);
 });

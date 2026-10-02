@@ -1,7 +1,7 @@
 // scripts/wb-smoke.js — post-deploy Word Bomb smoke test against a live server (BACKEND RULE).
 // Creates a private room, adds a MEDIUM bot, starts Word Bomb, and plays real words containing the
 // fragment on its own turns until a word is ACCEPTED and the turn has passed to the bot and back.
-// Exit 0 = healthy, 1 = failed. Usage: node scripts/wb-smoke.js [wss://url] [timeoutSec=90]
+// Exit 0 = healthy, 1 = failed. Usage: [DIFF=chill] node scripts/wb-smoke.js [wss://url] [timeoutSec=90]
 const WebSocket = require('ws');
 const fs = require('fs');
 const path = require('path');
@@ -33,6 +33,7 @@ ws.on('message', (raw) => {
   if (m.type === 'error') log.errors.push(p.message || p);
   if (m.type === 'room_created') {
     send('set_game_type', { gameType: 'word-bomb' });
+    if (process.env.DIFF) send('set_difficulty', { difficultyKey: process.env.DIFF }); // e.g. DIFF=chill
     send('add_bot', { difficulty: 'medium' });
   }
   if (m.type === 'room_update') {

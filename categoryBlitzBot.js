@@ -64,7 +64,9 @@ function createBotPlayer(difficulty) {
 // like a metronome). Tiers map to the same easy/medium/hard keys as Word Bomb.
 const BOT_DIFFICULTY = {
   easy:   { answers: [2, 3], firstDelayMs: [2500, 5000], intervalMs: [4000, 7000] }, // slow, beatable
-  medium: { answers: [4, 5], firstDelayMs: [1500, 3500], intervalMs: [2500, 4500] }, // challenging
+  // BA1 (oct2): first answer at 3.0-5.5 s (was 1.5-3.5): the bot scored first in 99.5% of rounds —
+  // a median player needs ~1.2 s just to read the prompt.
+  medium: { answers: [4, 5], firstDelayMs: [3000, 5500], intervalMs: [2500, 4500] }, // challenging
   hard:   { answers: [6, 8], firstDelayMs: [800, 2000],  intervalMs: [1600, 2600] }, // brisk, brutal
 };
 
