@@ -212,8 +212,8 @@ test('words variant: bot typing time grows with word length and spreads by bot',
   const fixed = () => 0.5;
   assert.ok(race.botTypeDelayMs('elephant', 1, fixed) > race.botTypeDelayMs('cat', 1, fixed));
   assert.ok(race.botTypeDelayMs('house', 0.88, fixed) < race.botTypeDelayMs('house', 1.12, fixed));
-  const fiveLetter = race.botTypeDelayMs('house', 1, fixed); // ~45 WPM medium
-  assert.ok(fiveLetter > 1000 && fiveLetter < 2000, String(fiveLetter));
+  const fiveLetter = race.botTypeDelayMs('house', 1, fixed); // ~38 WPM medium (BA1: 300 ms/char)
+  assert.ok(fiveLetter > 1500 && fiveLetter < 2600, String(fiveLetter));
 });
 
 test('words variant pool: no adult terms, names, places, brands or web jargon', () => {
