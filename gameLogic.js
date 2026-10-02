@@ -339,7 +339,27 @@ function computeTimerForTurn(game) {
  * Advances turn order to the next non-eliminated player. If only one
  * player remains, the game ends and that player wins.
  */
+/**
+ * JOIN MID-GAME (STEP 54): players who joined by code while this game was running wait in
+ * game.pendingPlayers as SPECTATORS and are dealt in here, at the start of the next turn advance:
+ * appended to the END of the turn order with the tier's full starting lives. Additive — a game
+ * with no pending joiners runs exactly as before.
+ */
+function dealInPending(game) {
+  if (!Array.isArray(game.pendingPlayers) || game.pendingPlayers.length === 0) return [];
+  const dealt = [];
+  for (const p of game.pendingPlayers) {
+    if (game.players.some((x) => x.id === p.id)) continue;
+    game.players.push({ id: p.id, name: p.name, lives: game.maxLives, eliminated: false });
+    game.turnOrder.push(p.id);
+    dealt.push(p.id);
+  }
+  game.pendingPlayers = [];
+  return dealt;
+}
+
 function advanceTurn(game) {
+  dealInPending(game);
   const active = getActivePlayers(game);
 
   if (active.length <= 1) {
@@ -498,6 +518,7 @@ async function submitWord(game, rawWord, opts = {}) {
 }
 
 module.exports = {
+  dealInPending,
   DIFFICULTY_PRESETS,
   MIN_PLAYERS_TO_START,
   COMBOS,

@@ -179,7 +179,7 @@ function createRoom(hostConnection, hostName, isPublic = false) {
   return { room };
 }
 
-function joinRoom(code, connection, playerName) {
+function joinRoom(code, connection, playerName, { allowSpectate = false } = {}) {
   const room = rooms.get(code);
   if (!room) {
     return { error: 'room_not_found' };
@@ -189,7 +189,20 @@ function joinRoom(code, connection, playerName) {
   // game.players) that got broadcasts but couldn't play or score. A FINISHED
   // game still joins like a lobby.
   if (isGameLive(room)) {
-    return { error: 'game_already_started' };
+    // STEP 54: a Word Bomb round in progress takes a code-joiner as a SPECTATOR, dealt in at the
+    // next turn (gameLogic.dealInPending). Every other mode keeps refusing a live join.
+    if (!allowSpectate || room.game.gameType !== 'word-bomb' || room.game.status !== 'in_progress') {
+      return { error: 'game_already_started' };
+    }
+    if (room.players.length >= MAX_PLAYERS_PER_ROOM) {
+      return { error: 'room_full' };
+    }
+    room.players.push({ id: connection.id, name: playerName, connection });
+    if (!Array.isArray(room.game.pendingPlayers)) room.game.pendingPlayers = [];
+    room.game.pendingPlayers.push({ id: connection.id, name: playerName });
+    touchRoom(room);
+    logInfo('player_joined_midgame', { roomCode: code, playerId: connection.id });
+    return { room, spectator: true };
   }
   if (room.players.length >= MAX_PLAYERS_PER_ROOM) {
     return { error: 'room_full' };
@@ -328,6 +341,8 @@ function buildTurnUpdatePayload(room) {
         lives: p.lives,
         eliminated: p.eliminated,
       })),
+      // STEP 54: who is watching and will be dealt in next turn (empty when nobody joined late).
+      spectators: (game.pendingPlayers || []).map((p) => ({ id: p.id, name: p.name })),
     },
   };
 }
@@ -1061,6 +1076,10 @@ function removePlayer(room, connectionId) {
   }
 
   const game = room.game;
+  // STEP 54: a spectator waiting to be dealt in leaves with nothing else to unwind.
+  if (game && Array.isArray(game.pendingPlayers)) {
+    game.pendingPlayers = game.pendingPlayers.filter((p) => p.id !== connectionId);
+  }
   if (game && game.gameType === 'category-blitz') {
     // Simultaneous mode has no turns to advance - the round timer keeps
     // running for everyone else. Just drop the leaver from the live roster
