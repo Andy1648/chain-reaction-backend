@@ -381,10 +381,12 @@ function botWordDelayMs(paceMs, factor, tier, rng = Math.random) {
   return Math.max(900, Math.round(paceMs * factor * (BOT_TIER_MULT[tier] || 1) * jitter));
 }
 
-// WHOLE-WORD bots type, they don't search: a reaction beat, then per-letter time. MEDIUM ~ 45 WPM
-// (5 letters + a space at ~220 ms/char), spread per bot by botFactor() like the fragment race.
+// WHOLE-WORD bots type, they don't search: a reaction beat, then per-letter time, spread per bot by
+// botFactor() like the fragment race. BA1 (oct2): 300 ms/char (~38 WPM; was 210 ≈ 52-57 WPM): a
+// median 40 WPM typist finished LAST in 100% of solo races and first in 0%; at 300 last 8%, and a
+// 50 WPM typist wins 62% (sim: frontend claude/batch-a/ba1/race-sim.mjs).
 const BOT_REACT_MS = 260;
-const BOT_MS_PER_CHAR = 210;
+const BOT_MS_PER_CHAR = 300;
 function botTypeDelayMs(word, factor, rng = Math.random) {
   const jitter = 0.8 + rng() * 0.45; // 0.80 .. 1.25
   const n = String(word || '').length + 1; // + the space / enter
