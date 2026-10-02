@@ -179,7 +179,7 @@ test('handleTimeout returns the acting player so a skip can be named in the feed
 
 test('CHILL tier grants 20s and 3 lives; HARD/CRAZY/HELL grant 2', () => {
   const chill = createGame([{ id: 'p1' }, { id: 'p2' }], 'chill');
-  assert.equal(chill.difficulty.startSeconds, 20);
+  assert.equal(chill.difficulty.startSeconds, 15);
   assert.equal(chill.maxLives, 3);
   assert.equal(chill.players[0].lives, 3);
   for (const key of ['easy', 'medium', 'hard']) {

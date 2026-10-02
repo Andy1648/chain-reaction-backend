@@ -88,7 +88,7 @@ test('the reaction band matches the balance spec', () => {
   assert.deepEqual(bot.BOT_DIFFICULTY.medium.delaySec, [2.0, 5.0]);
   assert.deepEqual(bot.BOT_DIFFICULTY.hard.delaySec, [1.0, 2.5]);
   assert.ok(Math.abs(bot.BOT_DIFFICULTY.easy.miss - 0.15) < 1e-9);
-  assert.ok(Math.abs(bot.BOT_DIFFICULTY.medium.miss - 0.05) < 1e-9);
+  assert.ok(Math.abs(bot.BOT_DIFFICULTY.medium.miss - 0.06) < 1e-9);
   assert.ok(Math.abs(bot.BOT_DIFFICULTY.hard.miss - 0.01) < 1e-9);
 });
 
@@ -177,13 +177,13 @@ test('word list loads, is sizable, and excludes proper nouns / place names', () 
 }
 
 // Batch A (Andy oct2): the bot feels the fuse — median human vs MEDIUM lands at ~51% (was 18.6%).
-test('missChance: MEDIUM is 5% on a full 20 s fuse, 13% at 8 s and below, linear between', () => {
+test('missChance: MEDIUM is 6% on a full 20 s fuse, 15.6% at 8 s and below, linear between', () => {
   const near = (a, b) => Math.abs(a - b) < 1e-9;
-  assert.ok(near(bot.missChance('medium', 20), 0.05));
-  assert.ok(near(bot.missChance('medium', 25), 0.05));
-  assert.ok(near(bot.missChance('medium', 8), 0.13));
-  assert.ok(near(bot.missChance('medium', 4), 0.13));
-  assert.ok(near(bot.missChance('medium', 14), 0.09));
-  assert.ok(near(bot.missChance('medium'), 0.05), 'no timer → the preset rate');
+  assert.ok(near(bot.missChance('medium', 20), 0.06));
+  assert.ok(near(bot.missChance('medium', 25), 0.06));
+  assert.ok(near(bot.missChance('medium', 8), 0.156));
+  assert.ok(near(bot.missChance('medium', 4), 0.156));
+  assert.ok(near(bot.missChance('medium', 14), 0.108));
+  assert.ok(near(bot.missChance('medium'), 0.06), 'no timer → the preset rate');
   assert.ok(bot.missChance('easy', 8) > bot.missChance('medium', 8) && bot.missChance('medium', 8) > bot.missChance('hard', 8));
 });

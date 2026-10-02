@@ -384,27 +384,7 @@ function startTurnTimer(room) {
     remaining -= 1;
 
     if (remaining <= 0) {
-      clearTurnTimer(room);
-      const { eliminatedPlayerId } = handleTimeout(game);
-
-      broadcastToRoom(room, {
-        type: 'turn_timeout',
-        payload: { eliminatedPlayerId },
-      });
-
-      // Always send the post-timeout state BEFORE any game_over. When this
-      // timeout eliminates the last-but-one player the game finishes, and the
-      // eliminated player's final lives (0) + eliminated flag live in this
-      // turn_update. Without it the client froze on the PREVIOUS turn's lives
-      // (still showing a filled heart) and never counted the eliminating
-      // timeout - the summary read one short (e.g. "2 TIMEOUTS" for a 3-life
-      // elimination). See also the skip path in server.js.
-      broadcastToRoom(room, buildTurnUpdatePayload(room));
-      if (game.status === 'finished') {
-        broadcastToRoom(room, buildGameOverPayload(room));
-      } else {
-        startTurnTimer(room); // chain into the next turn's timer
-      }
+      expireTurn(room);
       return;
     }
 
@@ -414,6 +394,36 @@ function startTurnTimer(room) {
   // If the player who just gained the turn is a bot, line up its move within
   // this timer window. No-op for human turns.
   maybeScheduleBotMove(room);
+}
+
+/**
+ * The current turn TIMES OUT: the player loses a life, everyone hears turn_timeout + the new state,
+ * and the next turn's timer starts (or game_over). The turn timer's deadline calls this; so does a
+ * choking bot that has run out of attempts (scheduleBotFumble) — the same life, lost sooner.
+ */
+function expireTurn(room) {
+  const { game } = room;
+  clearTurnTimer(room);
+  const { eliminatedPlayerId } = handleTimeout(game);
+
+  broadcastToRoom(room, {
+    type: 'turn_timeout',
+    payload: { eliminatedPlayerId },
+  });
+
+  // Always send the post-timeout state BEFORE any game_over. When this
+  // timeout eliminates the last-but-one player the game finishes, and the
+  // eliminated player's final lives (0) + eliminated flag live in this
+  // turn_update. Without it the client froze on the PREVIOUS turn's lives
+  // (still showing a filled heart) and never counted the eliminating
+  // timeout - the summary read one short (e.g. "2 TIMEOUTS" for a 3-life
+  // elimination). See also the skip path in server.js.
+  broadcastToRoom(room, buildTurnUpdatePayload(room));
+  if (game.status === 'finished') {
+    broadcastToRoom(room, buildGameOverPayload(room));
+  } else {
+    startTurnTimer(room); // chain into the next turn's timer
+  }
 }
 
 function clearTurnTimer(room) {
@@ -682,6 +692,20 @@ function scheduleBotFumble(room, botId, botDifficulty) {
       logError('bot_fumble_failed', { roomCode: room.code, playerId: botId }, err);
     }
   }, step.at));
+  // BA1 (oct2): once the attempts are done the bot CONCEDES instead of sitting out the whole fuse
+  // (8-9% of bot turns burned a mean 13 s of dead air; 48-59% of CHILL games had a 15 s+ stretch).
+  // Same timeout, same life — just sooner: after the last attempt + FUMBLE_CONCEDE_AFTER_MS, never
+  // later than FUMBLE_CONCEDE_CAP_MS into the turn, and never past the real deadline (then the turn
+  // timer simply fires as before).
+  const lastAt = plan.length ? plan[plan.length - 1].at : first;
+  const concedeAt = Math.min(lastAt + wordBombBot.FUMBLE_CONCEDE_AFTER_MS, wordBombBot.FUMBLE_CONCEDE_CAP_MS);
+  if (concedeAt < turnMs - 500) {
+    room.botFumbleTimeouts.push(setTimeout(() => guardRoom(room, 'bot_concede_error', () => {
+      if (!room.game || room.game.status !== 'in_progress') return;
+      if (getCurrentPlayerId(room.game) !== botId) return;
+      expireTurn(room);
+    }), concedeAt));
+  }
 }
 
 /**

@@ -119,7 +119,7 @@ function createBotPlayer(difficulty) {
 //   hard   1.0-2.5s, ~1%  timeout   -> fast, near-relentless
 const BOT_DIFFICULTY = {
   easy:   { delaySec: [4.0, 8.0], miss: 0.15 },
-  medium: { delaySec: [2.0, 5.0], miss: 0.05 },
+  medium: { delaySec: [2.0, 5.0], miss: 0.06 }, // BA1: 0.05 -> 0.06 keeps CHILL's win rate (~48%) with its 15 s start
   hard:   { delaySec: [1.0, 2.5], miss: 0.01 },
 };
 
@@ -141,7 +141,7 @@ function tuningFor(difficultyKey) {
 // misses climb as the fuse shortens; the bot's never did (its delay is clamped under the timer, so
 // only the flat miss roll could cost it a life) — median human vs MEDIUM measured 18.6%. Now the miss
 // chance climbs linearly from the preset rate at a full 20 s fuse to PRESSURE_MULT× it at 8 s and
-// below: MEDIUM 5% → 13%. Median-human model (3.5 s think + typing, frontend
+// below: MEDIUM 6% → 15.6% (BA1 oct2: base 5% → 6% with CHILL's 15 s start). Median-human model (3.5 s think + typing, frontend
 // claude/batch-a/wb-winrate-sim.mjs): 51.3% (slower player 34%, faster 77%).
 const PRESSURE_MULT = 2.6;
 const PRESSURE_FULL_S = 20;
@@ -216,6 +216,11 @@ const FUMBLE_HOLD_MS = 500; // the stall with the letters up
 const FUMBLE_BACK_MS = 90; // per letter deleted
 const FUMBLE_GAP_MS = 3000; // attempt start to next attempt start
 const FUMBLE_MAX_TRIES = 6;
+// BA1 (oct2): a choking bot concedes the turn this long after its last attempt, and never later
+// than FUMBLE_CONCEDE_CAP_MS into the turn (roomManager.scheduleBotFumble). Sim: dead air from a
+// fumble 13.3 s mean -> 6.0 s, games with a 15 s+ fumble 59% -> 0%, win rate unchanged.
+const FUMBLE_CONCEDE_AFTER_MS = 600;
+const FUMBLE_CONCEDE_CAP_MS = 6000;
 const FUMBLE_SHOW_MS = FUMBLE_HOLD_MS; // the hold with the letters up
 
 // PREFIX INDEX, built once: every English word bucketed by its first two letters. Checking "does any
@@ -305,6 +310,8 @@ module.exports = {
   FUMBLE_SHOW_MS,
   FUMBLE_GAP_MS,
   FUMBLE_MAX_TRIES,
+  FUMBLE_CONCEDE_AFTER_MS,
+  FUMBLE_CONCEDE_CAP_MS,
   FUMBLE_TYPE_MS,
   FUMBLE_HOLD_MS,
   FUMBLE_BACK_MS,
