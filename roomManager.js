@@ -89,6 +89,13 @@ const MAX_PLAYERS_PER_ROOM = 8;
 // immediately so the countdown can play; only the timer waits.
 const COUNTDOWN_DELAY_MS = 3000;
 
+// PAUSE TO LEARN (Word Bomb, frontend P9c): when a turn BLOWS UP (the timer ran out), the bomb holds this long before
+// the next turn's timer starts, so the player who went out can read one valid word for the fragment they missed
+// (the client derives it from its own word list — no new message). The post-timeout turn_update carries
+// `learnPauseMs` so clients know the timer is held; older clients ignore the field. A submit by the next player
+// during the hold is still accepted (handleWordSubmission restarts the timer as usual). Skips do not pause.
+const LEARN_PAUSE_MS = 2000;
+
 // Category Blitz: a category reroll is only allowed in the opening window of an
 // actively-running round (anti-grief - no yanking the category mid-round).
 const REROLL_WINDOW_MS = 5000;
@@ -418,11 +425,22 @@ function expireTurn(room) {
   // (still showing a filled heart) and never counted the eliminating
   // timeout - the summary read one short (e.g. "2 TIMEOUTS" for a 3-life
   // elimination). See also the skip path in server.js.
-  broadcastToRoom(room, buildTurnUpdatePayload(room));
   if (game.status === 'finished') {
+    broadcastToRoom(room, buildTurnUpdatePayload(room));
     broadcastToRoom(room, buildGameOverPayload(room));
   } else {
-    startTurnTimer(room); // chain into the next turn's timer
+    // PAUSE TO LEARN: the bomb holds LEARN_PAUSE_MS, then the next turn's timer starts (startTurnTimer clears the
+    // hold if a submit lands first). The hold rides room.countdownTimeout, so clearTurnTimer / game end clear it.
+    const update = buildTurnUpdatePayload(room);
+    update.payload.learnPauseMs = LEARN_PAUSE_MS;
+    broadcastToRoom(room, update);
+    clearCountdownTimeout(room);
+    room.countdownTimeout = setTimeout(() => {
+      room.countdownTimeout = null;
+      guardRoom(room, 'learn_pause_error', () => {
+        if (room.game === game && game.status === 'in_progress') startTurnTimer(room);
+      });
+    }, LEARN_PAUSE_MS);
   }
 }
 
@@ -1318,6 +1336,7 @@ module.exports = {
   buildGameOverPayload,
   clearTurnTimer,
   startTurnTimer,
+  LEARN_PAUSE_MS,
   startRoundTimer,
   clearRoundTimer,
   // Room lifecycle safety (foundation for public rooms):
