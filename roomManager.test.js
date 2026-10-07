@@ -472,7 +472,8 @@ test('BA1: a choking bot CONCEDES within ~6 s instead of sitting out the whole 1
       now += 100;
       for (; seen < host.received.length; seen++) {
         const m = host.received[seen];
-        if (m.type === 'turn_update' && m.payload.currentPlayerId === botId && botTurnAt === null) botTurnAt = now;
+        // the bot's clock starts when its timer does: after a blow-up the bomb first holds learnPauseMs (PAUSE TO LEARN)
+        if (m.type === 'turn_update' && m.payload.currentPlayerId === botId && botTurnAt === null) botTurnAt = now + (m.payload.learnPauseMs || 0);
         if (m.type === 'turn_timeout' && botTurnAt !== null) { botTurnMs.push(now - botTurnAt); botTurnAt = null; }
       }
     }
