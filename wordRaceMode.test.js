@@ -65,7 +65,9 @@ async function client() {
 // A real word for a fragment that this racer hasn't used.
 const realWord = (frag, used = []) => wordBombBot.pickWord(frag, new Set(used));
 
-async function privateRace({ bot = false } = {}) {
+// Private rooms default to the whole-word race; these tests pin the fragment race unless told
+// otherwise (variant: null leaves the room's default alone).
+async function privateRace({ bot = false, variant = 'fragments' } = {}) {
   const a = await client();
   const b = await client();
   a.send('create_room', { name: 'ANNA' });
@@ -75,6 +77,7 @@ async function privateRace({ bot = false } = {}) {
   a.send('set_game_type', { gameType: 'word-race' });
   if (bot) a.send('race_add_bot', {});
   await a.waitFor('room_update', 6000, (m) => m.payload.gameType === 'word-race' && (!bot || m.payload.players.length === 3));
+  if (variant) getRoom(payload.code).raceVariant = variant;
   a.send('start_game', {});
   const [sa, sb] = await Promise.all([a.waitFor('race_start'), b.waitFor('race_start')]);
   await Promise.all([a.waitFor('race_go'), b.waitFor('race_go')]);
@@ -96,6 +99,13 @@ test.after(async () => {
   stopRoomReaper();
   wss.close();
   await new Promise((resolve) => server.close(resolve));
+});
+
+test('a private room plays the whole-word race by default', async () => {
+  const { sa, sb } = await privateRace({ variant: null });
+  assert.equal(sa.payload.variant, 'words');
+  assert.ok(sa.payload.words.length > 0);
+  assert.deepEqual(sa.payload.words, sb.payload.words);
 });
 
 test('both racers get the identical fragment sequence; two humans get no auto bots', async () => {
