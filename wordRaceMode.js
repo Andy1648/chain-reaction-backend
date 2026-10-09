@@ -107,8 +107,9 @@ const logic = {
 
 function start(room, helpers) {
   const g = room.game;
-  // WHOLE-WORD variant (Andy oct2 A6): opt-in per room (race_quick_match { variant: 'words' }).
-  if (room.raceVariant === 'words') race.useWordsVariant(g);
+  // WHOLE-WORD variant (Andy oct2 A6) is the default: private rooms (no raceVariant) play it too.
+  // Only a quick-match fragment room (race_quick_match without variant: 'words') keeps fragments.
+  if (room.raceVariant !== 'fragments') race.useWordsVariant(g);
   // Mark roster bots (a rematch keeps the bots from the previous race).
   for (const r of g.racers) {
     const rp = room.players.find((p) => p.id === r.id);
