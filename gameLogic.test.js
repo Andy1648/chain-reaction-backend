@@ -36,10 +36,10 @@ test('createGame sets up correct initial state', () => {
   const game = makeTwoPlayerGame();
   assert.equal(game.status, 'in_progress');
   assert.equal(game.players.length, 2);
-  // medium (CRAZY) grants 2 lives; maxLives mirrors it as the heart-count source of truth.
-  assert.equal(game.players[0].lives, 2);
-  assert.equal(game.players[1].lives, 2);
-  assert.equal(game.maxLives, 2);
+  // medium (CRAZY) grants 3 lives (every tier does — Andy oct10); maxLives mirrors it as the heart-count source of truth.
+  assert.equal(game.players[0].lives, 3);
+  assert.equal(game.players[1].lives, 3);
+  assert.equal(game.maxLives, 3);
   assert.equal(game.usedWords.size, 0, 'should start with no used words');
   assert.ok(COMBOS.includes(game.currentCombo), 'should start with a combo from the list');
   assert.equal(game.chain, undefined, 'Word Bomb has no chain');
@@ -137,9 +137,8 @@ test('handleTimeout costs a life and does not eliminate above zero', () => {
 
 test('a player with N lives survives exactly N-1 timeouts and is eliminated on the Nth', () => {
   // Guards the elimination boundary: a life is lost per timeout and elimination
-  // fires only when lives hit 0 (post-decrement), never at 1. Run for medium (2)
-  // and chill (3).
-  for (const [diff, N] of [['medium', 2], ['chill', 3]]) {
+  // fires only when lives hit 0 (post-decrement), never at 1. Run for medium and chill (3 each).
+  for (const [diff, N] of [['medium', 3], ['chill', 3]]) {
     const game = createGame([{ id: 'p1', name: 'A' }, { id: 'p2', name: 'B' }], diff);
     assert.equal(game.maxLives, N, `${diff} should grant ${N} lives`);
     const p1 = game.players.find((p) => p.id === 'p1');
@@ -177,14 +176,14 @@ test('handleTimeout returns the acting player so a skip can be named in the feed
   assert.equal(res.playerName, 'Alice');
 });
 
-test('CHILL tier grants 20s and 3 lives; HARD/CRAZY/HELL grant 2', () => {
+test('every tier grants 3 lives (Andy oct10: "same number of lives for each"); CHILL starts at 15s', () => {
   const chill = createGame([{ id: 'p1' }, { id: 'p2' }], 'chill');
   assert.equal(chill.difficulty.startSeconds, 15);
   assert.equal(chill.maxLives, 3);
   assert.equal(chill.players[0].lives, 3);
   for (const key of ['easy', 'medium', 'hard']) {
     const g = createGame([{ id: 'p1' }, { id: 'p2' }], key);
-    assert.equal(g.maxLives, 2, `${key} should grant 2 lives`);
+    assert.equal(g.maxLives, 3, `${key} should grant 3 lives`);
   }
 });
 

@@ -43,7 +43,7 @@ test('a blown-up turn holds the bomb LEARN_PAUSE_MS, says so on the turn_update,
     const after = host.received[iTo + 1];
     assert.equal(after.type, 'turn_update');
     assert.equal(after.payload.learnPauseMs, LEARN_PAUSE_MS, 'the post-timeout turn_update announces the hold');
-    assert.equal(after.payload.players.find((p) => p.id === 'host').lives, 2);
+    assert.equal(after.payload.players.find((p) => p.id === 'host').lives, after.payload.maxLives - 1, 'one life lost');
     // during the hold: no ticks, no timer, and the clock on the wire is the next turn's full time
     const t0 = ticks();
     test.mock.timers.tick(LEARN_PAUSE_MS - 100);
