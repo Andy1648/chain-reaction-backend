@@ -32,9 +32,9 @@ function _setDictionaryForTesting(mockModule) {
 // chill -> CHILL, easy -> HARD, medium -> CRAZY, hard -> HELL.
 const DIFFICULTY_PRESETS = {
   chill: { startSeconds: 15, decreaseEveryNTurns: 4, floorSeconds: 8, lives: 3 }, // BA1 oct2: 20 -> 15 (no life was lost for ~2 min)
-  easy: { startSeconds: 15, decreaseEveryNTurns: 3, floorSeconds: 6, lives: 2 },
-  medium: { startSeconds: 10, decreaseEveryNTurns: 2, floorSeconds: 4, lives: 2 },
-  hard: { startSeconds: 7, decreaseEveryNTurns: 1, floorSeconds: 3, lives: 2 },
+  easy: { startSeconds: 15, decreaseEveryNTurns: 3, floorSeconds: 6, lives: 3 }, // Andy oct10: every tier 3 lives (was 2)
+  medium: { startSeconds: 10, decreaseEveryNTurns: 2, floorSeconds: 4, lives: 3 },
+  hard: { startSeconds: 7, decreaseEveryNTurns: 1, floorSeconds: 3, lives: 3 },
 };
 
 // Fallback only — every preset above carries its own `lives`. Used if a preset

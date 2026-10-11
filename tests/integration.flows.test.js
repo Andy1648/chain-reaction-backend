@@ -108,7 +108,7 @@ test('Word Bomb: full flow from join to game_over with a real timeout eliminatio
     assert.equal(firstTurn.payload.players.length, 2);
     // Everyone starts at the tier's maxLives (medium/CRAZY default = 2), and the
     // turn_update carries maxLives so the client can draw the right heart count.
-    assert.equal(firstTurn.payload.maxLives, 2);
+    assert.equal(firstTurn.payload.maxLives, 3); // every tier 3 lives (Andy oct10)
     assert.ok(firstTurn.payload.players.every((p) => p.lives === firstTurn.payload.maxLives));
   }
 
