@@ -19035,5 +19035,804 @@
     "mausoleum of mausolus"
    ]
   }
+ ],
+ "Zodiac signs": [
+  {
+   "canon": "leo",
+   "aliases": []
+  },
+  {
+   "canon": "aries",
+   "aliases": []
+  },
+  {
+   "canon": "gemini",
+   "aliases": []
+  },
+  {
+   "canon": "cancer",
+   "aliases": []
+  },
+  {
+   "canon": "virgo",
+   "aliases": []
+  },
+  {
+   "canon": "libra",
+   "aliases": []
+  },
+  {
+   "canon": "scorpio",
+   "aliases": [
+    "scorpius"
+   ]
+  },
+  {
+   "canon": "taurus",
+   "aliases": []
+  },
+  {
+   "canon": "pisces",
+   "aliases": []
+  },
+  {
+   "canon": "aquarius",
+   "aliases": []
+  },
+  {
+   "canon": "capricorn",
+   "aliases": [
+    "capricornus"
+   ]
+  },
+  {
+   "canon": "sagittarius",
+   "aliases": []
+  }
+ ],
+ "Chinese zodiac animals": [
+  {
+   "canon": "dragon",
+   "aliases": []
+  },
+  {
+   "canon": "tiger",
+   "aliases": []
+  },
+  {
+   "canon": "rat",
+   "aliases": [
+    "mouse"
+   ]
+  },
+  {
+   "canon": "snake",
+   "aliases": []
+  },
+  {
+   "canon": "horse",
+   "aliases": []
+  },
+  {
+   "canon": "monkey",
+   "aliases": []
+  },
+  {
+   "canon": "dog",
+   "aliases": []
+  },
+  {
+   "canon": "pig",
+   "aliases": [
+    "boar"
+   ]
+  },
+  {
+   "canon": "rabbit",
+   "aliases": [
+    "hare"
+   ]
+  },
+  {
+   "canon": "ox",
+   "aliases": [
+    "cow",
+    "bull",
+    "buffalo"
+   ]
+  },
+  {
+   "canon": "rooster",
+   "aliases": [
+    "chicken",
+    "hen"
+   ]
+  },
+  {
+   "canon": "goat",
+   "aliases": [
+    "sheep",
+    "ram"
+   ]
+  }
+ ],
+ "Planets & dwarf planets": [
+  {
+   "canon": "earth",
+   "aliases": []
+  },
+  {
+   "canon": "mars",
+   "aliases": []
+  },
+  {
+   "canon": "jupiter",
+   "aliases": []
+  },
+  {
+   "canon": "saturn",
+   "aliases": []
+  },
+  {
+   "canon": "venus",
+   "aliases": []
+  },
+  {
+   "canon": "mercury",
+   "aliases": []
+  },
+  {
+   "canon": "neptune",
+   "aliases": []
+  },
+  {
+   "canon": "uranus",
+   "aliases": []
+  },
+  {
+   "canon": "pluto",
+   "aliases": []
+  },
+  {
+   "canon": "ceres",
+   "aliases": []
+  },
+  {
+   "canon": "eris",
+   "aliases": []
+  },
+  {
+   "canon": "haumea",
+   "aliases": []
+  },
+  {
+   "canon": "makemake",
+   "aliases": []
+  }
+ ],
+ "Phases of the Moon": [
+  {
+   "canon": "full moon",
+   "aliases": [
+    "full"
+   ]
+  },
+  {
+   "canon": "new moon",
+   "aliases": [
+    "new"
+   ]
+  },
+  {
+   "canon": "first quarter",
+   "aliases": []
+  },
+  {
+   "canon": "waxing crescent",
+   "aliases": []
+  },
+  {
+   "canon": "waning crescent",
+   "aliases": []
+  },
+  {
+   "canon": "third quarter",
+   "aliases": [
+    "last quarter"
+   ]
+  },
+  {
+   "canon": "waxing gibbous",
+   "aliases": []
+  },
+  {
+   "canon": "waning gibbous",
+   "aliases": []
+  }
+ ],
+ "Polygons with 3 to 12 sides": [
+  {
+   "canon": "triangle",
+   "aliases": []
+  },
+  {
+   "canon": "hexagon",
+   "aliases": []
+  },
+  {
+   "canon": "pentagon",
+   "aliases": []
+  },
+  {
+   "canon": "octagon",
+   "aliases": []
+  },
+  {
+   "canon": "quadrilateral",
+   "aliases": [
+    "quadrangle",
+    "tetragon"
+   ]
+  },
+  {
+   "canon": "decagon",
+   "aliases": []
+  },
+  {
+   "canon": "heptagon",
+   "aliases": [
+    "septagon"
+   ]
+  },
+  {
+   "canon": "nonagon",
+   "aliases": [
+    "enneagon"
+   ]
+  },
+  {
+   "canon": "dodecagon",
+   "aliases": []
+  },
+  {
+   "canon": "hendecagon",
+   "aliases": [
+    "undecagon"
+   ]
+  }
+ ],
+ "Canadian provinces & territories": [
+  {
+   "canon": "ontario",
+   "aliases": []
+  },
+  {
+   "canon": "quebec",
+   "aliases": []
+  },
+  {
+   "canon": "british columbia",
+   "aliases": [
+    "bc"
+   ]
+  },
+  {
+   "canon": "alberta",
+   "aliases": []
+  },
+  {
+   "canon": "nova scotia",
+   "aliases": []
+  },
+  {
+   "canon": "manitoba",
+   "aliases": []
+  },
+  {
+   "canon": "saskatchewan",
+   "aliases": []
+  },
+  {
+   "canon": "yukon",
+   "aliases": [
+    "yukon territory"
+   ]
+  },
+  {
+   "canon": "newfoundland and labrador",
+   "aliases": [
+    "newfoundland",
+    "labrador"
+   ]
+  },
+  {
+   "canon": "new brunswick",
+   "aliases": []
+  },
+  {
+   "canon": "prince edward island",
+   "aliases": [
+    "pei"
+   ]
+  },
+  {
+   "canon": "nunavut",
+   "aliases": []
+  },
+  {
+   "canon": "northwest territories",
+   "aliases": [
+    "nwt"
+   ]
+  }
+ ],
+ "Australian states & territories": [
+  {
+   "canon": "queensland",
+   "aliases": []
+  },
+  {
+   "canon": "victoria",
+   "aliases": []
+  },
+  {
+   "canon": "new south wales",
+   "aliases": [
+    "nsw"
+   ]
+  },
+  {
+   "canon": "tasmania",
+   "aliases": []
+  },
+  {
+   "canon": "western australia",
+   "aliases": []
+  },
+  {
+   "canon": "south australia",
+   "aliases": []
+  },
+  {
+   "canon": "northern territory",
+   "aliases": []
+  },
+  {
+   "canon": "australian capital territory",
+   "aliases": [
+    "act"
+   ]
+  }
+ ],
+ "Mexican states": [
+  {
+   "canon": "mexico city",
+   "aliases": [
+    "cdmx"
+   ]
+  },
+  {
+   "canon": "jalisco",
+   "aliases": []
+  },
+  {
+   "canon": "baja california",
+   "aliases": []
+  },
+  {
+   "canon": "chihuahua",
+   "aliases": []
+  },
+  {
+   "canon": "sonora",
+   "aliases": []
+  },
+  {
+   "canon": "oaxaca",
+   "aliases": []
+  },
+  {
+   "canon": "yucatan",
+   "aliases": []
+  },
+  {
+   "canon": "quintana roo",
+   "aliases": []
+  },
+  {
+   "canon": "nuevo leon",
+   "aliases": []
+  },
+  {
+   "canon": "veracruz",
+   "aliases": []
+  },
+  {
+   "canon": "puebla",
+   "aliases": []
+  },
+  {
+   "canon": "chiapas",
+   "aliases": []
+  },
+  {
+   "canon": "guerrero",
+   "aliases": []
+  },
+  {
+   "canon": "sinaloa",
+   "aliases": []
+  },
+  {
+   "canon": "baja california sur",
+   "aliases": []
+  },
+  {
+   "canon": "mexico",
+   "aliases": [
+    "state of mexico",
+    "estado de mexico"
+   ]
+  },
+  {
+   "canon": "durango",
+   "aliases": []
+  },
+  {
+   "canon": "zacatecas",
+   "aliases": []
+  },
+  {
+   "canon": "coahuila",
+   "aliases": []
+  },
+  {
+   "canon": "tamaulipas",
+   "aliases": []
+  },
+  {
+   "canon": "guanajuato",
+   "aliases": []
+  },
+  {
+   "canon": "michoacan",
+   "aliases": []
+  },
+  {
+   "canon": "tabasco",
+   "aliases": []
+  },
+  {
+   "canon": "campeche",
+   "aliases": []
+  },
+  {
+   "canon": "hidalgo",
+   "aliases": []
+  },
+  {
+   "canon": "morelos",
+   "aliases": []
+  },
+  {
+   "canon": "queretaro",
+   "aliases": []
+  },
+  {
+   "canon": "san luis potosi",
+   "aliases": []
+  },
+  {
+   "canon": "aguascalientes",
+   "aliases": []
+  },
+  {
+   "canon": "colima",
+   "aliases": []
+  },
+  {
+   "canon": "nayarit",
+   "aliases": []
+  },
+  {
+   "canon": "tlaxcala",
+   "aliases": []
+  }
+ ],
+ "Pokémon types": [
+  {
+   "canon": "fire",
+   "aliases": []
+  },
+  {
+   "canon": "water",
+   "aliases": []
+  },
+  {
+   "canon": "grass",
+   "aliases": []
+  },
+  {
+   "canon": "electric",
+   "aliases": []
+  },
+  {
+   "canon": "psychic",
+   "aliases": []
+  },
+  {
+   "canon": "dragon",
+   "aliases": []
+  },
+  {
+   "canon": "ghost",
+   "aliases": []
+  },
+  {
+   "canon": "ice",
+   "aliases": []
+  },
+  {
+   "canon": "fighting",
+   "aliases": []
+  },
+  {
+   "canon": "flying",
+   "aliases": []
+  },
+  {
+   "canon": "poison",
+   "aliases": []
+  },
+  {
+   "canon": "rock",
+   "aliases": []
+  },
+  {
+   "canon": "ground",
+   "aliases": []
+  },
+  {
+   "canon": "bug",
+   "aliases": []
+  },
+  {
+   "canon": "normal",
+   "aliases": []
+  },
+  {
+   "canon": "dark",
+   "aliases": []
+  },
+  {
+   "canon": "steel",
+   "aliases": []
+  },
+  {
+   "canon": "fairy",
+   "aliases": []
+  }
+ ],
+ "Months in Spanish": [
+  {
+   "canon": "enero",
+   "aliases": []
+  },
+  {
+   "canon": "mayo",
+   "aliases": []
+  },
+  {
+   "canon": "abril",
+   "aliases": []
+  },
+  {
+   "canon": "marzo",
+   "aliases": []
+  },
+  {
+   "canon": "junio",
+   "aliases": []
+  },
+  {
+   "canon": "julio",
+   "aliases": []
+  },
+  {
+   "canon": "febrero",
+   "aliases": []
+  },
+  {
+   "canon": "agosto",
+   "aliases": []
+  },
+  {
+   "canon": "octubre",
+   "aliases": []
+  },
+  {
+   "canon": "noviembre",
+   "aliases": []
+  },
+  {
+   "canon": "diciembre",
+   "aliases": []
+  },
+  {
+   "canon": "septiembre",
+   "aliases": [
+    "setiembre"
+   ]
+  }
+ ],
+ "South American countries": [
+  {
+   "canon": "brazil",
+   "aliases": [
+    "brasil"
+   ]
+  },
+  {
+   "canon": "argentina",
+   "aliases": []
+  },
+  {
+   "canon": "chile",
+   "aliases": []
+  },
+  {
+   "canon": "peru",
+   "aliases": []
+  },
+  {
+   "canon": "colombia",
+   "aliases": []
+  },
+  {
+   "canon": "venezuela",
+   "aliases": []
+  },
+  {
+   "canon": "ecuador",
+   "aliases": []
+  },
+  {
+   "canon": "bolivia",
+   "aliases": []
+  },
+  {
+   "canon": "uruguay",
+   "aliases": []
+  },
+  {
+   "canon": "paraguay",
+   "aliases": []
+  },
+  {
+   "canon": "guyana",
+   "aliases": []
+  },
+  {
+   "canon": "suriname",
+   "aliases": [
+    "surinam"
+   ]
+  }
+ ],
+ "Countries of Oceania": [
+  {
+   "canon": "australia",
+   "aliases": []
+  },
+  {
+   "canon": "new zealand",
+   "aliases": []
+  },
+  {
+   "canon": "fiji",
+   "aliases": []
+  },
+  {
+   "canon": "papua new guinea",
+   "aliases": [
+    "png"
+   ]
+  },
+  {
+   "canon": "samoa",
+   "aliases": []
+  },
+  {
+   "canon": "tonga",
+   "aliases": []
+  },
+  {
+   "canon": "palau",
+   "aliases": []
+  },
+  {
+   "canon": "vanuatu",
+   "aliases": []
+  },
+  {
+   "canon": "solomon islands",
+   "aliases": []
+  },
+  {
+   "canon": "micronesia",
+   "aliases": [
+    "federated states of micronesia"
+   ]
+  },
+  {
+   "canon": "marshall islands",
+   "aliases": []
+  },
+  {
+   "canon": "kiribati",
+   "aliases": []
+  },
+  {
+   "canon": "tuvalu",
+   "aliases": []
+  },
+  {
+   "canon": "nauru",
+   "aliases": []
+  }
+ ],
+ "The Thirteen Colonies": [
+  {
+   "canon": "virginia",
+   "aliases": []
+  },
+  {
+   "canon": "massachusetts",
+   "aliases": []
+  },
+  {
+   "canon": "new york",
+   "aliases": []
+  },
+  {
+   "canon": "pennsylvania",
+   "aliases": []
+  },
+  {
+   "canon": "georgia",
+   "aliases": []
+  },
+  {
+   "canon": "new jersey",
+   "aliases": []
+  },
+  {
+   "canon": "north carolina",
+   "aliases": []
+  },
+  {
+   "canon": "south carolina",
+   "aliases": []
+  },
+  {
+   "canon": "maryland",
+   "aliases": []
+  },
+  {
+   "canon": "connecticut",
+   "aliases": []
+  },
+  {
+   "canon": "rhode island",
+   "aliases": []
+  },
+  {
+   "canon": "delaware",
+   "aliases": []
+  },
+  {
+   "canon": "new hampshire",
+   "aliases": []
+  }
  ]
 }

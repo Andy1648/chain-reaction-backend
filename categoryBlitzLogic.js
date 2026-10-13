@@ -670,6 +670,8 @@ const TIER_BROAD = new Set([
   'Asian countries', 'European national capitals', 'African countries', 'US state capitals', 'US presidents',
   'Summer Olympic sports', 'Major human organs', 'Pixar feature films', 'Latin American countries',
   'NBA teams', 'NFL teams', 'English & British monarchs',
+  // oct13 content batch (Andy "more categories for Blitz"): closed lists anyone can name a few of
+  'Planets & dwarf planets', 'Phases of the Moon', 'Canadian provinces & territories', 'South American countries',
 ]);
 // Mainstream franchises where naming a few is EASY (not enthusiasts-only): they
 // match a niche franchise pattern below but belong in MEDIUM, not NICHE.
@@ -679,6 +681,7 @@ const TIER_MEDIUM_OVERRIDE = new Set([
   'Lord of the Rings characters', 'Batman Characters', 'Batman villains', 'Stranger Things characters',
   'James Bond Movies', 'Harry Potter Characters', 'Harry Potter Spells', 'Pokemon from Gen 1',
   'Marvel Cinematic Universe Villains', 'Anime Villains', 'Greek gods', 'Studio Ghibli Movies',
+  'Pokémon types', // oct13: everyone knows fire / water / grass — the Pokémon pattern would file it as niche
 ]);
 // Explicit niche (specialist/deep-cut) not always caught by the franchise patterns.
 const TIER_NICHE = new Set([
@@ -704,6 +707,8 @@ const TIER_NICHE = new Set([
   'Genshin Impact playable characters', 'League of Legends Champions',
   // BA1 (oct2): specialist lists that defaulted to MEDIUM
   'Boxing weight classes', 'Major and minor keys',
+  // oct13 content batch
+  'Mexican states', 'Countries of Oceania',
 ]);
 // Niche franchise/specialist keyword patterns (case-insensitive).
 const TIER_NICHE_PATTERNS = [

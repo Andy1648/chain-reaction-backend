@@ -138,6 +138,12 @@ const COMBOS = [
   'pin', 'llo', 'ett', 'oti', 'unc', 'ane', 'cas', 'ute', 'rse', 'lor', 'mic', 'ole', 'bri', 'nve', 'cin', 'inf',
   'hel', 'pol', 'lon', 'owe', 'rol', 'emo', 'ivi', 'mit', 'ics', 'ets', 'cul', 'ood', 'boo', 'ram', 'eta', 'net',
   'ami', 'mal', 'qua', 'sid', 'abi', 'emp',
+  // ---- content-expand batch 4 (Andy oct13 "more letter combos for word bomb"; `node comboExpand.js`, each in >= 40
+  // of botWords.txt — the same floor as batches 1–3) ----
+  'qu', 'og', 'pp', 'ov', 'fa', 'gh', 'lu', 'ef', 'eg', 'rn', 'ib', 'ua', 'if', 'ue', 'pt', 'lt', 'ui', 'ki', 'du', 'rc', 'uc', 'av',
+  'cte', 'hed', 'tly', 'rev', 'cer', 'dec', 'inv', 'sis', 'ced', 'ffe', 'lig', 'sol', 'aut', 'mot', 'row', 'ura', 'wer', 'ars',
+  'bli', 'cho', 'ied', 'osi', 'sig', 'ery', 'ier', 'loc', 'los', 'orr', 'sel', 'spi', 'sup', 'adi', 'ged', 'hip', 'its', 'itu',
+  'ked', 'mme', 'rio', 'rip', 'rve', 'urs', 'yin',
 ];
 
 // ---- Escalating combo difficulty ----
