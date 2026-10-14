@@ -74,7 +74,7 @@ const {
 
 // Category Blitz pack ids — the valid set the host's set_packs selection is checked
 // against. Derived from CATEGORY_PACKS so it can't drift from the real assignments.
-const { PACK_IDS } = require('./categoryBlitzLogic');
+const { PACK_IDS, ROUND_OPTIONS: BLITZ_ROUND_OPTIONS } = require('./categoryBlitzLogic');
 const VALID_PACK_IDS = new Set(PACK_IDS);
 
 // Input hardening + abuse throttles (see security.js). sanitizeName strips
@@ -452,6 +452,26 @@ wss.on('connection', (ws) => {
             return;
           }
           room.selectedPacks = packs;
+          broadcastToRoom(room, buildRoomUpdatePayload(room));
+          break;
+        }
+
+        // Category Blitz: the host picks the game length (3 / 5 / 10 rounds).
+        // Host-only, validated against ROUND_OPTIONS, then broadcast. Every round
+        // is a new category (categoryBlitzLogic never repeats within a game).
+        case 'set_rounds': {
+          const room = getRoomForConnection(ws);
+          if (!room) return;
+          if (room.hostId !== ws.id) {
+            sendError(ws, 'Only the host can change rounds.', 'set_rounds');
+            return;
+          }
+          const rounds = payload?.rounds;
+          if (!BLITZ_ROUND_OPTIONS.includes(rounds)) {
+            sendError(ws, 'Invalid rounds.', 'set_rounds');
+            return;
+          }
+          room.blitzRounds = rounds;
           broadcastToRoom(room, buildRoomUpdatePayload(room));
           break;
         }

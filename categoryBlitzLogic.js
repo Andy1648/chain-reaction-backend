@@ -78,6 +78,9 @@ function listHas(category, answer) {
 }
 
 const TOTAL_ROUNDS = 3;
+// Host-selectable game lengths (set_rounds). The default stays TOTAL_ROUNDS; the
+// Daily Challenge is always TOTAL_ROUNDS (one shared board).
+const ROUND_OPTIONS = [3, 5, 10];
 const MIN_PLAYERS_TO_START = 2;
 
 // Every round is a flat 30 seconds, for every difficulty and for both solo and
@@ -745,11 +748,18 @@ const TIER_WEIGHTS = { 1: 0.5, 2: 0.35, 3: 0.15 };
  * full pool is used. GUARD: a too-small selection (e.g. geography's 2 categories)
  * falls back to the full pool so TOTAL_ROUNDS non-repeating rounds always fill.
  */
-function categoriesForPacks(selectedPacks) {
+function categoriesForPacks(selectedPacks, rounds = TOTAL_ROUNDS) {
   if (!Array.isArray(selectedPacks) || selectedPacks.length === 0) return CATEGORIES;
   const set = new Set(selectedPacks);
   const pool = CATEGORIES.filter((c) => set.has(CURATED_PACK[c]));
-  return pool.length >= TOTAL_ROUNDS ? pool : CATEGORIES;
+  // A pack selection too small for this game's length would have to repeat a
+  // category — use the full pool instead so every round is a NEW category.
+  return pool.length >= rounds ? pool : CATEGORIES;
+}
+
+/** Validates a host round choice; anything off-menu is the default. */
+function normalizeRounds(n) {
+  return ROUND_OPTIONS.includes(n) ? n : TOTAL_ROUNDS;
 }
 
 /**
@@ -783,9 +793,13 @@ function pickWeightedByTier(pool, rng = Math.random) {
  * (optional) restricts the pool to those packs. Falls back to the (filtered) base
  * list in the impossible case that every option is excluded.
  */
-function pickRandomCategory(excludeSet, selectedPacks) {
-  const base = categoriesForPacks(selectedPacks);
-  const pool = excludeSet ? base.filter((c) => !excludeSet.has(c)) : base;
+function pickRandomCategory(excludeSet, selectedPacks, rounds = TOTAL_ROUNDS) {
+  const base = categoriesForPacks(selectedPacks, rounds);
+  const fresh = (list) => (excludeSet ? list.filter((c) => !excludeSet.has(c)) : list);
+  // Pack exhausted (rerolls on a small pack) → spill into the full pool before
+  // ever repeating a category; only a fully-played pool repeats.
+  let pool = fresh(base);
+  if (!pool.length && base !== CATEGORIES) pool = fresh(CATEGORIES);
   const choices = pool.length ? pool : base;
   return pickWeightedByTier(choices) || choices[Math.floor(Math.random() * choices.length)];
 }
@@ -817,13 +831,14 @@ function determineWinner(game) {
  * changes the round count. Every round is ROUND_TIME_SECONDS (20s); difficulty
  * only sets the per-game reroll allowance.
  */
-function createGame(players, difficultyKey, solo = false, selectedPacks = null, daily = null) {
+function createGame(players, difficultyKey, solo = false, selectedPacks = null, daily = null, roundCount = TOTAL_ROUNDS) {
   const difficulty = VALID_DIFFICULTIES.includes(difficultyKey) ? difficultyKey : 'medium';
+  const rounds = daily ? TOTAL_ROUNDS : normalizeRounds(roundCount);
   // Daily Challenge: the whole game's categories are predetermined by the UTC
   // date (same board for everyone), packs are ignored, and rerolls are off —
   // a reroll would fork the board away from everyone else's.
   const dailyPlan = daily ? dailyCategories(daily.dateKey) : null;
-  const firstCategory = dailyPlan ? dailyPlan[0] : pickRandomCategory(null, selectedPacks);
+  const firstCategory = dailyPlan ? dailyPlan[0] : pickRandomCategory(null, selectedPacks, rounds);
 
   return {
     status: 'in_progress', // 'in_progress' | 'between_rounds' | 'finished'
@@ -836,7 +851,7 @@ function createGame(players, difficultyKey, solo = false, selectedPacks = null, 
     // plan for all rounds. Both null for a normal game.
     daily: daily ? { dayNumber: daily.dayNumber, dateKey: daily.dateKey } : null,
     dailyPlan,
-    rounds: TOTAL_ROUNDS,
+    rounds,
     currentRound: 1,
     currentCategory: firstCategory,
     roundTimeSeconds: ROUND_TIME_SECONDS,
@@ -1024,6 +1039,7 @@ function endRound(game) {
   game.status = 'between_rounds';
   return {
     round: game.currentRound,
+    totalRounds: game.rounds,
     category: game.currentCategory,
     playerResults: game.players.map((p) => ({
       id: p.id,
@@ -1059,7 +1075,7 @@ function startNextRound(game) {
   // non-repeating category.
   const category = game.dailyPlan
     ? game.dailyPlan[game.currentRound - 1]
-    : pickRandomCategory(game.usedCategories, game.selectedPacks);
+    : pickRandomCategory(game.usedCategories, game.selectedPacks, game.rounds);
   game.currentCategory = category;
   game.usedCategories.add(category);
   game.players.forEach((p) => {
@@ -1070,6 +1086,7 @@ function startNextRound(game) {
 
   return {
     round: game.currentRound,
+    totalRounds: game.rounds,
     category,
     timerSeconds: game.roundTimeSeconds,
     rerollsRemaining: game.rerollsRemaining,
@@ -1097,12 +1114,13 @@ function rerollCategory(game) {
     p.answers = [];
     p.answerJudgements = [];
   });
-  const category = pickRandomCategory(game.usedCategories, game.selectedPacks);
+  const category = pickRandomCategory(game.usedCategories, game.selectedPacks, game.rounds);
   game.currentCategory = category;
   game.usedCategories.add(category);
   game.rerollsRemaining -= 1;
   return {
     round: game.currentRound,
+    totalRounds: game.rounds,
     category,
     timerSeconds: game.roundTimeSeconds,
     rerollsRemaining: game.rerollsRemaining,
@@ -1129,6 +1147,8 @@ module.exports = {
   normalizeCategoryKey,
   PACK_IDS,
   TOTAL_ROUNDS,
+  ROUND_OPTIONS,
+  normalizeRounds,
   MIN_PLAYERS_TO_START,
   ROUND_TIME_SECONDS,
   REROLLS_BY_DIFFICULTY,

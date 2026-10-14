@@ -317,6 +317,8 @@ function buildRoomUpdatePayload(room) {
       // Category Blitz: host-selected packs (null = all). Lets every client mirror
       // the host's pack choice in the lobby. null until the host sends set_packs.
       selectedPacks: room.selectedPacks || null,
+      // Category Blitz: host-selected game length (3 / 5 / 10); 3 until set_rounds.
+      blitzRounds: room.blitzRounds || 3,
       players: room.players.map((p) => ({
         id: p.id,
         name: p.name,
@@ -833,7 +835,8 @@ function startGame(room, opts = {}) {
     room.difficultyKey,
     isSoloCategoryBlitz,
     room.selectedPacks, // Category Blitz only: host-selected packs (undefined until set_packs); other modes ignore it
-    daily // Category Blitz only: Daily Challenge info ({ dayNumber, dateKey }) or null
+    daily, // Category Blitz only: Daily Challenge info ({ dayNumber, dateKey }) or null
+    room.blitzRounds // Category Blitz only: host-selected round count (daily ignores it)
   );
   // Stamp the type onto the game so payload builders and submission routing
   // know which mode this in-progress game is, independent of the room.
@@ -860,6 +863,7 @@ function startGame(room, opts = {}) {
       type: 'round_start',
       payload: {
         round: room.game.currentRound,
+        totalRounds: room.game.rounds,
         category: room.game.currentCategory,
         timerSeconds: room.game.roundTimeSeconds,
         rerollsRemaining: room.game.rerollsRemaining,
