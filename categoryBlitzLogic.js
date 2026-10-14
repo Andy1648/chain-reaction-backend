@@ -675,6 +675,8 @@ const TIER_BROAD = new Set([
   'NBA teams', 'NFL teams', 'English & British monarchs',
   // oct13 content batch (Andy "more categories for Blitz"): closed lists anyone can name a few of
   'Planets & dwarf planets', 'Phases of the Moon', 'Canadian provinces & territories', 'South American countries',
+  // oct14 batch (Andy "more categories … all easy so all players can go")
+  "Santa's reindeer", 'European countries', 'Countries starting with S', 'Baseball positions',
 ]);
 // Mainstream franchises where naming a few is EASY (not enthusiasts-only): they
 // match a niche franchise pattern below but belong in MEDIUM, not NICHE.
@@ -685,6 +687,7 @@ const TIER_MEDIUM_OVERRIDE = new Set([
   'James Bond Movies', 'Harry Potter Characters', 'Harry Potter Spells', 'Pokemon from Gen 1',
   'Marvel Cinematic Universe Villains', 'Anime Villains', 'Greek gods', 'Studio Ghibli Movies',
   'Pokémon types', // oct13: everyone knows fire / water / grass — the Pokémon pattern would file it as niche
+  'Marvel Infinity Saga films', 'Taylor Swift studio albums', // oct14: mainstream — the franchise patterns would file them as niche
 ]);
 // Explicit niche (specialist/deep-cut) not always caught by the franchise patterns.
 const TIER_NICHE = new Set([

@@ -144,6 +144,18 @@ const COMBOS = [
   'cte', 'hed', 'tly', 'rev', 'cer', 'dec', 'inv', 'sis', 'ced', 'ffe', 'lig', 'sol', 'aut', 'mot', 'row', 'ura', 'wer', 'ars',
   'bli', 'cho', 'ied', 'osi', 'sig', 'ery', 'ier', 'loc', 'los', 'orr', 'sel', 'spi', 'sup', 'adi', 'ged', 'hip', 'its', 'itu',
   'ked', 'mme', 'rio', 'rip', 'rve', 'urs', 'yin',
+  // ---- content-expand batch 5 (Andy oct14 "maybe even more combos"): the 2-letter ones clear the usual >= 40-word floor
+  // of botWords.txt; batch 4 used up every 3-letter combo above 40, so these 3-letter ones sit in 30-39 common words
+  // (e.g. rom: from/room/romance, ugh: through/laugh, hoo: school/choose) — still solvable every turn, and the pool-size
+  // weighting files them as late-game ----
+  'mm', 'ff', 'rg', 'nn', 'pu', 'fl', 'ks', 'gu', 'ps', 'iz', 'oa', 'mu', 'fu', 'fr', 'ob', 'wo', 'dr', 'ld', 'rk', 'vo',
+  'cc', 'ud', 'ei', 'oi', 'nu', 'ze', 'xp', 'sl', 'sm', 'hu', 'af', 'sy', 'cy', 'aw', 'gl', 'ye', 'ny', 'sk', 'dd', 'ju',
+  'oy', 'sw', 'ft', 'jo', 'gg', 'xi',
+  'rom', 'ext', 'pan', 'lac', 'tec', 'sal', 'del', 'bit', 'pea', 'sca', 'not', 'dat', 'ork', 'sec', 'urn', 'lay', 'rag',
+  'fac', 'bin', 'bre', 'cra', 'bac', 'hou', 'cit', 'ugh', 'riv', 'fil', 'adv', 'rot', 'mor', 'but', 'mil', 'tom', 'bro',
+  'pac', 'clo', 'cro', 'gan', 'dem', 'rig', 'hon', 'mod', 'spa', 'sea', 'mai', 'tem', 'leg', 'ket', 'oke', 'eng', 'def',
+  'roo', 'bel', 'ape', 'nom', 'org', 'pet', 'coo', 'fra', 'dra', 'rod', 'gro', 'pho', 'roc', 'tee', 'lim', 'bal', 'cap',
+  'bor', 'thi', 'off', 'mag', 'bar', 'rus', 'eak', 'fre', 'cli', 'hoo', 'uth', 'til', 'pas', 'vol',
 ];
 
 // ---- Escalating combo difficulty ----

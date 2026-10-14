@@ -19834,5 +19834,1752 @@
    "canon": "new hampshire",
    "aliases": []
   }
+ ],
+ "Disney princesses": [
+  {
+   "canon": "cinderella",
+   "aliases": []
+  },
+  {
+   "canon": "ariel",
+   "aliases": [
+    "the little mermaid",
+    "little mermaid"
+   ]
+  },
+  {
+   "canon": "belle",
+   "aliases": []
+  },
+  {
+   "canon": "snow white",
+   "aliases": []
+  },
+  {
+   "canon": "jasmine",
+   "aliases": [
+    "princess jasmine"
+   ]
+  },
+  {
+   "canon": "elsa",
+   "aliases": [
+    "queen elsa"
+   ]
+  },
+  {
+   "canon": "anna",
+   "aliases": [
+    "princess anna"
+   ]
+  },
+  {
+   "canon": "rapunzel",
+   "aliases": []
+  },
+  {
+   "canon": "aurora",
+   "aliases": [
+    "sleeping beauty",
+    "briar rose",
+    "princess aurora"
+   ]
+  },
+  {
+   "canon": "mulan",
+   "aliases": [
+    "fa mulan"
+   ]
+  },
+  {
+   "canon": "moana",
+   "aliases": []
+  },
+  {
+   "canon": "tiana",
+   "aliases": [
+    "princess tiana"
+   ]
+  },
+  {
+   "canon": "pocahontas",
+   "aliases": []
+  },
+  {
+   "canon": "merida",
+   "aliases": []
+  },
+  {
+   "canon": "raya",
+   "aliases": []
+  },
+  {
+   "canon": "vanellope",
+   "aliases": [
+    "vanellope von schweetz"
+   ]
+  },
+  {
+   "canon": "kida",
+   "aliases": []
+  },
+  {
+   "canon": "eilonwy",
+   "aliases": []
+  }
+ ],
+ "Marvel Infinity Saga films": [
+  {
+   "canon": "avengers endgame",
+   "aliases": [
+    "endgame",
+    "avengers 4"
+   ]
+  },
+  {
+   "canon": "avengers infinity war",
+   "aliases": [
+    "infinity war",
+    "avengers 3"
+   ]
+  },
+  {
+   "canon": "the avengers",
+   "aliases": [
+    "avengers",
+    "avengers 1"
+   ]
+  },
+  {
+   "canon": "iron man",
+   "aliases": [
+    "iron man 1"
+   ]
+  },
+  {
+   "canon": "black panther",
+   "aliases": []
+  },
+  {
+   "canon": "guardians of the galaxy",
+   "aliases": [
+    "guardians of the galaxy 1",
+    "gotg"
+   ]
+  },
+  {
+   "canon": "thor ragnarok",
+   "aliases": [
+    "ragnarok",
+    "thor 3"
+   ]
+  },
+  {
+   "canon": "captain america civil war",
+   "aliases": [
+    "civil war",
+    "captain america 3"
+   ]
+  },
+  {
+   "canon": "spider man homecoming",
+   "aliases": [
+    "homecoming"
+   ]
+  },
+  {
+   "canon": "captain america the winter soldier",
+   "aliases": [
+    "winter soldier",
+    "captain america 2"
+   ]
+  },
+  {
+   "canon": "avengers age of ultron",
+   "aliases": [
+    "age of ultron",
+    "avengers 2"
+   ]
+  },
+  {
+   "canon": "doctor strange",
+   "aliases": [
+    "dr strange"
+   ]
+  },
+  {
+   "canon": "captain marvel",
+   "aliases": []
+  },
+  {
+   "canon": "spider man far from home",
+   "aliases": [
+    "far from home"
+   ]
+  },
+  {
+   "canon": "ant man",
+   "aliases": [
+    "antman"
+   ]
+  },
+  {
+   "canon": "iron man 2",
+   "aliases": []
+  },
+  {
+   "canon": "iron man 3",
+   "aliases": []
+  },
+  {
+   "canon": "thor",
+   "aliases": [
+    "thor 1"
+   ]
+  },
+  {
+   "canon": "captain america the first avenger",
+   "aliases": [
+    "the first avenger",
+    "first avenger",
+    "captain america 1"
+   ]
+  },
+  {
+   "canon": "guardians of the galaxy vol 2",
+   "aliases": [
+    "guardians of the galaxy 2",
+    "gotg 2",
+    "guardians 2"
+   ]
+  },
+  {
+   "canon": "ant man and the wasp",
+   "aliases": [
+    "ant man 2"
+   ]
+  },
+  {
+   "canon": "thor the dark world",
+   "aliases": [
+    "the dark world",
+    "dark world",
+    "thor 2"
+   ]
+  },
+  {
+   "canon": "the incredible hulk",
+   "aliases": [
+    "incredible hulk"
+   ]
+  }
+ ],
+ "Fast & Furious films": [
+  {
+   "canon": "the fast and the furious",
+   "aliases": [
+    "fast and furious 1"
+   ]
+  },
+  {
+   "canon": "fast five",
+   "aliases": [
+    "fast 5",
+    "fast and furious 5"
+   ]
+  },
+  {
+   "canon": "furious 7",
+   "aliases": [
+    "furious seven",
+    "fast 7",
+    "fast and furious 7"
+   ]
+  },
+  {
+   "canon": "2 fast 2 furious",
+   "aliases": [
+    "fast and furious 2",
+    "fast 2"
+   ]
+  },
+  {
+   "canon": "the fast and the furious tokyo drift",
+   "aliases": [
+    "tokyo drift",
+    "fast and furious tokyo drift",
+    "fast and furious 3"
+   ]
+  },
+  {
+   "canon": "fast and furious 6",
+   "aliases": [
+    "furious 6",
+    "fast 6"
+   ]
+  },
+  {
+   "canon": "the fate of the furious",
+   "aliases": [
+    "fate of the furious",
+    "f8",
+    "fast 8",
+    "fast and furious 8"
+   ]
+  },
+  {
+   "canon": "fast and furious",
+   "aliases": [
+    "fast and furious 4",
+    "fast and furious 2009",
+    "fast 4"
+   ]
+  },
+  {
+   "canon": "f9",
+   "aliases": [
+    "fast 9",
+    "fast and furious 9",
+    "f9 the fast saga"
+   ]
+  },
+  {
+   "canon": "fast x",
+   "aliases": [
+    "fast 10",
+    "fast and furious 10"
+   ]
+  },
+  {
+   "canon": "hobbs and shaw",
+   "aliases": [
+    "fast and furious presents hobbs and shaw",
+    "hobbs & shaw"
+   ]
+  }
+ ],
+ "Taylor Swift studio albums": [
+  {
+   "canon": "1989",
+   "aliases": [
+    "1989 taylors version"
+   ]
+  },
+  {
+   "canon": "folklore",
+   "aliases": []
+  },
+  {
+   "canon": "midnights",
+   "aliases": []
+  },
+  {
+   "canon": "red",
+   "aliases": [
+    "red taylors version"
+   ]
+  },
+  {
+   "canon": "fearless",
+   "aliases": [
+    "fearless taylors version"
+   ]
+  },
+  {
+   "canon": "reputation",
+   "aliases": [
+    "rep"
+   ]
+  },
+  {
+   "canon": "lover",
+   "aliases": []
+  },
+  {
+   "canon": "the tortured poets department",
+   "aliases": [
+    "tortured poets department",
+    "ttpd"
+   ]
+  },
+  {
+   "canon": "evermore",
+   "aliases": []
+  },
+  {
+   "canon": "speak now",
+   "aliases": [
+    "speak now taylors version"
+   ]
+  },
+  {
+   "canon": "taylor swift",
+   "aliases": [
+    "debut"
+   ]
+  },
+  {
+   "canon": "the life of a showgirl",
+   "aliases": [
+    "life of a showgirl",
+    "showgirl"
+   ]
+  }
+ ],
+ "The 12 Days of Christmas gifts": [
+  {
+   "canon": "partridge in a pear tree",
+   "aliases": [
+    "a partridge in a pear tree",
+    "partridge"
+   ]
+  },
+  {
+   "canon": "turtle doves",
+   "aliases": [
+    "two turtle doves",
+    "2 turtle doves",
+    "turtle dove"
+   ]
+  },
+  {
+   "canon": "french hens",
+   "aliases": [
+    "three french hens",
+    "3 french hens",
+    "french hen"
+   ]
+  },
+  {
+   "canon": "calling birds",
+   "aliases": [
+    "four calling birds",
+    "4 calling birds",
+    "colly birds",
+    "calling bird"
+   ]
+  },
+  {
+   "canon": "golden rings",
+   "aliases": [
+    "five golden rings",
+    "5 golden rings",
+    "gold rings",
+    "golden ring"
+   ]
+  },
+  {
+   "canon": "geese a laying",
+   "aliases": [
+    "six geese a laying",
+    "6 geese a laying",
+    "geese"
+   ]
+  },
+  {
+   "canon": "swans a swimming",
+   "aliases": [
+    "seven swans a swimming",
+    "7 swans a swimming",
+    "swans"
+   ]
+  },
+  {
+   "canon": "maids a milking",
+   "aliases": [
+    "eight maids a milking",
+    "8 maids a milking",
+    "maids"
+   ]
+  },
+  {
+   "canon": "ladies dancing",
+   "aliases": [
+    "nine ladies dancing",
+    "9 ladies dancing",
+    "ladies"
+   ]
+  },
+  {
+   "canon": "lords a leaping",
+   "aliases": [
+    "ten lords a leaping",
+    "10 lords a leaping",
+    "lords"
+   ]
+  },
+  {
+   "canon": "pipers piping",
+   "aliases": [
+    "eleven pipers piping",
+    "11 pipers piping",
+    "pipers"
+   ]
+  },
+  {
+   "canon": "drummers drumming",
+   "aliases": [
+    "twelve drummers drumming",
+    "12 drummers drumming",
+    "drummers"
+   ]
+  }
+ ],
+ "Santa's reindeer": [
+  {
+   "canon": "rudolph",
+   "aliases": [
+    "rudolph the red nosed reindeer"
+   ]
+  },
+  {
+   "canon": "dasher",
+   "aliases": []
+  },
+  {
+   "canon": "dancer",
+   "aliases": []
+  },
+  {
+   "canon": "prancer",
+   "aliases": []
+  },
+  {
+   "canon": "vixen",
+   "aliases": []
+  },
+  {
+   "canon": "comet",
+   "aliases": []
+  },
+  {
+   "canon": "cupid",
+   "aliases": []
+  },
+  {
+   "canon": "donner",
+   "aliases": [
+    "donder",
+    "dunder"
+   ]
+  },
+  {
+   "canon": "blitzen",
+   "aliases": [
+    "blixem"
+   ]
+  }
+ ],
+ "NATO phonetic alphabet": [
+  {
+   "canon": "alpha",
+   "aliases": [
+    "alfa"
+   ]
+  },
+  {
+   "canon": "bravo",
+   "aliases": []
+  },
+  {
+   "canon": "charlie",
+   "aliases": []
+  },
+  {
+   "canon": "delta",
+   "aliases": []
+  },
+  {
+   "canon": "echo",
+   "aliases": []
+  },
+  {
+   "canon": "foxtrot",
+   "aliases": []
+  },
+  {
+   "canon": "golf",
+   "aliases": []
+  },
+  {
+   "canon": "hotel",
+   "aliases": []
+  },
+  {
+   "canon": "india",
+   "aliases": []
+  },
+  {
+   "canon": "juliet",
+   "aliases": [
+    "juliett"
+   ]
+  },
+  {
+   "canon": "kilo",
+   "aliases": []
+  },
+  {
+   "canon": "lima",
+   "aliases": []
+  },
+  {
+   "canon": "mike",
+   "aliases": []
+  },
+  {
+   "canon": "november",
+   "aliases": []
+  },
+  {
+   "canon": "oscar",
+   "aliases": []
+  },
+  {
+   "canon": "papa",
+   "aliases": []
+  },
+  {
+   "canon": "quebec",
+   "aliases": []
+  },
+  {
+   "canon": "romeo",
+   "aliases": []
+  },
+  {
+   "canon": "sierra",
+   "aliases": []
+  },
+  {
+   "canon": "tango",
+   "aliases": []
+  },
+  {
+   "canon": "uniform",
+   "aliases": []
+  },
+  {
+   "canon": "victor",
+   "aliases": []
+  },
+  {
+   "canon": "whiskey",
+   "aliases": [
+    "whisky"
+   ]
+  },
+  {
+   "canon": "x ray",
+   "aliases": [
+    "xray"
+   ]
+  },
+  {
+   "canon": "yankee",
+   "aliases": []
+  },
+  {
+   "canon": "zulu",
+   "aliases": []
+  }
+ ],
+ "European countries": [
+  {
+   "canon": "france",
+   "aliases": []
+  },
+  {
+   "canon": "germany",
+   "aliases": []
+  },
+  {
+   "canon": "italy",
+   "aliases": []
+  },
+  {
+   "canon": "spain",
+   "aliases": []
+  },
+  {
+   "canon": "united kingdom",
+   "aliases": [
+    "uk",
+    "britain",
+    "great britain"
+   ]
+  },
+  {
+   "canon": "portugal",
+   "aliases": []
+  },
+  {
+   "canon": "netherlands",
+   "aliases": [
+    "holland",
+    "the netherlands"
+   ]
+  },
+  {
+   "canon": "belgium",
+   "aliases": []
+  },
+  {
+   "canon": "switzerland",
+   "aliases": []
+  },
+  {
+   "canon": "austria",
+   "aliases": []
+  },
+  {
+   "canon": "greece",
+   "aliases": []
+  },
+  {
+   "canon": "ireland",
+   "aliases": [
+    "republic of ireland",
+    "eire"
+   ]
+  },
+  {
+   "canon": "sweden",
+   "aliases": []
+  },
+  {
+   "canon": "norway",
+   "aliases": []
+  },
+  {
+   "canon": "denmark",
+   "aliases": []
+  },
+  {
+   "canon": "finland",
+   "aliases": []
+  },
+  {
+   "canon": "iceland",
+   "aliases": []
+  },
+  {
+   "canon": "poland",
+   "aliases": []
+  },
+  {
+   "canon": "ukraine",
+   "aliases": []
+  },
+  {
+   "canon": "russia",
+   "aliases": []
+  },
+  {
+   "canon": "czech republic",
+   "aliases": [
+    "czechia"
+   ]
+  },
+  {
+   "canon": "slovakia",
+   "aliases": []
+  },
+  {
+   "canon": "hungary",
+   "aliases": []
+  },
+  {
+   "canon": "romania",
+   "aliases": []
+  },
+  {
+   "canon": "bulgaria",
+   "aliases": []
+  },
+  {
+   "canon": "croatia",
+   "aliases": []
+  },
+  {
+   "canon": "serbia",
+   "aliases": []
+  },
+  {
+   "canon": "slovenia",
+   "aliases": []
+  },
+  {
+   "canon": "bosnia and herzegovina",
+   "aliases": [
+    "bosnia",
+    "bosnia herzegovina"
+   ]
+  },
+  {
+   "canon": "montenegro",
+   "aliases": []
+  },
+  {
+   "canon": "albania",
+   "aliases": []
+  },
+  {
+   "canon": "north macedonia",
+   "aliases": [
+    "macedonia"
+   ]
+  },
+  {
+   "canon": "kosovo",
+   "aliases": []
+  },
+  {
+   "canon": "moldova",
+   "aliases": []
+  },
+  {
+   "canon": "belarus",
+   "aliases": []
+  },
+  {
+   "canon": "lithuania",
+   "aliases": []
+  },
+  {
+   "canon": "latvia",
+   "aliases": []
+  },
+  {
+   "canon": "estonia",
+   "aliases": []
+  },
+  {
+   "canon": "luxembourg",
+   "aliases": []
+  },
+  {
+   "canon": "monaco",
+   "aliases": []
+  },
+  {
+   "canon": "liechtenstein",
+   "aliases": []
+  },
+  {
+   "canon": "andorra",
+   "aliases": []
+  },
+  {
+   "canon": "san marino",
+   "aliases": []
+  },
+  {
+   "canon": "vatican city",
+   "aliases": [
+    "vatican",
+    "holy see"
+   ]
+  },
+  {
+   "canon": "malta",
+   "aliases": []
+  },
+  {
+   "canon": "cyprus",
+   "aliases": []
+  },
+  {
+   "canon": "turkey",
+   "aliases": [
+    "turkiye"
+   ]
+  },
+  {
+   "canon": "england",
+   "aliases": []
+  },
+  {
+   "canon": "scotland",
+   "aliases": []
+  },
+  {
+   "canon": "wales",
+   "aliases": []
+  },
+  {
+   "canon": "northern ireland",
+   "aliases": []
+  },
+  {
+   "canon": "georgia",
+   "aliases": []
+  },
+  {
+   "canon": "armenia",
+   "aliases": []
+  },
+  {
+   "canon": "azerbaijan",
+   "aliases": []
+  },
+  {
+   "canon": "kazakhstan",
+   "aliases": []
+  }
+ ],
+ "Countries starting with S": [
+  {
+   "canon": "spain",
+   "aliases": []
+  },
+  {
+   "canon": "sweden",
+   "aliases": []
+  },
+  {
+   "canon": "switzerland",
+   "aliases": []
+  },
+  {
+   "canon": "south africa",
+   "aliases": []
+  },
+  {
+   "canon": "south korea",
+   "aliases": []
+  },
+  {
+   "canon": "saudi arabia",
+   "aliases": []
+  },
+  {
+   "canon": "singapore",
+   "aliases": []
+  },
+  {
+   "canon": "scotland",
+   "aliases": []
+  },
+  {
+   "canon": "sri lanka",
+   "aliases": []
+  },
+  {
+   "canon": "syria",
+   "aliases": []
+  },
+  {
+   "canon": "sudan",
+   "aliases": []
+  },
+  {
+   "canon": "south sudan",
+   "aliases": []
+  },
+  {
+   "canon": "somalia",
+   "aliases": []
+  },
+  {
+   "canon": "senegal",
+   "aliases": []
+  },
+  {
+   "canon": "serbia",
+   "aliases": []
+  },
+  {
+   "canon": "slovakia",
+   "aliases": [
+    "slovak republic"
+   ]
+  },
+  {
+   "canon": "slovenia",
+   "aliases": []
+  },
+  {
+   "canon": "sierra leone",
+   "aliases": []
+  },
+  {
+   "canon": "samoa",
+   "aliases": []
+  },
+  {
+   "canon": "san marino",
+   "aliases": []
+  },
+  {
+   "canon": "seychelles",
+   "aliases": []
+  },
+  {
+   "canon": "suriname",
+   "aliases": [
+    "surinam"
+   ]
+  },
+  {
+   "canon": "solomon islands",
+   "aliases": []
+  },
+  {
+   "canon": "sao tome and principe",
+   "aliases": [
+    "sao tome"
+   ]
+  },
+  {
+   "canon": "saint lucia",
+   "aliases": [
+    "st lucia"
+   ]
+  },
+  {
+   "canon": "saint kitts and nevis",
+   "aliases": [
+    "st kitts and nevis",
+    "saint kitts",
+    "st kitts"
+   ]
+  },
+  {
+   "canon": "saint vincent and the grenadines",
+   "aliases": [
+    "st vincent and the grenadines",
+    "saint vincent",
+    "st vincent"
+   ]
+  },
+  {
+   "canon": "swaziland",
+   "aliases": []
+  }
+ ],
+ "Greek alphabet letters": [
+  {
+   "canon": "alpha",
+   "aliases": []
+  },
+  {
+   "canon": "beta",
+   "aliases": []
+  },
+  {
+   "canon": "gamma",
+   "aliases": []
+  },
+  {
+   "canon": "delta",
+   "aliases": []
+  },
+  {
+   "canon": "omega",
+   "aliases": []
+  },
+  {
+   "canon": "pi",
+   "aliases": []
+  },
+  {
+   "canon": "sigma",
+   "aliases": []
+  },
+  {
+   "canon": "theta",
+   "aliases": []
+  },
+  {
+   "canon": "epsilon",
+   "aliases": []
+  },
+  {
+   "canon": "lambda",
+   "aliases": [
+    "lamda"
+   ]
+  },
+  {
+   "canon": "omicron",
+   "aliases": []
+  },
+  {
+   "canon": "zeta",
+   "aliases": []
+  },
+  {
+   "canon": "eta",
+   "aliases": []
+  },
+  {
+   "canon": "iota",
+   "aliases": []
+  },
+  {
+   "canon": "kappa",
+   "aliases": []
+  },
+  {
+   "canon": "mu",
+   "aliases": []
+  },
+  {
+   "canon": "nu",
+   "aliases": []
+  },
+  {
+   "canon": "xi",
+   "aliases": []
+  },
+  {
+   "canon": "rho",
+   "aliases": []
+  },
+  {
+   "canon": "tau",
+   "aliases": []
+  },
+  {
+   "canon": "upsilon",
+   "aliases": []
+  },
+  {
+   "canon": "phi",
+   "aliases": []
+  },
+  {
+   "canon": "chi",
+   "aliases": []
+  },
+  {
+   "canon": "psi",
+   "aliases": []
+  }
+ ],
+ "First 20 elements of the periodic table": [
+  {
+   "canon": "hydrogen",
+   "aliases": []
+  },
+  {
+   "canon": "oxygen",
+   "aliases": []
+  },
+  {
+   "canon": "carbon",
+   "aliases": []
+  },
+  {
+   "canon": "helium",
+   "aliases": []
+  },
+  {
+   "canon": "nitrogen",
+   "aliases": []
+  },
+  {
+   "canon": "sodium",
+   "aliases": []
+  },
+  {
+   "canon": "calcium",
+   "aliases": []
+  },
+  {
+   "canon": "neon",
+   "aliases": []
+  },
+  {
+   "canon": "potassium",
+   "aliases": []
+  },
+  {
+   "canon": "magnesium",
+   "aliases": []
+  },
+  {
+   "canon": "chlorine",
+   "aliases": []
+  },
+  {
+   "canon": "aluminium",
+   "aliases": [
+    "aluminum"
+   ]
+  },
+  {
+   "canon": "sulfur",
+   "aliases": [
+    "sulphur"
+   ]
+  },
+  {
+   "canon": "silicon",
+   "aliases": []
+  },
+  {
+   "canon": "lithium",
+   "aliases": []
+  },
+  {
+   "canon": "fluorine",
+   "aliases": []
+  },
+  {
+   "canon": "argon",
+   "aliases": []
+  },
+  {
+   "canon": "phosphorus",
+   "aliases": []
+  },
+  {
+   "canon": "boron",
+   "aliases": []
+  },
+  {
+   "canon": "beryllium",
+   "aliases": []
+  }
+ ],
+ "Birthstones": [
+  {
+   "canon": "diamond",
+   "aliases": []
+  },
+  {
+   "canon": "ruby",
+   "aliases": []
+  },
+  {
+   "canon": "emerald",
+   "aliases": []
+  },
+  {
+   "canon": "sapphire",
+   "aliases": []
+  },
+  {
+   "canon": "amethyst",
+   "aliases": []
+  },
+  {
+   "canon": "pearl",
+   "aliases": []
+  },
+  {
+   "canon": "opal",
+   "aliases": []
+  },
+  {
+   "canon": "topaz",
+   "aliases": [
+    "blue topaz"
+   ]
+  },
+  {
+   "canon": "garnet",
+   "aliases": []
+  },
+  {
+   "canon": "aquamarine",
+   "aliases": []
+  },
+  {
+   "canon": "turquoise",
+   "aliases": []
+  },
+  {
+   "canon": "peridot",
+   "aliases": []
+  },
+  {
+   "canon": "citrine",
+   "aliases": []
+  },
+  {
+   "canon": "tourmaline",
+   "aliases": [
+    "pink tourmaline"
+   ]
+  },
+  {
+   "canon": "moonstone",
+   "aliases": []
+  },
+  {
+   "canon": "alexandrite",
+   "aliases": []
+  },
+  {
+   "canon": "tanzanite",
+   "aliases": []
+  },
+  {
+   "canon": "zircon",
+   "aliases": [
+    "blue zircon"
+   ]
+  },
+  {
+   "canon": "bloodstone",
+   "aliases": []
+  },
+  {
+   "canon": "spinel",
+   "aliases": []
+  },
+  {
+   "canon": "sardonyx",
+   "aliases": []
+  }
+ ],
+ "Baseball positions": [
+  {
+   "canon": "pitcher",
+   "aliases": [
+    "starting pitcher",
+    "relief pitcher",
+    "reliever",
+    "closer"
+   ]
+  },
+  {
+   "canon": "catcher",
+   "aliases": []
+  },
+  {
+   "canon": "shortstop",
+   "aliases": []
+  },
+  {
+   "canon": "first baseman",
+   "aliases": [
+    "first base",
+    "1b"
+   ]
+  },
+  {
+   "canon": "second baseman",
+   "aliases": [
+    "second base",
+    "2b"
+   ]
+  },
+  {
+   "canon": "third baseman",
+   "aliases": [
+    "third base",
+    "3b"
+   ]
+  },
+  {
+   "canon": "center fielder",
+   "aliases": [
+    "centre fielder",
+    "center field",
+    "centre field",
+    "cf"
+   ]
+  },
+  {
+   "canon": "left fielder",
+   "aliases": [
+    "left field",
+    "lf"
+   ]
+  },
+  {
+   "canon": "right fielder",
+   "aliases": [
+    "right field",
+    "rf"
+   ]
+  },
+  {
+   "canon": "designated hitter",
+   "aliases": [
+    "dh"
+   ]
+  }
+ ],
+ "Winter Olympic sports": [
+  {
+   "canon": "ice hockey",
+   "aliases": [
+    "hockey"
+   ]
+  },
+  {
+   "canon": "figure skating",
+   "aliases": [
+    "ice skating",
+    "ice dancing",
+    "ice dance"
+   ]
+  },
+  {
+   "canon": "alpine skiing",
+   "aliases": [
+    "downhill skiing",
+    "downhill",
+    "slalom",
+    "giant slalom",
+    "super g"
+   ]
+  },
+  {
+   "canon": "snowboarding",
+   "aliases": [
+    "snowboard"
+   ]
+  },
+  {
+   "canon": "curling",
+   "aliases": []
+  },
+  {
+   "canon": "speed skating",
+   "aliases": [
+    "long track speed skating"
+   ]
+  },
+  {
+   "canon": "bobsleigh",
+   "aliases": [
+    "bobsled",
+    "bobsledding"
+   ]
+  },
+  {
+   "canon": "luge",
+   "aliases": []
+  },
+  {
+   "canon": "ski jumping",
+   "aliases": []
+  },
+  {
+   "canon": "cross country skiing",
+   "aliases": [
+    "cross country"
+   ]
+  },
+  {
+   "canon": "biathlon",
+   "aliases": []
+  },
+  {
+   "canon": "skeleton",
+   "aliases": []
+  },
+  {
+   "canon": "freestyle skiing",
+   "aliases": [
+    "moguls",
+    "aerials",
+    "ski cross"
+   ]
+  },
+  {
+   "canon": "short track speed skating",
+   "aliases": [
+    "short track"
+   ]
+  },
+  {
+   "canon": "nordic combined",
+   "aliases": []
+  },
+  {
+   "canon": "ski mountaineering",
+   "aliases": [
+    "skimo"
+   ]
+  }
+ ],
+ "US states on the Atlantic coast": [
+  {
+   "canon": "florida",
+   "aliases": []
+  },
+  {
+   "canon": "new york",
+   "aliases": []
+  },
+  {
+   "canon": "maine",
+   "aliases": []
+  },
+  {
+   "canon": "massachusetts",
+   "aliases": []
+  },
+  {
+   "canon": "new jersey",
+   "aliases": []
+  },
+  {
+   "canon": "north carolina",
+   "aliases": []
+  },
+  {
+   "canon": "south carolina",
+   "aliases": []
+  },
+  {
+   "canon": "georgia",
+   "aliases": []
+  },
+  {
+   "canon": "virginia",
+   "aliases": []
+  },
+  {
+   "canon": "maryland",
+   "aliases": []
+  },
+  {
+   "canon": "delaware",
+   "aliases": []
+  },
+  {
+   "canon": "connecticut",
+   "aliases": []
+  },
+  {
+   "canon": "rhode island",
+   "aliases": []
+  },
+  {
+   "canon": "new hampshire",
+   "aliases": []
+  }
+ ],
+ "Monopoly properties (US board)": [
+  {
+   "canon": "boardwalk",
+   "aliases": []
+  },
+  {
+   "canon": "park place",
+   "aliases": []
+  },
+  {
+   "canon": "baltic avenue",
+   "aliases": [
+    "baltic"
+   ]
+  },
+  {
+   "canon": "mediterranean avenue",
+   "aliases": [
+    "mediterranean"
+   ]
+  },
+  {
+   "canon": "reading railroad",
+   "aliases": [
+    "reading"
+   ]
+  },
+  {
+   "canon": "pennsylvania railroad",
+   "aliases": []
+  },
+  {
+   "canon": "b and o railroad",
+   "aliases": [
+    "b and o",
+    "bo railroad",
+    "baltimore and ohio railroad"
+   ]
+  },
+  {
+   "canon": "short line",
+   "aliases": [
+    "short line railroad",
+    "shortline"
+   ]
+  },
+  {
+   "canon": "electric company",
+   "aliases": []
+  },
+  {
+   "canon": "water works",
+   "aliases": [
+    "waterworks"
+   ]
+  },
+  {
+   "canon": "oriental avenue",
+   "aliases": [
+    "oriental"
+   ]
+  },
+  {
+   "canon": "vermont avenue",
+   "aliases": [
+    "vermont"
+   ]
+  },
+  {
+   "canon": "connecticut avenue",
+   "aliases": [
+    "connecticut"
+   ]
+  },
+  {
+   "canon": "st charles place",
+   "aliases": [
+    "saint charles place",
+    "st charles"
+   ]
+  },
+  {
+   "canon": "states avenue",
+   "aliases": []
+  },
+  {
+   "canon": "virginia avenue",
+   "aliases": [
+    "virginia"
+   ]
+  },
+  {
+   "canon": "st james place",
+   "aliases": [
+    "saint james place",
+    "st james"
+   ]
+  },
+  {
+   "canon": "tennessee avenue",
+   "aliases": [
+    "tennessee"
+   ]
+  },
+  {
+   "canon": "new york avenue",
+   "aliases": [
+    "new york"
+   ]
+  },
+  {
+   "canon": "kentucky avenue",
+   "aliases": [
+    "kentucky"
+   ]
+  },
+  {
+   "canon": "indiana avenue",
+   "aliases": [
+    "indiana"
+   ]
+  },
+  {
+   "canon": "illinois avenue",
+   "aliases": [
+    "illinois"
+   ]
+  },
+  {
+   "canon": "atlantic avenue",
+   "aliases": [
+    "atlantic"
+   ]
+  },
+  {
+   "canon": "ventnor avenue",
+   "aliases": [
+    "ventnor"
+   ]
+  },
+  {
+   "canon": "marvin gardens",
+   "aliases": []
+  },
+  {
+   "canon": "pacific avenue",
+   "aliases": [
+    "pacific"
+   ]
+  },
+  {
+   "canon": "north carolina avenue",
+   "aliases": [
+    "north carolina"
+   ]
+  },
+  {
+   "canon": "pennsylvania avenue",
+   "aliases": []
+  }
+ ],
+ "Weasley siblings & parents": [
+  {
+   "canon": "ron",
+   "aliases": [
+    "ronald",
+    "ron weasley",
+    "ronald weasley"
+   ]
+  },
+  {
+   "canon": "ginny",
+   "aliases": [
+    "ginevra",
+    "ginny weasley"
+   ]
+  },
+  {
+   "canon": "fred",
+   "aliases": [
+    "fred weasley"
+   ]
+  },
+  {
+   "canon": "george",
+   "aliases": [
+    "george weasley"
+   ]
+  },
+  {
+   "canon": "molly",
+   "aliases": [
+    "molly weasley",
+    "mrs weasley"
+   ]
+  },
+  {
+   "canon": "arthur",
+   "aliases": [
+    "arthur weasley",
+    "mr weasley"
+   ]
+  },
+  {
+   "canon": "percy",
+   "aliases": [
+    "percy weasley"
+   ]
+  },
+  {
+   "canon": "bill",
+   "aliases": [
+    "william",
+    "bill weasley"
+   ]
+  },
+  {
+   "canon": "charlie",
+   "aliases": [
+    "charles",
+    "charlie weasley"
+   ]
+  }
  ]
 }
