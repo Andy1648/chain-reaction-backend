@@ -21581,5 +21581,4651 @@
     "charlie weasley"
    ]
   }
+ ],
+ "Inside Out emotions": [
+  {
+   "canon": "joy",
+   "aliases": []
+  },
+  {
+   "canon": "sadness",
+   "aliases": []
+  },
+  {
+   "canon": "anger",
+   "aliases": []
+  },
+  {
+   "canon": "fear",
+   "aliases": []
+  },
+  {
+   "canon": "disgust",
+   "aliases": []
+  },
+  {
+   "canon": "anxiety",
+   "aliases": []
+  },
+  {
+   "canon": "envy",
+   "aliases": []
+  },
+  {
+   "canon": "ennui",
+   "aliases": []
+  },
+  {
+   "canon": "embarrassment",
+   "aliases": [
+    "embarassment"
+   ]
+  },
+  {
+   "canon": "nostalgia",
+   "aliases": []
+  }
+ ],
+ "Frozen characters": [
+  {
+   "canon": "elsa",
+   "aliases": [
+    "queen elsa"
+   ]
+  },
+  {
+   "canon": "anna",
+   "aliases": [
+    "princess anna"
+   ]
+  },
+  {
+   "canon": "olaf",
+   "aliases": []
+  },
+  {
+   "canon": "kristoff",
+   "aliases": []
+  },
+  {
+   "canon": "sven",
+   "aliases": []
+  },
+  {
+   "canon": "hans",
+   "aliases": [
+    "prince hans"
+   ]
+  },
+  {
+   "canon": "duke of weselton",
+   "aliases": [
+    "the duke",
+    "weselton",
+    "weaselton",
+    "duke of weaselton"
+   ]
+  },
+  {
+   "canon": "oaken",
+   "aliases": []
+  },
+  {
+   "canon": "pabbie",
+   "aliases": [
+    "grand pabbie"
+   ]
+  },
+  {
+   "canon": "bulda",
+   "aliases": []
+  },
+  {
+   "canon": "marshmallow",
+   "aliases": []
+  },
+  {
+   "canon": "honeymaren",
+   "aliases": []
+  },
+  {
+   "canon": "ryder",
+   "aliases": []
+  },
+  {
+   "canon": "yelana",
+   "aliases": []
+  },
+  {
+   "canon": "mattias",
+   "aliases": [
+    "lieutenant mattias"
+   ]
+  },
+  {
+   "canon": "iduna",
+   "aliases": [
+    "queen iduna"
+   ]
+  },
+  {
+   "canon": "agnarr",
+   "aliases": [
+    "king agnarr"
+   ]
+  },
+  {
+   "canon": "runeard",
+   "aliases": [
+    "king runeard"
+   ]
+  },
+  {
+   "canon": "bruni",
+   "aliases": []
+  },
+  {
+   "canon": "gale",
+   "aliases": []
+  },
+  {
+   "canon": "nokk",
+   "aliases": [
+    "the nokk"
+   ]
+  },
+  {
+   "canon": "trolls",
+   "aliases": [
+    "the trolls"
+   ]
+  }
+ ],
+ "The Lion King characters": [
+  {
+   "canon": "simba",
+   "aliases": []
+  },
+  {
+   "canon": "nala",
+   "aliases": []
+  },
+  {
+   "canon": "mufasa",
+   "aliases": []
+  },
+  {
+   "canon": "scar",
+   "aliases": []
+  },
+  {
+   "canon": "timon",
+   "aliases": []
+  },
+  {
+   "canon": "pumbaa",
+   "aliases": []
+  },
+  {
+   "canon": "rafiki",
+   "aliases": []
+  },
+  {
+   "canon": "zazu",
+   "aliases": []
+  },
+  {
+   "canon": "sarabi",
+   "aliases": []
+  },
+  {
+   "canon": "shenzi",
+   "aliases": []
+  },
+  {
+   "canon": "banzai",
+   "aliases": []
+  },
+  {
+   "canon": "ed",
+   "aliases": []
+  },
+  {
+   "canon": "sarafina",
+   "aliases": []
+  },
+  {
+   "canon": "kiara",
+   "aliases": []
+  },
+  {
+   "canon": "kovu",
+   "aliases": []
+  },
+  {
+   "canon": "zira",
+   "aliases": []
+  },
+  {
+   "canon": "vitani",
+   "aliases": []
+  },
+  {
+   "canon": "nuka",
+   "aliases": []
+  },
+  {
+   "canon": "kion",
+   "aliases": []
+  },
+  {
+   "canon": "kopa",
+   "aliases": []
+  },
+  {
+   "canon": "kiros",
+   "aliases": []
+  },
+  {
+   "canon": "taka",
+   "aliases": []
+  },
+  {
+   "canon": "hyenas",
+   "aliases": [
+    "the hyenas"
+   ]
+  }
+ ],
+ "Toy Story characters": [
+  {
+   "canon": "woody",
+   "aliases": [
+    "sheriff woody"
+   ]
+  },
+  {
+   "canon": "buzz lightyear",
+   "aliases": [
+    "buzz"
+   ]
+  },
+  {
+   "canon": "jessie",
+   "aliases": []
+  },
+  {
+   "canon": "rex",
+   "aliases": []
+  },
+  {
+   "canon": "hamm",
+   "aliases": [
+    "ham"
+   ]
+  },
+  {
+   "canon": "slinky dog",
+   "aliases": [
+    "slinky"
+   ]
+  },
+  {
+   "canon": "mr potato head",
+   "aliases": [
+    "potato head"
+   ]
+  },
+  {
+   "canon": "mrs potato head",
+   "aliases": []
+  },
+  {
+   "canon": "bo peep",
+   "aliases": [
+    "bo"
+   ]
+  },
+  {
+   "canon": "bullseye",
+   "aliases": []
+  },
+  {
+   "canon": "aliens",
+   "aliases": [
+    "little green men",
+    "the aliens",
+    "alien"
+   ]
+  },
+  {
+   "canon": "andy",
+   "aliases": [
+    "andy davis"
+   ]
+  },
+  {
+   "canon": "sid",
+   "aliases": [
+    "sid phillips"
+   ]
+  },
+  {
+   "canon": "lotso",
+   "aliases": [
+    "lots o huggin bear",
+    "lotso huggin bear"
+   ]
+  },
+  {
+   "canon": "forky",
+   "aliases": []
+  },
+  {
+   "canon": "ken",
+   "aliases": []
+  },
+  {
+   "canon": "barbie",
+   "aliases": []
+  },
+  {
+   "canon": "zurg",
+   "aliases": [
+    "emperor zurg"
+   ]
+  },
+  {
+   "canon": "stinky pete",
+   "aliases": [
+    "the prospector",
+    "prospector"
+   ]
+  },
+  {
+   "canon": "wheezy",
+   "aliases": []
+  },
+  {
+   "canon": "sarge",
+   "aliases": []
+  },
+  {
+   "canon": "trixie",
+   "aliases": []
+  },
+  {
+   "canon": "buttercup",
+   "aliases": []
+  },
+  {
+   "canon": "mr pricklepants",
+   "aliases": []
+  },
+  {
+   "canon": "dolly",
+   "aliases": []
+  },
+  {
+   "canon": "chuckles",
+   "aliases": []
+  },
+  {
+   "canon": "big baby",
+   "aliases": []
+  },
+  {
+   "canon": "bonnie",
+   "aliases": []
+  },
+  {
+   "canon": "duke caboom",
+   "aliases": []
+  },
+  {
+   "canon": "gabby gabby",
+   "aliases": []
+  },
+  {
+   "canon": "ducky",
+   "aliases": []
+  },
+  {
+   "canon": "bunny",
+   "aliases": []
+  },
+  {
+   "canon": "bennies",
+   "aliases": []
+  },
+  {
+   "canon": "benson",
+   "aliases": []
+  },
+  {
+   "canon": "giggle mcdimples",
+   "aliases": []
+  },
+  {
+   "canon": "molly",
+   "aliases": []
+  },
+  {
+   "canon": "scud",
+   "aliases": []
+  },
+  {
+   "canon": "al",
+   "aliases": [
+    "al mcwhiggin"
+   ]
+  },
+  {
+   "canon": "stretch",
+   "aliases": []
+  },
+  {
+   "canon": "twitch",
+   "aliases": []
+  },
+  {
+   "canon": "sparks",
+   "aliases": []
+  },
+  {
+   "canon": "chunk",
+   "aliases": []
+  },
+  {
+   "canon": "totoro",
+   "aliases": []
+  },
+  {
+   "canon": "rc",
+   "aliases": [
+    "r c"
+   ]
+  },
+  {
+   "canon": "lenny",
+   "aliases": []
+  },
+  {
+   "canon": "mr spell",
+   "aliases": []
+  },
+  {
+   "canon": "etch",
+   "aliases": [
+    "etch a sketch"
+   ]
+  },
+  {
+   "canon": "robot",
+   "aliases": []
+  },
+  {
+   "canon": "rocky gibraltar",
+   "aliases": []
+  },
+  {
+   "canon": "troll",
+   "aliases": []
+  },
+  {
+   "canon": "hannah",
+   "aliases": []
+  },
+  {
+   "canon": "mrs davis",
+   "aliases": []
+  }
+ ],
+ "Shrek characters": [
+  {
+   "canon": "shrek",
+   "aliases": []
+  },
+  {
+   "canon": "donkey",
+   "aliases": []
+  },
+  {
+   "canon": "fiona",
+   "aliases": [
+    "princess fiona"
+   ]
+  },
+  {
+   "canon": "lord farquaad",
+   "aliases": [
+    "farquaad"
+   ]
+  },
+  {
+   "canon": "puss in boots",
+   "aliases": [
+    "puss"
+   ]
+  },
+  {
+   "canon": "dragon",
+   "aliases": []
+  },
+  {
+   "canon": "gingy",
+   "aliases": [
+    "gingerbread man",
+    "gingerbread"
+   ]
+  },
+  {
+   "canon": "pinocchio",
+   "aliases": []
+  },
+  {
+   "canon": "three blind mice",
+   "aliases": [
+    "blind mice"
+   ]
+  },
+  {
+   "canon": "big bad wolf",
+   "aliases": [
+    "the big bad wolf",
+    "wolf"
+   ]
+  },
+  {
+   "canon": "fairy godmother",
+   "aliases": []
+  },
+  {
+   "canon": "prince charming",
+   "aliases": [
+    "charming"
+   ]
+  },
+  {
+   "canon": "king harold",
+   "aliases": [
+    "harold"
+   ]
+  },
+  {
+   "canon": "queen lillian",
+   "aliases": [
+    "lillian"
+   ]
+  },
+  {
+   "canon": "rumpelstiltskin",
+   "aliases": []
+  },
+  {
+   "canon": "doris",
+   "aliases": []
+  },
+  {
+   "canon": "dronkeys",
+   "aliases": []
+  },
+  {
+   "canon": "magic mirror",
+   "aliases": [
+    "mirror"
+   ]
+  },
+  {
+   "canon": "three little pigs",
+   "aliases": [
+    "little pigs"
+   ]
+  },
+  {
+   "canon": "merlin",
+   "aliases": []
+  },
+  {
+   "canon": "artie",
+   "aliases": [
+    "arthur"
+   ]
+  },
+  {
+   "canon": "mongo",
+   "aliases": []
+  },
+  {
+   "canon": "cyclops",
+   "aliases": []
+  },
+  {
+   "canon": "captain hook",
+   "aliases": []
+  },
+  {
+   "canon": "muffin man",
+   "aliases": [
+    "the muffin man"
+   ]
+  },
+  {
+   "canon": "ogre babies",
+   "aliases": [
+    "farkle",
+    "fergus",
+    "felicia"
+   ]
+  },
+  {
+   "canon": "kitty softpaws",
+   "aliases": []
+  },
+  {
+   "canon": "humpty dumpty",
+   "aliases": []
+  },
+  {
+   "canon": "cinderella",
+   "aliases": []
+  },
+  {
+   "canon": "snow white",
+   "aliases": []
+  },
+  {
+   "canon": "sleeping beauty",
+   "aliases": []
+  },
+  {
+   "canon": "rapunzel",
+   "aliases": []
+  },
+  {
+   "canon": "brogan",
+   "aliases": []
+  },
+  {
+   "canon": "cookie",
+   "aliases": []
+  }
+ ],
+ "Finding Nemo characters": [
+  {
+   "canon": "nemo",
+   "aliases": []
+  },
+  {
+   "canon": "marlin",
+   "aliases": []
+  },
+  {
+   "canon": "dory",
+   "aliases": []
+  },
+  {
+   "canon": "bruce",
+   "aliases": []
+  },
+  {
+   "canon": "crush",
+   "aliases": []
+  },
+  {
+   "canon": "squirt",
+   "aliases": []
+  },
+  {
+   "canon": "gill",
+   "aliases": []
+  },
+  {
+   "canon": "bloat",
+   "aliases": []
+  },
+  {
+   "canon": "peach",
+   "aliases": []
+  },
+  {
+   "canon": "gurgle",
+   "aliases": []
+  },
+  {
+   "canon": "bubbles",
+   "aliases": []
+  },
+  {
+   "canon": "deb",
+   "aliases": [
+    "flo"
+   ]
+  },
+  {
+   "canon": "jacques",
+   "aliases": []
+  },
+  {
+   "canon": "nigel",
+   "aliases": []
+  },
+  {
+   "canon": "mr ray",
+   "aliases": []
+  },
+  {
+   "canon": "darla",
+   "aliases": []
+  },
+  {
+   "canon": "dr sherman",
+   "aliases": [
+    "philip sherman",
+    "the dentist",
+    "dentist"
+   ]
+  },
+  {
+   "canon": "anchor",
+   "aliases": []
+  },
+  {
+   "canon": "chum",
+   "aliases": []
+  },
+  {
+   "canon": "tad",
+   "aliases": []
+  },
+  {
+   "canon": "pearl",
+   "aliases": []
+  },
+  {
+   "canon": "sheldon",
+   "aliases": []
+  },
+  {
+   "canon": "coral",
+   "aliases": []
+  },
+  {
+   "canon": "hank",
+   "aliases": []
+  },
+  {
+   "canon": "destiny",
+   "aliases": []
+  },
+  {
+   "canon": "bailey",
+   "aliases": []
+  },
+  {
+   "canon": "jenny",
+   "aliases": []
+  },
+  {
+   "canon": "charlie",
+   "aliases": []
+  },
+  {
+   "canon": "becky",
+   "aliases": []
+  },
+  {
+   "canon": "fluke",
+   "aliases": []
+  },
+  {
+   "canon": "rudder",
+   "aliases": []
+  },
+  {
+   "canon": "gerald",
+   "aliases": []
+  },
+  {
+   "canon": "seagulls",
+   "aliases": [
+    "the seagulls",
+    "mine"
+   ]
+  }
+ ],
+ "SpongeBob characters": [
+  {
+   "canon": "spongebob",
+   "aliases": [
+    "spongebob squarepants",
+    "sponge bob"
+   ]
+  },
+  {
+   "canon": "patrick",
+   "aliases": [
+    "patrick star"
+   ]
+  },
+  {
+   "canon": "squidward",
+   "aliases": [
+    "squidward tentacles"
+   ]
+  },
+  {
+   "canon": "mr krabs",
+   "aliases": [
+    "krabs",
+    "eugene krabs"
+   ]
+  },
+  {
+   "canon": "sandy",
+   "aliases": [
+    "sandy cheeks"
+   ]
+  },
+  {
+   "canon": "plankton",
+   "aliases": [
+    "sheldon plankton"
+   ]
+  },
+  {
+   "canon": "karen",
+   "aliases": []
+  },
+  {
+   "canon": "gary",
+   "aliases": [
+    "gary the snail"
+   ]
+  },
+  {
+   "canon": "mrs puff",
+   "aliases": [
+    "puff"
+   ]
+  },
+  {
+   "canon": "pearl",
+   "aliases": [
+    "pearl krabs"
+   ]
+  },
+  {
+   "canon": "larry",
+   "aliases": [
+    "larry the lobster"
+   ]
+  },
+  {
+   "canon": "squilliam",
+   "aliases": [
+    "squilliam fancyson"
+   ]
+  },
+  {
+   "canon": "mermaid man",
+   "aliases": []
+  },
+  {
+   "canon": "barnacle boy",
+   "aliases": []
+  },
+  {
+   "canon": "flying dutchman",
+   "aliases": [
+    "the flying dutchman"
+   ]
+  },
+  {
+   "canon": "bubble bass",
+   "aliases": []
+  },
+  {
+   "canon": "king neptune",
+   "aliases": [
+    "neptune"
+   ]
+  },
+  {
+   "canon": "man ray",
+   "aliases": []
+  },
+  {
+   "canon": "dirty bubble",
+   "aliases": []
+  },
+  {
+   "canon": "patchy",
+   "aliases": [
+    "patchy the pirate"
+   ]
+  },
+  {
+   "canon": "potty",
+   "aliases": [
+    "potty the parrot"
+   ]
+  },
+  {
+   "canon": "doodlebob",
+   "aliases": []
+  },
+  {
+   "canon": "fred",
+   "aliases": [
+    "my leg"
+   ]
+  },
+  {
+   "canon": "grandma squarepants",
+   "aliases": []
+  },
+  {
+   "canon": "harold",
+   "aliases": [
+    "harold squarepants"
+   ]
+  },
+  {
+   "canon": "margaret",
+   "aliases": [
+    "margaret squarepants"
+   ]
+  },
+  {
+   "canon": "bubble buddy",
+   "aliases": []
+  },
+  {
+   "canon": "mystery",
+   "aliases": []
+  },
+  {
+   "canon": "painty",
+   "aliases": [
+    "painty the pirate"
+   ]
+  },
+  {
+   "canon": "french narrator",
+   "aliases": [
+    "narrator"
+   ]
+  },
+  {
+   "canon": "kevin",
+   "aliases": [
+    "kevin c cucumber"
+   ]
+  },
+  {
+   "canon": "rock",
+   "aliases": []
+  },
+  {
+   "canon": "the hash slinging slasher",
+   "aliases": [
+    "hash slinging slasher"
+   ]
+  },
+  {
+   "canon": "old man jenkins",
+   "aliases": []
+  },
+  {
+   "canon": "nat peterson",
+   "aliases": []
+  },
+  {
+   "canon": "purple doctorfish",
+   "aliases": []
+  },
+  {
+   "canon": "scooter",
+   "aliases": []
+  }
+ ],
+ "The Simpsons family": [
+  {
+   "canon": "homer",
+   "aliases": [
+    "homer simpson"
+   ]
+  },
+  {
+   "canon": "marge",
+   "aliases": [
+    "marge simpson"
+   ]
+  },
+  {
+   "canon": "bart",
+   "aliases": [
+    "bart simpson"
+   ]
+  },
+  {
+   "canon": "lisa",
+   "aliases": [
+    "lisa simpson"
+   ]
+  },
+  {
+   "canon": "maggie",
+   "aliases": [
+    "maggie simpson"
+   ]
+  },
+  {
+   "canon": "abe",
+   "aliases": [
+    "grampa",
+    "grandpa",
+    "abraham",
+    "abe simpson",
+    "grampa simpson",
+    "grandpa simpson"
+   ]
+  },
+  {
+   "canon": "mona",
+   "aliases": [
+    "mona simpson"
+   ]
+  },
+  {
+   "canon": "herb",
+   "aliases": [
+    "herb powell"
+   ]
+  },
+  {
+   "canon": "patty",
+   "aliases": [
+    "patty bouvier"
+   ]
+  },
+  {
+   "canon": "selma",
+   "aliases": [
+    "selma bouvier"
+   ]
+  },
+  {
+   "canon": "jacqueline",
+   "aliases": [
+    "jackie bouvier",
+    "jacqueline bouvier",
+    "grandma bouvier"
+   ]
+  },
+  {
+   "canon": "clancy",
+   "aliases": [
+    "clancy bouvier"
+   ]
+  },
+  {
+   "canon": "ling",
+   "aliases": [
+    "ling bouvier"
+   ]
+  },
+  {
+   "canon": "santa's little helper",
+   "aliases": [
+    "santas little helper"
+   ]
+  },
+  {
+   "canon": "snowball",
+   "aliases": [
+    "snowball ii",
+    "snowball 2"
+   ]
+  }
+ ],
+ "PAW Patrol team": [
+  {
+   "canon": "chase",
+   "aliases": []
+  },
+  {
+   "canon": "marshall",
+   "aliases": []
+  },
+  {
+   "canon": "skye",
+   "aliases": []
+  },
+  {
+   "canon": "rocky",
+   "aliases": []
+  },
+  {
+   "canon": "zuma",
+   "aliases": []
+  },
+  {
+   "canon": "rubble",
+   "aliases": []
+  },
+  {
+   "canon": "everest",
+   "aliases": []
+  },
+  {
+   "canon": "tracker",
+   "aliases": []
+  },
+  {
+   "canon": "rex",
+   "aliases": []
+  },
+  {
+   "canon": "liberty",
+   "aliases": []
+  },
+  {
+   "canon": "ryder",
+   "aliases": []
+  },
+  {
+   "canon": "robo dog",
+   "aliases": []
+  },
+  {
+   "canon": "wildcat",
+   "aliases": []
+  },
+  {
+   "canon": "al",
+   "aliases": []
+  },
+  {
+   "canon": "sweetie",
+   "aliases": []
+  },
+  {
+   "canon": "tuck",
+   "aliases": []
+  },
+  {
+   "canon": "ella",
+   "aliases": []
+  },
+  {
+   "canon": "boomer",
+   "aliases": []
+  },
+  {
+   "canon": "mayor goodway",
+   "aliases": []
+  },
+  {
+   "canon": "mayor humdinger",
+   "aliases": [
+    "humdinger"
+   ]
+  },
+  {
+   "canon": "chickaletta",
+   "aliases": []
+  },
+  {
+   "canon": "cap'n turbot",
+   "aliases": [
+    "captain turbot",
+    "capn turbot"
+   ]
+  },
+  {
+   "canon": "katie",
+   "aliases": []
+  }
+ ],
+ "Teenage Mutant Ninja Turtles characters": [
+  {
+   "canon": "leonardo",
+   "aliases": [
+    "leo"
+   ]
+  },
+  {
+   "canon": "donatello",
+   "aliases": [
+    "donnie",
+    "donny"
+   ]
+  },
+  {
+   "canon": "raphael",
+   "aliases": [
+    "raph"
+   ]
+  },
+  {
+   "canon": "michelangelo",
+   "aliases": [
+    "mikey",
+    "mike"
+   ]
+  },
+  {
+   "canon": "splinter",
+   "aliases": [
+    "master splinter"
+   ]
+  },
+  {
+   "canon": "april o'neil",
+   "aliases": [
+    "april",
+    "april oneil"
+   ]
+  },
+  {
+   "canon": "shredder",
+   "aliases": [
+    "the shredder",
+    "oroku saki"
+   ]
+  },
+  {
+   "canon": "casey jones",
+   "aliases": [
+    "casey"
+   ]
+  },
+  {
+   "canon": "krang",
+   "aliases": []
+  },
+  {
+   "canon": "bebop",
+   "aliases": []
+  },
+  {
+   "canon": "rocksteady",
+   "aliases": []
+  },
+  {
+   "canon": "baxter stockman",
+   "aliases": [
+    "baxter"
+   ]
+  },
+  {
+   "canon": "karai",
+   "aliases": []
+  },
+  {
+   "canon": "foot clan",
+   "aliases": [
+    "the foot",
+    "foot soldiers"
+   ]
+  },
+  {
+   "canon": "leatherhead",
+   "aliases": []
+  },
+  {
+   "canon": "mondo gecko",
+   "aliases": []
+  },
+  {
+   "canon": "slash",
+   "aliases": []
+  },
+  {
+   "canon": "tiger claw",
+   "aliases": []
+  },
+  {
+   "canon": "metalhead",
+   "aliases": []
+  },
+  {
+   "canon": "venus",
+   "aliases": [
+    "venus de milo"
+   ]
+  },
+  {
+   "canon": "irma",
+   "aliases": []
+  },
+  {
+   "canon": "vernon",
+   "aliases": []
+  },
+  {
+   "canon": "hun",
+   "aliases": []
+  },
+  {
+   "canon": "bishop",
+   "aliases": []
+  },
+  {
+   "canon": "tokka",
+   "aliases": []
+  },
+  {
+   "canon": "rahzar",
+   "aliases": []
+  },
+  {
+   "canon": "super fly",
+   "aliases": [
+    "superfly"
+   ]
+  },
+  {
+   "canon": "ray fillet",
+   "aliases": []
+  },
+  {
+   "canon": "genghis frog",
+   "aliases": []
+  },
+  {
+   "canon": "usagi",
+   "aliases": [
+    "usagi yojimbo"
+   ]
+  },
+  {
+   "canon": "mutagen man",
+   "aliases": []
+  }
+ ],
+ "Looney Tunes characters": [
+  {
+   "canon": "bugs bunny",
+   "aliases": [
+    "bugs"
+   ]
+  },
+  {
+   "canon": "daffy duck",
+   "aliases": [
+    "daffy"
+   ]
+  },
+  {
+   "canon": "porky pig",
+   "aliases": [
+    "porky"
+   ]
+  },
+  {
+   "canon": "elmer fudd",
+   "aliases": [
+    "elmer"
+   ]
+  },
+  {
+   "canon": "tweety",
+   "aliases": [
+    "tweety bird",
+    "tweety pie"
+   ]
+  },
+  {
+   "canon": "sylvester",
+   "aliases": [
+    "sylvester the cat"
+   ]
+  },
+  {
+   "canon": "wile e coyote",
+   "aliases": [
+    "wile e. coyote",
+    "coyote",
+    "wile coyote"
+   ]
+  },
+  {
+   "canon": "road runner",
+   "aliases": [
+    "roadrunner"
+   ]
+  },
+  {
+   "canon": "yosemite sam",
+   "aliases": []
+  },
+  {
+   "canon": "foghorn leghorn",
+   "aliases": [
+    "foghorn"
+   ]
+  },
+  {
+   "canon": "pepe le pew",
+   "aliases": [
+    "pepe"
+   ]
+  },
+  {
+   "canon": "marvin the martian",
+   "aliases": [
+    "marvin"
+   ]
+  },
+  {
+   "canon": "speedy gonzales",
+   "aliases": [
+    "speedy"
+   ]
+  },
+  {
+   "canon": "tasmanian devil",
+   "aliases": [
+    "taz"
+   ]
+  },
+  {
+   "canon": "lola bunny",
+   "aliases": [
+    "lola"
+   ]
+  },
+  {
+   "canon": "granny",
+   "aliases": []
+  },
+  {
+   "canon": "gossamer",
+   "aliases": []
+  },
+  {
+   "canon": "michigan j frog",
+   "aliases": [
+    "michigan j. frog"
+   ]
+  },
+  {
+   "canon": "henery hawk",
+   "aliases": []
+  },
+  {
+   "canon": "petunia pig",
+   "aliases": []
+  },
+  {
+   "canon": "sylvester jr",
+   "aliases": []
+  },
+  {
+   "canon": "hector",
+   "aliases": [
+    "hector the bulldog"
+   ]
+  },
+  {
+   "canon": "barnyard dawg",
+   "aliases": []
+  },
+  {
+   "canon": "witch hazel",
+   "aliases": []
+  },
+  {
+   "canon": "marc antony",
+   "aliases": []
+  },
+  {
+   "canon": "pussyfoot",
+   "aliases": []
+  },
+  {
+   "canon": "ralph wolf",
+   "aliases": []
+  },
+  {
+   "canon": "sam sheepdog",
+   "aliases": []
+  },
+  {
+   "canon": "claude cat",
+   "aliases": []
+  },
+  {
+   "canon": "hubie and bertie",
+   "aliases": [
+    "hubie",
+    "bertie"
+   ]
+  },
+  {
+   "canon": "cecil turtle",
+   "aliases": []
+  },
+  {
+   "canon": "beaky buzzard",
+   "aliases": []
+  },
+  {
+   "canon": "rocky and mugsy",
+   "aliases": [
+    "rocky",
+    "mugsy"
+   ]
+  },
+  {
+   "canon": "penelope pussycat",
+   "aliases": [
+    "penelope"
+   ]
+  },
+  {
+   "canon": "k 9",
+   "aliases": [
+    "k9"
+   ]
+  },
+  {
+   "canon": "tina russo",
+   "aliases": []
+  }
+ ],
+ "Mickey Mouse & friends": [
+  {
+   "canon": "mickey",
+   "aliases": [
+    "mickey mouse"
+   ]
+  },
+  {
+   "canon": "minnie",
+   "aliases": [
+    "minnie mouse"
+   ]
+  },
+  {
+   "canon": "donald",
+   "aliases": [
+    "donald duck"
+   ]
+  },
+  {
+   "canon": "daisy",
+   "aliases": [
+    "daisy duck"
+   ]
+  },
+  {
+   "canon": "goofy",
+   "aliases": []
+  },
+  {
+   "canon": "pluto",
+   "aliases": []
+  },
+  {
+   "canon": "pete",
+   "aliases": [
+    "black pete",
+    "big bad pete"
+   ]
+  },
+  {
+   "canon": "chip",
+   "aliases": []
+  },
+  {
+   "canon": "dale",
+   "aliases": []
+  },
+  {
+   "canon": "clarabelle cow",
+   "aliases": [
+    "clarabelle"
+   ]
+  },
+  {
+   "canon": "horace horsecollar",
+   "aliases": [
+    "horace"
+   ]
+  },
+  {
+   "canon": "huey",
+   "aliases": []
+  },
+  {
+   "canon": "dewey",
+   "aliases": []
+  },
+  {
+   "canon": "louie",
+   "aliases": []
+  },
+  {
+   "canon": "scrooge mcduck",
+   "aliases": [
+    "scrooge",
+    "uncle scrooge"
+   ]
+  },
+  {
+   "canon": "ludwig von drake",
+   "aliases": [
+    "ludwig"
+   ]
+  },
+  {
+   "canon": "max",
+   "aliases": [
+    "max goof"
+   ]
+  },
+  {
+   "canon": "figaro",
+   "aliases": []
+  },
+  {
+   "canon": "oswald",
+   "aliases": [
+    "oswald the lucky rabbit"
+   ]
+  },
+  {
+   "canon": "webby",
+   "aliases": [
+    "webby vanderquack"
+   ]
+  },
+  {
+   "canon": "launchpad",
+   "aliases": [
+    "launchpad mcquack"
+   ]
+  },
+  {
+   "canon": "gyro gearloose",
+   "aliases": [
+    "gyro"
+   ]
+  },
+  {
+   "canon": "mortimer mouse",
+   "aliases": [
+    "mortimer"
+   ]
+  },
+  {
+   "canon": "butch",
+   "aliases": []
+  },
+  {
+   "canon": "toodles",
+   "aliases": []
+  },
+  {
+   "canon": "clara cluck",
+   "aliases": []
+  },
+  {
+   "canon": "gus goose",
+   "aliases": []
+  },
+  {
+   "canon": "grandma duck",
+   "aliases": []
+  },
+  {
+   "canon": "april may and june",
+   "aliases": [
+    "april",
+    "may",
+    "june"
+   ]
+  },
+  {
+   "canon": "morty and ferdie",
+   "aliases": [
+    "morty",
+    "ferdie"
+   ]
+  },
+  {
+   "canon": "gladstone gander",
+   "aliases": [
+    "gladstone"
+   ]
+  },
+  {
+   "canon": "magica de spell",
+   "aliases": [
+    "magica"
+   ]
+  },
+  {
+   "canon": "beagle boys",
+   "aliases": [
+    "the beagle boys"
+   ]
+  },
+  {
+   "canon": "julius",
+   "aliases": []
+  }
+ ],
+ "Sesame Street characters": [
+  {
+   "canon": "elmo",
+   "aliases": []
+  },
+  {
+   "canon": "big bird",
+   "aliases": []
+  },
+  {
+   "canon": "cookie monster",
+   "aliases": []
+  },
+  {
+   "canon": "oscar the grouch",
+   "aliases": [
+    "oscar"
+   ]
+  },
+  {
+   "canon": "bert",
+   "aliases": []
+  },
+  {
+   "canon": "ernie",
+   "aliases": []
+  },
+  {
+   "canon": "grover",
+   "aliases": [
+    "super grover"
+   ]
+  },
+  {
+   "canon": "count von count",
+   "aliases": [
+    "the count",
+    "count"
+   ]
+  },
+  {
+   "canon": "abby cadabby",
+   "aliases": [
+    "abby"
+   ]
+  },
+  {
+   "canon": "zoe",
+   "aliases": []
+  },
+  {
+   "canon": "rosita",
+   "aliases": []
+  },
+  {
+   "canon": "telly",
+   "aliases": [
+    "telly monster"
+   ]
+  },
+  {
+   "canon": "snuffleupagus",
+   "aliases": [
+    "mr snuffleupagus",
+    "snuffy"
+   ]
+  },
+  {
+   "canon": "baby bear",
+   "aliases": []
+  },
+  {
+   "canon": "herry monster",
+   "aliases": [
+    "herry"
+   ]
+  },
+  {
+   "canon": "prairie dawn",
+   "aliases": []
+  },
+  {
+   "canon": "julia",
+   "aliases": []
+  },
+  {
+   "canon": "kermit",
+   "aliases": [
+    "kermit the frog"
+   ]
+  },
+  {
+   "canon": "guy smiley",
+   "aliases": []
+  },
+  {
+   "canon": "slimey",
+   "aliases": [
+    "slimey the worm"
+   ]
+  },
+  {
+   "canon": "murray",
+   "aliases": [
+    "murray monster"
+   ]
+  },
+  {
+   "canon": "gabrielle",
+   "aliases": []
+  },
+  {
+   "canon": "tamir",
+   "aliases": []
+  },
+  {
+   "canon": "ji young",
+   "aliases": []
+  },
+  {
+   "canon": "wes",
+   "aliases": []
+  },
+  {
+   "canon": "dorothy",
+   "aliases": [
+    "dorothy the goldfish"
+   ]
+  },
+  {
+   "canon": "mr noodle",
+   "aliases": []
+  },
+  {
+   "canon": "hoots",
+   "aliases": [
+    "hoots the owl"
+   ]
+  },
+  {
+   "canon": "forgetful jones",
+   "aliases": []
+  },
+  {
+   "canon": "sherlock hemlock",
+   "aliases": []
+  },
+  {
+   "canon": "lefty",
+   "aliases": []
+  },
+  {
+   "canon": "frazzle",
+   "aliases": []
+  },
+  {
+   "canon": "barkley",
+   "aliases": []
+  },
+  {
+   "canon": "twiddlebugs",
+   "aliases": []
+  },
+  {
+   "canon": "honkers",
+   "aliases": []
+  },
+  {
+   "canon": "two headed monster",
+   "aliases": []
+  },
+  {
+   "canon": "curly bear",
+   "aliases": []
+  },
+  {
+   "canon": "benny rabbit",
+   "aliases": []
+  }
+ ],
+ "The Muppets": [
+  {
+   "canon": "kermit",
+   "aliases": [
+    "kermit the frog"
+   ]
+  },
+  {
+   "canon": "miss piggy",
+   "aliases": [
+    "piggy"
+   ]
+  },
+  {
+   "canon": "fozzie",
+   "aliases": [
+    "fozzie bear"
+   ]
+  },
+  {
+   "canon": "gonzo",
+   "aliases": [
+    "the great gonzo"
+   ]
+  },
+  {
+   "canon": "animal",
+   "aliases": []
+  },
+  {
+   "canon": "rowlf",
+   "aliases": [
+    "rowlf the dog"
+   ]
+  },
+  {
+   "canon": "scooter",
+   "aliases": []
+  },
+  {
+   "canon": "beaker",
+   "aliases": []
+  },
+  {
+   "canon": "dr bunsen honeydew",
+   "aliases": [
+    "bunsen",
+    "bunsen honeydew",
+    "dr bunsen"
+   ]
+  },
+  {
+   "canon": "swedish chef",
+   "aliases": [
+    "the swedish chef"
+   ]
+  },
+  {
+   "canon": "statler",
+   "aliases": []
+  },
+  {
+   "canon": "waldorf",
+   "aliases": []
+  },
+  {
+   "canon": "sam eagle",
+   "aliases": [
+    "sam the eagle"
+   ]
+  },
+  {
+   "canon": "rizzo",
+   "aliases": [
+    "rizzo the rat"
+   ]
+  },
+  {
+   "canon": "pepe",
+   "aliases": [
+    "pepe the king prawn"
+   ]
+  },
+  {
+   "canon": "camilla",
+   "aliases": [
+    "camilla the chicken"
+   ]
+  },
+  {
+   "canon": "dr teeth",
+   "aliases": []
+  },
+  {
+   "canon": "floyd",
+   "aliases": [
+    "floyd pepper"
+   ]
+  },
+  {
+   "canon": "janice",
+   "aliases": []
+  },
+  {
+   "canon": "zoot",
+   "aliases": []
+  },
+  {
+   "canon": "sweetums",
+   "aliases": []
+  },
+  {
+   "canon": "lew zealand",
+   "aliases": []
+  },
+  {
+   "canon": "crazy harry",
+   "aliases": []
+  },
+  {
+   "canon": "walter",
+   "aliases": []
+  },
+  {
+   "canon": "robin",
+   "aliases": [
+    "robin the frog"
+   ]
+  },
+  {
+   "canon": "link hogthrob",
+   "aliases": []
+  },
+  {
+   "canon": "dr strangepork",
+   "aliases": []
+  },
+  {
+   "canon": "uncle deadly",
+   "aliases": []
+  },
+  {
+   "canon": "bobo",
+   "aliases": [
+    "bobo the bear"
+   ]
+  },
+  {
+   "canon": "beauregard",
+   "aliases": []
+  },
+  {
+   "canon": "marvin suggs",
+   "aliases": []
+  },
+  {
+   "canon": "constantine",
+   "aliases": []
+  },
+  {
+   "canon": "clifford",
+   "aliases": []
+  },
+  {
+   "canon": "electric mayhem",
+   "aliases": [
+    "the electric mayhem"
+   ]
+  },
+  {
+   "canon": "mahna mahna",
+   "aliases": []
+  }
+ ],
+ "Harry Potter films": [
+  {
+   "canon": "harry potter and the philosopher's stone",
+   "aliases": [
+    "philosopher's stone",
+    "philosophers stone",
+    "sorcerer's stone",
+    "sorcerers stone",
+    "harry potter and the sorcerer's stone"
+   ]
+  },
+  {
+   "canon": "harry potter and the chamber of secrets",
+   "aliases": [
+    "chamber of secrets"
+   ]
+  },
+  {
+   "canon": "harry potter and the prisoner of azkaban",
+   "aliases": [
+    "prisoner of azkaban"
+   ]
+  },
+  {
+   "canon": "harry potter and the goblet of fire",
+   "aliases": [
+    "goblet of fire"
+   ]
+  },
+  {
+   "canon": "harry potter and the order of the phoenix",
+   "aliases": [
+    "order of the phoenix"
+   ]
+  },
+  {
+   "canon": "harry potter and the half blood prince",
+   "aliases": [
+    "half blood prince",
+    "the half blood prince"
+   ]
+  },
+  {
+   "canon": "harry potter and the deathly hallows part 1",
+   "aliases": [
+    "deathly hallows part 1",
+    "deathly hallows 1"
+   ]
+  },
+  {
+   "canon": "harry potter and the deathly hallows part 2",
+   "aliases": [
+    "deathly hallows part 2",
+    "deathly hallows 2"
+   ]
+  }
+ ],
+ "Winnie the Pooh characters": [
+  {
+   "canon": "winnie the pooh",
+   "aliases": [
+    "pooh",
+    "pooh bear",
+    "winnie"
+   ]
+  },
+  {
+   "canon": "piglet",
+   "aliases": []
+  },
+  {
+   "canon": "tigger",
+   "aliases": []
+  },
+  {
+   "canon": "eeyore",
+   "aliases": []
+  },
+  {
+   "canon": "rabbit",
+   "aliases": []
+  },
+  {
+   "canon": "owl",
+   "aliases": []
+  },
+  {
+   "canon": "kanga",
+   "aliases": []
+  },
+  {
+   "canon": "roo",
+   "aliases": []
+  },
+  {
+   "canon": "christopher robin",
+   "aliases": []
+  },
+  {
+   "canon": "heffalump",
+   "aliases": [
+    "heffalumps"
+   ]
+  },
+  {
+   "canon": "woozle",
+   "aliases": [
+    "woozles"
+   ]
+  },
+  {
+   "canon": "lumpy",
+   "aliases": []
+  },
+  {
+   "canon": "gopher",
+   "aliases": []
+  },
+  {
+   "canon": "kessie",
+   "aliases": []
+  },
+  {
+   "canon": "darby",
+   "aliases": []
+  },
+  {
+   "canon": "buster",
+   "aliases": []
+  },
+  {
+   "canon": "lottie",
+   "aliases": []
+  },
+  {
+   "canon": "small",
+   "aliases": [
+    "rabbit's friends and relations"
+   ]
+  },
+  {
+   "canon": "bees",
+   "aliases": [
+    "the bees"
+   ]
+  }
+ ],
+ "The Wizard of Oz characters": [
+  {
+   "canon": "dorothy",
+   "aliases": [
+    "dorothy gale"
+   ]
+  },
+  {
+   "canon": "toto",
+   "aliases": []
+  },
+  {
+   "canon": "scarecrow",
+   "aliases": [
+    "the scarecrow"
+   ]
+  },
+  {
+   "canon": "tin man",
+   "aliases": [
+    "tin woodman",
+    "the tin man",
+    "tin woodsman"
+   ]
+  },
+  {
+   "canon": "cowardly lion",
+   "aliases": [
+    "the cowardly lion",
+    "lion"
+   ]
+  },
+  {
+   "canon": "wicked witch of the west",
+   "aliases": [
+    "wicked witch",
+    "the wicked witch"
+   ]
+  },
+  {
+   "canon": "glinda",
+   "aliases": [
+    "glinda the good witch",
+    "good witch",
+    "good witch of the north"
+   ]
+  },
+  {
+   "canon": "the wizard",
+   "aliases": [
+    "wizard",
+    "wizard of oz",
+    "oz",
+    "oscar diggs",
+    "professor marvel"
+   ]
+  },
+  {
+   "canon": "munchkins",
+   "aliases": [
+    "munchkin"
+   ]
+  },
+  {
+   "canon": "flying monkeys",
+   "aliases": [
+    "winged monkeys",
+    "flying monkey"
+   ]
+  },
+  {
+   "canon": "wicked witch of the east",
+   "aliases": []
+  },
+  {
+   "canon": "aunt em",
+   "aliases": []
+  },
+  {
+   "canon": "uncle henry",
+   "aliases": []
+  },
+  {
+   "canon": "miss gulch",
+   "aliases": [
+    "almira gulch"
+   ]
+  },
+  {
+   "canon": "winkies",
+   "aliases": [
+    "winkie guards"
+   ]
+  },
+  {
+   "canon": "lollipop guild",
+   "aliases": []
+  },
+  {
+   "canon": "mayor of munchkin city",
+   "aliases": [
+    "munchkin mayor"
+   ]
+  },
+  {
+   "canon": "the coroner",
+   "aliases": [
+    "coroner"
+   ]
+  },
+  {
+   "canon": "guardian of the gates",
+   "aliases": [
+    "gatekeeper"
+   ]
+  },
+  {
+   "canon": "ozma",
+   "aliases": []
+  },
+  {
+   "canon": "hunk",
+   "aliases": []
+  },
+  {
+   "canon": "hickory",
+   "aliases": []
+  },
+  {
+   "canon": "zeke",
+   "aliases": []
+  },
+  {
+   "canon": "elphaba",
+   "aliases": []
+  },
+  {
+   "canon": "nessarose",
+   "aliases": []
+  },
+  {
+   "canon": "boq",
+   "aliases": []
+  },
+  {
+   "canon": "fiyero",
+   "aliases": []
+  },
+  {
+   "canon": "madame morrible",
+   "aliases": []
+  },
+  {
+   "canon": "doctor dillamond",
+   "aliases": [
+    "dr dillamond"
+   ]
+  },
+  {
+   "canon": "good witch of the south",
+   "aliases": []
+  }
+ ],
+ "Alice in Wonderland characters": [
+  {
+   "canon": "alice",
+   "aliases": []
+  },
+  {
+   "canon": "white rabbit",
+   "aliases": [
+    "the white rabbit"
+   ]
+  },
+  {
+   "canon": "cheshire cat",
+   "aliases": [
+    "the cheshire cat"
+   ]
+  },
+  {
+   "canon": "mad hatter",
+   "aliases": [
+    "the hatter",
+    "hatter",
+    "the mad hatter"
+   ]
+  },
+  {
+   "canon": "march hare",
+   "aliases": [
+    "the march hare"
+   ]
+  },
+  {
+   "canon": "queen of hearts",
+   "aliases": [
+    "the queen of hearts",
+    "red queen"
+   ]
+  },
+  {
+   "canon": "king of hearts",
+   "aliases": [
+    "the king of hearts"
+   ]
+  },
+  {
+   "canon": "caterpillar",
+   "aliases": [
+    "the caterpillar",
+    "absolem"
+   ]
+  },
+  {
+   "canon": "dormouse",
+   "aliases": [
+    "the dormouse"
+   ]
+  },
+  {
+   "canon": "tweedledee",
+   "aliases": []
+  },
+  {
+   "canon": "tweedledum",
+   "aliases": []
+  },
+  {
+   "canon": "knave of hearts",
+   "aliases": [
+    "jack of hearts"
+   ]
+  },
+  {
+   "canon": "duchess",
+   "aliases": [
+    "the duchess"
+   ]
+  },
+  {
+   "canon": "mock turtle",
+   "aliases": [
+    "the mock turtle"
+   ]
+  },
+  {
+   "canon": "gryphon",
+   "aliases": [
+    "griffin"
+   ]
+  },
+  {
+   "canon": "dodo",
+   "aliases": [
+    "the dodo"
+   ]
+  },
+  {
+   "canon": "bill the lizard",
+   "aliases": [
+    "bill"
+   ]
+  },
+  {
+   "canon": "jabberwock",
+   "aliases": [
+    "jabberwocky",
+    "the jabberwock"
+   ]
+  },
+  {
+   "canon": "white queen",
+   "aliases": []
+  },
+  {
+   "canon": "white knight",
+   "aliases": []
+  },
+  {
+   "canon": "humpty dumpty",
+   "aliases": []
+  },
+  {
+   "canon": "dinah",
+   "aliases": []
+  },
+  {
+   "canon": "the cook",
+   "aliases": [
+    "cook"
+   ]
+  },
+  {
+   "canon": "card soldiers",
+   "aliases": [
+    "playing cards",
+    "cards"
+   ]
+  },
+  {
+   "canon": "flamingos",
+   "aliases": [
+    "flamingo"
+   ]
+  },
+  {
+   "canon": "bandersnatch",
+   "aliases": []
+  },
+  {
+   "canon": "walrus",
+   "aliases": [
+    "the walrus"
+   ]
+  },
+  {
+   "canon": "carpenter",
+   "aliases": [
+    "the carpenter"
+   ]
+  },
+  {
+   "canon": "doorknob",
+   "aliases": []
+  },
+  {
+   "canon": "mouse",
+   "aliases": [
+    "the mouse"
+   ]
+  },
+  {
+   "canon": "frog footman",
+   "aliases": []
+  },
+  {
+   "canon": "fish footman",
+   "aliases": []
+  },
+  {
+   "canon": "lory",
+   "aliases": []
+  },
+  {
+   "canon": "eaglet",
+   "aliases": []
+  },
+  {
+   "canon": "pat",
+   "aliases": []
+  },
+  {
+   "canon": "pig baby",
+   "aliases": [
+    "baby"
+   ]
+  },
+  {
+   "canon": "red king",
+   "aliases": []
+  },
+  {
+   "canon": "sheep",
+   "aliases": []
+  }
+ ],
+ "Roald Dahl books": [
+  {
+   "canon": "charlie and the chocolate factory",
+   "aliases": []
+  },
+  {
+   "canon": "matilda",
+   "aliases": []
+  },
+  {
+   "canon": "the bfg",
+   "aliases": [
+    "bfg"
+   ]
+  },
+  {
+   "canon": "james and the giant peach",
+   "aliases": []
+  },
+  {
+   "canon": "the witches",
+   "aliases": [
+    "witches"
+   ]
+  },
+  {
+   "canon": "fantastic mr fox",
+   "aliases": []
+  },
+  {
+   "canon": "the twits",
+   "aliases": [
+    "twits"
+   ]
+  },
+  {
+   "canon": "george's marvellous medicine",
+   "aliases": [
+    "georges marvelous medicine",
+    "george's marvelous medicine"
+   ]
+  },
+  {
+   "canon": "danny the champion of the world",
+   "aliases": []
+  },
+  {
+   "canon": "esio trot",
+   "aliases": []
+  },
+  {
+   "canon": "the enormous crocodile",
+   "aliases": []
+  },
+  {
+   "canon": "charlie and the great glass elevator",
+   "aliases": []
+  },
+  {
+   "canon": "boy",
+   "aliases": []
+  },
+  {
+   "canon": "going solo",
+   "aliases": []
+  },
+  {
+   "canon": "the giraffe and the pelly and me",
+   "aliases": []
+  },
+  {
+   "canon": "the magic finger",
+   "aliases": []
+  },
+  {
+   "canon": "the minpins",
+   "aliases": []
+  },
+  {
+   "canon": "revolting rhymes",
+   "aliases": []
+  },
+  {
+   "canon": "dirty beasts",
+   "aliases": []
+  },
+  {
+   "canon": "the vicar of nibbleswicke",
+   "aliases": []
+  },
+  {
+   "canon": "rhyme stew",
+   "aliases": []
+  },
+  {
+   "canon": "the gremlins",
+   "aliases": []
+  },
+  {
+   "canon": "tales of the unexpected",
+   "aliases": []
+  },
+  {
+   "canon": "kiss kiss",
+   "aliases": []
+  },
+  {
+   "canon": "someone like you",
+   "aliases": []
+  },
+  {
+   "canon": "my uncle oswald",
+   "aliases": []
+  },
+  {
+   "canon": "the wonderful story of henry sugar",
+   "aliases": [
+    "henry sugar"
+   ]
+  },
+  {
+   "canon": "switch bitch",
+   "aliases": []
+  },
+  {
+   "canon": "over to you",
+   "aliases": []
+  },
+  {
+   "canon": "sometime never",
+   "aliases": []
+  },
+  {
+   "canon": "the great mouse plot",
+   "aliases": []
+  }
+ ],
+ "Harry Potter books": [
+  {
+   "canon": "philosopher's stone",
+   "aliases": [
+    "sorcerer's stone",
+    "sorcerers stone",
+    "philosophers stone",
+    "harry potter and the philosopher's stone",
+    "harry potter and the sorcerer's stone"
+   ]
+  },
+  {
+   "canon": "chamber of secrets",
+   "aliases": [
+    "harry potter and the chamber of secrets"
+   ]
+  },
+  {
+   "canon": "prisoner of azkaban",
+   "aliases": [
+    "harry potter and the prisoner of azkaban"
+   ]
+  },
+  {
+   "canon": "goblet of fire",
+   "aliases": [
+    "harry potter and the goblet of fire"
+   ]
+  },
+  {
+   "canon": "order of the phoenix",
+   "aliases": [
+    "harry potter and the order of the phoenix"
+   ]
+  },
+  {
+   "canon": "half blood prince",
+   "aliases": [
+    "harry potter and the half blood prince"
+   ]
+  },
+  {
+   "canon": "deathly hallows",
+   "aliases": [
+    "harry potter and the deathly hallows"
+   ]
+  }
+ ],
+ "Chronicles of Narnia books": [
+  {
+   "canon": "the magician's nephew",
+   "aliases": [
+    "magicians nephew",
+    "the magicians nephew"
+   ]
+  },
+  {
+   "canon": "the lion the witch and the wardrobe",
+   "aliases": [
+    "lion witch and the wardrobe",
+    "the lion the witch & the wardrobe"
+   ]
+  },
+  {
+   "canon": "the horse and his boy",
+   "aliases": [
+    "horse and his boy"
+   ]
+  },
+  {
+   "canon": "prince caspian",
+   "aliases": []
+  },
+  {
+   "canon": "the voyage of the dawn treader",
+   "aliases": [
+    "voyage of the dawn treader",
+    "dawn treader"
+   ]
+  },
+  {
+   "canon": "the silver chair",
+   "aliases": [
+    "silver chair"
+   ]
+  },
+  {
+   "canon": "the last battle",
+   "aliases": [
+    "last battle"
+   ]
+  }
+ ],
+ "Chess pieces": [
+  {
+   "canon": "king",
+   "aliases": []
+  },
+  {
+   "canon": "queen",
+   "aliases": []
+  },
+  {
+   "canon": "rook",
+   "aliases": [
+    "castle"
+   ]
+  },
+  {
+   "canon": "bishop",
+   "aliases": []
+  },
+  {
+   "canon": "knight",
+   "aliases": [
+    "horse"
+   ]
+  },
+  {
+   "canon": "pawn",
+   "aliases": []
+  }
+ ],
+ "Playing card ranks": [
+  {
+   "canon": "ace",
+   "aliases": [
+    "one",
+    "1"
+   ]
+  },
+  {
+   "canon": "two",
+   "aliases": [
+    "2",
+    "deuce"
+   ]
+  },
+  {
+   "canon": "three",
+   "aliases": [
+    "3",
+    "trey"
+   ]
+  },
+  {
+   "canon": "four",
+   "aliases": [
+    "4"
+   ]
+  },
+  {
+   "canon": "five",
+   "aliases": [
+    "5"
+   ]
+  },
+  {
+   "canon": "six",
+   "aliases": [
+    "6"
+   ]
+  },
+  {
+   "canon": "seven",
+   "aliases": [
+    "7"
+   ]
+  },
+  {
+   "canon": "eight",
+   "aliases": [
+    "8"
+   ]
+  },
+  {
+   "canon": "nine",
+   "aliases": [
+    "9"
+   ]
+  },
+  {
+   "canon": "ten",
+   "aliases": [
+    "10"
+   ]
+  },
+  {
+   "canon": "jack",
+   "aliases": [
+    "knave"
+   ]
+  },
+  {
+   "canon": "queen",
+   "aliases": []
+  },
+  {
+   "canon": "king",
+   "aliases": []
+  }
+ ],
+ "Poker hands": [
+  {
+   "canon": "royal flush",
+   "aliases": []
+  },
+  {
+   "canon": "straight flush",
+   "aliases": []
+  },
+  {
+   "canon": "four of a kind",
+   "aliases": [
+    "quads",
+    "4 of a kind"
+   ]
+  },
+  {
+   "canon": "full house",
+   "aliases": [
+    "boat"
+   ]
+  },
+  {
+   "canon": "flush",
+   "aliases": []
+  },
+  {
+   "canon": "straight",
+   "aliases": []
+  },
+  {
+   "canon": "three of a kind",
+   "aliases": [
+    "trips",
+    "set",
+    "3 of a kind"
+   ]
+  },
+  {
+   "canon": "two pair",
+   "aliases": [
+    "2 pair",
+    "two pairs"
+   ]
+  },
+  {
+   "canon": "pair",
+   "aliases": [
+    "one pair",
+    "a pair"
+   ]
+  },
+  {
+   "canon": "high card",
+   "aliases": [
+    "no pair"
+   ]
+  },
+  {
+   "canon": "five of a kind",
+   "aliases": [
+    "5 of a kind"
+   ]
+  }
+ ],
+ "Clue suspects, weapons & rooms": [
+  {
+   "canon": "miss scarlet",
+   "aliases": [
+    "scarlet",
+    "miss scarlett",
+    "scarlett"
+   ]
+  },
+  {
+   "canon": "colonel mustard",
+   "aliases": [
+    "mustard"
+   ]
+  },
+  {
+   "canon": "mrs white",
+   "aliases": [
+    "white"
+   ]
+  },
+  {
+   "canon": "mr green",
+   "aliases": [
+    "reverend green",
+    "green"
+   ]
+  },
+  {
+   "canon": "mrs peacock",
+   "aliases": [
+    "peacock"
+   ]
+  },
+  {
+   "canon": "professor plum",
+   "aliases": [
+    "plum"
+   ]
+  },
+  {
+   "canon": "dr orchid",
+   "aliases": [
+    "orchid"
+   ]
+  },
+  {
+   "canon": "candlestick",
+   "aliases": []
+  },
+  {
+   "canon": "knife",
+   "aliases": [
+    "dagger"
+   ]
+  },
+  {
+   "canon": "lead pipe",
+   "aliases": [
+    "pipe"
+   ]
+  },
+  {
+   "canon": "revolver",
+   "aliases": [
+    "gun",
+    "pistol"
+   ]
+  },
+  {
+   "canon": "rope",
+   "aliases": []
+  },
+  {
+   "canon": "wrench",
+   "aliases": [
+    "spanner"
+   ]
+  },
+  {
+   "canon": "kitchen",
+   "aliases": []
+  },
+  {
+   "canon": "ballroom",
+   "aliases": []
+  },
+  {
+   "canon": "conservatory",
+   "aliases": []
+  },
+  {
+   "canon": "dining room",
+   "aliases": []
+  },
+  {
+   "canon": "billiard room",
+   "aliases": []
+  },
+  {
+   "canon": "library",
+   "aliases": []
+  },
+  {
+   "canon": "lounge",
+   "aliases": []
+  },
+  {
+   "canon": "hall",
+   "aliases": []
+  },
+  {
+   "canon": "study",
+   "aliases": []
+  }
+ ],
+ "Monopoly tokens": [
+  {
+   "canon": "top hat",
+   "aliases": [
+    "hat"
+   ]
+  },
+  {
+   "canon": "thimble",
+   "aliases": []
+  },
+  {
+   "canon": "iron",
+   "aliases": []
+  },
+  {
+   "canon": "boot",
+   "aliases": [
+    "shoe"
+   ]
+  },
+  {
+   "canon": "battleship",
+   "aliases": [
+    "ship",
+    "boat"
+   ]
+  },
+  {
+   "canon": "cannon",
+   "aliases": []
+  },
+  {
+   "canon": "race car",
+   "aliases": [
+    "car",
+    "racecar"
+   ]
+  },
+  {
+   "canon": "scottie dog",
+   "aliases": [
+    "dog",
+    "scottie",
+    "scotty dog"
+   ]
+  },
+  {
+   "canon": "wheelbarrow",
+   "aliases": []
+  },
+  {
+   "canon": "horse and rider",
+   "aliases": [
+    "horse"
+   ]
+  },
+  {
+   "canon": "money bag",
+   "aliases": [
+    "sack of money",
+    "moneybag"
+   ]
+  },
+  {
+   "canon": "cat",
+   "aliases": []
+  },
+  {
+   "canon": "t rex",
+   "aliases": [
+    "dinosaur",
+    "trex",
+    "tyrannosaurus"
+   ]
+  },
+  {
+   "canon": "rubber duck",
+   "aliases": [
+    "duck",
+    "rubber ducky"
+   ]
+  },
+  {
+   "canon": "penguin",
+   "aliases": []
+  }
+ ],
+ "Soccer positions": [
+  {
+   "canon": "goalkeeper",
+   "aliases": [
+    "goalie",
+    "keeper",
+    "gk"
+   ]
+  },
+  {
+   "canon": "center back",
+   "aliases": [
+    "centre back",
+    "cb",
+    "central defender",
+    "centre half",
+    "center half",
+    "stopper"
+   ]
+  },
+  {
+   "canon": "full back",
+   "aliases": [
+    "fullback"
+   ]
+  },
+  {
+   "canon": "left back",
+   "aliases": [
+    "lb"
+   ]
+  },
+  {
+   "canon": "right back",
+   "aliases": [
+    "rb"
+   ]
+  },
+  {
+   "canon": "wing back",
+   "aliases": [
+    "wingback",
+    "left wing back",
+    "right wing back"
+   ]
+  },
+  {
+   "canon": "sweeper",
+   "aliases": [
+    "libero"
+   ]
+  },
+  {
+   "canon": "defender",
+   "aliases": []
+  },
+  {
+   "canon": "defensive midfielder",
+   "aliases": [
+    "cdm",
+    "holding midfielder",
+    "dm"
+   ]
+  },
+  {
+   "canon": "central midfielder",
+   "aliases": [
+    "cm",
+    "center mid",
+    "centre midfielder"
+   ]
+  },
+  {
+   "canon": "attacking midfielder",
+   "aliases": [
+    "cam",
+    "am",
+    "number 10"
+   ]
+  },
+  {
+   "canon": "midfielder",
+   "aliases": []
+  },
+  {
+   "canon": "left midfielder",
+   "aliases": [
+    "lm"
+   ]
+  },
+  {
+   "canon": "right midfielder",
+   "aliases": [
+    "rm"
+   ]
+  },
+  {
+   "canon": "winger",
+   "aliases": [
+    "left winger",
+    "right winger",
+    "left wing",
+    "right wing",
+    "lw",
+    "rw"
+   ]
+  },
+  {
+   "canon": "striker",
+   "aliases": [
+    "st"
+   ]
+  },
+  {
+   "canon": "center forward",
+   "aliases": [
+    "centre forward",
+    "cf"
+   ]
+  },
+  {
+   "canon": "forward",
+   "aliases": []
+  },
+  {
+   "canon": "second striker",
+   "aliases": [
+    "ss",
+    "false nine",
+    "false 9"
+   ]
+  }
+ ],
+ "Golf scoring terms": [
+  {
+   "canon": "hole in one",
+   "aliases": [
+    "ace"
+   ]
+  },
+  {
+   "canon": "condor",
+   "aliases": []
+  },
+  {
+   "canon": "albatross",
+   "aliases": [
+    "double eagle"
+   ]
+  },
+  {
+   "canon": "eagle",
+   "aliases": []
+  },
+  {
+   "canon": "birdie",
+   "aliases": []
+  },
+  {
+   "canon": "par",
+   "aliases": []
+  },
+  {
+   "canon": "bogey",
+   "aliases": []
+  },
+  {
+   "canon": "double bogey",
+   "aliases": []
+  },
+  {
+   "canon": "triple bogey",
+   "aliases": []
+  },
+  {
+   "canon": "quadruple bogey",
+   "aliases": []
+  }
+ ],
+ "Continents": [
+  {
+   "canon": "africa",
+   "aliases": []
+  },
+  {
+   "canon": "antarctica",
+   "aliases": []
+  },
+  {
+   "canon": "asia",
+   "aliases": []
+  },
+  {
+   "canon": "australia",
+   "aliases": [
+    "oceania",
+    "australia oceania"
+   ]
+  },
+  {
+   "canon": "europe",
+   "aliases": []
+  },
+  {
+   "canon": "north america",
+   "aliases": []
+  },
+  {
+   "canon": "south america",
+   "aliases": []
+  }
+ ],
+ "Days of the week": [
+  {
+   "canon": "monday",
+   "aliases": [
+    "mon"
+   ]
+  },
+  {
+   "canon": "tuesday",
+   "aliases": [
+    "tue",
+    "tues"
+   ]
+  },
+  {
+   "canon": "wednesday",
+   "aliases": [
+    "wed"
+   ]
+  },
+  {
+   "canon": "thursday",
+   "aliases": [
+    "thu",
+    "thurs"
+   ]
+  },
+  {
+   "canon": "friday",
+   "aliases": [
+    "fri"
+   ]
+  },
+  {
+   "canon": "saturday",
+   "aliases": [
+    "sat"
+   ]
+  },
+  {
+   "canon": "sunday",
+   "aliases": [
+    "sun"
+   ]
+  }
+ ],
+ "Months of the year": [
+  {
+   "canon": "january",
+   "aliases": [
+    "jan"
+   ]
+  },
+  {
+   "canon": "february",
+   "aliases": [
+    "feb"
+   ]
+  },
+  {
+   "canon": "march",
+   "aliases": [
+    "mar"
+   ]
+  },
+  {
+   "canon": "april",
+   "aliases": [
+    "apr"
+   ]
+  },
+  {
+   "canon": "may",
+   "aliases": []
+  },
+  {
+   "canon": "june",
+   "aliases": [
+    "jun"
+   ]
+  },
+  {
+   "canon": "july",
+   "aliases": [
+    "jul"
+   ]
+  },
+  {
+   "canon": "august",
+   "aliases": [
+    "aug"
+   ]
+  },
+  {
+   "canon": "september",
+   "aliases": [
+    "sep",
+    "sept"
+   ]
+  },
+  {
+   "canon": "october",
+   "aliases": [
+    "oct"
+   ]
+  },
+  {
+   "canon": "november",
+   "aliases": [
+    "nov"
+   ]
+  },
+  {
+   "canon": "december",
+   "aliases": [
+    "dec"
+   ]
+  }
+ ],
+ "US states starting with M": [
+  {
+   "canon": "maine",
+   "aliases": []
+  },
+  {
+   "canon": "maryland",
+   "aliases": []
+  },
+  {
+   "canon": "massachusetts",
+   "aliases": []
+  },
+  {
+   "canon": "michigan",
+   "aliases": []
+  },
+  {
+   "canon": "minnesota",
+   "aliases": []
+  },
+  {
+   "canon": "mississippi",
+   "aliases": []
+  },
+  {
+   "canon": "missouri",
+   "aliases": []
+  },
+  {
+   "canon": "montana",
+   "aliases": []
+  }
+ ],
+ "US states starting with N": [
+  {
+   "canon": "nebraska",
+   "aliases": []
+  },
+  {
+   "canon": "nevada",
+   "aliases": []
+  },
+  {
+   "canon": "new hampshire",
+   "aliases": []
+  },
+  {
+   "canon": "new jersey",
+   "aliases": []
+  },
+  {
+   "canon": "new mexico",
+   "aliases": []
+  },
+  {
+   "canon": "new york",
+   "aliases": []
+  },
+  {
+   "canon": "north carolina",
+   "aliases": []
+  },
+  {
+   "canon": "north dakota",
+   "aliases": []
+  }
+ ],
+ "Hawaiian islands": [
+  {
+   "canon": "hawaii",
+   "aliases": [
+    "big island",
+    "the big island",
+    "hawaii island"
+   ]
+  },
+  {
+   "canon": "maui",
+   "aliases": []
+  },
+  {
+   "canon": "oahu",
+   "aliases": []
+  },
+  {
+   "canon": "kauai",
+   "aliases": []
+  },
+  {
+   "canon": "molokai",
+   "aliases": []
+  },
+  {
+   "canon": "lanai",
+   "aliases": []
+  },
+  {
+   "canon": "niihau",
+   "aliases": []
+  },
+  {
+   "canon": "kahoolawe",
+   "aliases": []
+  }
+ ],
+ "Colors of the rainbow": [
+  {
+   "canon": "red",
+   "aliases": []
+  },
+  {
+   "canon": "orange",
+   "aliases": []
+  },
+  {
+   "canon": "yellow",
+   "aliases": []
+  },
+  {
+   "canon": "green",
+   "aliases": []
+  },
+  {
+   "canon": "blue",
+   "aliases": []
+  },
+  {
+   "canon": "indigo",
+   "aliases": []
+  },
+  {
+   "canon": "violet",
+   "aliases": [
+    "purple"
+   ]
+  }
+ ],
+ "Units of time": [
+  {
+   "canon": "nanosecond",
+   "aliases": []
+  },
+  {
+   "canon": "microsecond",
+   "aliases": []
+  },
+  {
+   "canon": "millisecond",
+   "aliases": []
+  },
+  {
+   "canon": "second",
+   "aliases": []
+  },
+  {
+   "canon": "minute",
+   "aliases": []
+  },
+  {
+   "canon": "hour",
+   "aliases": []
+  },
+  {
+   "canon": "day",
+   "aliases": []
+  },
+  {
+   "canon": "week",
+   "aliases": []
+  },
+  {
+   "canon": "fortnight",
+   "aliases": []
+  },
+  {
+   "canon": "month",
+   "aliases": []
+  },
+  {
+   "canon": "quarter",
+   "aliases": []
+  },
+  {
+   "canon": "season",
+   "aliases": []
+  },
+  {
+   "canon": "year",
+   "aliases": []
+  },
+  {
+   "canon": "leap year",
+   "aliases": []
+  },
+  {
+   "canon": "decade",
+   "aliases": []
+  },
+  {
+   "canon": "century",
+   "aliases": []
+  },
+  {
+   "canon": "millennium",
+   "aliases": []
+  },
+  {
+   "canon": "eon",
+   "aliases": []
+  },
+  {
+   "canon": "era",
+   "aliases": []
+  },
+  {
+   "canon": "epoch",
+   "aliases": []
+  },
+  {
+   "canon": "age",
+   "aliases": []
+  },
+  {
+   "canon": "picosecond",
+   "aliases": []
+  },
+  {
+   "canon": "semester",
+   "aliases": []
+  },
+  {
+   "canon": "trimester",
+   "aliases": []
+  },
+  {
+   "canon": "lustrum",
+   "aliases": []
+  },
+  {
+   "canon": "jiffy",
+   "aliases": []
+  },
+  {
+   "canon": "moment",
+   "aliases": []
+  },
+  {
+   "canon": "olympiad",
+   "aliases": []
+  },
+  {
+   "canon": "weekend",
+   "aliases": []
+  },
+  {
+   "canon": "lifetime",
+   "aliases": []
+  },
+  {
+   "canon": "generation",
+   "aliases": []
+  }
+ ],
+ "Roman gods": [
+  {
+   "canon": "jupiter",
+   "aliases": [
+    "jove"
+   ]
+  },
+  {
+   "canon": "juno",
+   "aliases": []
+  },
+  {
+   "canon": "neptune",
+   "aliases": []
+  },
+  {
+   "canon": "pluto",
+   "aliases": [
+    "dis",
+    "dis pater"
+   ]
+  },
+  {
+   "canon": "mars",
+   "aliases": []
+  },
+  {
+   "canon": "venus",
+   "aliases": []
+  },
+  {
+   "canon": "apollo",
+   "aliases": []
+  },
+  {
+   "canon": "diana",
+   "aliases": []
+  },
+  {
+   "canon": "minerva",
+   "aliases": []
+  },
+  {
+   "canon": "vulcan",
+   "aliases": []
+  },
+  {
+   "canon": "mercury",
+   "aliases": []
+  },
+  {
+   "canon": "ceres",
+   "aliases": []
+  },
+  {
+   "canon": "vesta",
+   "aliases": []
+  },
+  {
+   "canon": "bacchus",
+   "aliases": [
+    "liber"
+   ]
+  },
+  {
+   "canon": "cupid",
+   "aliases": [
+    "amor"
+   ]
+  },
+  {
+   "canon": "janus",
+   "aliases": []
+  },
+  {
+   "canon": "saturn",
+   "aliases": []
+  },
+  {
+   "canon": "aurora",
+   "aliases": []
+  },
+  {
+   "canon": "fortuna",
+   "aliases": []
+  },
+  {
+   "canon": "faunus",
+   "aliases": []
+  },
+  {
+   "canon": "proserpina",
+   "aliases": [
+    "proserpine"
+   ]
+  },
+  {
+   "canon": "sol",
+   "aliases": []
+  },
+  {
+   "canon": "luna",
+   "aliases": []
+  },
+  {
+   "canon": "terra",
+   "aliases": [
+    "tellus"
+   ]
+  },
+  {
+   "canon": "quirinus",
+   "aliases": []
+  },
+  {
+   "canon": "bellona",
+   "aliases": []
+  },
+  {
+   "canon": "victoria",
+   "aliases": []
+  },
+  {
+   "canon": "somnus",
+   "aliases": []
+  },
+  {
+   "canon": "flora",
+   "aliases": []
+  },
+  {
+   "canon": "pomona",
+   "aliases": []
+  },
+  {
+   "canon": "nox",
+   "aliases": []
+  },
+  {
+   "canon": "orcus",
+   "aliases": []
+  },
+  {
+   "canon": "trivia",
+   "aliases": []
+  },
+  {
+   "canon": "vertumnus",
+   "aliases": []
+  },
+  {
+   "canon": "libitina",
+   "aliases": []
+  },
+  {
+   "canon": "mithras",
+   "aliases": []
+  },
+  {
+   "canon": "sylvanus",
+   "aliases": [
+    "silvanus"
+   ]
+  },
+  {
+   "canon": "caelus",
+   "aliases": []
+  },
+  {
+   "canon": "ops",
+   "aliases": []
+  },
+  {
+   "canon": "pax",
+   "aliases": []
+  },
+  {
+   "canon": "spes",
+   "aliases": []
+  },
+  {
+   "canon": "fides",
+   "aliases": []
+  },
+  {
+   "canon": "concordia",
+   "aliases": []
+  },
+  {
+   "canon": "lares",
+   "aliases": []
+  },
+  {
+   "canon": "penates",
+   "aliases": []
+  },
+  {
+   "canon": "genius",
+   "aliases": []
+  },
+  {
+   "canon": "juventas",
+   "aliases": []
+  },
+  {
+   "canon": "hercules",
+   "aliases": []
+  }
+ ],
+ "Egyptian gods": [
+  {
+   "canon": "ra",
+   "aliases": [
+    "re",
+    "amun ra",
+    "amun re",
+    "amon ra"
+   ]
+  },
+  {
+   "canon": "osiris",
+   "aliases": []
+  },
+  {
+   "canon": "isis",
+   "aliases": []
+  },
+  {
+   "canon": "horus",
+   "aliases": []
+  },
+  {
+   "canon": "anubis",
+   "aliases": []
+  },
+  {
+   "canon": "set",
+   "aliases": [
+    "seth"
+   ]
+  },
+  {
+   "canon": "thoth",
+   "aliases": []
+  },
+  {
+   "canon": "bastet",
+   "aliases": [
+    "bast"
+   ]
+  },
+  {
+   "canon": "hathor",
+   "aliases": []
+  },
+  {
+   "canon": "ptah",
+   "aliases": []
+  },
+  {
+   "canon": "sekhmet",
+   "aliases": []
+  },
+  {
+   "canon": "nut",
+   "aliases": []
+  },
+  {
+   "canon": "geb",
+   "aliases": []
+  },
+  {
+   "canon": "shu",
+   "aliases": []
+  },
+  {
+   "canon": "tefnut",
+   "aliases": []
+  },
+  {
+   "canon": "amun",
+   "aliases": [
+    "amon"
+   ]
+  },
+  {
+   "canon": "aten",
+   "aliases": [
+    "aton"
+   ]
+  },
+  {
+   "canon": "sobek",
+   "aliases": []
+  },
+  {
+   "canon": "maat",
+   "aliases": []
+  },
+  {
+   "canon": "nephthys",
+   "aliases": []
+  },
+  {
+   "canon": "khnum",
+   "aliases": []
+  },
+  {
+   "canon": "bes",
+   "aliases": []
+  },
+  {
+   "canon": "taweret",
+   "aliases": []
+  },
+  {
+   "canon": "khonsu",
+   "aliases": []
+  },
+  {
+   "canon": "montu",
+   "aliases": []
+  },
+  {
+   "canon": "apep",
+   "aliases": [
+    "apophis"
+   ]
+  },
+  {
+   "canon": "atum",
+   "aliases": []
+  },
+  {
+   "canon": "hapi",
+   "aliases": []
+  },
+  {
+   "canon": "neith",
+   "aliases": []
+  },
+  {
+   "canon": "serket",
+   "aliases": [
+    "selket",
+    "serqet"
+   ]
+  },
+  {
+   "canon": "khepri",
+   "aliases": []
+  },
+  {
+   "canon": "wadjet",
+   "aliases": []
+  },
+  {
+   "canon": "nekhbet",
+   "aliases": []
+  },
+  {
+   "canon": "min",
+   "aliases": []
+  },
+  {
+   "canon": "heka",
+   "aliases": []
+  },
+  {
+   "canon": "mut",
+   "aliases": []
+  },
+  {
+   "canon": "anuket",
+   "aliases": []
+  },
+  {
+   "canon": "satet",
+   "aliases": [
+    "satis"
+   ]
+  },
+  {
+   "canon": "seshat",
+   "aliases": []
+  },
+  {
+   "canon": "meretseger",
+   "aliases": []
+  },
+  {
+   "canon": "wepwawet",
+   "aliases": []
+  },
+  {
+   "canon": "aker",
+   "aliases": []
+  },
+  {
+   "canon": "heh",
+   "aliases": []
+  },
+  {
+   "canon": "nun",
+   "aliases": []
+  },
+  {
+   "canon": "renenutet",
+   "aliases": []
+  },
+  {
+   "canon": "sopdu",
+   "aliases": []
+  },
+  {
+   "canon": "imhotep",
+   "aliases": []
+  },
+  {
+   "canon": "ammit",
+   "aliases": []
+  },
+  {
+   "canon": "babi",
+   "aliases": []
+  }
+ ],
+ "Seven deadly sins": [
+  {
+   "canon": "pride",
+   "aliases": [
+    "vanity",
+    "superbia"
+   ]
+  },
+  {
+   "canon": "greed",
+   "aliases": [
+    "avarice"
+   ]
+  },
+  {
+   "canon": "lust",
+   "aliases": []
+  },
+  {
+   "canon": "envy",
+   "aliases": [
+    "jealousy"
+   ]
+  },
+  {
+   "canon": "gluttony",
+   "aliases": []
+  },
+  {
+   "canon": "wrath",
+   "aliases": [
+    "anger"
+   ]
+  },
+  {
+   "canon": "sloth",
+   "aliases": [
+    "laziness",
+    "acedia"
+   ]
+  }
+ ],
+ "Countries starting with B": [
+  {
+   "canon": "bahamas",
+   "aliases": []
+  },
+  {
+   "canon": "bahrain",
+   "aliases": [
+    "bahrein"
+   ]
+  },
+  {
+   "canon": "bangladesh",
+   "aliases": [
+    "bangladash"
+   ]
+  },
+  {
+   "canon": "barbados",
+   "aliases": []
+  },
+  {
+   "canon": "belarus",
+   "aliases": []
+  },
+  {
+   "canon": "belgium",
+   "aliases": []
+  },
+  {
+   "canon": "belize",
+   "aliases": []
+  },
+  {
+   "canon": "benin",
+   "aliases": []
+  },
+  {
+   "canon": "bhutan",
+   "aliases": []
+  },
+  {
+   "canon": "bolivia",
+   "aliases": []
+  },
+  {
+   "canon": "bosnia and herzegovina",
+   "aliases": [
+    "bosnia",
+    "bosnia herzegovina"
+   ]
+  },
+  {
+   "canon": "botswana",
+   "aliases": []
+  },
+  {
+   "canon": "brazil",
+   "aliases": [
+    "brasil"
+   ]
+  },
+  {
+   "canon": "brunei",
+   "aliases": []
+  },
+  {
+   "canon": "bulgaria",
+   "aliases": []
+  },
+  {
+   "canon": "burkina faso",
+   "aliases": [
+    "burkina"
+   ]
+  },
+  {
+   "canon": "burundi",
+   "aliases": []
+  },
+  {
+   "canon": "burma",
+   "aliases": []
+  },
+  {
+   "canon": "britain",
+   "aliases": []
+  }
+ ],
+ "Countries starting with C": [
+  {
+   "canon": "cambodia",
+   "aliases": []
+  },
+  {
+   "canon": "cameroon",
+   "aliases": []
+  },
+  {
+   "canon": "canada",
+   "aliases": []
+  },
+  {
+   "canon": "cape verde",
+   "aliases": [
+    "cabo verde"
+   ]
+  },
+  {
+   "canon": "central african republic",
+   "aliases": [
+    "car"
+   ]
+  },
+  {
+   "canon": "chad",
+   "aliases": []
+  },
+  {
+   "canon": "chile",
+   "aliases": []
+  },
+  {
+   "canon": "china",
+   "aliases": []
+  },
+  {
+   "canon": "colombia",
+   "aliases": [
+    "columbia"
+   ]
+  },
+  {
+   "canon": "comoros",
+   "aliases": []
+  },
+  {
+   "canon": "costa rica",
+   "aliases": []
+  },
+  {
+   "canon": "croatia",
+   "aliases": []
+  },
+  {
+   "canon": "cuba",
+   "aliases": []
+  },
+  {
+   "canon": "cyprus",
+   "aliases": []
+  },
+  {
+   "canon": "czech republic",
+   "aliases": [
+    "czechia"
+   ]
+  },
+  {
+   "canon": "congo kinshasa",
+   "aliases": []
+  },
+  {
+   "canon": "cote d'ivoire",
+   "aliases": []
+  },
+  {
+   "canon": "congo",
+   "aliases": [
+    "congo brazzaville"
+   ]
+  }
+ ],
+ "Countries starting with M": [
+  {
+   "canon": "madagascar",
+   "aliases": []
+  },
+  {
+   "canon": "malawi",
+   "aliases": []
+  },
+  {
+   "canon": "malaysia",
+   "aliases": []
+  },
+  {
+   "canon": "maldives",
+   "aliases": [
+    "maldivs"
+   ]
+  },
+  {
+   "canon": "mali",
+   "aliases": []
+  },
+  {
+   "canon": "malta",
+   "aliases": []
+  },
+  {
+   "canon": "marshall islands",
+   "aliases": []
+  },
+  {
+   "canon": "mauritania",
+   "aliases": []
+  },
+  {
+   "canon": "mauritius",
+   "aliases": [
+    "mauritious"
+   ]
+  },
+  {
+   "canon": "mexico",
+   "aliases": [
+    "mejico"
+   ]
+  },
+  {
+   "canon": "micronesia",
+   "aliases": []
+  },
+  {
+   "canon": "moldova",
+   "aliases": []
+  },
+  {
+   "canon": "monaco",
+   "aliases": []
+  },
+  {
+   "canon": "mongolia",
+   "aliases": []
+  },
+  {
+   "canon": "montenegro",
+   "aliases": []
+  },
+  {
+   "canon": "morocco",
+   "aliases": []
+  },
+  {
+   "canon": "mozambique",
+   "aliases": [
+    "mozambik",
+    "mozambiqe"
+   ]
+  },
+  {
+   "canon": "myanmar",
+   "aliases": []
+  },
+  {
+   "canon": "macedonia",
+   "aliases": []
+  }
+ ],
+ "Countries starting with P": [
+  {
+   "canon": "pakistan",
+   "aliases": []
+  },
+  {
+   "canon": "palau",
+   "aliases": []
+  },
+  {
+   "canon": "palestine",
+   "aliases": [
+    "palistine"
+   ]
+  },
+  {
+   "canon": "panama",
+   "aliases": []
+  },
+  {
+   "canon": "papua new guinea",
+   "aliases": [
+    "png"
+   ]
+  },
+  {
+   "canon": "paraguay",
+   "aliases": []
+  },
+  {
+   "canon": "peru",
+   "aliases": []
+  },
+  {
+   "canon": "philippines",
+   "aliases": [
+    "philipines",
+    "phillipines"
+   ]
+  },
+  {
+   "canon": "poland",
+   "aliases": []
+  },
+  {
+   "canon": "portugal",
+   "aliases": []
+  }
+ ],
+ "Countries starting with T": [
+  {
+   "canon": "timor-leste",
+   "aliases": []
+  },
+  {
+   "canon": "taiwan",
+   "aliases": []
+  },
+  {
+   "canon": "tajikistan",
+   "aliases": [
+    "tajikstan"
+   ]
+  },
+  {
+   "canon": "tanzania",
+   "aliases": [
+    "tanzana"
+   ]
+  },
+  {
+   "canon": "thailand",
+   "aliases": []
+  },
+  {
+   "canon": "togo",
+   "aliases": []
+  },
+  {
+   "canon": "tonga",
+   "aliases": []
+  },
+  {
+   "canon": "trinidad and tobago",
+   "aliases": [
+    "trinidad"
+   ]
+  },
+  {
+   "canon": "tunisia",
+   "aliases": []
+  },
+  {
+   "canon": "turkey",
+   "aliases": [
+    "turkiye",
+    "türkiye"
+   ]
+  },
+  {
+   "canon": "turkmenistan",
+   "aliases": []
+  },
+  {
+   "canon": "tuvalu",
+   "aliases": []
+  }
  ]
 }

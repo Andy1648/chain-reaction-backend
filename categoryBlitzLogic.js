@@ -677,6 +677,15 @@ const TIER_BROAD = new Set([
   'Planets & dwarf planets', 'Phases of the Moon', 'Canadian provinces & territories', 'South American countries',
   // oct14 batch (Andy "more categories … all easy so all players can go")
   "Santa's reindeer", 'European countries', 'Countries starting with S', 'Baseball positions',
+  // oct14 batch 2 (Andy "we need more categories (like way more - but easy ones only)"): things nearly anyone grew up with
+  'Inside Out emotions', 'Frozen characters', 'The Lion King characters', 'Toy Story characters', 'Shrek characters',
+  'Finding Nemo characters', 'SpongeBob characters', 'The Simpsons family', 'PAW Patrol team',
+  'Teenage Mutant Ninja Turtles characters', 'Looney Tunes characters', 'Mickey Mouse & friends', 'Sesame Street characters',
+  'The Muppets', 'Harry Potter films', 'Harry Potter books', 'Winnie the Pooh characters', 'The Wizard of Oz characters',
+  'Alice in Wonderland characters', 'Chess pieces', 'Playing card ranks', 'Poker hands', 'Monopoly tokens', 'Soccer positions',
+  'Continents', 'Days of the week', 'Months of the year', 'US states starting with M', 'US states starting with N',
+  'Colors of the rainbow', 'Units of time', 'Seven deadly sins', 'Countries starting with B', 'Countries starting with C',
+  'Countries starting with M', 'Countries starting with P', 'Countries starting with T',
 ]);
 // Mainstream franchises where naming a few is EASY (not enthusiasts-only): they
 // match a niche franchise pattern below but belong in MEDIUM, not NICHE.
@@ -688,6 +697,8 @@ const TIER_MEDIUM_OVERRIDE = new Set([
   'Marvel Cinematic Universe Villains', 'Anime Villains', 'Greek gods', 'Studio Ghibli Movies',
   'Pokémon types', // oct13: everyone knows fire / water / grass — the Pokémon pattern would file it as niche
   'Marvel Infinity Saga films', 'Taylor Swift studio albums', // oct14: mainstream — the franchise patterns would file them as niche
+  'Roman gods', 'Egyptian gods', 'Roald Dahl books', 'Chronicles of Narnia books', 'Clue suspects, weapons & rooms', // oct14 batch 2
+  'Golf scoring terms', 'Hawaiian islands',
 ]);
 // Explicit niche (specialist/deep-cut) not always caught by the franchise patterns.
 const TIER_NICHE = new Set([
