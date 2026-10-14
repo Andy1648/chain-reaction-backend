@@ -19,7 +19,7 @@
 // All roomManager facilities arrive via an injected `helpers` object - this
 // module never requires roomManager (no cycles). Registered in t5Modes.js.
 
-const { pickRandomCombo } = require('./gameLogic');
+const { pickRandomCombo, nextCombo } = require('./gameLogic');
 
 /* ============================== PURE LOGIC ============================== */
 
@@ -218,7 +218,7 @@ async function submitWord(game, rawWord) {
 
   game.usedWords.add(word);
   game.passCount += 1;
-  game.currentCombo = pickRandomCombo(combo, game.passCount);
+  game.currentCombo = nextCombo(game, game.passCount); // never a combo this game already showed
   advanceHolder(game);
 
   return { accepted: true, word, combo: game.currentCombo };
@@ -242,7 +242,7 @@ function handleExplosion(game) {
   }
 
   game.bombIndex += 1;
-  game.currentCombo = pickRandomCombo(game.currentCombo, game.passCount);
+  game.currentCombo = nextCombo(game, game.passCount);
   advanceHolder(game); // also finishes the game if <=1 player remains
 
   return {

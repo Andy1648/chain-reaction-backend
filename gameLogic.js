@@ -257,10 +257,17 @@ function comboEffectiveLength(combo) {
  * at any stage. If `excludeCombo` is given, the result is guaranteed to differ
  * from it, so the prompt visibly changes from one turn to the next rather than
  * (rarely) repeating. `completedTurnCount` defaults to 0 (easiest weighting) so
- * the game-start call needs no progress argument.
+ * the game-start call needs no progress argument. `usedCombos` (a Set, optional) is
+ * every combo this game has shown; none of them is picked again.
  */
-function pickRandomCombo(excludeCombo, completedTurnCount = 0) {
-  const pool = excludeCombo ? COMBOS.filter((c) => c !== excludeCombo) : COMBOS;
+function pickRandomCombo(excludeCombo, completedTurnCount = 0, usedCombos = null) {
+  let pool = excludeCombo ? COMBOS.filter((c) => c !== excludeCombo) : COMBOS;
+  // NO REPEATS IN A GAME (Andy oct14): skip every combo this game has already shown.
+  // Only once all ~700 are used (never in practice) does it fall back to "not the last one".
+  if (usedCombos && usedCombos.size) {
+    const fresh = pool.filter((c) => !usedCombos.has(c));
+    if (fresh.length) pool = fresh;
+  }
   const pressure = comboDifficultyPressure(completedTurnCount);
 
   // Weight each combo by exp(pressure * (effectiveLength - pivot)) - always
@@ -290,7 +297,7 @@ function createGame(players, difficultyKey) {
   const difficulty = DIFFICULTY_PRESETS[difficultyKey] || DIFFICULTY_PRESETS.medium;
   const startingLives = difficulty.lives || STARTING_LIVES;
 
-  return {
+  const game = {
     status: 'in_progress', // 'in_progress' | 'finished'
     difficultyKey: DIFFICULTY_PRESETS[difficultyKey] ? difficultyKey : 'medium',
     difficulty,
@@ -305,9 +312,8 @@ function createGame(players, difficultyKey) {
     })),
     turnOrder: players.map((p) => p.id),
     currentPlayerIndex: 0,
-    // The opening combo. No turns completed yet, so pickRandomCombo defaults to
-    // the easiest (shortest-favouring) weighting.
-    currentCombo: pickRandomCombo(),
+    currentCombo: null, // set just below, once usedCombos exists
+    usedCombos: new Set(), // every combo shown this game — never shown twice
     comboFailStreak: 0,
     usedWords: new Set(), // every word accepted so far, so none can be reused
     completedTurnCount: 0,
@@ -318,6 +324,17 @@ function createGame(players, difficultyKey) {
     skipCount: 0,
     winnerId: null,
   };
+  // The opening combo: no turns completed yet → the easiest (shortest-favouring) weighting.
+  game.currentCombo = nextCombo(game, 0);
+  return game;
+}
+
+/** The next combo for this game — never the current one, never one already shown — recorded as used. */
+function nextCombo(game, completedTurnCount) {
+  if (!game.usedCombos) game.usedCombos = new Set(game.currentCombo ? [game.currentCombo] : []);
+  const combo = pickRandomCombo(game.currentCombo, completedTurnCount, game.usedCombos);
+  game.usedCombos.add(combo);
+  return combo;
 }
 
 function getCurrentPlayerId(game) {
@@ -425,7 +442,7 @@ function handleTimeout(game, reason = 'timeout') {
   // can't loop forever / grind the lobby down.
   let comboSwapped = false;
   if (game.status === 'in_progress' && game.comboFailStreak >= getActivePlayers(game).length) {
-    game.currentCombo = pickRandomCombo(game.currentCombo, 0); // turn-0 weighting = easier
+    game.currentCombo = nextCombo(game, 0); // turn-0 weighting = easier
     game.comboFailStreak = 0;
     comboSwapped = true;
   }
@@ -516,7 +533,7 @@ async function submitWord(game, rawWord, opts = {}) {
   // just bumped, so the new combo's difficulty reflects progress so far.
   game.usedWords.add(word);
   game.completedTurnCount += 1;
-  game.currentCombo = pickRandomCombo(combo, game.completedTurnCount);
+  game.currentCombo = nextCombo(game, game.completedTurnCount);
   game.comboFailStreak = 0;
   advanceTurn(game);
 
@@ -536,6 +553,7 @@ module.exports = {
   handleTimeout,
   submitWord,
   pickRandomCombo,
+  nextCombo,
   comboDifficultyPressure,
   _setDictionaryForTesting,
 };
