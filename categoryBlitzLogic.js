@@ -615,6 +615,18 @@ const QUARANTINED_CATEGORIES = new Set([
 const BENCHED = new Set([
   'Japanese shoguns', 'Inca emperors', 'Skyrim races', 'Minecraft Ore Blocks', 'Dark Souls 1 bosses',
   "Donkey Kong's Kong family", 'Pokémon starters',
+  // Andy oct15 night "FUN categories - think for the user, easy to answer ... dont make them too close (us states and us
+  // states that start with n) ... an example of whats not fun is among us tasks": benched, kept in blitzLists.json.
+  // NOT FUN — lore-deep or specialist:
+  'Among Us tasks (The Skeld)', 'Portal test elements', 'Half-Life enemies', 'Half-Life weapons', 'Stardew Valley villagers',
+  'Declaration of Independence signers', 'NCAA Division I conferences', 'Russian tsars', 'Rugby union positions',
+  'Boxing weight classes', 'Musical note values', 'Major and minor keys', 'Parts of a plant cell', 'Types of blood cells',
+  'Japanese prefectures', 'Irish counties', 'Mexican states', 'Heisman Trophy Winners', 'NBA arenas', 'NFL stadiums',
+  'Tennis Slams & Masters 1000s', 'F1 circuits (2026 calendar)', 'Sherlock Holmes stories',
+  // TOO CLOSE to a broader list that stays (one per family):
+  'US states starting with M', 'US states starting with N', 'US states on the Atlantic coast', 'US states bordering Canada',
+  'Countries starting with B', 'Countries starting with C', 'Countries starting with M', 'Countries starting with P',
+  'Countries starting with T', 'Countries starting with S', 'Organs of the human digestive system',
 ]);
 const CATEGORIES = BLITZ_LISTS.NAMES.filter((c) => !BENCHED.has(c));
 // Pack of each curated category, and the packs offered to players: only a pack with enough curated
@@ -694,6 +706,15 @@ const TIER_BROAD = new Set([
   'Cars characters', 'Kung Fu Panda characters', 'Powerpuff Girls characters', 'Original Power Rangers colors', 'Peanuts characters',
   'The original six Avengers', 'Do-Re-Mi syllables', 'Olympic ring colors', 'The five senses', 'Primary & secondary colors', 'Layers of the Earth',
   'States of matter', 'Uno action cards', 'Rock Paper Scissors Lizard Spock', 'Spice Girls', 'One Direction members',
+  // oct15 night batch (Andy "A LOT ... easy ... FUN"): spam-able wordplay, rosters everyone knows, nostalgia
+  'Rhymes with JUMP (-UMP)', 'Rhymes with THINK (-INK)', 'Rhymes with NIGHT (-IGHT)', 'Rhymes with COOL (-OOL)', 'Words ending in -OO',
+  'Rhymes with CRASH (-ASH)', 'Rhymes with BOOK (-OOK)', 'Words with a double Z', '3-letter animals', '3-letter body parts',
+  'Numbers from one to twenty (spelled out)', 'Keyboard keys (not letters or numbers)', 'Animal sounds', 'Baby animal names',
+  'Counting to ten in Spanish', 'Colors in Spanish', 'Countries ending in -STAN', 'Countries with LAND in the name',
+  'Friends main six', 'Stranger Things kids', 'Rocky & Creed films', 'Jurassic Park & World films', 'Ice Age films', 'Saw films',
+  'iPhone models', 'Windows versions', 'School subjects', 'Things on your face', 'Fast food mascots', 'Types of pasta',
+  'Coffee drinks', 'Sports played with a racket', 'Swimming strokes', 'Martial arts', 'Instruments in an orchestra',
+  'Classic board games', 'Card games', 'Big cats', 'Ways to say hello around the world',
 ]);
 // Mainstream franchises where naming a few is EASY (not enthusiasts-only): they
 // match a niche franchise pattern below but belong in MEDIUM, not NICHE.
@@ -708,6 +729,7 @@ const TIER_MEDIUM_OVERRIDE = new Set([
   'Roman gods', 'Egyptian gods', 'Roald Dahl books', 'Chronicles of Narnia books', 'Clue suspects, weapons & rooms', // oct14 batch 2
   'Golf scoring terms', 'Hawaiian islands',
   'Beatles members', 'Super Mario power-ups', 'Sonic characters', // oct15: mainstream — the franchise patterns would file them as niche
+  'Mario characters', // oct15 night: everyone names five — the \bmario\b pattern would file it as niche
 ]);
 // Explicit niche (specialist/deep-cut) not always caught by the franchise patterns.
 const TIER_NICHE = new Set([
