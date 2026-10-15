@@ -730,6 +730,7 @@ const TIER_BROAD = new Set([
   'Horror movie villains', "McDonald's menu items", 'Taco Bell menu items', 'Kitchen utensils', 'Types of bread', 'Types of cheese', 'Dance styles', 'School supplies', 'Things in a bathroom', 'Car parts',
   'Famous cartoon dogs', 'Famous cartoon cats', 'Famous bears', 'Famous people named Chris', 'Farm animals', 'Sea creatures', 'Vegetables', 'Tropical fruits', 'Things you find at the beach', 'Things with wheels', 'Words starting with RAIN', 'Words starting with PAN',
   'Desserts', 'Breakfast foods', 'Things in a fridge', 'Camping gear', 'Pets', 'Jobs', 'Clothing', 'Birds', 'Things at a birthday party', 'Things that are sticky',
+  'Superheroes', 'Famous robots', 'Video game characters', 'Things that are round', 'Things in space', 'Things with buttons', 'Things people are scared of', 'Flowers', 'Snack foods', 'Comic book sound effects',
 ]);
 // Mainstream franchises where naming a few is EASY (not enthusiasts-only): they
 // match a niche franchise pattern below but belong in MEDIUM, not NICHE.
