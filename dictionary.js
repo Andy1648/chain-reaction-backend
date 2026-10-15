@@ -7,7 +7,6 @@
 // Results are cached since the same words get checked repeatedly across games.
 
 const { isDisallowedWord, isCommonEnglishWord } = require('./wordFilter');
-const { isSlur } = require('./blockedTerms');
 
 // STEP 55 (Andy oct2: "expand accept lists for every mode ... months, days, countries, major cities,
 // mild insults"). A CURATED allowlist of common proper nouns (626 words, the same list the solo
@@ -58,8 +57,8 @@ async function isValidWord(word) {
     return false;
   }
 
-  // STEP 55: the curated common proper nouns are accepted (never a slur — checked anyway).
-  if (COMMON_PROPER.has(normalized) && !isSlur(normalized)) {
+  // STEP 55: the curated common proper nouns are accepted.
+  if (COMMON_PROPER.has(normalized)) {
     cacheSet(normalized, true);
     return true;
   }
@@ -71,15 +70,10 @@ async function isValidWord(word) {
     return false;
   }
 
-  // SAFETY GATE (fix/dict-safety): slurs/hate terms are present in the underlying
-  // ~275k common-English wordlist, so they'd otherwise validate. They must NEVER be
-  // accepted or scored. Checked BEFORE the cache so a bot's markAsValid() can never
-  // pre-warm a slur as valid. Mild profanity is intentionally NOT gated here — a
-  // player TYPING a rude word is allowed; only DISPLAY/generation assets strip it.
-  if (isSlur(normalized)) {
-    cacheSet(normalized, false);
-    return false;
-  }
+  // NO WORD CENSORSHIP (Andy oct15: "i ABSOLUTELY DO NOT CARE abt censorship in games like word bomb (people choose who
+  // they play with - remove all restrictions and all words should work)"). Every real word a player types is accepted —
+  // slurs and profanity included. Only what the game itself DISPLAYS or GENERATES (bot words, fragments, word-race
+  // targets, category answers) stays filtered (wordFilter.js / wordRace.js / blockedTerms.isBlockedForDisplay).
 
   if (cache.has(normalized)) {
     return cache.get(normalized);
