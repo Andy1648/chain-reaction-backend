@@ -51,7 +51,8 @@ test('pickAnswer returns null for a category with no accept-list', () => {
 });
 
 test('pickAnswer returns null when every answer was already given', () => {
-  const everything = [...CATEGORY_ANSWERS[CATEGORY]];
+  // oct15 night: Pizza toppings is a curated list now — "everything" is that list (the old pool lacked a few)
+  const everything = [...CATEGORY_ANSWERS[CATEGORY], ...require('./blitzLists').listFor(CATEGORY).answers];
   assert.equal(bot.pickAnswer(CATEGORY, everything), null);
 });
 

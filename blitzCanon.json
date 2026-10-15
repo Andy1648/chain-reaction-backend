@@ -29374,6 +29374,34 @@
   {
    "canon": "oganesson",
    "aliases": []
+  },
+  {
+   "canon": "he",
+   "aliases": []
+  },
+  {
+   "canon": "ne",
+   "aliases": []
+  },
+  {
+   "canon": "ar",
+   "aliases": []
+  },
+  {
+   "canon": "kr",
+   "aliases": []
+  },
+  {
+   "canon": "xe",
+   "aliases": []
+  },
+  {
+   "canon": "rn",
+   "aliases": []
+  },
+  {
+   "canon": "og",
+   "aliases": []
   }
  ],
  "States of matter": [
@@ -29399,6 +29427,38 @@
     "bose einstein condensate",
     "bec"
    ]
+  },
+  {
+   "canon": "fermionic condensate",
+   "aliases": []
+  },
+  {
+   "canon": "quark gluon plasma",
+   "aliases": []
+  },
+  {
+   "canon": "degenerate matter",
+   "aliases": []
+  },
+  {
+   "canon": "superfluid",
+   "aliases": []
+  },
+  {
+   "canon": "supersolid",
+   "aliases": []
+  },
+  {
+   "canon": "neutronium",
+   "aliases": []
+  },
+  {
+   "canon": "rydberg matter",
+   "aliases": []
+  },
+  {
+   "canon": "photonic matter",
+   "aliases": []
   }
  ],
  "Uno action cards": [
@@ -32139,6 +32199,26 @@
   {
    "canon": "tanooki mario",
    "aliases": []
+  },
+  {
+   "canon": "bowzer",
+   "aliases": []
+  },
+  {
+   "canon": "princess toadstool",
+   "aliases": []
+  },
+  {
+   "canon": "gumba",
+   "aliases": []
+  },
+  {
+   "canon": "baby daisy",
+   "aliases": []
+  },
+  {
+   "canon": "baby rosalina",
+   "aliases": []
   }
  ],
  "iPhone models": [
@@ -33011,6 +33091,618 @@
   {
    "canon": "agnolotti",
    "aliases": []
+  },
+  {
+   "canon": "penne rigate",
+   "aliases": []
+  },
+  {
+   "canon": "spaghettini",
+   "aliases": []
+  },
+  {
+   "canon": "baked ziti",
+   "aliases": []
+  },
+  {
+   "canon": "bow tie pasta",
+   "aliases": []
+  },
+  {
+   "canon": "jumbo shells",
+   "aliases": []
+  },
+  {
+   "canon": "stuffed shells",
+   "aliases": []
+  },
+  {
+   "canon": "ditali",
+   "aliases": []
+  },
+  {
+   "canon": "egg noodles",
+   "aliases": []
+  },
+  {
+   "canon": "ramen",
+   "aliases": []
+  },
+  {
+   "canon": "ramen noodles",
+   "aliases": []
+  },
+  {
+   "canon": "udon",
+   "aliases": []
+  },
+  {
+   "canon": "soba",
+   "aliases": []
+  },
+  {
+   "canon": "rice noodles",
+   "aliases": []
+  },
+  {
+   "canon": "glass noodles",
+   "aliases": []
+  },
+  {
+   "canon": "lo mein",
+   "aliases": []
+  },
+  {
+   "canon": "chow mein",
+   "aliases": []
+  },
+  {
+   "canon": "mostaccioli",
+   "aliases": []
+  },
+  {
+   "canon": "cellentani",
+   "aliases": []
+  },
+  {
+   "canon": "casarecce",
+   "aliases": []
+  },
+  {
+   "canon": "trofie",
+   "aliases": []
+  },
+  {
+   "canon": "strozzapreti",
+   "aliases": []
+  },
+  {
+   "canon": "bigoli",
+   "aliases": []
+  },
+  {
+   "canon": "reginette",
+   "aliases": []
+  },
+  {
+   "canon": "spaghettoni",
+   "aliases": []
+  },
+  {
+   "canon": "perciatelli",
+   "aliases": []
+  },
+  {
+   "canon": "fideo",
+   "aliases": []
+  },
+  {
+   "canon": "acini di pepe",
+   "aliases": []
+  },
+  {
+   "canon": "pastina",
+   "aliases": []
+  },
+  {
+   "canon": "anelli",
+   "aliases": []
+  },
+  {
+   "canon": "tubetti",
+   "aliases": []
+  },
+  {
+   "canon": "calamarata",
+   "aliases": []
+  },
+  {
+   "canon": "lumache",
+   "aliases": []
+  },
+  {
+   "canon": "lumaconi",
+   "aliases": []
+  },
+  {
+   "canon": "gigli",
+   "aliases": []
+  },
+  {
+   "canon": "creste di gallo",
+   "aliases": []
+  },
+  {
+   "canon": "gnocchetti",
+   "aliases": []
+  },
+  {
+   "canon": "malloreddus",
+   "aliases": []
+  },
+  {
+   "canon": "pici",
+   "aliases": []
+  },
+  {
+   "canon": "scialatielli",
+   "aliases": []
+  },
+  {
+   "canon": "busiate",
+   "aliases": []
+  },
+  {
+   "canon": "fregola",
+   "aliases": []
+  },
+  {
+   "canon": "couscous",
+   "aliases": []
+  },
+  {
+   "canon": "israeli couscous",
+   "aliases": []
+  },
+  {
+   "canon": "garganelli",
+   "aliases": []
+  },
+  {
+   "canon": "maltagliati",
+   "aliases": []
+  },
+  {
+   "canon": "cappellacci",
+   "aliases": []
+  },
+  {
+   "canon": "culurgiones",
+   "aliases": []
+  },
+  {
+   "canon": "sacchetti",
+   "aliases": []
+  },
+  {
+   "canon": "mezzelune",
+   "aliases": []
+  },
+  {
+   "canon": "girasoli",
+   "aliases": []
+  },
+  {
+   "canon": "caramelle",
+   "aliases": []
+  },
+  {
+   "canon": "pansotti",
+   "aliases": []
+  },
+  {
+   "canon": "tortelli",
+   "aliases": []
+  },
+  {
+   "canon": "lasagnette",
+   "aliases": []
+  },
+  {
+   "canon": "mafalda",
+   "aliases": []
+  },
+  {
+   "canon": "tripoline",
+   "aliases": []
+  },
+  {
+   "canon": "whole wheat pasta",
+   "aliases": []
+  },
+  {
+   "canon": "gluten free pasta",
+   "aliases": []
+  },
+  {
+   "canon": "chickpea pasta",
+   "aliases": []
+  },
+  {
+   "canon": "lentil pasta",
+   "aliases": []
+  },
+  {
+   "canon": "protein pasta",
+   "aliases": []
+  },
+  {
+   "canon": "spinach pasta",
+   "aliases": []
+  },
+  {
+   "canon": "squid ink pasta",
+   "aliases": []
+  },
+  {
+   "canon": "semolina pasta",
+   "aliases": []
+  },
+  {
+   "canon": "fresh pasta",
+   "aliases": []
+  },
+  {
+   "canon": "dried pasta",
+   "aliases": []
+  },
+  {
+   "canon": "stuffed pasta",
+   "aliases": []
+  },
+  {
+   "canon": "long pasta",
+   "aliases": []
+  },
+  {
+   "canon": "short pasta",
+   "aliases": []
+  },
+  {
+   "canon": "tube pasta",
+   "aliases": []
+  },
+  {
+   "canon": "ribbon pasta",
+   "aliases": []
+  },
+  {
+   "canon": "mac and cheese",
+   "aliases": []
+  },
+  {
+   "canon": "macaroni and cheese",
+   "aliases": []
+  },
+  {
+   "canon": "mac n cheese",
+   "aliases": []
+  },
+  {
+   "canon": "spaghetti and meatballs",
+   "aliases": []
+  },
+  {
+   "canon": "fettuccine alfredo",
+   "aliases": []
+  },
+  {
+   "canon": "spaghettios",
+   "aliases": []
+  },
+  {
+   "canon": "spaghetti o's",
+   "aliases": []
+  },
+  {
+   "canon": "easy mac",
+   "aliases": []
+  },
+  {
+   "canon": "kraft mac and cheese",
+   "aliases": []
+  },
+  {
+   "canon": "cup noodles",
+   "aliases": []
+  },
+  {
+   "canon": "instant ramen",
+   "aliases": []
+  },
+  {
+   "canon": "maruchan",
+   "aliases": []
+  },
+  {
+   "canon": "top ramen",
+   "aliases": []
+  },
+  {
+   "canon": "cavatelli",
+   "aliases": []
+  },
+  {
+   "canon": "ziti rigati",
+   "aliases": []
+  },
+  {
+   "canon": "rigatoncini",
+   "aliases": []
+  },
+  {
+   "canon": "sedani",
+   "aliases": []
+  },
+  {
+   "canon": "chifferi",
+   "aliases": []
+  },
+  {
+   "canon": "pipe rigate",
+   "aliases": []
+  },
+  {
+   "canon": "fusilli bucati",
+   "aliases": []
+  },
+  {
+   "canon": "trottole",
+   "aliases": []
+  },
+  {
+   "canon": "gigli pasta",
+   "aliases": []
+  },
+  {
+   "canon": "fiori",
+   "aliases": []
+  },
+  {
+   "canon": "farfalline",
+   "aliases": []
+  },
+  {
+   "canon": "tagliolini",
+   "aliases": []
+  },
+  {
+   "canon": "rotini tricolor",
+   "aliases": []
+  },
+  {
+   "canon": "tri color rotini",
+   "aliases": []
+  },
+  {
+   "canon": "penne pasta",
+   "aliases": []
+  },
+  {
+   "canon": "spaghetti noodles",
+   "aliases": []
+  },
+  {
+   "canon": "macaroni noodles",
+   "aliases": []
+  },
+  {
+   "canon": "lasagna noodles",
+   "aliases": []
+  },
+  {
+   "canon": "spinach lasagna",
+   "aliases": []
+  },
+  {
+   "canon": "whole grain pasta",
+   "aliases": []
+  },
+  {
+   "canon": "veggie pasta",
+   "aliases": []
+  },
+  {
+   "canon": "edamame pasta",
+   "aliases": []
+  },
+  {
+   "canon": "black bean pasta",
+   "aliases": []
+  },
+  {
+   "canon": "rice pasta",
+   "aliases": []
+  },
+  {
+   "canon": "quinoa pasta",
+   "aliases": []
+  },
+  {
+   "canon": "corn pasta",
+   "aliases": []
+  },
+  {
+   "canon": "banza",
+   "aliases": []
+  },
+  {
+   "canon": "barilla",
+   "aliases": []
+  },
+  {
+   "canon": "no boil lasagna",
+   "aliases": []
+  },
+  {
+   "canon": "oven ready lasagna",
+   "aliases": []
+  },
+  {
+   "canon": "jumbo macaroni",
+   "aliases": []
+  },
+  {
+   "canon": "spiral pasta",
+   "aliases": []
+  },
+  {
+   "canon": "twist pasta",
+   "aliases": []
+  },
+  {
+   "canon": "wheel pasta",
+   "aliases": []
+  },
+  {
+   "canon": "soup pasta",
+   "aliases": []
+  },
+  {
+   "canon": "ramen brick",
+   "aliases": []
+  },
+  {
+   "canon": "cup noodle",
+   "aliases": []
+  },
+  {
+   "canon": "rice vermicelli",
+   "aliases": []
+  },
+  {
+   "canon": "cellophane noodles",
+   "aliases": []
+  },
+  {
+   "canon": "shirataki noodles",
+   "aliases": []
+  },
+  {
+   "canon": "zucchini noodles",
+   "aliases": []
+  },
+  {
+   "canon": "zoodles",
+   "aliases": []
+  },
+  {
+   "canon": "spaghetti squash",
+   "aliases": []
+  },
+  {
+   "canon": "pad see ew noodles",
+   "aliases": []
+  },
+  {
+   "canon": "pho noodles",
+   "aliases": []
+  },
+  {
+   "canon": "wide rice noodles",
+   "aliases": []
+  },
+  {
+   "canon": "thin rice noodles",
+   "aliases": []
+  },
+  {
+   "canon": "mein noodles",
+   "aliases": []
+  },
+  {
+   "canon": "yakisoba",
+   "aliases": []
+  },
+  {
+   "canon": "somen",
+   "aliases": []
+  },
+  {
+   "canon": "spaetzle",
+   "aliases": []
+  },
+  {
+   "canon": "pierogi",
+   "aliases": []
+  },
+  {
+   "canon": "dumplings",
+   "aliases": []
+  },
+  {
+   "canon": "wontons",
+   "aliases": []
+  },
+  {
+   "canon": "cheese ravioli",
+   "aliases": []
+  },
+  {
+   "canon": "meat ravioli",
+   "aliases": []
+  },
+  {
+   "canon": "lobster ravioli",
+   "aliases": []
+  },
+  {
+   "canon": "mushroom ravioli",
+   "aliases": []
+  },
+  {
+   "canon": "spinach ravioli",
+   "aliases": []
+  },
+  {
+   "canon": "butternut squash ravioli",
+   "aliases": []
+  },
+  {
+   "canon": "four cheese ravioli",
+   "aliases": []
+  },
+  {
+   "canon": "spagetti",
+   "aliases": []
+  },
+  {
+   "canon": "sketti",
+   "aliases": []
+  },
+  {
+   "canon": "fettucini",
+   "aliases": []
+  },
+  {
+   "canon": "linguini",
+   "aliases": []
+  },
+  {
+   "canon": "raviolli",
+   "aliases": []
+  },
+  {
+   "canon": "gnochi",
+   "aliases": []
+  },
+  {
+   "canon": "nyoki",
+   "aliases": []
+  },
+  {
+   "canon": "tortelini",
+   "aliases": []
   }
  ],
  "Coffee drinks": [
@@ -33180,6 +33872,58 @@
   },
   {
    "canon": "dirty chai",
+   "aliases": []
+  },
+  {
+   "canon": "nitro",
+   "aliases": []
+  },
+  {
+   "canon": "cafe cubano",
+   "aliases": []
+  },
+  {
+   "canon": "aeropress",
+   "aliases": []
+  },
+  {
+   "canon": "espresso con panna",
+   "aliases": []
+  },
+  {
+   "canon": "cafe bombon",
+   "aliases": []
+  },
+  {
+   "canon": "vienna coffee",
+   "aliases": []
+  },
+  {
+   "canon": "flat black",
+   "aliases": []
+  },
+  {
+   "canon": "long black",
+   "aliases": []
+  },
+  {
+   "canon": "mochaccino",
+   "aliases": []
+  },
+  {
+   "canon": "galao",
+   "aliases": []
+  },
+  {
+   "canon": "cafe mocha",
+   "aliases": []
+  },
+  {
+   "canon": "vietnamese coffee",
+   "aliases": []
+  },
+  {
+   "canon": "dead eye",
    "aliases": []
   }
  ],
@@ -33475,6 +34219,22 @@
    "aliases": [
     "sanshou"
    ]
+  },
+  {
+   "canon": "tkd",
+   "aliases": []
+  },
+  {
+   "canon": "thai boxing",
+   "aliases": []
+  },
+  {
+   "canon": "capoiera",
+   "aliases": []
+  },
+  {
+   "canon": "ninjitsu",
+   "aliases": []
   }
  ],
  "Instruments in an orchestra": [
@@ -34238,6 +34998,22 @@
   {
    "canon": "whist",
    "aliases": []
+  },
+  {
+   "canon": "kings corner",
+   "aliases": []
+  },
+  {
+   "canon": "pokemon tcg",
+   "aliases": []
+  },
+  {
+   "canon": "clock solitaire",
+   "aliases": []
+  },
+  {
+   "canon": "sheepshead",
+   "aliases": []
   }
  ],
  "Big cats": [
@@ -34371,6 +35147,90 @@
   },
   {
    "canon": "catamount",
+   "aliases": []
+  },
+  {
+   "canon": "canada lynx",
+   "aliases": []
+  },
+  {
+   "canon": "eurasian lynx",
+   "aliases": []
+  },
+  {
+   "canon": "iberian lynx",
+   "aliases": []
+  },
+  {
+   "canon": "oncilla",
+   "aliases": []
+  },
+  {
+   "canon": "fishing cat",
+   "aliases": []
+  },
+  {
+   "canon": "sand cat",
+   "aliases": []
+  },
+  {
+   "canon": "african golden cat",
+   "aliases": []
+  },
+  {
+   "canon": "asian golden cat",
+   "aliases": []
+  },
+  {
+   "canon": "marbled cat",
+   "aliases": []
+  },
+  {
+   "canon": "pallas cat",
+   "aliases": []
+  },
+  {
+   "canon": "manul",
+   "aliases": []
+  },
+  {
+   "canon": "geoffroys cat",
+   "aliases": []
+  },
+  {
+   "canon": "rusty-spotted cat",
+   "aliases": []
+  },
+  {
+   "canon": "flat-headed cat",
+   "aliases": []
+  },
+  {
+   "canon": "black-footed cat",
+   "aliases": []
+  },
+  {
+   "canon": "jungle cat",
+   "aliases": []
+  },
+  {
+   "canon": "leopard cat",
+   "aliases": []
+  },
+  {
+   "canon": "kodkod",
+   "aliases": []
+  },
+  {
+   "canon": "pampas cat",
+   "aliases": []
+  },
+  {
+   "canon": "andean mountain cat",
+   "aliases": []
+  },
+  {
+   "canon": "bay cat",
    "aliases": []
   }
  ],
@@ -34673,6 +35533,614 @@
   {
    "canon": "cupra",
    "aliases": []
+  },
+  {
+   "canon": "lancia",
+   "aliases": []
+  },
+  {
+   "canon": "morgan",
+   "aliases": []
+  },
+  {
+   "canon": "tvr",
+   "aliases": []
+  },
+  {
+   "canon": "ds",
+   "aliases": []
+  },
+  {
+   "canon": "eagle",
+   "aliases": []
+  },
+  {
+   "canon": "amc",
+   "aliases": []
+  },
+  {
+   "canon": "studebaker",
+   "aliases": []
+  },
+  {
+   "canon": "packard",
+   "aliases": []
+  },
+  {
+   "canon": "tucker",
+   "aliases": []
+  },
+  {
+   "canon": "delorean",
+   "aliases": []
+  },
+  {
+   "canon": "fisker",
+   "aliases": []
+  },
+  {
+   "canon": "karma",
+   "aliases": []
+  },
+  {
+   "canon": "vinfast",
+   "aliases": []
+  },
+  {
+   "canon": "nio",
+   "aliases": []
+  },
+  {
+   "canon": "xpeng",
+   "aliases": []
+  },
+  {
+   "canon": "li auto",
+   "aliases": []
+  },
+  {
+   "canon": "great wall",
+   "aliases": []
+  },
+  {
+   "canon": "chery",
+   "aliases": []
+  },
+  {
+   "canon": "haval",
+   "aliases": []
+  },
+  {
+   "canon": "mg",
+   "aliases": []
+  },
+  {
+   "canon": "mahindra",
+   "aliases": []
+  },
+  {
+   "canon": "maruti",
+   "aliases": []
+  },
+  {
+   "canon": "proton",
+   "aliases": []
+  },
+  {
+   "canon": "perodua",
+   "aliases": []
+  },
+  {
+   "canon": "holden",
+   "aliases": []
+  },
+  {
+   "canon": "datsun",
+   "aliases": []
+  },
+  {
+   "canon": "daihatsu",
+   "aliases": []
+  },
+  {
+   "canon": "daewoo",
+   "aliases": []
+  },
+  {
+   "canon": "ssangyong",
+   "aliases": []
+  },
+  {
+   "canon": "gaz",
+   "aliases": []
+  },
+  {
+   "canon": "uaz",
+   "aliases": []
+  },
+  {
+   "canon": "zaz",
+   "aliases": []
+  },
+  {
+   "canon": "wartburg",
+   "aliases": []
+  },
+  {
+   "canon": "trabant",
+   "aliases": []
+  },
+  {
+   "canon": "skoda auto",
+   "aliases": []
+  },
+  {
+   "canon": "abarth",
+   "aliases": []
+  },
+  {
+   "canon": "maybach",
+   "aliases": []
+  },
+  {
+   "canon": "amg",
+   "aliases": []
+  },
+  {
+   "canon": "brabus",
+   "aliases": []
+  },
+  {
+   "canon": "alpina",
+   "aliases": []
+  },
+  {
+   "canon": "ruf",
+   "aliases": []
+  },
+  {
+   "canon": "singer",
+   "aliases": []
+  },
+  {
+   "canon": "shelby",
+   "aliases": []
+  },
+  {
+   "canon": "roush",
+   "aliases": []
+  },
+  {
+   "canon": "spyker",
+   "aliases": []
+  },
+  {
+   "canon": "rimac",
+   "aliases": []
+  },
+  {
+   "canon": "lordstown",
+   "aliases": []
+  },
+  {
+   "canon": "canoo",
+   "aliases": []
+  },
+  {
+   "canon": "faraday future",
+   "aliases": []
+  },
+  {
+   "canon": "aptera",
+   "aliases": []
+  },
+  {
+   "canon": "bollinger",
+   "aliases": []
+  },
+  {
+   "canon": "workhorse",
+   "aliases": []
+  },
+  {
+   "canon": "mullen",
+   "aliases": []
+  },
+  {
+   "canon": "nikola",
+   "aliases": []
+  },
+  {
+   "canon": "wuling",
+   "aliases": []
+  },
+  {
+   "canon": "hongqi",
+   "aliases": []
+  },
+  {
+   "canon": "lynk and co",
+   "aliases": []
+  },
+  {
+   "canon": "zeekr",
+   "aliases": []
+  },
+  {
+   "canon": "aiways",
+   "aliases": []
+  },
+  {
+   "canon": "voyah",
+   "aliases": []
+  },
+  {
+   "canon": "ora",
+   "aliases": []
+  },
+  {
+   "canon": "leapmotor",
+   "aliases": []
+  },
+  {
+   "canon": "jac",
+   "aliases": []
+  },
+  {
+   "canon": "foton",
+   "aliases": []
+  },
+  {
+   "canon": "caterham",
+   "aliases": []
+  },
+  {
+   "canon": "noble",
+   "aliases": []
+  },
+  {
+   "canon": "ariel",
+   "aliases": []
+  },
+  {
+   "canon": "gumpert",
+   "aliases": []
+  },
+  {
+   "canon": "wiesmann",
+   "aliases": []
+  },
+  {
+   "canon": "donkervoort",
+   "aliases": []
+  },
+  {
+   "canon": "hennessey",
+   "aliases": []
+  },
+  {
+   "canon": "saleen",
+   "aliases": []
+  },
+  {
+   "canon": "panoz",
+   "aliases": []
+  },
+  {
+   "canon": "venturi",
+   "aliases": []
+  },
+  {
+   "canon": "de tomaso",
+   "aliases": []
+  },
+  {
+   "canon": "iso",
+   "aliases": []
+  },
+  {
+   "canon": "bizzarrini",
+   "aliases": []
+  },
+  {
+   "canon": "monteverdi",
+   "aliases": []
+  },
+  {
+   "canon": "facel vega",
+   "aliases": []
+  },
+  {
+   "canon": "auburn",
+   "aliases": []
+  },
+  {
+   "canon": "cord",
+   "aliases": []
+  },
+  {
+   "canon": "duesenberg",
+   "aliases": []
+  },
+  {
+   "canon": "hudson",
+   "aliases": []
+  },
+  {
+   "canon": "nash",
+   "aliases": []
+  },
+  {
+   "canon": "willys",
+   "aliases": []
+  },
+  {
+   "canon": "kaiser",
+   "aliases": []
+  },
+  {
+   "canon": "crosley",
+   "aliases": []
+  },
+  {
+   "canon": "edsel",
+   "aliases": []
+  },
+  {
+   "canon": "desoto",
+   "aliases": []
+  },
+  {
+   "canon": "rambler",
+   "aliases": []
+  },
+  {
+   "canon": "checker",
+   "aliases": []
+  },
+  {
+   "canon": "stutz",
+   "aliases": []
+  },
+  {
+   "canon": "pierce arrow",
+   "aliases": []
+  },
+  {
+   "canon": "lambo",
+   "aliases": []
+  },
+  {
+   "canon": "rolls",
+   "aliases": []
+  },
+  {
+   "canon": "toyata",
+   "aliases": []
+  },
+  {
+   "canon": "toyoda",
+   "aliases": []
+  },
+  {
+   "canon": "chevvy",
+   "aliases": []
+  },
+  {
+   "canon": "chevorlet",
+   "aliases": []
+  },
+  {
+   "canon": "mercedez",
+   "aliases": []
+  },
+  {
+   "canon": "mercedez benz",
+   "aliases": []
+  },
+  {
+   "canon": "porsha",
+   "aliases": []
+  },
+  {
+   "canon": "porshe",
+   "aliases": []
+  },
+  {
+   "canon": "porche",
+   "aliases": []
+  },
+  {
+   "canon": "lamborgini",
+   "aliases": []
+  },
+  {
+   "canon": "lamborghinni",
+   "aliases": []
+  },
+  {
+   "canon": "lambourghini",
+   "aliases": []
+  },
+  {
+   "canon": "ferarri",
+   "aliases": []
+  },
+  {
+   "canon": "ferari",
+   "aliases": []
+  },
+  {
+   "canon": "ferrarri",
+   "aliases": []
+  },
+  {
+   "canon": "volkswagon",
+   "aliases": []
+  },
+  {
+   "canon": "hyundia",
+   "aliases": []
+  },
+  {
+   "canon": "hyandai",
+   "aliases": []
+  },
+  {
+   "canon": "mitsibishi",
+   "aliases": []
+  },
+  {
+   "canon": "infinity",
+   "aliases": []
+  },
+  {
+   "canon": "accura",
+   "aliases": []
+  },
+  {
+   "canon": "subbaru",
+   "aliases": []
+  },
+  {
+   "canon": "mazada",
+   "aliases": []
+  },
+  {
+   "canon": "hondda",
+   "aliases": []
+  },
+  {
+   "canon": "nisssan",
+   "aliases": []
+  },
+  {
+   "canon": "audii",
+   "aliases": []
+  },
+  {
+   "canon": "beemer",
+   "aliases": []
+  },
+  {
+   "canon": "ineos",
+   "aliases": []
+  },
+  {
+   "canon": "ds automobiles",
+   "aliases": []
+  },
+  {
+   "canon": "international harvester",
+   "aliases": []
+  },
+  {
+   "canon": "freightliner",
+   "aliases": []
+  },
+  {
+   "canon": "kenworth",
+   "aliases": []
+  },
+  {
+   "canon": "peterbilt",
+   "aliases": []
+  },
+  {
+   "canon": "mack",
+   "aliases": []
+  },
+  {
+   "canon": "volvo trucks",
+   "aliases": []
+  },
+  {
+   "canon": "scania",
+   "aliases": []
+  },
+  {
+   "canon": "man",
+   "aliases": []
+  },
+  {
+   "canon": "iveco",
+   "aliases": []
+  },
+  {
+   "canon": "tatra",
+   "aliases": []
+  },
+  {
+   "canon": "zil",
+   "aliases": []
+  },
+  {
+   "canon": "moskvitch",
+   "aliases": []
+  },
+  {
+   "canon": "borgward",
+   "aliases": []
+  },
+  {
+   "canon": "auto union",
+   "aliases": []
+  },
+  {
+   "canon": "horch",
+   "aliases": []
+  },
+  {
+   "canon": "wanderer",
+   "aliases": []
+  },
+  {
+   "canon": "panhard",
+   "aliases": []
+  },
+  {
+   "canon": "simca",
+   "aliases": []
+  },
+  {
+   "canon": "talbot",
+   "aliases": []
+  },
+  {
+   "canon": "rover",
+   "aliases": []
+  },
+  {
+   "canon": "austin",
+   "aliases": []
+  },
+  {
+   "canon": "morris",
+   "aliases": []
+  },
+  {
+   "canon": "triumph",
+   "aliases": []
+  },
+  {
+   "canon": "sunbeam",
+   "aliases": []
+  },
+  {
+   "canon": "hillman",
+   "aliases": []
+  },
+  {
+   "canon": "humber",
+   "aliases": []
+  },
+  {
+   "canon": "riley",
+   "aliases": []
+  },
+  {
+   "canon": "wolseley",
+   "aliases": []
   }
  ],
  "Fast food chains": [
@@ -34956,6 +36424,554 @@
   {
    "canon": "waffle house",
    "aliases": []
+  },
+  {
+   "canon": "in and out",
+   "aliases": []
+  },
+  {
+   "canon": "quiznos",
+   "aliases": []
+  },
+  {
+   "canon": "blimpie",
+   "aliases": []
+  },
+  {
+   "canon": "potbelly",
+   "aliases": []
+  },
+  {
+   "canon": "cicis",
+   "aliases": []
+  },
+  {
+   "canon": "marcos pizza",
+   "aliases": []
+  },
+  {
+   "canon": "round table pizza",
+   "aliases": []
+  },
+  {
+   "canon": "jets pizza",
+   "aliases": []
+  },
+  {
+   "canon": "papa murphys",
+   "aliases": []
+  },
+  {
+   "canon": "blaze pizza",
+   "aliases": []
+  },
+  {
+   "canon": "mod pizza",
+   "aliases": []
+  },
+  {
+   "canon": "pf changs",
+   "aliases": []
+  },
+  {
+   "canon": "pei wei",
+   "aliases": []
+  },
+  {
+   "canon": "buffalo wild wings",
+   "aliases": []
+  },
+  {
+   "canon": "bww",
+   "aliases": []
+  },
+  {
+   "canon": "pollo tropical",
+   "aliases": []
+  },
+  {
+   "canon": "moes southwest grill",
+   "aliases": []
+  },
+  {
+   "canon": "taco johns",
+   "aliases": []
+  },
+  {
+   "canon": "taco cabana",
+   "aliases": []
+  },
+  {
+   "canon": "rubios",
+   "aliases": []
+  },
+  {
+   "canon": "baja fresh",
+   "aliases": []
+  },
+  {
+   "canon": "chronic tacos",
+   "aliases": []
+  },
+  {
+   "canon": "freebirds",
+   "aliases": []
+  },
+  {
+   "canon": "krystal",
+   "aliases": []
+  },
+  {
+   "canon": "fatburger",
+   "aliases": []
+  },
+  {
+   "canon": "the habit",
+   "aliases": []
+  },
+  {
+   "canon": "habit burger",
+   "aliases": []
+  },
+  {
+   "canon": "smashburger",
+   "aliases": []
+  },
+  {
+   "canon": "good times",
+   "aliases": []
+  },
+  {
+   "canon": "freddys",
+   "aliases": []
+  },
+  {
+   "canon": "fuddruckers",
+   "aliases": []
+  },
+  {
+   "canon": "red robin",
+   "aliases": []
+  },
+  {
+   "canon": "sonic drive in",
+   "aliases": []
+  },
+  {
+   "canon": "cracker barrel",
+   "aliases": []
+  },
+  {
+   "canon": "bob evans",
+   "aliases": []
+  },
+  {
+   "canon": "village inn",
+   "aliases": []
+  },
+  {
+   "canon": "perkins",
+   "aliases": []
+  },
+  {
+   "canon": "huddle house",
+   "aliases": []
+  },
+  {
+   "canon": "shoneys",
+   "aliases": []
+  },
+  {
+   "canon": "frischs",
+   "aliases": []
+  },
+  {
+   "canon": "einstein bagels",
+   "aliases": []
+  },
+  {
+   "canon": "caribou coffee",
+   "aliases": []
+  },
+  {
+   "canon": "peets",
+   "aliases": []
+  },
+  {
+   "canon": "costa coffee",
+   "aliases": []
+  },
+  {
+   "canon": "wetzels pretzels",
+   "aliases": []
+  },
+  {
+   "canon": "orange julius",
+   "aliases": []
+  },
+  {
+   "canon": "jamba juice",
+   "aliases": []
+  },
+  {
+   "canon": "smoothie king",
+   "aliases": []
+  },
+  {
+   "canon": "tropical smoothie",
+   "aliases": []
+  },
+  {
+   "canon": "cold stone",
+   "aliases": []
+  },
+  {
+   "canon": "carvel",
+   "aliases": []
+  },
+  {
+   "canon": "dippin dots",
+   "aliases": []
+  },
+  {
+   "canon": "rita's",
+   "aliases": []
+  },
+  {
+   "canon": "ritas",
+   "aliases": []
+  },
+  {
+   "canon": "menchies",
+   "aliases": []
+  },
+  {
+   "canon": "pinkberry",
+   "aliases": []
+  },
+  {
+   "canon": "yogurtland",
+   "aliases": []
+  },
+  {
+   "canon": "tropical smoothie cafe",
+   "aliases": []
+  },
+  {
+   "canon": "noodles and company",
+   "aliases": []
+  },
+  {
+   "canon": "au bon pain",
+   "aliases": []
+  },
+  {
+   "canon": "corner bakery",
+   "aliases": []
+  },
+  {
+   "canon": "la madeleine",
+   "aliases": []
+  },
+  {
+   "canon": "wienerschnitzel",
+   "aliases": []
+  },
+  {
+   "canon": "portillos",
+   "aliases": []
+  },
+  {
+   "canon": "nathans",
+   "aliases": []
+  },
+  {
+   "canon": "nathans famous",
+   "aliases": []
+  },
+  {
+   "canon": "sbarro",
+   "aliases": []
+  },
+  {
+   "canon": "fazolis",
+   "aliases": []
+  },
+  {
+   "canon": "olive garden",
+   "aliases": []
+  },
+  {
+   "canon": "red lobster",
+   "aliases": []
+  },
+  {
+   "canon": "outback",
+   "aliases": []
+  },
+  {
+   "canon": "applebees",
+   "aliases": []
+  },
+  {
+   "canon": "chilis",
+   "aliases": []
+  },
+  {
+   "canon": "tgi fridays",
+   "aliases": []
+  },
+  {
+   "canon": "longhorn steakhouse",
+   "aliases": []
+  },
+  {
+   "canon": "texas roadhouse",
+   "aliases": []
+  },
+  {
+   "canon": "golden corral",
+   "aliases": []
+  },
+  {
+   "canon": "buffet",
+   "aliases": []
+  },
+  {
+   "canon": "hooters",
+   "aliases": []
+  },
+  {
+   "canon": "twin peaks",
+   "aliases": []
+  },
+  {
+   "canon": "wahlburgers",
+   "aliases": []
+  },
+  {
+   "canon": "shake shack burgers",
+   "aliases": []
+  },
+  {
+   "canon": "whatchamacallit",
+   "aliases": []
+  },
+  {
+   "canon": "chowking",
+   "aliases": []
+  },
+  {
+   "canon": "tacos el gordo",
+   "aliases": []
+  },
+  {
+   "canon": "taco bueno",
+   "aliases": []
+  },
+  {
+   "canon": "hungry jacks",
+   "aliases": []
+  },
+  {
+   "canon": "wagamama",
+   "aliases": []
+  },
+  {
+   "canon": "leon",
+   "aliases": []
+  },
+  {
+   "canon": "pizza pizza",
+   "aliases": []
+  },
+  {
+   "canon": "a&w canada",
+   "aliases": []
+  },
+  {
+   "canon": "harveys",
+   "aliases": []
+  },
+  {
+   "canon": "swiss chalet",
+   "aliases": []
+  },
+  {
+   "canon": "bdubs",
+   "aliases": []
+  },
+  {
+   "canon": "dominos pizza",
+   "aliases": []
+  },
+  {
+   "canon": "captain ds",
+   "aliases": []
+  },
+  {
+   "canon": "cookout",
+   "aliases": []
+  },
+  {
+   "canon": "biscuitville",
+   "aliases": []
+  },
+  {
+   "canon": "runza",
+   "aliases": []
+  },
+  {
+   "canon": "braums",
+   "aliases": []
+  },
+  {
+   "canon": "dairy queen grill",
+   "aliases": []
+  },
+  {
+   "canon": "cicis pizza",
+   "aliases": []
+  },
+  {
+   "canon": "bojangles famous chicken",
+   "aliases": []
+  },
+  {
+   "canon": "wing street",
+   "aliases": []
+  },
+  {
+   "canon": "mickey ds",
+   "aliases": []
+  },
+  {
+   "canon": "micky ds",
+   "aliases": []
+  },
+  {
+   "canon": "chic fil a",
+   "aliases": []
+  },
+  {
+   "canon": "b dubs",
+   "aliases": []
+  },
+  {
+   "canon": "wings to go",
+   "aliases": []
+  },
+  {
+   "canon": "bonchon",
+   "aliases": []
+  },
+  {
+   "canon": "moes southwest",
+   "aliases": []
+  },
+  {
+   "canon": "arthur treachers",
+   "aliases": []
+  },
+  {
+   "canon": "bojangles famous",
+   "aliases": []
+  },
+  {
+   "canon": "pretzel time",
+   "aliases": []
+  },
+  {
+   "canon": "mrs fields",
+   "aliases": []
+  },
+  {
+   "canon": "great american cookies",
+   "aliases": []
+  },
+  {
+   "canon": "pf changs to go",
+   "aliases": []
+  },
+  {
+   "canon": "farmer boys",
+   "aliases": []
+  },
+  {
+   "canon": "waba grill",
+   "aliases": []
+  },
+  {
+   "canon": "pita pit",
+   "aliases": []
+  },
+  {
+   "canon": "which wich",
+   "aliases": []
+  },
+  {
+   "canon": "schlotzskys",
+   "aliases": []
+  },
+  {
+   "canon": "togos",
+   "aliases": []
+  },
+  {
+   "canon": "mcalisters deli",
+   "aliases": []
+  },
+  {
+   "canon": "newks",
+   "aliases": []
+  },
+  {
+   "canon": "jasons deli",
+   "aliases": []
+  },
+  {
+   "canon": "crown fried chicken",
+   "aliases": []
+  },
+  {
+   "canon": "kennedy fried chicken",
+   "aliases": []
+  },
+  {
+   "canon": "lees famous recipe",
+   "aliases": []
+  },
+  {
+   "canon": "golden chick",
+   "aliases": []
+  },
+  {
+   "canon": "slim chickens",
+   "aliases": []
+  },
+  {
+   "canon": "pdq",
+   "aliases": []
+  },
+  {
+   "canon": "sizzler",
+   "aliases": []
+  },
+  {
+   "canon": "ci ci s pizza",
+   "aliases": []
+  },
+  {
+   "canon": "mountain mikes",
+   "aliases": []
+  },
+  {
+   "canon": "hungry howies",
+   "aliases": []
+  },
+  {
+   "canon": "donatos",
+   "aliases": []
   }
  ],
  "Soda brands": [
@@ -35136,6 +37152,554 @@
    "aliases": [
     "tonic water"
    ]
+  },
+  {
+   "canon": "classic coke",
+   "aliases": []
+  },
+  {
+   "canon": "coca cola classic",
+   "aliases": []
+  },
+  {
+   "canon": "pepsi cola",
+   "aliases": []
+  },
+  {
+   "canon": "sprite zero",
+   "aliases": []
+  },
+  {
+   "canon": "doctor pepper",
+   "aliases": []
+  },
+  {
+   "canon": "diet dr pepper",
+   "aliases": []
+  },
+  {
+   "canon": "dr pepper cherry",
+   "aliases": []
+  },
+  {
+   "canon": "mountain dew code red",
+   "aliases": []
+  },
+  {
+   "canon": "code red",
+   "aliases": []
+  },
+  {
+   "canon": "baja blast",
+   "aliases": []
+  },
+  {
+   "canon": "mountain dew baja blast",
+   "aliases": []
+  },
+  {
+   "canon": "livewire",
+   "aliases": []
+  },
+  {
+   "canon": "fanta orange",
+   "aliases": []
+  },
+  {
+   "canon": "orange fanta",
+   "aliases": []
+  },
+  {
+   "canon": "fanta grape",
+   "aliases": []
+  },
+  {
+   "canon": "fanta pineapple",
+   "aliases": []
+  },
+  {
+   "canon": "fanta strawberry",
+   "aliases": []
+  },
+  {
+   "canon": "a&w root beer",
+   "aliases": []
+  },
+  {
+   "canon": "mug root beer",
+   "aliases": []
+  },
+  {
+   "canon": "dads root beer",
+   "aliases": []
+  },
+  {
+   "canon": "ibc",
+   "aliases": []
+  },
+  {
+   "canon": "ibc root beer",
+   "aliases": []
+  },
+  {
+   "canon": "stewarts",
+   "aliases": []
+  },
+  {
+   "canon": "stewart's root beer",
+   "aliases": []
+  },
+  {
+   "canon": "coca cola zero",
+   "aliases": []
+  },
+  {
+   "canon": "pepsi zero",
+   "aliases": []
+  },
+  {
+   "canon": "pepsi max",
+   "aliases": []
+  },
+  {
+   "canon": "cherry coke",
+   "aliases": []
+  },
+  {
+   "canon": "vanilla coke",
+   "aliases": []
+  },
+  {
+   "canon": "cherry pepsi",
+   "aliases": []
+  },
+  {
+   "canon": "wild cherry pepsi",
+   "aliases": []
+  },
+  {
+   "canon": "orange crush",
+   "aliases": []
+  },
+  {
+   "canon": "grape crush",
+   "aliases": []
+  },
+  {
+   "canon": "canada dry ginger ale",
+   "aliases": []
+  },
+  {
+   "canon": "seagrams",
+   "aliases": []
+  },
+  {
+   "canon": "ginger beer",
+   "aliases": []
+  },
+  {
+   "canon": "sprite cranberry",
+   "aliases": []
+  },
+  {
+   "canon": "big blue",
+   "aliases": []
+  },
+  {
+   "canon": "faygo redpop",
+   "aliases": []
+  },
+  {
+   "canon": "mexican coke",
+   "aliases": []
+  },
+  {
+   "canon": "jolt",
+   "aliases": []
+  },
+  {
+   "canon": "royal crown",
+   "aliases": []
+  },
+  {
+   "canon": "royal crown cola",
+   "aliases": []
+  },
+  {
+   "canon": "dr thunder",
+   "aliases": []
+  },
+  {
+   "canon": "a&w cream soda",
+   "aliases": []
+  },
+  {
+   "canon": "ale 8",
+   "aliases": []
+  },
+  {
+   "canon": "ale 8 one",
+   "aliases": []
+  },
+  {
+   "canon": "moxie",
+   "aliases": []
+  },
+  {
+   "canon": "green river",
+   "aliases": []
+  },
+  {
+   "canon": "nehi",
+   "aliases": []
+  },
+  {
+   "canon": "nehi grape",
+   "aliases": []
+  },
+  {
+   "canon": "nehi orange",
+   "aliases": []
+  },
+  {
+   "canon": "jones soda",
+   "aliases": []
+  },
+  {
+   "canon": "jones",
+   "aliases": []
+  },
+  {
+   "canon": "boylan",
+   "aliases": []
+  },
+  {
+   "canon": "la croix",
+   "aliases": []
+  },
+  {
+   "canon": "lacroix",
+   "aliases": []
+  },
+  {
+   "canon": "bubly",
+   "aliases": []
+  },
+  {
+   "canon": "spindrift",
+   "aliases": []
+  },
+  {
+   "canon": "polar seltzer",
+   "aliases": []
+  },
+  {
+   "canon": "seltzer",
+   "aliases": []
+  },
+  {
+   "canon": "perrier",
+   "aliases": []
+  },
+  {
+   "canon": "topo chico",
+   "aliases": []
+  },
+  {
+   "canon": "san pellegrino",
+   "aliases": []
+  },
+  {
+   "canon": "sanpellegrino",
+   "aliases": []
+  },
+  {
+   "canon": "soda water",
+   "aliases": []
+  },
+  {
+   "canon": "sparkling water",
+   "aliases": []
+  },
+  {
+   "canon": "sparkling ice",
+   "aliases": []
+  },
+  {
+   "canon": "waterloo",
+   "aliases": []
+  },
+  {
+   "canon": "aha",
+   "aliases": []
+  },
+  {
+   "canon": "zevia",
+   "aliases": []
+  },
+  {
+   "canon": "lilt",
+   "aliases": []
+  },
+  {
+   "canon": "lucozade",
+   "aliases": []
+  },
+  {
+   "canon": "tango",
+   "aliases": []
+  },
+  {
+   "canon": "vimto",
+   "aliases": []
+  },
+  {
+   "canon": "cherryade",
+   "aliases": []
+  },
+  {
+   "canon": "lemonade",
+   "aliases": []
+  },
+  {
+   "canon": "sprite lemon",
+   "aliases": []
+  },
+  {
+   "canon": "pepsi wild cherry",
+   "aliases": []
+  },
+  {
+   "canon": "diet mountain dew",
+   "aliases": []
+  },
+  {
+   "canon": "voltage",
+   "aliases": []
+  },
+  {
+   "canon": "cola",
+   "aliases": []
+  },
+  {
+   "canon": "orange soda",
+   "aliases": []
+  },
+  {
+   "canon": "grape soda",
+   "aliases": []
+  },
+  {
+   "canon": "strawberry soda",
+   "aliases": []
+  },
+  {
+   "canon": "lemon lime soda",
+   "aliases": []
+  },
+  {
+   "canon": "fanta lemon",
+   "aliases": []
+  },
+  {
+   "canon": "cherry vanilla coke",
+   "aliases": []
+  },
+  {
+   "canon": "coke vanilla",
+   "aliases": []
+  },
+  {
+   "canon": "coke cherry",
+   "aliases": []
+  },
+  {
+   "canon": "diet sprite",
+   "aliases": []
+  },
+  {
+   "canon": "caffeine free coke",
+   "aliases": []
+  },
+  {
+   "canon": "caffeine free diet coke",
+   "aliases": []
+  },
+  {
+   "canon": "coke energy",
+   "aliases": []
+  },
+  {
+   "canon": "dr pepper cream soda",
+   "aliases": []
+  },
+  {
+   "canon": "dr pepper zero",
+   "aliases": []
+  },
+  {
+   "canon": "mountain dew voltage",
+   "aliases": []
+  },
+  {
+   "canon": "mountain dew zero",
+   "aliases": []
+  },
+  {
+   "canon": "sprite tropical",
+   "aliases": []
+  },
+  {
+   "canon": "sunkist orange",
+   "aliases": []
+  },
+  {
+   "canon": "minute maid lemonade",
+   "aliases": []
+  },
+  {
+   "canon": "minute maid soda",
+   "aliases": []
+  },
+  {
+   "canon": "hawaiian punch",
+   "aliases": []
+  },
+  {
+   "canon": "kool aid",
+   "aliases": []
+  },
+  {
+   "canon": "capri sun",
+   "aliases": []
+  },
+  {
+   "canon": "gatorade",
+   "aliases": []
+  },
+  {
+   "canon": "powerade",
+   "aliases": []
+  },
+  {
+   "canon": "red bull",
+   "aliases": []
+  },
+  {
+   "canon": "monster",
+   "aliases": []
+  },
+  {
+   "canon": "monster energy",
+   "aliases": []
+  },
+  {
+   "canon": "rockstar",
+   "aliases": []
+  },
+  {
+   "canon": "bang",
+   "aliases": []
+  },
+  {
+   "canon": "celsius",
+   "aliases": []
+  },
+  {
+   "canon": "prime",
+   "aliases": []
+  },
+  {
+   "canon": "sparkling apple cider",
+   "aliases": []
+  },
+  {
+   "canon": "martinellis",
+   "aliases": []
+  },
+  {
+   "canon": "welchs grape soda",
+   "aliases": []
+  },
+  {
+   "canon": "jolly good",
+   "aliases": []
+  },
+  {
+   "canon": "big shot",
+   "aliases": []
+  },
+  {
+   "canon": "sprecher",
+   "aliases": []
+  },
+  {
+   "canon": "abita root beer",
+   "aliases": []
+  },
+  {
+   "canon": "sioux city sarsaparilla",
+   "aliases": []
+  },
+  {
+   "canon": "sarsaparilla",
+   "aliases": []
+  },
+  {
+   "canon": "crush pineapple",
+   "aliases": []
+  },
+  {
+   "canon": "crush strawberry",
+   "aliases": []
+  },
+  {
+   "canon": "fanta peach",
+   "aliases": []
+  },
+  {
+   "canon": "mexican sprite",
+   "aliases": []
+  },
+  {
+   "canon": "mexican fanta",
+   "aliases": []
+  },
+  {
+   "canon": "manzanita sol",
+   "aliases": []
+  },
+  {
+   "canon": "sangria senorial",
+   "aliases": []
+  },
+  {
+   "canon": "sidral mundet",
+   "aliases": []
+  },
+  {
+   "canon": "topo chico lime",
+   "aliases": []
+  },
+  {
+   "canon": "spindrift lemon",
+   "aliases": []
+  },
+  {
+   "canon": "bubly lime",
+   "aliases": []
+  },
+  {
+   "canon": "aha lime watermelon",
+   "aliases": []
+  },
+  {
+   "canon": "pibb extra",
+   "aliases": []
+  },
+  {
+   "canon": "mirinda",
+   "aliases": []
   }
  ],
  "Candy brands": [
@@ -35997,6 +38561,58 @@
    "aliases": [
     "xiaohongshu"
    ]
+  },
+  {
+   "canon": "viber",
+   "aliases": []
+  },
+  {
+   "canon": "douyin",
+   "aliases": []
+  },
+  {
+   "canon": "vk",
+   "aliases": []
+  },
+  {
+   "canon": "flickr",
+   "aliases": []
+  },
+  {
+   "canon": "medium",
+   "aliases": []
+  },
+  {
+   "canon": "nextdoor",
+   "aliases": []
+  },
+  {
+   "canon": "yik yak",
+   "aliases": []
+  },
+  {
+   "canon": "meetup",
+   "aliases": []
+  },
+  {
+   "canon": "truth social",
+   "aliases": []
+  },
+  {
+   "canon": "parler",
+   "aliases": []
+  },
+  {
+   "canon": "tinder",
+   "aliases": []
+  },
+  {
+   "canon": "bumble",
+   "aliases": []
+  },
+  {
+   "canon": "hinge",
+   "aliases": []
   }
  ],
  "Streaming services": [
@@ -37289,6 +39905,610 @@
   },
   {
    "canon": "kronk",
+   "aliases": []
+  },
+  {
+   "canon": "ursula the sea witch",
+   "aliases": []
+  },
+  {
+   "canon": "cruella deville",
+   "aliases": []
+  },
+  {
+   "canon": "grimhilde",
+   "aliases": []
+  },
+  {
+   "canon": "the queen",
+   "aliases": []
+  },
+  {
+   "canon": "hades the god of the underworld",
+   "aliases": []
+  },
+  {
+   "canon": "judge claude frollo",
+   "aliases": []
+  },
+  {
+   "canon": "claude frollo",
+   "aliases": []
+  },
+  {
+   "canon": "doctor facilier",
+   "aliases": []
+  },
+  {
+   "canon": "lots-o-huggin bear",
+   "aliases": []
+  },
+  {
+   "canon": "lots o huggin bear",
+   "aliases": []
+  },
+  {
+   "canon": "buddy pine",
+   "aliases": []
+  },
+  {
+   "canon": "randall boggs",
+   "aliases": []
+  },
+  {
+   "canon": "henry j waternoose",
+   "aliases": []
+  },
+  {
+   "canon": "waternoose",
+   "aliases": []
+  },
+  {
+   "canon": "sid phillips",
+   "aliases": []
+  },
+  {
+   "canon": "the prospector",
+   "aliases": []
+  },
+  {
+   "canon": "al",
+   "aliases": []
+  },
+  {
+   "canon": "al mcwhiggin",
+   "aliases": []
+  },
+  {
+   "canon": "gabby gabby",
+   "aliases": []
+  },
+  {
+   "canon": "ernesto de la cruz",
+   "aliases": []
+  },
+  {
+   "canon": "ernesto",
+   "aliases": []
+  },
+  {
+   "canon": "mayor bellwether",
+   "aliases": []
+  },
+  {
+   "canon": "te fiti",
+   "aliases": []
+  },
+  {
+   "canon": "amos slade",
+   "aliases": []
+  },
+  {
+   "canon": "bill sykes",
+   "aliases": []
+  },
+  {
+   "canon": "professor ratigan",
+   "aliases": []
+  },
+  {
+   "canon": "madame mim",
+   "aliases": []
+  },
+  {
+   "canon": "peg leg pete",
+   "aliases": []
+  },
+  {
+   "canon": "black pete",
+   "aliases": []
+  },
+  {
+   "canon": "monstro",
+   "aliases": []
+  },
+  {
+   "canon": "stromboli",
+   "aliases": []
+  },
+  {
+   "canon": "the coachman",
+   "aliases": []
+  },
+  {
+   "canon": "coachman",
+   "aliases": []
+  },
+  {
+   "canon": "honest john",
+   "aliases": []
+  },
+  {
+   "canon": "foulfellow",
+   "aliases": []
+  },
+  {
+   "canon": "gideon",
+   "aliases": []
+  },
+  {
+   "canon": "si and am",
+   "aliases": []
+  },
+  {
+   "canon": "si",
+   "aliases": []
+  },
+  {
+   "canon": "am",
+   "aliases": []
+  },
+  {
+   "canon": "the rat",
+   "aliases": []
+  },
+  {
+   "canon": "lady and the tramp rat",
+   "aliases": []
+  },
+  {
+   "canon": "aunt sarah",
+   "aliases": []
+  },
+  {
+   "canon": "diablo",
+   "aliases": []
+  },
+  {
+   "canon": "diablo the raven",
+   "aliases": []
+  },
+  {
+   "canon": "the goons",
+   "aliases": []
+  },
+  {
+   "canon": "maleficents goons",
+   "aliases": []
+  },
+  {
+   "canon": "sir hiss",
+   "aliases": []
+  },
+  {
+   "canon": "the sheriff of nottingham",
+   "aliases": []
+  },
+  {
+   "canon": "sheriff of nottingham",
+   "aliases": []
+  },
+  {
+   "canon": "edgar balthazar",
+   "aliases": []
+  },
+  {
+   "canon": "edgar the butler",
+   "aliases": []
+  },
+  {
+   "canon": "mr snoops",
+   "aliases": []
+  },
+  {
+   "canon": "snoops",
+   "aliases": []
+  },
+  {
+   "canon": "brutus and nero",
+   "aliases": []
+  },
+  {
+   "canon": "flotsam and jetsam",
+   "aliases": []
+  },
+  {
+   "canon": "the wicked stepsisters",
+   "aliases": []
+  },
+  {
+   "canon": "anastasia",
+   "aliases": []
+  },
+  {
+   "canon": "drizella",
+   "aliases": []
+  },
+  {
+   "canon": "lucifer",
+   "aliases": []
+  },
+  {
+   "canon": "lucifer the cat",
+   "aliases": []
+  },
+  {
+   "canon": "the queen of hearts card soldiers",
+   "aliases": []
+  },
+  {
+   "canon": "oogie boogie",
+   "aliases": []
+  },
+  {
+   "canon": "lock shock and barrel",
+   "aliases": []
+  },
+  {
+   "canon": "lock",
+   "aliases": []
+  },
+  {
+   "canon": "shock",
+   "aliases": []
+  },
+  {
+   "canon": "barrel",
+   "aliases": []
+  },
+  {
+   "canon": "william clayton",
+   "aliases": []
+  },
+  {
+   "canon": "sabor",
+   "aliases": []
+  },
+  {
+   "canon": "jafar genie",
+   "aliases": []
+  },
+  {
+   "canon": "jafar as a genie",
+   "aliases": []
+  },
+  {
+   "canon": "iago",
+   "aliases": []
+  },
+  {
+   "canon": "razoul",
+   "aliases": []
+  },
+  {
+   "canon": "the magic mirror",
+   "aliases": []
+  },
+  {
+   "canon": "the headless horseman",
+   "aliases": []
+  },
+  {
+   "canon": "headless horseman",
+   "aliases": []
+  },
+  {
+   "canon": "mr toad villains",
+   "aliases": []
+  },
+  {
+   "canon": "mr winkie",
+   "aliases": []
+  },
+  {
+   "canon": "winkie",
+   "aliases": []
+  },
+  {
+   "canon": "the toughs",
+   "aliases": []
+  },
+  {
+   "canon": "weasels",
+   "aliases": []
+  },
+  {
+   "canon": "cy-bug",
+   "aliases": []
+  },
+  {
+   "canon": "cy bugs",
+   "aliases": []
+  },
+  {
+   "canon": "gaston lefou",
+   "aliases": []
+  },
+  {
+   "canon": "forte",
+   "aliases": []
+  },
+  {
+   "canon": "maestro forte",
+   "aliases": []
+  },
+  {
+   "canon": "jasper and horace",
+   "aliases": []
+  },
+  {
+   "canon": "jasper",
+   "aliases": []
+  },
+  {
+   "canon": "horace",
+   "aliases": []
+  },
+  {
+   "canon": "professor z",
+   "aliases": []
+  },
+  {
+   "canon": "mater villain",
+   "aliases": []
+  },
+  {
+   "canon": "miles axlerod",
+   "aliases": []
+  },
+  {
+   "canon": "axlerod",
+   "aliases": []
+  },
+  {
+   "canon": "auto",
+   "aliases": []
+  },
+  {
+   "canon": "auto wall-e",
+   "aliases": []
+  },
+  {
+   "canon": "zira",
+   "aliases": []
+  },
+  {
+   "canon": "kovu villain",
+   "aliases": []
+  },
+  {
+   "canon": "nuka",
+   "aliases": []
+  },
+  {
+   "canon": "vitani",
+   "aliases": []
+  },
+  {
+   "canon": "banzai",
+   "aliases": []
+  },
+  {
+   "canon": "shenzi",
+   "aliases": []
+  },
+  {
+   "canon": "ed",
+   "aliases": []
+  },
+  {
+   "canon": "the hyenas",
+   "aliases": []
+  },
+  {
+   "canon": "hyenas",
+   "aliases": []
+  },
+  {
+   "canon": "darla",
+   "aliases": []
+  },
+  {
+   "canon": "darla finding nemo",
+   "aliases": []
+  },
+  {
+   "canon": "bruce",
+   "aliases": []
+  },
+  {
+   "canon": "bruce the shark",
+   "aliases": []
+  },
+  {
+   "canon": "screenslaver",
+   "aliases": []
+  },
+  {
+   "canon": "the screenslaver",
+   "aliases": []
+  },
+  {
+   "canon": "evelyn deavor",
+   "aliases": []
+  },
+  {
+   "canon": "the firebird",
+   "aliases": []
+  },
+  {
+   "canon": "druun",
+   "aliases": []
+  },
+  {
+   "canon": "the druun",
+   "aliases": []
+  },
+  {
+   "canon": "bowler hat guy",
+   "aliases": []
+  },
+  {
+   "canon": "dor-15",
+   "aliases": []
+  },
+  {
+   "canon": "doris",
+   "aliases": []
+  },
+  {
+   "canon": "lyle tiberius rourke",
+   "aliases": []
+  },
+  {
+   "canon": "commander rourke",
+   "aliases": []
+  },
+  {
+   "canon": "helga sinclair",
+   "aliases": []
+  },
+  {
+   "canon": "helga",
+   "aliases": []
+  },
+  {
+   "canon": "the grand duke of owls",
+   "aliases": []
+  },
+  {
+   "canon": "grand duke of owls",
+   "aliases": []
+  },
+  {
+   "canon": "the cauldron born",
+   "aliases": []
+  },
+  {
+   "canon": "cauldron born",
+   "aliases": []
+  },
+  {
+   "canon": "gaston and lefou",
+   "aliases": []
+  },
+  {
+   "canon": "brom bones",
+   "aliases": []
+  },
+  {
+   "canon": "man",
+   "aliases": []
+  },
+  {
+   "canon": "the hunter",
+   "aliases": []
+  },
+  {
+   "canon": "wiggins",
+   "aliases": []
+  },
+  {
+   "canon": "morgana",
+   "aliases": []
+  },
+  {
+   "canon": "mr waternoose",
+   "aliases": []
+  },
+  {
+   "canon": "emperor zurg",
+   "aliases": []
+  },
+  {
+   "canon": "zurg",
+   "aliases": []
+  },
+  {
+   "canon": "lord shen",
+   "aliases": []
+  },
+  {
+   "canon": "tai lung",
+   "aliases": []
+  },
+  {
+   "canon": "kai",
+   "aliases": []
+  },
+  {
+   "canon": "the toad",
+   "aliases": []
+  },
+  {
+   "canon": "dr hamsterviel",
+   "aliases": []
+  },
+  {
+   "canon": "evil emperor zurg",
+   "aliases": []
+  },
+  {
+   "canon": "malificent",
+   "aliases": []
+  },
+  {
+   "canon": "malificint",
+   "aliases": []
+  },
+  {
+   "canon": "jaffar",
+   "aliases": []
+  },
+  {
+   "canon": "cruela",
+   "aliases": []
+  },
+  {
+   "canon": "sher khan",
+   "aliases": []
+  },
+  {
+   "canon": "ursula sea witch",
+   "aliases": []
+  },
+  {
+   "canon": "mad madam mim",
+   "aliases": []
+  },
+  {
+   "canon": "hamsterviel",
+   "aliases": []
+  },
+  {
+   "canon": "fat cat",
+   "aliases": []
+  },
+  {
+   "canon": "brutus",
+   "aliases": []
+  },
+  {
+   "canon": "davy jones",
+   "aliases": []
+  },
+  {
+   "canon": "bomb voyage",
    "aliases": []
   }
  ],
@@ -50731,6 +53951,314 @@
   {
    "canon": "husky mix",
    "aliases": []
+  },
+  {
+   "canon": "retriever",
+   "aliases": []
+  },
+  {
+   "canon": "german shepard",
+   "aliases": []
+  },
+  {
+   "canon": "gsd",
+   "aliases": []
+  },
+  {
+   "canon": "toy poodle",
+   "aliases": []
+  },
+  {
+   "canon": "standard poodle",
+   "aliases": []
+  },
+  {
+   "canon": "rott",
+   "aliases": []
+  },
+  {
+   "canon": "weiner dog",
+   "aliases": []
+  },
+  {
+   "canon": "doxie",
+   "aliases": []
+  },
+  {
+   "canon": "pom",
+   "aliases": []
+  },
+  {
+   "canon": "chiwawa",
+   "aliases": []
+  },
+  {
+   "canon": "dobermann",
+   "aliases": []
+  },
+  {
+   "canon": "shitzu",
+   "aliases": []
+  },
+  {
+   "canon": "welsh corgi",
+   "aliases": []
+  },
+  {
+   "canon": "pembroke corgi",
+   "aliases": []
+  },
+  {
+   "canon": "spaniel",
+   "aliases": []
+  },
+  {
+   "canon": "english mastiff",
+   "aliases": []
+  },
+  {
+   "canon": "newfie",
+   "aliases": []
+  },
+  {
+   "canon": "dalmation",
+   "aliases": []
+  },
+  {
+   "canon": "american bully",
+   "aliases": []
+  },
+  {
+   "canon": "miniature schnauzer",
+   "aliases": []
+  },
+  {
+   "canon": "giant schnauzer",
+   "aliases": []
+  },
+  {
+   "canon": "chow",
+   "aliases": []
+  },
+  {
+   "canon": "australian cattle dog",
+   "aliases": []
+  },
+  {
+   "canon": "blue heeler",
+   "aliases": []
+  },
+  {
+   "canon": "heeler",
+   "aliases": []
+  },
+  {
+   "canon": "pyrenees",
+   "aliases": []
+  },
+  {
+   "canon": "english setter",
+   "aliases": []
+  },
+  {
+   "canon": "pointer",
+   "aliases": []
+  },
+  {
+   "canon": "german shorthaired pointer",
+   "aliases": []
+  },
+  {
+   "canon": "brittany",
+   "aliases": []
+  },
+  {
+   "canon": "american eskimo",
+   "aliases": []
+  },
+  {
+   "canon": "eskimo dog",
+   "aliases": []
+  },
+  {
+   "canon": "keeshond",
+   "aliases": []
+  },
+  {
+   "canon": "ridgeback",
+   "aliases": []
+  },
+  {
+   "canon": "dutch shepherd",
+   "aliases": []
+  },
+  {
+   "canon": "leonberger",
+   "aliases": []
+  },
+  {
+   "canon": "tibetan mastiff",
+   "aliases": []
+  },
+  {
+   "canon": "neapolitan mastiff",
+   "aliases": []
+  },
+  {
+   "canon": "boston",
+   "aliases": []
+  },
+  {
+   "canon": "rat terrier",
+   "aliases": []
+  },
+  {
+   "canon": "fox terrier",
+   "aliases": []
+  },
+  {
+   "canon": "irish wolfhound",
+   "aliases": []
+  },
+  {
+   "canon": "saluki",
+   "aliases": []
+  },
+  {
+   "canon": "coonhound",
+   "aliases": []
+  },
+  {
+   "canon": "plott hound",
+   "aliases": []
+  },
+  {
+   "canon": "cavapoo",
+   "aliases": []
+  },
+  {
+   "canon": "schnoodle",
+   "aliases": []
+  },
+  {
+   "canon": "chiweenie",
+   "aliases": []
+  },
+  {
+   "canon": "cavalier king charles",
+   "aliases": []
+  },
+  {
+   "canon": "king charles spaniel",
+   "aliases": []
+  },
+  {
+   "canon": "mutt",
+   "aliases": []
+  },
+  {
+   "canon": "mixed breed",
+   "aliases": []
+  },
+  {
+   "canon": "terrier",
+   "aliases": []
+  },
+  {
+   "canon": "hound",
+   "aliases": []
+  },
+  {
+   "canon": "finnish spitz",
+   "aliases": []
+  },
+  {
+   "canon": "teacup poodle",
+   "aliases": []
+  },
+  {
+   "canon": "teacup chihuahua",
+   "aliases": []
+  },
+  {
+   "canon": "cardigan welsh corgi",
+   "aliases": []
+  },
+  {
+   "canon": "airedale terrier",
+   "aliases": []
+  },
+  {
+   "canon": "pugs",
+   "aliases": []
+  },
+  {
+   "canon": "pomeranians",
+   "aliases": []
+  },
+  {
+   "canon": "yorkies",
+   "aliases": []
+  },
+  {
+   "canon": "frenchies",
+   "aliases": []
+  },
+  {
+   "canon": "boston terriers",
+   "aliases": []
+  },
+  {
+   "canon": "cavaliers",
+   "aliases": []
+  },
+  {
+   "canon": "papillons",
+   "aliases": []
+  },
+  {
+   "canon": "dachshunds",
+   "aliases": []
+  },
+  {
+   "canon": "doxies",
+   "aliases": []
+  },
+  {
+   "canon": "iggy",
+   "aliases": []
+  },
+  {
+   "canon": "brussels griffon",
+   "aliases": []
+  },
+  {
+   "canon": "japanese chin",
+   "aliases": []
+  },
+  {
+   "canon": "chinese crested",
+   "aliases": []
+  },
+  {
+   "canon": "corgis",
+   "aliases": []
+  },
+  {
+   "canon": "cardigan corgi",
+   "aliases": []
+  },
+  {
+   "canon": "schipperke",
+   "aliases": []
+  },
+  {
+   "canon": "silky terrier",
+   "aliases": []
+  },
+  {
+   "canon": "toy fox terrier",
+   "aliases": []
   }
  ],
  "Sharks": [
@@ -51080,6 +54608,46 @@
   },
   {
    "canon": "archaeopteryx",
+   "aliases": []
+  },
+  {
+   "canon": "velaciraptor",
+   "aliases": []
+  },
+  {
+   "canon": "brachiosaur",
+   "aliases": []
+  },
+  {
+   "canon": "stego",
+   "aliases": []
+  },
+  {
+   "canon": "tricerotops",
+   "aliases": []
+  },
+  {
+   "canon": "spino",
+   "aliases": []
+  },
+  {
+   "canon": "allosaurous",
+   "aliases": []
+  },
+  {
+   "canon": "pachycephalosaur",
+   "aliases": []
+  },
+  {
+   "canon": "compy",
+   "aliases": []
+  },
+  {
+   "canon": "terodactyl",
+   "aliases": []
+  },
+  {
+   "canon": "anky",
    "aliases": []
   }
  ],
@@ -54686,6 +58254,9268 @@
   },
   {
    "canon": "waterdog",
+   "aliases": []
+  }
+ ],
+ "Superpowers": [
+  {
+   "canon": "flight",
+   "aliases": []
+  },
+  {
+   "canon": "flying",
+   "aliases": []
+  },
+  {
+   "canon": "invisibility",
+   "aliases": []
+  },
+  {
+   "canon": "super strength",
+   "aliases": []
+  },
+  {
+   "canon": "strength",
+   "aliases": []
+  },
+  {
+   "canon": "super speed",
+   "aliases": []
+  },
+  {
+   "canon": "speed",
+   "aliases": []
+  },
+  {
+   "canon": "teleportation",
+   "aliases": []
+  },
+  {
+   "canon": "teleport",
+   "aliases": []
+  },
+  {
+   "canon": "telekinesis",
+   "aliases": []
+  },
+  {
+   "canon": "mind reading",
+   "aliases": []
+  },
+  {
+   "canon": "telepathy",
+   "aliases": []
+  },
+  {
+   "canon": "time travel",
+   "aliases": []
+  },
+  {
+   "canon": "shapeshifting",
+   "aliases": []
+  },
+  {
+   "canon": "shape shifting",
+   "aliases": []
+  },
+  {
+   "canon": "x-ray vision",
+   "aliases": []
+  },
+  {
+   "canon": "laser eyes",
+   "aliases": []
+  },
+  {
+   "canon": "heat vision",
+   "aliases": []
+  },
+  {
+   "canon": "healing",
+   "aliases": []
+  },
+  {
+   "canon": "regeneration",
+   "aliases": []
+  },
+  {
+   "canon": "immortality",
+   "aliases": []
+  },
+  {
+   "canon": "invincibility",
+   "aliases": []
+  },
+  {
+   "canon": "super jump",
+   "aliases": []
+  },
+  {
+   "canon": "wall crawling",
+   "aliases": []
+  },
+  {
+   "canon": "web slinging",
+   "aliases": []
+  },
+  {
+   "canon": "spider sense",
+   "aliases": []
+  },
+  {
+   "canon": "elasticity",
+   "aliases": []
+  },
+  {
+   "canon": "stretching",
+   "aliases": []
+  },
+  {
+   "canon": "shrinking",
+   "aliases": []
+  },
+  {
+   "canon": "growing",
+   "aliases": []
+  },
+  {
+   "canon": "fire powers",
+   "aliases": []
+  },
+  {
+   "canon": "pyrokinesis",
+   "aliases": []
+  },
+  {
+   "canon": "ice powers",
+   "aliases": []
+  },
+  {
+   "canon": "cryokinesis",
+   "aliases": []
+  },
+  {
+   "canon": "weather control",
+   "aliases": []
+  },
+  {
+   "canon": "electricity",
+   "aliases": []
+  },
+  {
+   "canon": "lightning",
+   "aliases": []
+  },
+  {
+   "canon": "water breathing",
+   "aliases": []
+  },
+  {
+   "canon": "talking to animals",
+   "aliases": []
+  },
+  {
+   "canon": "mind control",
+   "aliases": []
+  },
+  {
+   "canon": "force field",
+   "aliases": []
+  },
+  {
+   "canon": "intangibility",
+   "aliases": []
+  },
+  {
+   "canon": "phasing",
+   "aliases": []
+  },
+  {
+   "canon": "time stop",
+   "aliases": []
+  },
+  {
+   "canon": "time freeze",
+   "aliases": []
+  },
+  {
+   "canon": "precognition",
+   "aliases": []
+  },
+  {
+   "canon": "super hearing",
+   "aliases": []
+  },
+  {
+   "canon": "night vision",
+   "aliases": []
+  },
+  {
+   "canon": "duplication",
+   "aliases": []
+  },
+  {
+   "canon": "cloning",
+   "aliases": []
+  },
+  {
+   "canon": "magnetism",
+   "aliases": []
+  },
+  {
+   "canon": "power absorption",
+   "aliases": []
+  },
+  {
+   "canon": "sonic scream",
+   "aliases": []
+  },
+  {
+   "canon": "portals",
+   "aliases": []
+  },
+  {
+   "canon": "photographic memory",
+   "aliases": []
+  },
+  {
+   "canon": "super intelligence",
+   "aliases": []
+  },
+  {
+   "canon": "luck",
+   "aliases": []
+  },
+  {
+   "canon": "camouflage",
+   "aliases": []
+  },
+  {
+   "canon": "gravity control",
+   "aliases": []
+  },
+  {
+   "canon": "earth control",
+   "aliases": []
+  },
+  {
+   "canon": "water control",
+   "aliases": []
+  },
+  {
+   "canon": "wind control",
+   "aliases": []
+  },
+  {
+   "canon": "plant control",
+   "aliases": []
+  },
+  {
+   "canon": "darkness",
+   "aliases": []
+  },
+  {
+   "canon": "light control",
+   "aliases": []
+  },
+  {
+   "canon": "energy blasts",
+   "aliases": []
+  },
+  {
+   "canon": "summoning",
+   "aliases": []
+  },
+  {
+   "canon": "necromancy",
+   "aliases": []
+  },
+  {
+   "canon": "levitation",
+   "aliases": []
+  },
+  {
+   "canon": "breathing underwater",
+   "aliases": []
+  }
+ ],
+ "Mythical creatures": [
+  {
+   "canon": "dragon",
+   "aliases": []
+  },
+  {
+   "canon": "unicorn",
+   "aliases": []
+  },
+  {
+   "canon": "phoenix",
+   "aliases": []
+  },
+  {
+   "canon": "mermaid",
+   "aliases": []
+  },
+  {
+   "canon": "griffin",
+   "aliases": []
+  },
+  {
+   "canon": "gryphon",
+   "aliases": []
+  },
+  {
+   "canon": "centaur",
+   "aliases": []
+  },
+  {
+   "canon": "minotaur",
+   "aliases": []
+  },
+  {
+   "canon": "pegasus",
+   "aliases": []
+  },
+  {
+   "canon": "kraken",
+   "aliases": []
+  },
+  {
+   "canon": "yeti",
+   "aliases": []
+  },
+  {
+   "canon": "bigfoot",
+   "aliases": []
+  },
+  {
+   "canon": "sasquatch",
+   "aliases": []
+  },
+  {
+   "canon": "vampire",
+   "aliases": []
+  },
+  {
+   "canon": "werewolf",
+   "aliases": []
+  },
+  {
+   "canon": "ghost",
+   "aliases": []
+  },
+  {
+   "canon": "zombie",
+   "aliases": []
+  },
+  {
+   "canon": "fairy",
+   "aliases": []
+  },
+  {
+   "canon": "elf",
+   "aliases": []
+  },
+  {
+   "canon": "goblin",
+   "aliases": []
+  },
+  {
+   "canon": "troll",
+   "aliases": []
+  },
+  {
+   "canon": "ogre",
+   "aliases": []
+  },
+  {
+   "canon": "cyclops",
+   "aliases": []
+  },
+  {
+   "canon": "hydra",
+   "aliases": []
+  },
+  {
+   "canon": "medusa",
+   "aliases": []
+  },
+  {
+   "canon": "gorgon",
+   "aliases": []
+  },
+  {
+   "canon": "sphinx",
+   "aliases": []
+  },
+  {
+   "canon": "chimera",
+   "aliases": []
+  },
+  {
+   "canon": "banshee",
+   "aliases": []
+  },
+  {
+   "canon": "leprechaun",
+   "aliases": []
+  },
+  {
+   "canon": "loch ness monster",
+   "aliases": []
+  },
+  {
+   "canon": "nessie",
+   "aliases": []
+  },
+  {
+   "canon": "chupacabra",
+   "aliases": []
+  },
+  {
+   "canon": "kitsune",
+   "aliases": []
+  },
+  {
+   "canon": "basilisk",
+   "aliases": []
+  },
+  {
+   "canon": "gnome",
+   "aliases": []
+  },
+  {
+   "canon": "dwarf",
+   "aliases": []
+  },
+  {
+   "canon": "giant",
+   "aliases": []
+  },
+  {
+   "canon": "siren",
+   "aliases": []
+  },
+  {
+   "canon": "harpy",
+   "aliases": []
+  },
+  {
+   "canon": "wendigo",
+   "aliases": []
+  },
+  {
+   "canon": "mothman",
+   "aliases": []
+  },
+  {
+   "canon": "jersey devil",
+   "aliases": []
+  },
+  {
+   "canon": "thunderbird",
+   "aliases": []
+  },
+  {
+   "canon": "kelpie",
+   "aliases": []
+  },
+  {
+   "canon": "selkie",
+   "aliases": []
+  },
+  {
+   "canon": "golem",
+   "aliases": []
+  },
+  {
+   "canon": "djinn",
+   "aliases": []
+  },
+  {
+   "canon": "genie",
+   "aliases": []
+  },
+  {
+   "canon": "imp",
+   "aliases": []
+  },
+  {
+   "canon": "pixie",
+   "aliases": []
+  },
+  {
+   "canon": "sprite",
+   "aliases": []
+  },
+  {
+   "canon": "nymph",
+   "aliases": []
+  },
+  {
+   "canon": "satyr",
+   "aliases": []
+  },
+  {
+   "canon": "faun",
+   "aliases": []
+  },
+  {
+   "canon": "cerberus",
+   "aliases": []
+  },
+  {
+   "canon": "manticore",
+   "aliases": []
+  },
+  {
+   "canon": "wyvern",
+   "aliases": []
+  },
+  {
+   "canon": "hippogriff",
+   "aliases": []
+  },
+  {
+   "canon": "jackalope",
+   "aliases": []
+  },
+  {
+   "canon": "abominable snowman",
+   "aliases": []
+  },
+  {
+   "canon": "headless horseman",
+   "aliases": []
+  },
+  {
+   "canon": "grim reaper",
+   "aliases": []
+  },
+  {
+   "canon": "mummy",
+   "aliases": []
+  },
+  {
+   "canon": "frankenstein",
+   "aliases": []
+  },
+  {
+   "canon": "boogeyman",
+   "aliases": []
+  },
+  {
+   "canon": "tooth fairy",
+   "aliases": []
+  },
+  {
+   "canon": "santa claus",
+   "aliases": []
+  },
+  {
+   "canon": "easter bunny",
+   "aliases": []
+  },
+  {
+   "canon": "hobbit",
+   "aliases": []
+  },
+  {
+   "canon": "dryad",
+   "aliases": []
+  },
+  {
+   "canon": "valkyrie",
+   "aliases": []
+  },
+  {
+   "canon": "titan",
+   "aliases": []
+  },
+  {
+   "canon": "leviathan",
+   "aliases": []
+  },
+  {
+   "canon": "behemoth",
+   "aliases": []
+  },
+  {
+   "canon": "roc",
+   "aliases": []
+  },
+  {
+   "canon": "naga",
+   "aliases": []
+  },
+  {
+   "canon": "oni",
+   "aliases": []
+  },
+  {
+   "canon": "tengu",
+   "aliases": []
+  },
+  {
+   "canon": "kappa",
+   "aliases": []
+  },
+  {
+   "canon": "baku",
+   "aliases": []
+  },
+  {
+   "canon": "tanuki",
+   "aliases": []
+  },
+  {
+   "canon": "qilin",
+   "aliases": []
+  },
+  {
+   "canon": "kirin",
+   "aliases": []
+  },
+  {
+   "canon": "dragons",
+   "aliases": []
+  },
+  {
+   "canon": "unicorns",
+   "aliases": []
+  },
+  {
+   "canon": "merman",
+   "aliases": []
+  },
+  {
+   "canon": "sirens",
+   "aliases": []
+  },
+  {
+   "canon": "fairies",
+   "aliases": []
+  },
+  {
+   "canon": "elves",
+   "aliases": []
+  },
+  {
+   "canon": "dwarves",
+   "aliases": []
+  },
+  {
+   "canon": "goblins",
+   "aliases": []
+  },
+  {
+   "canon": "trolls",
+   "aliases": []
+  },
+  {
+   "canon": "orc",
+   "aliases": []
+  },
+  {
+   "canon": "orcs",
+   "aliases": []
+  },
+  {
+   "canon": "werewolves",
+   "aliases": []
+  },
+  {
+   "canon": "vampires",
+   "aliases": []
+  },
+  {
+   "canon": "ghosts",
+   "aliases": []
+  },
+  {
+   "canon": "ghoul",
+   "aliases": []
+  },
+  {
+   "canon": "wraith",
+   "aliases": []
+  },
+  {
+   "canon": "poltergeist",
+   "aliases": []
+  },
+  {
+   "canon": "cockatrice",
+   "aliases": []
+  },
+  {
+   "canon": "harpies",
+   "aliases": []
+  },
+  {
+   "canon": "naiad",
+   "aliases": []
+  },
+  {
+   "canon": "cyclopes",
+   "aliases": []
+  },
+  {
+   "canon": "giants",
+   "aliases": []
+  },
+  {
+   "canon": "titans",
+   "aliases": []
+  },
+  {
+   "canon": "gargoyle",
+   "aliases": []
+  },
+  {
+   "canon": "demon",
+   "aliases": []
+  },
+  {
+   "canon": "demons",
+   "aliases": []
+  },
+  {
+   "canon": "ifrit",
+   "aliases": []
+  },
+  {
+   "canon": "quetzalcoatl",
+   "aliases": []
+  },
+  {
+   "canon": "yokai",
+   "aliases": []
+  },
+  {
+   "canon": "jorogumo",
+   "aliases": []
+  },
+  {
+   "canon": "nekomata",
+   "aliases": []
+  },
+  {
+   "canon": "dullahan",
+   "aliases": []
+  },
+  {
+   "canon": "changeling",
+   "aliases": []
+  },
+  {
+   "canon": "brownie",
+   "aliases": []
+  },
+  {
+   "canon": "boggart",
+   "aliases": []
+  },
+  {
+   "canon": "redcap",
+   "aliases": []
+  },
+  {
+   "canon": "will-o-the-wisp",
+   "aliases": []
+  },
+  {
+   "canon": "jinn",
+   "aliases": []
+  },
+  {
+   "canon": "salamander",
+   "aliases": []
+  },
+  {
+   "canon": "undine",
+   "aliases": []
+  },
+  {
+   "canon": "sylph",
+   "aliases": []
+  },
+  {
+   "canon": "hippocampus",
+   "aliases": []
+  },
+  {
+   "canon": "ouroboros",
+   "aliases": []
+  },
+  {
+   "canon": "amphisbaena",
+   "aliases": []
+  },
+  {
+   "canon": "lamia",
+   "aliases": []
+  },
+  {
+   "canon": "echidna",
+   "aliases": []
+  },
+  {
+   "canon": "typhon",
+   "aliases": []
+  },
+  {
+   "canon": "scylla",
+   "aliases": []
+  },
+  {
+   "canon": "charybdis",
+   "aliases": []
+  },
+  {
+   "canon": "cyclops polyphemus",
+   "aliases": []
+  },
+  {
+   "canon": "nemean lion",
+   "aliases": []
+  },
+  {
+   "canon": "stymphalian birds",
+   "aliases": []
+  },
+  {
+   "canon": "ceryneian hind",
+   "aliases": []
+  },
+  {
+   "canon": "lernaean hydra",
+   "aliases": []
+  },
+  {
+   "canon": "firebird",
+   "aliases": []
+  },
+  {
+   "canon": "baba yaga",
+   "aliases": []
+  },
+  {
+   "canon": "krampus",
+   "aliases": []
+  },
+  {
+   "canon": "fenrir",
+   "aliases": []
+  },
+  {
+   "canon": "jormungandr",
+   "aliases": []
+  },
+  {
+   "canon": "nidhogg",
+   "aliases": []
+  },
+  {
+   "canon": "huldra",
+   "aliases": []
+  },
+  {
+   "canon": "nisse",
+   "aliases": []
+  },
+  {
+   "canon": "draugr",
+   "aliases": []
+  },
+  {
+   "canon": "rusalka",
+   "aliases": []
+  },
+  {
+   "canon": "domovoi",
+   "aliases": []
+  },
+  {
+   "canon": "leshy",
+   "aliases": []
+  },
+  {
+   "canon": "nue",
+   "aliases": []
+  },
+  {
+   "canon": "gashadokuro",
+   "aliases": []
+  },
+  {
+   "canon": "shapeshifter",
+   "aliases": []
+  },
+  {
+   "canon": "lich",
+   "aliases": []
+  },
+  {
+   "canon": "skeleton",
+   "aliases": []
+  },
+  {
+   "canon": "incubus",
+   "aliases": []
+  },
+  {
+   "canon": "succubus",
+   "aliases": []
+  },
+  {
+   "canon": "gremlin",
+   "aliases": []
+  },
+  {
+   "canon": "gremlins",
+   "aliases": []
+  },
+  {
+   "canon": "cait sith",
+   "aliases": []
+  },
+  {
+   "canon": "pooka",
+   "aliases": []
+  },
+  {
+   "canon": "bunyip",
+   "aliases": []
+  },
+  {
+   "canon": "drop bear",
+   "aliases": []
+  },
+  {
+   "canon": "skinwalker",
+   "aliases": []
+  },
+  {
+   "canon": "lycanthrope",
+   "aliases": []
+  },
+  {
+   "canon": "vampyre",
+   "aliases": []
+  },
+  {
+   "canon": "pheonix",
+   "aliases": []
+  },
+  {
+   "canon": "centuar",
+   "aliases": []
+  },
+  {
+   "canon": "gargoile",
+   "aliases": []
+  },
+  {
+   "canon": "leprachaun",
+   "aliases": []
+  },
+  {
+   "canon": "cyclopse",
+   "aliases": []
+  },
+  {
+   "canon": "griffon",
+   "aliases": []
+  },
+  {
+   "canon": "specter",
+   "aliases": []
+  }
+ ],
+ "Pizza toppings": [
+  {
+   "canon": "pepperoni",
+   "aliases": []
+  },
+  {
+   "canon": "sausage",
+   "aliases": []
+  },
+  {
+   "canon": "mushrooms",
+   "aliases": []
+  },
+  {
+   "canon": "mushroom",
+   "aliases": []
+  },
+  {
+   "canon": "onions",
+   "aliases": []
+  },
+  {
+   "canon": "onion",
+   "aliases": []
+  },
+  {
+   "canon": "peppers",
+   "aliases": []
+  },
+  {
+   "canon": "green peppers",
+   "aliases": []
+  },
+  {
+   "canon": "bell peppers",
+   "aliases": []
+  },
+  {
+   "canon": "olives",
+   "aliases": []
+  },
+  {
+   "canon": "black olives",
+   "aliases": []
+  },
+  {
+   "canon": "ham",
+   "aliases": []
+  },
+  {
+   "canon": "pineapple",
+   "aliases": []
+  },
+  {
+   "canon": "bacon",
+   "aliases": []
+  },
+  {
+   "canon": "extra cheese",
+   "aliases": []
+  },
+  {
+   "canon": "cheese",
+   "aliases": []
+  },
+  {
+   "canon": "spinach",
+   "aliases": []
+  },
+  {
+   "canon": "tomatoes",
+   "aliases": []
+  },
+  {
+   "canon": "tomato",
+   "aliases": []
+  },
+  {
+   "canon": "jalapenos",
+   "aliases": []
+  },
+  {
+   "canon": "jalapeno",
+   "aliases": []
+  },
+  {
+   "canon": "chicken",
+   "aliases": []
+  },
+  {
+   "canon": "anchovies",
+   "aliases": []
+  },
+  {
+   "canon": "garlic",
+   "aliases": []
+  },
+  {
+   "canon": "basil",
+   "aliases": []
+  },
+  {
+   "canon": "broccoli",
+   "aliases": []
+  },
+  {
+   "canon": "artichoke",
+   "aliases": []
+  },
+  {
+   "canon": "artichokes",
+   "aliases": []
+  },
+  {
+   "canon": "feta",
+   "aliases": []
+  },
+  {
+   "canon": "ricotta",
+   "aliases": []
+  },
+  {
+   "canon": "mozzarella",
+   "aliases": []
+  },
+  {
+   "canon": "parmesan",
+   "aliases": []
+  },
+  {
+   "canon": "salami",
+   "aliases": []
+  },
+  {
+   "canon": "meatballs",
+   "aliases": []
+  },
+  {
+   "canon": "ground beef",
+   "aliases": []
+  },
+  {
+   "canon": "beef",
+   "aliases": []
+  },
+  {
+   "canon": "prosciutto",
+   "aliases": []
+  },
+  {
+   "canon": "arugula",
+   "aliases": []
+  },
+  {
+   "canon": "red onion",
+   "aliases": []
+  },
+  {
+   "canon": "banana peppers",
+   "aliases": []
+  },
+  {
+   "canon": "sun dried tomatoes",
+   "aliases": []
+  },
+  {
+   "canon": "bbq chicken",
+   "aliases": []
+  },
+  {
+   "canon": "buffalo chicken",
+   "aliases": []
+  },
+  {
+   "canon": "pesto",
+   "aliases": []
+  },
+  {
+   "canon": "corn",
+   "aliases": []
+  },
+  {
+   "canon": "eggplant",
+   "aliases": []
+  },
+  {
+   "canon": "zucchini",
+   "aliases": []
+  },
+  {
+   "canon": "shrimp",
+   "aliases": []
+  },
+  {
+   "canon": "chorizo",
+   "aliases": []
+  },
+  {
+   "canon": "hot honey",
+   "aliases": []
+  },
+  {
+   "canon": "goat cheese",
+   "aliases": []
+  },
+  {
+   "canon": "capers",
+   "aliases": []
+  },
+  {
+   "canon": "oregano",
+   "aliases": []
+  },
+  {
+   "canon": "chili flakes",
+   "aliases": []
+  },
+  {
+   "canon": "red pepper flakes",
+   "aliases": []
+  },
+  {
+   "canon": "canadian bacon",
+   "aliases": []
+  },
+  {
+   "canon": "pickles",
+   "aliases": []
+  },
+  {
+   "canon": "potatoes",
+   "aliases": []
+  },
+  {
+   "canon": "egg",
+   "aliases": []
+  },
+  {
+   "canon": "tuna",
+   "aliases": []
+  },
+  {
+   "canon": "kale",
+   "aliases": []
+  },
+  {
+   "canon": "cherry tomatoes",
+   "aliases": []
+  },
+  {
+   "canon": "gorgonzola",
+   "aliases": []
+  },
+  {
+   "canon": "blue cheese",
+   "aliases": []
+  },
+  {
+   "canon": "ranch",
+   "aliases": []
+  },
+  {
+   "canon": "bbq sauce",
+   "aliases": []
+  },
+  {
+   "canon": "pepperonis",
+   "aliases": []
+  },
+  {
+   "canon": "italian sausage",
+   "aliases": []
+  },
+  {
+   "canon": "ground sausage",
+   "aliases": []
+  },
+  {
+   "canon": "caramelized onions",
+   "aliases": []
+  },
+  {
+   "canon": "green pepper",
+   "aliases": []
+  },
+  {
+   "canon": "bell pepper",
+   "aliases": []
+  },
+  {
+   "canon": "pepper",
+   "aliases": []
+  },
+  {
+   "canon": "olive",
+   "aliases": []
+  },
+  {
+   "canon": "green olives",
+   "aliases": []
+  },
+  {
+   "canon": "kalamata olives",
+   "aliases": []
+  },
+  {
+   "canon": "fresh basil",
+   "aliases": []
+  },
+  {
+   "canon": "roasted garlic",
+   "aliases": []
+  },
+  {
+   "canon": "pepperoncini",
+   "aliases": []
+  },
+  {
+   "canon": "anchovy",
+   "aliases": []
+  },
+  {
+   "canon": "grilled chicken",
+   "aliases": []
+  },
+  {
+   "canon": "hamburger",
+   "aliases": []
+  },
+  {
+   "canon": "meatball",
+   "aliases": []
+  },
+  {
+   "canon": "soppressata",
+   "aliases": []
+  },
+  {
+   "canon": "pancetta",
+   "aliases": []
+  },
+  {
+   "canon": "pulled pork",
+   "aliases": []
+  },
+  {
+   "canon": "pork",
+   "aliases": []
+  },
+  {
+   "canon": "double cheese",
+   "aliases": []
+  },
+  {
+   "canon": "three cheese",
+   "aliases": []
+  },
+  {
+   "canon": "four cheese",
+   "aliases": []
+  },
+  {
+   "canon": "fresh mozzarella",
+   "aliases": []
+  },
+  {
+   "canon": "parmigiano",
+   "aliases": []
+  },
+  {
+   "canon": "cheddar",
+   "aliases": []
+  },
+  {
+   "canon": "gouda",
+   "aliases": []
+  },
+  {
+   "canon": "provolone",
+   "aliases": []
+  },
+  {
+   "canon": "pepper jack",
+   "aliases": []
+  },
+  {
+   "canon": "swiss",
+   "aliases": []
+  },
+  {
+   "canon": "asiago",
+   "aliases": []
+  },
+  {
+   "canon": "romano",
+   "aliases": []
+  },
+  {
+   "canon": "buffalo sauce",
+   "aliases": []
+  },
+  {
+   "canon": "hot sauce",
+   "aliases": []
+  },
+  {
+   "canon": "honey",
+   "aliases": []
+  },
+  {
+   "canon": "marinara",
+   "aliases": []
+  },
+  {
+   "canon": "red sauce",
+   "aliases": []
+  },
+  {
+   "canon": "white sauce",
+   "aliases": []
+  },
+  {
+   "canon": "alfredo",
+   "aliases": []
+  },
+  {
+   "canon": "alfredo sauce",
+   "aliases": []
+  },
+  {
+   "canon": "vodka sauce",
+   "aliases": []
+  },
+  {
+   "canon": "garlic butter",
+   "aliases": []
+  },
+  {
+   "canon": "garlic parmesan",
+   "aliases": []
+  },
+  {
+   "canon": "olive oil",
+   "aliases": []
+  },
+  {
+   "canon": "truffle",
+   "aliases": []
+  },
+  {
+   "canon": "truffle oil",
+   "aliases": []
+  },
+  {
+   "canon": "crushed red pepper",
+   "aliases": []
+  },
+  {
+   "canon": "parsley",
+   "aliases": []
+  },
+  {
+   "canon": "cilantro",
+   "aliases": []
+  },
+  {
+   "canon": "scallions",
+   "aliases": []
+  },
+  {
+   "canon": "green onion",
+   "aliases": []
+  },
+  {
+   "canon": "crab",
+   "aliases": []
+  },
+  {
+   "canon": "lobster",
+   "aliases": []
+  },
+  {
+   "canon": "clams",
+   "aliases": []
+  },
+  {
+   "canon": "fried egg",
+   "aliases": []
+  },
+  {
+   "canon": "potato",
+   "aliases": []
+  },
+  {
+   "canon": "french fries",
+   "aliases": []
+  },
+  {
+   "canon": "fries",
+   "aliases": []
+  },
+  {
+   "canon": "tater tots",
+   "aliases": []
+  },
+  {
+   "canon": "hot dog",
+   "aliases": []
+  },
+  {
+   "canon": "philly cheesesteak",
+   "aliases": []
+  },
+  {
+   "canon": "gyro meat",
+   "aliases": []
+  },
+  {
+   "canon": "lamb",
+   "aliases": []
+  },
+  {
+   "canon": "turkey",
+   "aliases": []
+  },
+  {
+   "canon": "turkey sausage",
+   "aliases": []
+  },
+  {
+   "canon": "portobello",
+   "aliases": []
+  },
+  {
+   "canon": "portobello mushrooms",
+   "aliases": []
+  },
+  {
+   "canon": "shiitake",
+   "aliases": []
+  },
+  {
+   "canon": "roasted red peppers",
+   "aliases": []
+  },
+  {
+   "canon": "giardiniera",
+   "aliases": []
+  },
+  {
+   "canon": "pickle",
+   "aliases": []
+  },
+  {
+   "canon": "cream cheese",
+   "aliases": []
+  },
+  {
+   "canon": "nutella",
+   "aliases": []
+  },
+  {
+   "canon": "cinnamon",
+   "aliases": []
+  },
+  {
+   "canon": "sugar",
+   "aliases": []
+  },
+  {
+   "canon": "mac and cheese",
+   "aliases": []
+  },
+  {
+   "canon": "avocado",
+   "aliases": []
+  },
+  {
+   "canon": "lettuce",
+   "aliases": []
+  },
+  {
+   "canon": "cucumber",
+   "aliases": []
+  },
+  {
+   "canon": "figs",
+   "aliases": []
+  },
+  {
+   "canon": "dates",
+   "aliases": []
+  },
+  {
+   "canon": "jalapeno poppers",
+   "aliases": []
+  },
+  {
+   "canon": "buffalo",
+   "aliases": []
+  },
+  {
+   "canon": "meat lovers",
+   "aliases": []
+  },
+  {
+   "canon": "supreme",
+   "aliases": []
+  },
+  {
+   "canon": "veggie",
+   "aliases": []
+  },
+  {
+   "canon": "margherita",
+   "aliases": []
+  },
+  {
+   "canon": "hawaiian",
+   "aliases": []
+  },
+  {
+   "canon": "plain cheese",
+   "aliases": []
+  },
+  {
+   "canon": "no cheese",
+   "aliases": []
+  },
+  {
+   "canon": "extra sauce",
+   "aliases": []
+  },
+  {
+   "canon": "light sauce",
+   "aliases": []
+  },
+  {
+   "canon": "thin crust",
+   "aliases": []
+  },
+  {
+   "canon": "stuffed crust",
+   "aliases": []
+  }
+ ],
+ "Ice cream flavors": [
+  {
+   "canon": "vanilla",
+   "aliases": []
+  },
+  {
+   "canon": "chocolate",
+   "aliases": []
+  },
+  {
+   "canon": "strawberry",
+   "aliases": []
+  },
+  {
+   "canon": "mint chocolate chip",
+   "aliases": []
+  },
+  {
+   "canon": "mint chip",
+   "aliases": []
+  },
+  {
+   "canon": "cookies and cream",
+   "aliases": []
+  },
+  {
+   "canon": "cookie dough",
+   "aliases": []
+  },
+  {
+   "canon": "rocky road",
+   "aliases": []
+  },
+  {
+   "canon": "butter pecan",
+   "aliases": []
+  },
+  {
+   "canon": "pistachio",
+   "aliases": []
+  },
+  {
+   "canon": "neapolitan",
+   "aliases": []
+  },
+  {
+   "canon": "coffee",
+   "aliases": []
+  },
+  {
+   "canon": "salted caramel",
+   "aliases": []
+  },
+  {
+   "canon": "caramel",
+   "aliases": []
+  },
+  {
+   "canon": "birthday cake",
+   "aliases": []
+  },
+  {
+   "canon": "cake batter",
+   "aliases": []
+  },
+  {
+   "canon": "moose tracks",
+   "aliases": []
+  },
+  {
+   "canon": "rainbow sherbet",
+   "aliases": []
+  },
+  {
+   "canon": "sherbet",
+   "aliases": []
+  },
+  {
+   "canon": "cherry garcia",
+   "aliases": []
+  },
+  {
+   "canon": "chunky monkey",
+   "aliases": []
+  },
+  {
+   "canon": "french vanilla",
+   "aliases": []
+  },
+  {
+   "canon": "chocolate chip",
+   "aliases": []
+  },
+  {
+   "canon": "double chocolate",
+   "aliases": []
+  },
+  {
+   "canon": "fudge brownie",
+   "aliases": []
+  },
+  {
+   "canon": "brownie batter",
+   "aliases": []
+  },
+  {
+   "canon": "peanut butter cup",
+   "aliases": []
+  },
+  {
+   "canon": "peanut butter",
+   "aliases": []
+  },
+  {
+   "canon": "banana",
+   "aliases": []
+  },
+  {
+   "canon": "mango",
+   "aliases": []
+  },
+  {
+   "canon": "coconut",
+   "aliases": []
+  },
+  {
+   "canon": "lemon",
+   "aliases": []
+  },
+  {
+   "canon": "raspberry",
+   "aliases": []
+  },
+  {
+   "canon": "black cherry",
+   "aliases": []
+  },
+  {
+   "canon": "cherry",
+   "aliases": []
+  },
+  {
+   "canon": "cotton candy",
+   "aliases": []
+  },
+  {
+   "canon": "bubblegum",
+   "aliases": []
+  },
+  {
+   "canon": "superman",
+   "aliases": []
+  },
+  {
+   "canon": "matcha",
+   "aliases": []
+  },
+  {
+   "canon": "green tea",
+   "aliases": []
+  },
+  {
+   "canon": "rum raisin",
+   "aliases": []
+  },
+  {
+   "canon": "toffee",
+   "aliases": []
+  },
+  {
+   "canon": "praline",
+   "aliases": []
+  },
+  {
+   "canon": "dulce de leche",
+   "aliases": []
+  },
+  {
+   "canon": "tiramisu",
+   "aliases": []
+  },
+  {
+   "canon": "cheesecake",
+   "aliases": []
+  },
+  {
+   "canon": "pumpkin",
+   "aliases": []
+  },
+  {
+   "canon": "peppermint",
+   "aliases": []
+  },
+  {
+   "canon": "spumoni",
+   "aliases": []
+  },
+  {
+   "canon": "tutti frutti",
+   "aliases": []
+  },
+  {
+   "canon": "maple walnut",
+   "aliases": []
+  },
+  {
+   "canon": "black raspberry",
+   "aliases": []
+  },
+  {
+   "canon": "chocolate fudge",
+   "aliases": []
+  },
+  {
+   "canon": "phish food",
+   "aliases": []
+  },
+  {
+   "canon": "half baked",
+   "aliases": []
+  },
+  {
+   "canon": "red velvet",
+   "aliases": []
+  },
+  {
+   "canon": "s'mores",
+   "aliases": []
+  },
+  {
+   "canon": "smores",
+   "aliases": []
+  },
+  {
+   "canon": "oreo",
+   "aliases": []
+  },
+  {
+   "canon": "blue moon",
+   "aliases": []
+  },
+  {
+   "canon": "stracciatella",
+   "aliases": []
+  },
+  {
+   "canon": "hazelnut",
+   "aliases": []
+  },
+  {
+   "canon": "honeycomb",
+   "aliases": []
+  },
+  {
+   "canon": "ube",
+   "aliases": []
+  },
+  {
+   "canon": "lavender",
+   "aliases": []
+  },
+  {
+   "canon": "horchata",
+   "aliases": []
+  },
+  {
+   "canon": "vanilla bean",
+   "aliases": []
+  },
+  {
+   "canon": "mint",
+   "aliases": []
+  },
+  {
+   "canon": "cookies n cream",
+   "aliases": []
+  },
+  {
+   "canon": "chocolate chip cookie dough",
+   "aliases": []
+  },
+  {
+   "canon": "mocha",
+   "aliases": []
+  },
+  {
+   "canon": "sorbet",
+   "aliases": []
+  },
+  {
+   "canon": "peach",
+   "aliases": []
+  },
+  {
+   "canon": "banana split",
+   "aliases": []
+  },
+  {
+   "canon": "fudge",
+   "aliases": []
+  },
+  {
+   "canon": "hot fudge",
+   "aliases": []
+  },
+  {
+   "canon": "double fudge",
+   "aliases": []
+  },
+  {
+   "canon": "chocolate fudge brownie",
+   "aliases": []
+  },
+  {
+   "canon": "brownie",
+   "aliases": []
+  },
+  {
+   "canon": "mud pie",
+   "aliases": []
+  },
+  {
+   "canon": "reeses",
+   "aliases": []
+  },
+  {
+   "canon": "americone dream",
+   "aliases": []
+  },
+  {
+   "canon": "butter brickle",
+   "aliases": []
+  },
+  {
+   "canon": "english toffee",
+   "aliases": []
+  },
+  {
+   "canon": "heath bar crunch",
+   "aliases": []
+  },
+  {
+   "canon": "snickers",
+   "aliases": []
+  },
+  {
+   "canon": "twix",
+   "aliases": []
+  },
+  {
+   "canon": "m&m",
+   "aliases": []
+  },
+  {
+   "canon": "cookie monster",
+   "aliases": []
+  },
+  {
+   "canon": "tiger tail",
+   "aliases": []
+  },
+  {
+   "canon": "taro",
+   "aliases": []
+  },
+  {
+   "canon": "black sesame",
+   "aliases": []
+  },
+  {
+   "canon": "almond",
+   "aliases": []
+  },
+  {
+   "canon": "nutella",
+   "aliases": []
+  },
+  {
+   "canon": "espresso",
+   "aliases": []
+  },
+  {
+   "canon": "cappuccino",
+   "aliases": []
+  },
+  {
+   "canon": "eggnog",
+   "aliases": []
+  },
+  {
+   "canon": "pumpkin spice",
+   "aliases": []
+  },
+  {
+   "canon": "gingerbread",
+   "aliases": []
+  },
+  {
+   "canon": "candy cane",
+   "aliases": []
+  },
+  {
+   "canon": "peppermint bark",
+   "aliases": []
+  },
+  {
+   "canon": "carrot cake",
+   "aliases": []
+  },
+  {
+   "canon": "strawberry cheesecake",
+   "aliases": []
+  },
+  {
+   "canon": "blueberry",
+   "aliases": []
+  },
+  {
+   "canon": "blackberry",
+   "aliases": []
+  },
+  {
+   "canon": "mixed berry",
+   "aliases": []
+  },
+  {
+   "canon": "very berry",
+   "aliases": []
+  },
+  {
+   "canon": "watermelon",
+   "aliases": []
+  },
+  {
+   "canon": "pineapple",
+   "aliases": []
+  },
+  {
+   "canon": "orange",
+   "aliases": []
+  },
+  {
+   "canon": "orange creamsicle",
+   "aliases": []
+  },
+  {
+   "canon": "creamsicle",
+   "aliases": []
+  },
+  {
+   "canon": "root beer",
+   "aliases": []
+  },
+  {
+   "canon": "root beer float",
+   "aliases": []
+  },
+  {
+   "canon": "cola",
+   "aliases": []
+  },
+  {
+   "canon": "lime",
+   "aliases": []
+  },
+  {
+   "canon": "key lime",
+   "aliases": []
+  },
+  {
+   "canon": "key lime pie",
+   "aliases": []
+  },
+  {
+   "canon": "butterscotch",
+   "aliases": []
+  },
+  {
+   "canon": "maple",
+   "aliases": []
+  },
+  {
+   "canon": "walnut",
+   "aliases": []
+  },
+  {
+   "canon": "pecan",
+   "aliases": []
+  },
+  {
+   "canon": "pralines and cream",
+   "aliases": []
+  },
+  {
+   "canon": "honey",
+   "aliases": []
+  },
+  {
+   "canon": "rose",
+   "aliases": []
+  },
+  {
+   "canon": "chai",
+   "aliases": []
+  },
+  {
+   "canon": "dragon fruit",
+   "aliases": []
+  },
+  {
+   "canon": "lychee",
+   "aliases": []
+  },
+  {
+   "canon": "passion fruit",
+   "aliases": []
+  },
+  {
+   "canon": "guava",
+   "aliases": []
+  },
+  {
+   "canon": "avocado",
+   "aliases": []
+  },
+  {
+   "canon": "sweet corn",
+   "aliases": []
+  },
+  {
+   "canon": "brown sugar",
+   "aliases": []
+  },
+  {
+   "canon": "cinnamon",
+   "aliases": []
+  },
+  {
+   "canon": "snickerdoodle",
+   "aliases": []
+  },
+  {
+   "canon": "oatmeal cookie",
+   "aliases": []
+  },
+  {
+   "canon": "sugar cookie",
+   "aliases": []
+  },
+  {
+   "canon": "banana pudding",
+   "aliases": []
+  },
+  {
+   "canon": "peaches and cream",
+   "aliases": []
+  },
+  {
+   "canon": "strawberry shortcake",
+   "aliases": []
+  },
+  {
+   "canon": "fruity pebbles",
+   "aliases": []
+  },
+  {
+   "canon": "cap n crunch",
+   "aliases": []
+  },
+  {
+   "canon": "froot loops",
+   "aliases": []
+  },
+  {
+   "canon": "cinnamon toast crunch",
+   "aliases": []
+  },
+  {
+   "canon": "cereal milk",
+   "aliases": []
+  },
+  {
+   "canon": "brown butter",
+   "aliases": []
+  },
+  {
+   "canon": "burnt caramel",
+   "aliases": []
+  },
+  {
+   "canon": "caramel swirl",
+   "aliases": []
+  },
+  {
+   "canon": "fudge ripple",
+   "aliases": []
+  },
+  {
+   "canon": "vanilla swirl",
+   "aliases": []
+  },
+  {
+   "canon": "twist",
+   "aliases": []
+  },
+  {
+   "canon": "soft serve",
+   "aliases": []
+  },
+  {
+   "canon": "gelato",
+   "aliases": []
+  },
+  {
+   "canon": "frozen yogurt",
+   "aliases": []
+  },
+  {
+   "canon": "froyo",
+   "aliases": []
+  },
+  {
+   "canon": "dippin dots",
+   "aliases": []
+  },
+  {
+   "canon": "sherbert",
+   "aliases": []
+  }
+ ],
+ "Sandwiches": [
+  {
+   "canon": "blt",
+   "aliases": []
+  },
+  {
+   "canon": "grilled cheese",
+   "aliases": []
+  },
+  {
+   "canon": "pbj",
+   "aliases": []
+  },
+  {
+   "canon": "peanut butter and jelly",
+   "aliases": []
+  },
+  {
+   "canon": "pb&j",
+   "aliases": []
+  },
+  {
+   "canon": "club",
+   "aliases": []
+  },
+  {
+   "canon": "club sandwich",
+   "aliases": []
+  },
+  {
+   "canon": "reuben",
+   "aliases": []
+  },
+  {
+   "canon": "cuban",
+   "aliases": []
+  },
+  {
+   "canon": "sub",
+   "aliases": []
+  },
+  {
+   "canon": "hoagie",
+   "aliases": []
+  },
+  {
+   "canon": "hero",
+   "aliases": []
+  },
+  {
+   "canon": "panini",
+   "aliases": []
+  },
+  {
+   "canon": "philly cheesesteak",
+   "aliases": []
+  },
+  {
+   "canon": "cheesesteak",
+   "aliases": []
+  },
+  {
+   "canon": "sloppy joe",
+   "aliases": []
+  },
+  {
+   "canon": "tuna melt",
+   "aliases": []
+  },
+  {
+   "canon": "tuna",
+   "aliases": []
+  },
+  {
+   "canon": "egg salad",
+   "aliases": []
+  },
+  {
+   "canon": "chicken salad",
+   "aliases": []
+  },
+  {
+   "canon": "ham and cheese",
+   "aliases": []
+  },
+  {
+   "canon": "turkey",
+   "aliases": []
+  },
+  {
+   "canon": "meatball sub",
+   "aliases": []
+  },
+  {
+   "canon": "french dip",
+   "aliases": []
+  },
+  {
+   "canon": "monte cristo",
+   "aliases": []
+  },
+  {
+   "canon": "po boy",
+   "aliases": []
+  },
+  {
+   "canon": "muffuletta",
+   "aliases": []
+  },
+  {
+   "canon": "banh mi",
+   "aliases": []
+  },
+  {
+   "canon": "croque monsieur",
+   "aliases": []
+  },
+  {
+   "canon": "gyro",
+   "aliases": []
+  },
+  {
+   "canon": "wrap",
+   "aliases": []
+  },
+  {
+   "canon": "burrito",
+   "aliases": []
+  },
+  {
+   "canon": "hamburger",
+   "aliases": []
+  },
+  {
+   "canon": "burger",
+   "aliases": []
+  },
+  {
+   "canon": "cheeseburger",
+   "aliases": []
+  },
+  {
+   "canon": "hot dog",
+   "aliases": []
+  },
+  {
+   "canon": "chicken sandwich",
+   "aliases": []
+  },
+  {
+   "canon": "fish sandwich",
+   "aliases": []
+  },
+  {
+   "canon": "pulled pork",
+   "aliases": []
+  },
+  {
+   "canon": "italian sub",
+   "aliases": []
+  },
+  {
+   "canon": "caprese",
+   "aliases": []
+  },
+  {
+   "canon": "bacon egg and cheese",
+   "aliases": []
+  },
+  {
+   "canon": "breakfast sandwich",
+   "aliases": []
+  },
+  {
+   "canon": "patty melt",
+   "aliases": []
+  },
+  {
+   "canon": "lobster roll",
+   "aliases": []
+  },
+  {
+   "canon": "katsu sando",
+   "aliases": []
+  },
+  {
+   "canon": "fluffernutter",
+   "aliases": []
+  },
+  {
+   "canon": "cucumber sandwich",
+   "aliases": []
+  },
+  {
+   "canon": "ice cream sandwich",
+   "aliases": []
+  },
+  {
+   "canon": "torta",
+   "aliases": []
+  },
+  {
+   "canon": "falafel",
+   "aliases": []
+  },
+  {
+   "canon": "shawarma",
+   "aliases": []
+  },
+  {
+   "canon": "bagel sandwich",
+   "aliases": []
+  },
+  {
+   "canon": "submarine",
+   "aliases": []
+  },
+  {
+   "canon": "grinder",
+   "aliases": []
+  },
+  {
+   "canon": "sandwich",
+   "aliases": []
+  },
+  {
+   "canon": "toastie",
+   "aliases": []
+  },
+  {
+   "canon": "bacon sandwich",
+   "aliases": []
+  },
+  {
+   "canon": "chip butty",
+   "aliases": []
+  },
+  {
+   "canon": "melt",
+   "aliases": []
+  }
+ ],
+ "Insects": [
+  {
+   "canon": "ant",
+   "aliases": []
+  },
+  {
+   "canon": "bee",
+   "aliases": []
+  },
+  {
+   "canon": "wasp",
+   "aliases": []
+  },
+  {
+   "canon": "hornet",
+   "aliases": []
+  },
+  {
+   "canon": "fly",
+   "aliases": []
+  },
+  {
+   "canon": "housefly",
+   "aliases": []
+  },
+  {
+   "canon": "mosquito",
+   "aliases": []
+  },
+  {
+   "canon": "beetle",
+   "aliases": []
+  },
+  {
+   "canon": "ladybug",
+   "aliases": []
+  },
+  {
+   "canon": "ladybird",
+   "aliases": []
+  },
+  {
+   "canon": "butterfly",
+   "aliases": []
+  },
+  {
+   "canon": "moth",
+   "aliases": []
+  },
+  {
+   "canon": "grasshopper",
+   "aliases": []
+  },
+  {
+   "canon": "cricket",
+   "aliases": []
+  },
+  {
+   "canon": "dragonfly",
+   "aliases": []
+  },
+  {
+   "canon": "damselfly",
+   "aliases": []
+  },
+  {
+   "canon": "cockroach",
+   "aliases": []
+  },
+  {
+   "canon": "roach",
+   "aliases": []
+  },
+  {
+   "canon": "termite",
+   "aliases": []
+  },
+  {
+   "canon": "flea",
+   "aliases": []
+  },
+  {
+   "canon": "louse",
+   "aliases": []
+  },
+  {
+   "canon": "lice",
+   "aliases": []
+  },
+  {
+   "canon": "bed bug",
+   "aliases": []
+  },
+  {
+   "canon": "bedbug",
+   "aliases": []
+  },
+  {
+   "canon": "stink bug",
+   "aliases": []
+  },
+  {
+   "canon": "praying mantis",
+   "aliases": []
+  },
+  {
+   "canon": "mantis",
+   "aliases": []
+  },
+  {
+   "canon": "firefly",
+   "aliases": []
+  },
+  {
+   "canon": "lightning bug",
+   "aliases": []
+  },
+  {
+   "canon": "cicada",
+   "aliases": []
+  },
+  {
+   "canon": "aphid",
+   "aliases": []
+  },
+  {
+   "canon": "weevil",
+   "aliases": []
+  },
+  {
+   "canon": "earwig",
+   "aliases": []
+  },
+  {
+   "canon": "silverfish",
+   "aliases": []
+  },
+  {
+   "canon": "locust",
+   "aliases": []
+  },
+  {
+   "canon": "katydid",
+   "aliases": []
+  },
+  {
+   "canon": "stick insect",
+   "aliases": []
+  },
+  {
+   "canon": "walking stick",
+   "aliases": []
+  },
+  {
+   "canon": "water strider",
+   "aliases": []
+  },
+  {
+   "canon": "gnat",
+   "aliases": []
+  },
+  {
+   "canon": "fruit fly",
+   "aliases": []
+  },
+  {
+   "canon": "horsefly",
+   "aliases": []
+  },
+  {
+   "canon": "bumblebee",
+   "aliases": []
+  },
+  {
+   "canon": "honeybee",
+   "aliases": []
+  },
+  {
+   "canon": "yellow jacket",
+   "aliases": []
+  },
+  {
+   "canon": "caterpillar",
+   "aliases": []
+  },
+  {
+   "canon": "maggot",
+   "aliases": []
+  },
+  {
+   "canon": "larva",
+   "aliases": []
+  },
+  {
+   "canon": "dung beetle",
+   "aliases": []
+  },
+  {
+   "canon": "stag beetle",
+   "aliases": []
+  },
+  {
+   "canon": "rhinoceros beetle",
+   "aliases": []
+  },
+  {
+   "canon": "june bug",
+   "aliases": []
+  },
+  {
+   "canon": "boll weevil",
+   "aliases": []
+  },
+  {
+   "canon": "mayfly",
+   "aliases": []
+  },
+  {
+   "canon": "lacewing",
+   "aliases": []
+  },
+  {
+   "canon": "leafhopper",
+   "aliases": []
+  },
+  {
+   "canon": "scarab",
+   "aliases": []
+  },
+  {
+   "canon": "weta",
+   "aliases": []
+  },
+  {
+   "canon": "monarch",
+   "aliases": []
+  },
+  {
+   "canon": "luna moth",
+   "aliases": []
+  },
+  {
+   "canon": "hercules beetle",
+   "aliases": []
+  },
+  {
+   "canon": "assassin bug",
+   "aliases": []
+  },
+  {
+   "canon": "water bug",
+   "aliases": []
+  },
+  {
+   "canon": "pill bug",
+   "aliases": []
+  },
+  {
+   "canon": "midge",
+   "aliases": []
+  },
+  {
+   "canon": "carpenter ant",
+   "aliases": []
+  },
+  {
+   "canon": "fire ant",
+   "aliases": []
+  },
+  {
+   "canon": "leaf beetle",
+   "aliases": []
+  },
+  {
+   "canon": "ground beetle",
+   "aliases": []
+  },
+  {
+   "canon": "monarch butterfly",
+   "aliases": []
+  },
+  {
+   "canon": "tsetse fly",
+   "aliases": []
+  }
+ ],
+ "Music genres": [
+  {
+   "canon": "pop",
+   "aliases": []
+  },
+  {
+   "canon": "rock",
+   "aliases": []
+  },
+  {
+   "canon": "hip hop",
+   "aliases": []
+  },
+  {
+   "canon": "rap",
+   "aliases": []
+  },
+  {
+   "canon": "jazz",
+   "aliases": []
+  },
+  {
+   "canon": "blues",
+   "aliases": []
+  },
+  {
+   "canon": "country",
+   "aliases": []
+  },
+  {
+   "canon": "classical",
+   "aliases": []
+  },
+  {
+   "canon": "metal",
+   "aliases": []
+  },
+  {
+   "canon": "heavy metal",
+   "aliases": []
+  },
+  {
+   "canon": "punk",
+   "aliases": []
+  },
+  {
+   "canon": "reggae",
+   "aliases": []
+  },
+  {
+   "canon": "edm",
+   "aliases": []
+  },
+  {
+   "canon": "techno",
+   "aliases": []
+  },
+  {
+   "canon": "house",
+   "aliases": []
+  },
+  {
+   "canon": "r&b",
+   "aliases": []
+  },
+  {
+   "canon": "rnb",
+   "aliases": []
+  },
+  {
+   "canon": "soul",
+   "aliases": []
+  },
+  {
+   "canon": "funk",
+   "aliases": []
+  },
+  {
+   "canon": "disco",
+   "aliases": []
+  },
+  {
+   "canon": "k-pop",
+   "aliases": []
+  },
+  {
+   "canon": "kpop",
+   "aliases": []
+  },
+  {
+   "canon": "indie",
+   "aliases": []
+  },
+  {
+   "canon": "folk",
+   "aliases": []
+  },
+  {
+   "canon": "gospel",
+   "aliases": []
+  },
+  {
+   "canon": "reggaeton",
+   "aliases": []
+  },
+  {
+   "canon": "latin",
+   "aliases": []
+  },
+  {
+   "canon": "salsa",
+   "aliases": []
+  },
+  {
+   "canon": "trap",
+   "aliases": []
+  },
+  {
+   "canon": "drill",
+   "aliases": []
+  },
+  {
+   "canon": "grunge",
+   "aliases": []
+  },
+  {
+   "canon": "emo",
+   "aliases": []
+  },
+  {
+   "canon": "ska",
+   "aliases": []
+  },
+  {
+   "canon": "dubstep",
+   "aliases": []
+  },
+  {
+   "canon": "drum and bass",
+   "aliases": []
+  },
+  {
+   "canon": "trance",
+   "aliases": []
+  },
+  {
+   "canon": "lofi",
+   "aliases": []
+  },
+  {
+   "canon": "lo-fi",
+   "aliases": []
+  },
+  {
+   "canon": "opera",
+   "aliases": []
+  },
+  {
+   "canon": "bluegrass",
+   "aliases": []
+  },
+  {
+   "canon": "alternative",
+   "aliases": []
+  },
+  {
+   "canon": "punk rock",
+   "aliases": []
+  },
+  {
+   "canon": "hard rock",
+   "aliases": []
+  },
+  {
+   "canon": "soft rock",
+   "aliases": []
+  },
+  {
+   "canon": "synthwave",
+   "aliases": []
+  },
+  {
+   "canon": "afrobeats",
+   "aliases": []
+  },
+  {
+   "canon": "afrobeat",
+   "aliases": []
+  },
+  {
+   "canon": "dancehall",
+   "aliases": []
+  },
+  {
+   "canon": "bossa nova",
+   "aliases": []
+  },
+  {
+   "canon": "samba",
+   "aliases": []
+  },
+  {
+   "canon": "flamenco",
+   "aliases": []
+  },
+  {
+   "canon": "mariachi",
+   "aliases": []
+  },
+  {
+   "canon": "polka",
+   "aliases": []
+  },
+  {
+   "canon": "swing",
+   "aliases": []
+  },
+  {
+   "canon": "ragtime",
+   "aliases": []
+  },
+  {
+   "canon": "motown",
+   "aliases": []
+  },
+  {
+   "canon": "hyperpop",
+   "aliases": []
+  },
+  {
+   "canon": "phonk",
+   "aliases": []
+  },
+  {
+   "canon": "j-pop",
+   "aliases": []
+  },
+  {
+   "canon": "jpop",
+   "aliases": []
+  },
+  {
+   "canon": "grime",
+   "aliases": []
+  },
+  {
+   "canon": "garage",
+   "aliases": []
+  },
+  {
+   "canon": "ambient",
+   "aliases": []
+  },
+  {
+   "canon": "new wave",
+   "aliases": []
+  },
+  {
+   "canon": "shoegaze",
+   "aliases": []
+  },
+  {
+   "canon": "emo rap",
+   "aliases": []
+  },
+  {
+   "canon": "corridos",
+   "aliases": []
+  },
+  {
+   "canon": "electronic",
+   "aliases": []
+  },
+  {
+   "canon": "hardcore",
+   "aliases": []
+  },
+  {
+   "canon": "psychedelic",
+   "aliases": []
+  },
+  {
+   "canon": "industrial",
+   "aliases": []
+  },
+  {
+   "canon": "synthpop",
+   "aliases": []
+  },
+  {
+   "canon": "calypso",
+   "aliases": []
+  },
+  {
+   "canon": "surf",
+   "aliases": []
+  }
+ ],
+ "Thanksgiving dinner foods": [
+  {
+   "canon": "turkey",
+   "aliases": []
+  },
+  {
+   "canon": "stuffing",
+   "aliases": []
+  },
+  {
+   "canon": "dressing",
+   "aliases": []
+  },
+  {
+   "canon": "mashed potatoes",
+   "aliases": []
+  },
+  {
+   "canon": "gravy",
+   "aliases": []
+  },
+  {
+   "canon": "cranberry sauce",
+   "aliases": []
+  },
+  {
+   "canon": "pumpkin pie",
+   "aliases": []
+  },
+  {
+   "canon": "sweet potatoes",
+   "aliases": []
+  },
+  {
+   "canon": "sweet potato casserole",
+   "aliases": []
+  },
+  {
+   "canon": "yams",
+   "aliases": []
+  },
+  {
+   "canon": "candied yams",
+   "aliases": []
+  },
+  {
+   "canon": "green bean casserole",
+   "aliases": []
+  },
+  {
+   "canon": "green beans",
+   "aliases": []
+  },
+  {
+   "canon": "corn",
+   "aliases": []
+  },
+  {
+   "canon": "rolls",
+   "aliases": []
+  },
+  {
+   "canon": "dinner rolls",
+   "aliases": []
+  },
+  {
+   "canon": "mac and cheese",
+   "aliases": []
+  },
+  {
+   "canon": "ham",
+   "aliases": []
+  },
+  {
+   "canon": "pecan pie",
+   "aliases": []
+  },
+  {
+   "canon": "apple pie",
+   "aliases": []
+  },
+  {
+   "canon": "cornbread",
+   "aliases": []
+  },
+  {
+   "canon": "deviled eggs",
+   "aliases": []
+  },
+  {
+   "canon": "brussels sprouts",
+   "aliases": []
+  },
+  {
+   "canon": "salad",
+   "aliases": []
+  },
+  {
+   "canon": "biscuits",
+   "aliases": []
+  },
+  {
+   "canon": "corn casserole",
+   "aliases": []
+  },
+  {
+   "canon": "carrots",
+   "aliases": []
+  },
+  {
+   "canon": "squash",
+   "aliases": []
+  },
+  {
+   "canon": "butternut squash",
+   "aliases": []
+  },
+  {
+   "canon": "cranberries",
+   "aliases": []
+  },
+  {
+   "canon": "pie",
+   "aliases": []
+  },
+  {
+   "canon": "whipped cream",
+   "aliases": []
+  },
+  {
+   "canon": "turducken",
+   "aliases": []
+  },
+  {
+   "canon": "casserole",
+   "aliases": []
+  },
+  {
+   "canon": "potatoes",
+   "aliases": []
+  },
+  {
+   "canon": "roast potatoes",
+   "aliases": []
+  },
+  {
+   "canon": "collard greens",
+   "aliases": []
+  },
+  {
+   "canon": "creamed corn",
+   "aliases": []
+  }
+ ],
+ "Christmas decorations": [
+  {
+   "canon": "christmas tree",
+   "aliases": []
+  },
+  {
+   "canon": "tree",
+   "aliases": []
+  },
+  {
+   "canon": "lights",
+   "aliases": []
+  },
+  {
+   "canon": "christmas lights",
+   "aliases": []
+  },
+  {
+   "canon": "fairy lights",
+   "aliases": []
+  },
+  {
+   "canon": "ornaments",
+   "aliases": []
+  },
+  {
+   "canon": "baubles",
+   "aliases": []
+  },
+  {
+   "canon": "tinsel",
+   "aliases": []
+  },
+  {
+   "canon": "wreath",
+   "aliases": []
+  },
+  {
+   "canon": "star",
+   "aliases": []
+  },
+  {
+   "canon": "angel",
+   "aliases": []
+  },
+  {
+   "canon": "stocking",
+   "aliases": []
+  },
+  {
+   "canon": "stockings",
+   "aliases": []
+  },
+  {
+   "canon": "garland",
+   "aliases": []
+  },
+  {
+   "canon": "mistletoe",
+   "aliases": []
+  },
+  {
+   "canon": "holly",
+   "aliases": []
+  },
+  {
+   "canon": "candy cane",
+   "aliases": []
+  },
+  {
+   "canon": "candy canes",
+   "aliases": []
+  },
+  {
+   "canon": "nativity",
+   "aliases": []
+  },
+  {
+   "canon": "nativity scene",
+   "aliases": []
+  },
+  {
+   "canon": "snow globe",
+   "aliases": []
+  },
+  {
+   "canon": "poinsettia",
+   "aliases": []
+  },
+  {
+   "canon": "nutcracker",
+   "aliases": []
+  },
+  {
+   "canon": "elf on the shelf",
+   "aliases": []
+  },
+  {
+   "canon": "advent calendar",
+   "aliases": []
+  },
+  {
+   "canon": "tree topper",
+   "aliases": []
+  },
+  {
+   "canon": "bells",
+   "aliases": []
+  },
+  {
+   "canon": "ribbon",
+   "aliases": []
+  },
+  {
+   "canon": "bows",
+   "aliases": []
+  },
+  {
+   "canon": "presents",
+   "aliases": []
+  },
+  {
+   "canon": "gifts",
+   "aliases": []
+  },
+  {
+   "canon": "inflatable",
+   "aliases": []
+  },
+  {
+   "canon": "inflatables",
+   "aliases": []
+  },
+  {
+   "canon": "snowman",
+   "aliases": []
+  },
+  {
+   "canon": "reindeer",
+   "aliases": []
+  },
+  {
+   "canon": "santa",
+   "aliases": []
+  },
+  {
+   "canon": "candles",
+   "aliases": []
+  },
+  {
+   "canon": "menorah",
+   "aliases": []
+  },
+  {
+   "canon": "pine cones",
+   "aliases": []
+  },
+  {
+   "canon": "popcorn garland",
+   "aliases": []
+  },
+  {
+   "canon": "lanterns",
+   "aliases": []
+  },
+  {
+   "canon": "icicle lights",
+   "aliases": []
+  },
+  {
+   "canon": "tree skirt",
+   "aliases": []
+  },
+  {
+   "canon": "village",
+   "aliases": []
+  },
+  {
+   "canon": "christmas village",
+   "aliases": []
+  },
+  {
+   "canon": "gingerbread house",
+   "aliases": []
+  },
+  {
+   "canon": "paper snowflakes",
+   "aliases": []
+  },
+  {
+   "canon": "snowflakes",
+   "aliases": []
+  }
+ ],
+ "Valentine's Day things": [
+  {
+   "canon": "roses",
+   "aliases": []
+  },
+  {
+   "canon": "rose",
+   "aliases": []
+  },
+  {
+   "canon": "chocolate",
+   "aliases": []
+  },
+  {
+   "canon": "chocolates",
+   "aliases": []
+  },
+  {
+   "canon": "cards",
+   "aliases": []
+  },
+  {
+   "canon": "valentine",
+   "aliases": []
+  },
+  {
+   "canon": "valentines",
+   "aliases": []
+  },
+  {
+   "canon": "cupid",
+   "aliases": []
+  },
+  {
+   "canon": "hearts",
+   "aliases": []
+  },
+  {
+   "canon": "heart",
+   "aliases": []
+  },
+  {
+   "canon": "teddy bear",
+   "aliases": []
+  },
+  {
+   "canon": "candy hearts",
+   "aliases": []
+  },
+  {
+   "canon": "conversation hearts",
+   "aliases": []
+  },
+  {
+   "canon": "flowers",
+   "aliases": []
+  },
+  {
+   "canon": "love letter",
+   "aliases": []
+  },
+  {
+   "canon": "kiss",
+   "aliases": []
+  },
+  {
+   "canon": "kisses",
+   "aliases": []
+  },
+  {
+   "canon": "hugs",
+   "aliases": []
+  },
+  {
+   "canon": "date",
+   "aliases": []
+  },
+  {
+   "canon": "dinner date",
+   "aliases": []
+  },
+  {
+   "canon": "jewelry",
+   "aliases": []
+  },
+  {
+   "canon": "ring",
+   "aliases": []
+  },
+  {
+   "canon": "balloons",
+   "aliases": []
+  },
+  {
+   "canon": "red",
+   "aliases": []
+  },
+  {
+   "canon": "pink",
+   "aliases": []
+  },
+  {
+   "canon": "box of chocolates",
+   "aliases": []
+  },
+  {
+   "canon": "bouquet",
+   "aliases": []
+  },
+  {
+   "canon": "perfume",
+   "aliases": []
+  },
+  {
+   "canon": "lace",
+   "aliases": []
+  },
+  {
+   "canon": "arrow",
+   "aliases": []
+  },
+  {
+   "canon": "bow and arrow",
+   "aliases": []
+  },
+  {
+   "canon": "candles",
+   "aliases": []
+  },
+  {
+   "canon": "champagne",
+   "aliases": []
+  },
+  {
+   "canon": "candlelit dinner",
+   "aliases": []
+  },
+  {
+   "canon": "romance",
+   "aliases": []
+  },
+  {
+   "canon": "love",
+   "aliases": []
+  },
+  {
+   "canon": "crush",
+   "aliases": []
+  },
+  {
+   "canon": "galentines",
+   "aliases": []
+  },
+  {
+   "canon": "xoxo",
+   "aliases": []
+  },
+  {
+   "canon": "lovebirds",
+   "aliases": []
+  },
+  {
+   "canon": "doves",
+   "aliases": []
+  },
+  {
+   "canon": "chocolate strawberries",
+   "aliases": []
+  },
+  {
+   "canon": "gifts",
+   "aliases": []
+  }
+ ],
+ "Easter things": [
+  {
+   "canon": "eggs",
+   "aliases": []
+  },
+  {
+   "canon": "easter eggs",
+   "aliases": []
+  },
+  {
+   "canon": "easter bunny",
+   "aliases": []
+  },
+  {
+   "canon": "bunny",
+   "aliases": []
+  },
+  {
+   "canon": "basket",
+   "aliases": []
+  },
+  {
+   "canon": "easter basket",
+   "aliases": []
+  },
+  {
+   "canon": "chocolate bunny",
+   "aliases": []
+  },
+  {
+   "canon": "peeps",
+   "aliases": []
+  },
+  {
+   "canon": "jelly beans",
+   "aliases": []
+  },
+  {
+   "canon": "egg hunt",
+   "aliases": []
+  },
+  {
+   "canon": "easter egg hunt",
+   "aliases": []
+  },
+  {
+   "canon": "chicks",
+   "aliases": []
+  },
+  {
+   "canon": "lamb",
+   "aliases": []
+  },
+  {
+   "canon": "lilies",
+   "aliases": []
+  },
+  {
+   "canon": "spring",
+   "aliases": []
+  },
+  {
+   "canon": "dyed eggs",
+   "aliases": []
+  },
+  {
+   "canon": "egg dye",
+   "aliases": []
+  },
+  {
+   "canon": "chocolate eggs",
+   "aliases": []
+  },
+  {
+   "canon": "cadbury eggs",
+   "aliases": []
+  },
+  {
+   "canon": "creme eggs",
+   "aliases": []
+  },
+  {
+   "canon": "plastic eggs",
+   "aliases": []
+  },
+  {
+   "canon": "grass",
+   "aliases": []
+  },
+  {
+   "canon": "easter grass",
+   "aliases": []
+  },
+  {
+   "canon": "hot cross buns",
+   "aliases": []
+  },
+  {
+   "canon": "ham",
+   "aliases": []
+  },
+  {
+   "canon": "bonnet",
+   "aliases": []
+  },
+  {
+   "canon": "easter bonnet",
+   "aliases": []
+  },
+  {
+   "canon": "church",
+   "aliases": []
+  },
+  {
+   "canon": "tulips",
+   "aliases": []
+  },
+  {
+   "canon": "daffodils",
+   "aliases": []
+  },
+  {
+   "canon": "pastel",
+   "aliases": []
+  },
+  {
+   "canon": "egg roll",
+   "aliases": []
+  },
+  {
+   "canon": "candy",
+   "aliases": []
+  },
+  {
+   "canon": "marshmallow chicks",
+   "aliases": []
+  },
+  {
+   "canon": "carrots",
+   "aliases": []
+  },
+  {
+   "canon": "baby chicks",
+   "aliases": []
+  },
+  {
+   "canon": "ducklings",
+   "aliases": []
+  },
+  {
+   "canon": "flowers",
+   "aliases": []
+  },
+  {
+   "canon": "sunrise",
+   "aliases": []
+  },
+  {
+   "canon": "cross",
+   "aliases": []
+  }
+ ],
+ "Words ending in -MAN": [
+  {
+   "canon": "man",
+   "aliases": []
+  },
+  {
+   "canon": "human",
+   "aliases": []
+  },
+  {
+   "canon": "woman",
+   "aliases": []
+  },
+  {
+   "canon": "chairman",
+   "aliases": []
+  },
+  {
+   "canon": "roman",
+   "aliases": []
+  },
+  {
+   "canon": "norman",
+   "aliases": []
+  },
+  {
+   "canon": "cayman",
+   "aliases": []
+  },
+  {
+   "canon": "batman",
+   "aliases": []
+  },
+  {
+   "canon": "mailman",
+   "aliases": []
+  },
+  {
+   "canon": "gentleman",
+   "aliases": []
+  },
+  {
+   "canon": "spokesman",
+   "aliases": []
+  },
+  {
+   "canon": "freshman",
+   "aliases": []
+  },
+  {
+   "canon": "chapman",
+   "aliases": []
+  },
+  {
+   "canon": "freeman",
+   "aliases": []
+  },
+  {
+   "canon": "superman",
+   "aliases": []
+  },
+  {
+   "canon": "goodman",
+   "aliases": []
+  },
+  {
+   "canon": "congressman",
+   "aliases": []
+  },
+  {
+   "canon": "fisherman",
+   "aliases": []
+  },
+  {
+   "canon": "bowman",
+   "aliases": []
+  },
+  {
+   "canon": "spiderman",
+   "aliases": []
+  },
+  {
+   "canon": "ombudsman",
+   "aliases": []
+  },
+  {
+   "canon": "craftsman",
+   "aliases": []
+  },
+  {
+   "canon": "foreman",
+   "aliases": []
+  },
+  {
+   "canon": "adman",
+   "aliases": []
+  },
+  {
+   "canon": "adwoman",
+   "aliases": []
+  },
+  {
+   "canon": "aidman",
+   "aliases": []
+  },
+  {
+   "canon": "aircraftman",
+   "aliases": []
+  },
+  {
+   "canon": "aircraftsman",
+   "aliases": []
+  },
+  {
+   "canon": "airman",
+   "aliases": []
+  },
+  {
+   "canon": "airwoman",
+   "aliases": []
+  },
+  {
+   "canon": "alderman",
+   "aliases": []
+  },
+  {
+   "canon": "alderwoman",
+   "aliases": []
+  },
+  {
+   "canon": "almsman",
+   "aliases": []
+  },
+  {
+   "canon": "almswoman",
+   "aliases": []
+  },
+  {
+   "canon": "ambulanceman",
+   "aliases": []
+  },
+  {
+   "canon": "amman",
+   "aliases": []
+  },
+  {
+   "canon": "amtman",
+   "aliases": []
+  },
+  {
+   "canon": "anatman",
+   "aliases": []
+  },
+  {
+   "canon": "anchorman",
+   "aliases": []
+  },
+  {
+   "canon": "anchorwoman",
+   "aliases": []
+  },
+  {
+   "canon": "antihuman",
+   "aliases": []
+  },
+  {
+   "canon": "antiman",
+   "aliases": []
+  },
+  {
+   "canon": "antiwoman",
+   "aliases": []
+  },
+  {
+   "canon": "apeman",
+   "aliases": []
+  },
+  {
+   "canon": "artilleryman",
+   "aliases": []
+  },
+  {
+   "canon": "artsman",
+   "aliases": []
+  },
+  {
+   "canon": "ashman",
+   "aliases": []
+  },
+  {
+   "canon": "assemblyman",
+   "aliases": []
+  },
+  {
+   "canon": "ataman",
+   "aliases": []
+  },
+  {
+   "canon": "atman",
+   "aliases": []
+  },
+  {
+   "canon": "attackman",
+   "aliases": []
+  },
+  {
+   "canon": "automan",
+   "aliases": []
+  },
+  {
+   "canon": "axeman",
+   "aliases": []
+  },
+  {
+   "canon": "axman",
+   "aliases": []
+  },
+  {
+   "canon": "backcourtman",
+   "aliases": []
+  },
+  {
+   "canon": "backswordman",
+   "aliases": []
+  },
+  {
+   "canon": "backwoodsman",
+   "aliases": []
+  },
+  {
+   "canon": "badman",
+   "aliases": []
+  },
+  {
+   "canon": "bagman",
+   "aliases": []
+  },
+  {
+   "canon": "bailsman",
+   "aliases": []
+  },
+  {
+   "canon": "bandsman",
+   "aliases": []
+  },
+  {
+   "canon": "bandyman",
+   "aliases": []
+  },
+  {
+   "canon": "banksman",
+   "aliases": []
+  },
+  {
+   "canon": "bargeman",
+   "aliases": []
+  },
+  {
+   "canon": "barman",
+   "aliases": []
+  },
+  {
+   "canon": "baseman",
+   "aliases": []
+  },
+  {
+   "canon": "batsman",
+   "aliases": []
+  },
+  {
+   "canon": "batswoman",
+   "aliases": []
+  },
+  {
+   "canon": "batwoman",
+   "aliases": []
+  },
+  {
+   "canon": "bayman",
+   "aliases": []
+  },
+  {
+   "canon": "beadman",
+   "aliases": []
+  },
+  {
+   "canon": "beadsman",
+   "aliases": []
+  },
+  {
+   "canon": "beadswoman",
+   "aliases": []
+  },
+  {
+   "canon": "bedeman",
+   "aliases": []
+  },
+  {
+   "canon": "bedesman",
+   "aliases": []
+  },
+  {
+   "canon": "bellman",
+   "aliases": []
+  },
+  {
+   "canon": "beltman",
+   "aliases": []
+  },
+  {
+   "canon": "billman",
+   "aliases": []
+  },
+  {
+   "canon": "binman",
+   "aliases": []
+  },
+  {
+   "canon": "birdman",
+   "aliases": []
+  },
+  {
+   "canon": "birlieman",
+   "aliases": []
+  },
+  {
+   "canon": "bluesman",
+   "aliases": []
+  },
+  {
+   "canon": "boardman",
+   "aliases": []
+  },
+  {
+   "canon": "boatman",
+   "aliases": []
+  },
+  {
+   "canon": "boatsman",
+   "aliases": []
+  },
+  {
+   "canon": "bogeyman",
+   "aliases": []
+  },
+  {
+   "canon": "bogman",
+   "aliases": []
+  },
+  {
+   "canon": "bogyman",
+   "aliases": []
+  },
+  {
+   "canon": "bondman",
+   "aliases": []
+  },
+  {
+   "canon": "bondsman",
+   "aliases": []
+  },
+  {
+   "canon": "bondswoman",
+   "aliases": []
+  },
+  {
+   "canon": "bondwoman",
+   "aliases": []
+  },
+  {
+   "canon": "boogerman",
+   "aliases": []
+  },
+  {
+   "canon": "boogeyman",
+   "aliases": []
+  },
+  {
+   "canon": "boogieman",
+   "aliases": []
+  },
+  {
+   "canon": "boogyman",
+   "aliases": []
+  },
+  {
+   "canon": "bookman",
+   "aliases": []
+  },
+  {
+   "canon": "bothyman",
+   "aliases": []
+  },
+  {
+   "canon": "bowerwoman",
+   "aliases": []
+  },
+  {
+   "canon": "brahman",
+   "aliases": []
+  },
+  {
+   "canon": "brakeman",
+   "aliases": []
+  },
+  {
+   "canon": "brakesman",
+   "aliases": []
+  },
+  {
+   "canon": "brideman",
+   "aliases": []
+  },
+  {
+   "canon": "bridesman",
+   "aliases": []
+  },
+  {
+   "canon": "brinkman",
+   "aliases": []
+  },
+  {
+   "canon": "bushelman",
+   "aliases": []
+  },
+  {
+   "canon": "bushelwoman",
+   "aliases": []
+  },
+  {
+   "canon": "bushman",
+   "aliases": []
+  },
+  {
+   "canon": "bushwoman",
+   "aliases": []
+  },
+  {
+   "canon": "businessman",
+   "aliases": []
+  },
+  {
+   "canon": "busman",
+   "aliases": []
+  },
+  {
+   "canon": "byreman",
+   "aliases": []
+  },
+  {
+   "canon": "byrewoman",
+   "aliases": []
+  },
+  {
+   "canon": "cabman",
+   "aliases": []
+  },
+  {
+   "canon": "caiman",
+   "aliases": []
+  },
+  {
+   "canon": "caman",
+   "aliases": []
+  },
+  {
+   "canon": "cameraman",
+   "aliases": []
+  },
+  {
+   "canon": "camerawoman",
+   "aliases": []
+  },
+  {
+   "canon": "candyman",
+   "aliases": []
+  },
+  {
+   "canon": "carman",
+   "aliases": []
+  },
+  {
+   "canon": "caseman",
+   "aliases": []
+  },
+  {
+   "canon": "cattleman",
+   "aliases": []
+  },
+  {
+   "canon": "cavalryman",
+   "aliases": []
+  },
+  {
+   "canon": "caveman",
+   "aliases": []
+  },
+  {
+   "canon": "cellarman",
+   "aliases": []
+  },
+  {
+   "canon": "chainman",
+   "aliases": []
+  },
+  {
+   "canon": "chairwoman",
+   "aliases": []
+  },
+  {
+   "canon": "charwoman",
+   "aliases": []
+  },
+  {
+   "canon": "chessman",
+   "aliases": []
+  },
+  {
+   "canon": "choirman",
+   "aliases": []
+  },
+  {
+   "canon": "choreman",
+   "aliases": []
+  },
+  {
+   "canon": "churchman",
+   "aliases": []
+  },
+  {
+   "canon": "churchwoman",
+   "aliases": []
+  },
+  {
+   "canon": "clansman",
+   "aliases": []
+  },
+  {
+   "canon": "clanswoman",
+   "aliases": []
+  },
+  {
+   "canon": "classman",
+   "aliases": []
+  },
+  {
+   "canon": "clergyman",
+   "aliases": []
+  },
+  {
+   "canon": "clergywoman",
+   "aliases": []
+  },
+  {
+   "canon": "clubman",
+   "aliases": []
+  },
+  {
+   "canon": "clubwoman",
+   "aliases": []
+  },
+  {
+   "canon": "coachman",
+   "aliases": []
+  },
+  {
+   "canon": "coalman",
+   "aliases": []
+  },
+  {
+   "canon": "cochairman",
+   "aliases": []
+  },
+  {
+   "canon": "cochairwoman",
+   "aliases": []
+  },
+  {
+   "canon": "colorman",
+   "aliases": []
+  },
+  {
+   "canon": "colourman",
+   "aliases": []
+  },
+  {
+   "canon": "committeeman",
+   "aliases": []
+  },
+  {
+   "canon": "cornerman",
+   "aliases": []
+  },
+  {
+   "canon": "corpsman",
+   "aliases": []
+  },
+  {
+   "canon": "councilman",
+   "aliases": []
+  },
+  {
+   "canon": "councilwoman",
+   "aliases": []
+  },
+  {
+   "canon": "counterman",
+   "aliases": []
+  },
+  {
+   "canon": "countryman",
+   "aliases": []
+  },
+  {
+   "canon": "countrywoman",
+   "aliases": []
+  },
+  {
+   "canon": "cowman",
+   "aliases": []
+  },
+  {
+   "canon": "cracksman",
+   "aliases": []
+  },
+  {
+   "canon": "craftswoman",
+   "aliases": []
+  },
+  {
+   "canon": "cragsman",
+   "aliases": []
+  },
+  {
+   "canon": "crewman",
+   "aliases": []
+  },
+  {
+   "canon": "crossbowman",
+   "aliases": []
+  },
+  {
+   "canon": "cupman",
+   "aliases": []
+  },
+  {
+   "canon": "dairyman",
+   "aliases": []
+  },
+  {
+   "canon": "dalesman",
+   "aliases": []
+  },
+  {
+   "canon": "daman",
+   "aliases": []
+  },
+  {
+   "canon": "daysman",
+   "aliases": []
+  },
+  {
+   "canon": "deadman",
+   "aliases": []
+  },
+  {
+   "canon": "deathsman",
+   "aliases": []
+  },
+  {
+   "canon": "deepwaterman",
+   "aliases": []
+  },
+  {
+   "canon": "defenceman",
+   "aliases": []
+  },
+  {
+   "canon": "defenseman",
+   "aliases": []
+  },
+  {
+   "canon": "deliveryman",
+   "aliases": []
+  },
+  {
+   "canon": "deman",
+   "aliases": []
+  },
+  {
+   "canon": "deskman",
+   "aliases": []
+  },
+  {
+   "canon": "desman",
+   "aliases": []
+  },
+  {
+   "canon": "disman",
+   "aliases": []
+  },
+  {
+   "canon": "dodman",
+   "aliases": []
+  },
+  {
+   "canon": "doggerman",
+   "aliases": []
+  },
+  {
+   "canon": "dogman",
+   "aliases": []
+  },
+  {
+   "canon": "dolman",
+   "aliases": []
+  },
+  {
+   "canon": "doomsman",
+   "aliases": []
+  },
+  {
+   "canon": "doorman",
+   "aliases": []
+  },
+  {
+   "canon": "doorsman",
+   "aliases": []
+  },
+  {
+   "canon": "doorwoman",
+   "aliases": []
+  },
+  {
+   "canon": "draftsman",
+   "aliases": []
+  },
+  {
+   "canon": "dragoman",
+   "aliases": []
+  },
+  {
+   "canon": "dragsman",
+   "aliases": []
+  },
+  {
+   "canon": "draughtman",
+   "aliases": []
+  },
+  {
+   "canon": "draughtsman",
+   "aliases": []
+  },
+  {
+   "canon": "drayman",
+   "aliases": []
+  },
+  {
+   "canon": "dustman",
+   "aliases": []
+  },
+  {
+   "canon": "dutchman",
+   "aliases": []
+  },
+  {
+   "canon": "ealdorman",
+   "aliases": []
+  },
+  {
+   "canon": "earthman",
+   "aliases": []
+  },
+  {
+   "canon": "earthwoman",
+   "aliases": []
+  },
+  {
+   "canon": "eightsman",
+   "aliases": []
+  },
+  {
+   "canon": "estatesman",
+   "aliases": []
+  },
+  {
+   "canon": "everyman",
+   "aliases": []
+  },
+  {
+   "canon": "everywoman",
+   "aliases": []
+  },
+  {
+   "canon": "exciseman",
+   "aliases": []
+  },
+  {
+   "canon": "expressman",
+   "aliases": []
+  },
+  {
+   "canon": "faceman",
+   "aliases": []
+  },
+  {
+   "canon": "fellowman",
+   "aliases": []
+  },
+  {
+   "canon": "fenman",
+   "aliases": []
+  },
+  {
+   "canon": "ferryman",
+   "aliases": []
+  },
+  {
+   "canon": "fieldsman",
+   "aliases": []
+  },
+  {
+   "canon": "fireman",
+   "aliases": []
+  },
+  {
+   "canon": "firewoman",
+   "aliases": []
+  },
+  {
+   "canon": "firman",
+   "aliases": []
+  },
+  {
+   "canon": "fisherwoman",
+   "aliases": []
+  },
+  {
+   "canon": "flagman",
+   "aliases": []
+  },
+  {
+   "canon": "flugelman",
+   "aliases": []
+  },
+  {
+   "canon": "flyman",
+   "aliases": []
+  },
+  {
+   "canon": "foeman",
+   "aliases": []
+  },
+  {
+   "canon": "fogman",
+   "aliases": []
+  },
+  {
+   "canon": "foilsman",
+   "aliases": []
+  },
+  {
+   "canon": "footman",
+   "aliases": []
+  },
+  {
+   "canon": "footplateman",
+   "aliases": []
+  },
+  {
+   "canon": "foremastman",
+   "aliases": []
+  },
+  {
+   "canon": "foretopman",
+   "aliases": []
+  },
+  {
+   "canon": "forewoman",
+   "aliases": []
+  },
+  {
+   "canon": "forgeman",
+   "aliases": []
+  },
+  {
+   "canon": "fraudsman",
+   "aliases": []
+  },
+  {
+   "canon": "freedman",
+   "aliases": []
+  },
+  {
+   "canon": "freedwoman",
+   "aliases": []
+  },
+  {
+   "canon": "freewoman",
+   "aliases": []
+  },
+  {
+   "canon": "frogman",
+   "aliases": []
+  },
+  {
+   "canon": "frontiersman",
+   "aliases": []
+  },
+  {
+   "canon": "frontman",
+   "aliases": []
+  },
+  {
+   "canon": "fugleman",
+   "aliases": []
+  },
+  {
+   "canon": "funnyman",
+   "aliases": []
+  },
+  {
+   "canon": "gadsman",
+   "aliases": []
+  },
+  {
+   "canon": "gagman",
+   "aliases": []
+  },
+  {
+   "canon": "gamesman",
+   "aliases": []
+  },
+  {
+   "canon": "gangsman",
+   "aliases": []
+  },
+  {
+   "canon": "garageman",
+   "aliases": []
+  },
+  {
+   "canon": "garbageman",
+   "aliases": []
+  },
+  {
+   "canon": "gasman",
+   "aliases": []
+  },
+  {
+   "canon": "gateman",
+   "aliases": []
+  },
+  {
+   "canon": "gavelman",
+   "aliases": []
+  },
+  {
+   "canon": "gemman",
+   "aliases": []
+  },
+  {
+   "canon": "gentlewoman",
+   "aliases": []
+  },
+  {
+   "canon": "german",
+   "aliases": []
+  },
+  {
+   "canon": "gigman",
+   "aliases": []
+  },
+  {
+   "canon": "gildsman",
+   "aliases": []
+  },
+  {
+   "canon": "gildswoman",
+   "aliases": []
+  },
+  {
+   "canon": "glassman",
+   "aliases": []
+  },
+  {
+   "canon": "gleeman",
+   "aliases": []
+  },
+  {
+   "canon": "goadsman",
+   "aliases": []
+  },
+  {
+   "canon": "gownman",
+   "aliases": []
+  },
+  {
+   "canon": "gownsman",
+   "aliases": []
+  },
+  {
+   "canon": "grantsman",
+   "aliases": []
+  },
+  {
+   "canon": "gripman",
+   "aliases": []
+  },
+  {
+   "canon": "groomsman",
+   "aliases": []
+  },
+  {
+   "canon": "groundman",
+   "aliases": []
+  },
+  {
+   "canon": "groundsman",
+   "aliases": []
+  },
+  {
+   "canon": "guardsman",
+   "aliases": []
+  },
+  {
+   "canon": "gudeman",
+   "aliases": []
+  },
+  {
+   "canon": "guildsman",
+   "aliases": []
+  },
+  {
+   "canon": "guildswoman",
+   "aliases": []
+  },
+  {
+   "canon": "gunman",
+   "aliases": []
+  },
+  {
+   "canon": "hackman",
+   "aliases": []
+  },
+  {
+   "canon": "hackneyman",
+   "aliases": []
+  },
+  {
+   "canon": "hammerman",
+   "aliases": []
+  },
+  {
+   "canon": "handyman",
+   "aliases": []
+  },
+  {
+   "canon": "hangman",
+   "aliases": []
+  },
+  {
+   "canon": "hanuman",
+   "aliases": []
+  },
+  {
+   "canon": "hardman",
+   "aliases": []
+  },
+  {
+   "canon": "hardwareman",
+   "aliases": []
+  },
+  {
+   "canon": "harman",
+   "aliases": []
+  },
+  {
+   "canon": "harvestman",
+   "aliases": []
+  },
+  {
+   "canon": "headman",
+   "aliases": []
+  },
+  {
+   "canon": "headsman",
+   "aliases": []
+  },
+  {
+   "canon": "heliman",
+   "aliases": []
+  },
+  {
+   "canon": "helmsman",
+   "aliases": []
+  },
+  {
+   "canon": "henchman",
+   "aliases": []
+  },
+  {
+   "canon": "henchwoman",
+   "aliases": []
+  },
+  {
+   "canon": "herdman",
+   "aliases": []
+  },
+  {
+   "canon": "herdsman",
+   "aliases": []
+  },
+  {
+   "canon": "hetman",
+   "aliases": []
+  },
+  {
+   "canon": "hielaman",
+   "aliases": []
+  },
+  {
+   "canon": "highman",
+   "aliases": []
+  },
+  {
+   "canon": "highwayman",
+   "aliases": []
+  },
+  {
+   "canon": "hitman",
+   "aliases": []
+  },
+  {
+   "canon": "hoastman",
+   "aliases": []
+  },
+  {
+   "canon": "hodman",
+   "aliases": []
+  },
+  {
+   "canon": "hoistman",
+   "aliases": []
+  },
+  {
+   "canon": "hoodman",
+   "aliases": []
+  },
+  {
+   "canon": "horseman",
+   "aliases": []
+  },
+  {
+   "canon": "horsewoman",
+   "aliases": []
+  },
+  {
+   "canon": "hoseman",
+   "aliases": []
+  },
+  {
+   "canon": "hotelman",
+   "aliases": []
+  },
+  {
+   "canon": "houseman",
+   "aliases": []
+  },
+  {
+   "canon": "huntsman",
+   "aliases": []
+  },
+  {
+   "canon": "husbandman",
+   "aliases": []
+  },
+  {
+   "canon": "iceman",
+   "aliases": []
+  },
+  {
+   "canon": "infantryman",
+   "aliases": []
+  },
+  {
+   "canon": "infieldsman",
+   "aliases": []
+  },
+  {
+   "canon": "infrahuman",
+   "aliases": []
+  },
+  {
+   "canon": "inhuman",
+   "aliases": []
+  },
+  {
+   "canon": "ironman",
+   "aliases": []
+  },
+  {
+   "canon": "ironwoman",
+   "aliases": []
+  },
+  {
+   "canon": "isleman",
+   "aliases": []
+  },
+  {
+   "canon": "islesman",
+   "aliases": []
+  },
+  {
+   "canon": "jackman",
+   "aliases": []
+  },
+  {
+   "canon": "jarkman",
+   "aliases": []
+  },
+  {
+   "canon": "jazzman",
+   "aliases": []
+  },
+  {
+   "canon": "journeyman",
+   "aliases": []
+  },
+  {
+   "canon": "junkman",
+   "aliases": []
+  },
+  {
+   "canon": "juryman",
+   "aliases": []
+  },
+  {
+   "canon": "jurywoman",
+   "aliases": []
+  },
+  {
+   "canon": "keelman",
+   "aliases": []
+  },
+  {
+   "canon": "kennelman",
+   "aliases": []
+  },
+  {
+   "canon": "kinsman",
+   "aliases": []
+  },
+  {
+   "canon": "kinswoman",
+   "aliases": []
+  },
+  {
+   "canon": "kirkman",
+   "aliases": []
+  },
+  {
+   "canon": "kloochman",
+   "aliases": []
+  },
+  {
+   "canon": "klootchman",
+   "aliases": []
+  },
+  {
+   "canon": "knifeman",
+   "aliases": []
+  },
+  {
+   "canon": "landamman",
+   "aliases": []
+  },
+  {
+   "canon": "landman",
+   "aliases": []
+  },
+  {
+   "canon": "landsman",
+   "aliases": []
+  },
+  {
+   "canon": "laundryman",
+   "aliases": []
+  },
+  {
+   "canon": "laundrywoman",
+   "aliases": []
+  },
+  {
+   "canon": "lawman",
+   "aliases": []
+  },
+  {
+   "canon": "layman",
+   "aliases": []
+  },
+  {
+   "canon": "laywoman",
+   "aliases": []
+  },
+  {
+   "canon": "leadman",
+   "aliases": []
+  },
+  {
+   "canon": "leadsman",
+   "aliases": []
+  },
+  {
+   "canon": "legman",
+   "aliases": []
+  },
+  {
+   "canon": "leman",
+   "aliases": []
+  },
+  {
+   "canon": "lengthman",
+   "aliases": []
+  },
+  {
+   "canon": "lengthsman",
+   "aliases": []
+  },
+  {
+   "canon": "lensman",
+   "aliases": []
+  },
+  {
+   "canon": "letterman",
+   "aliases": []
+  },
+  {
+   "canon": "liegeman",
+   "aliases": []
+  },
+  {
+   "canon": "liftman",
+   "aliases": []
+  },
+  {
+   "canon": "lighterman",
+   "aliases": []
+  },
+  {
+   "canon": "liman",
+   "aliases": []
+  },
+  {
+   "canon": "lineman",
+   "aliases": []
+  },
+  {
+   "canon": "linesman",
+   "aliases": []
+  },
+  {
+   "canon": "linkman",
+   "aliases": []
+  },
+  {
+   "canon": "linksman",
+   "aliases": []
+  },
+  {
+   "canon": "liveryman",
+   "aliases": []
+  },
+  {
+   "canon": "lobsterman",
+   "aliases": []
+  },
+  {
+   "canon": "lockman",
+   "aliases": []
+  },
+  {
+   "canon": "locksman",
+   "aliases": []
+  },
+  {
+   "canon": "locoman",
+   "aliases": []
+  },
+  {
+   "canon": "lodesman",
+   "aliases": []
+  },
+  {
+   "canon": "loftsman",
+   "aliases": []
+  },
+  {
+   "canon": "longbowman",
+   "aliases": []
+  },
+  {
+   "canon": "longshoreman",
+   "aliases": []
+  },
+  {
+   "canon": "lumberman",
+   "aliases": []
+  },
+  {
+   "canon": "machineman",
+   "aliases": []
+  },
+  {
+   "canon": "madman",
+   "aliases": []
+  },
+  {
+   "canon": "madwoman",
+   "aliases": []
+  },
+  {
+   "canon": "magsman",
+   "aliases": []
+  },
+  {
+   "canon": "maltman",
+   "aliases": []
+  },
+  {
+   "canon": "marchman",
+   "aliases": []
+  },
+  {
+   "canon": "markman",
+   "aliases": []
+  },
+  {
+   "canon": "marksman",
+   "aliases": []
+  },
+  {
+   "canon": "markswoman",
+   "aliases": []
+  },
+  {
+   "canon": "mashman",
+   "aliases": []
+  },
+  {
+   "canon": "meatman",
+   "aliases": []
+  },
+  {
+   "canon": "merchantman",
+   "aliases": []
+  },
+  {
+   "canon": "meresman",
+   "aliases": []
+  },
+  {
+   "canon": "merman",
+   "aliases": []
+  },
+  {
+   "canon": "merryman",
+   "aliases": []
+  },
+  {
+   "canon": "messman",
+   "aliases": []
+  },
+  {
+   "canon": "middleman",
+   "aliases": []
+  },
+  {
+   "canon": "midshipman",
+   "aliases": []
+  },
+  {
+   "canon": "militiaman",
+   "aliases": []
+  },
+  {
+   "canon": "milkman",
+   "aliases": []
+  },
+  {
+   "canon": "minuteman",
+   "aliases": []
+  },
+  {
+   "canon": "missileman",
+   "aliases": []
+  },
+  {
+   "canon": "mobsman",
+   "aliases": []
+  },
+  {
+   "canon": "moneyman",
+   "aliases": []
+  },
+  {
+   "canon": "moorman",
+   "aliases": []
+  },
+  {
+   "canon": "mootman",
+   "aliases": []
+  },
+  {
+   "canon": "mortarman",
+   "aliases": []
+  },
+  {
+   "canon": "motorman",
+   "aliases": []
+  },
+  {
+   "canon": "muscleman",
+   "aliases": []
+  },
+  {
+   "canon": "needlewoman",
+   "aliases": []
+  },
+  {
+   "canon": "newsman",
+   "aliases": []
+  },
+  {
+   "canon": "newspaperman",
+   "aliases": []
+  },
+  {
+   "canon": "newswoman",
+   "aliases": []
+  },
+  {
+   "canon": "nobleman",
+   "aliases": []
+  },
+  {
+   "canon": "noblewoman",
+   "aliases": []
+  },
+  {
+   "canon": "nonhuman",
+   "aliases": []
+  },
+  {
+   "canon": "nonman",
+   "aliases": []
+  },
+  {
+   "canon": "nurseryman",
+   "aliases": []
+  },
+  {
+   "canon": "oarsman",
+   "aliases": []
+  },
+  {
+   "canon": "oarswoman",
+   "aliases": []
+  },
+  {
+   "canon": "oddsman",
+   "aliases": []
+  },
+  {
+   "canon": "oilman",
+   "aliases": []
+  },
+  {
+   "canon": "oncostman",
+   "aliases": []
+  },
+  {
+   "canon": "orchardman",
+   "aliases": []
+  },
+  {
+   "canon": "orraman",
+   "aliases": []
+  },
+  {
+   "canon": "ottoman",
+   "aliases": []
+  },
+  {
+   "canon": "outdoorsman",
+   "aliases": []
+  },
+  {
+   "canon": "outman",
+   "aliases": []
+  },
+  {
+   "canon": "overman",
+   "aliases": []
+  },
+  {
+   "canon": "oversman",
+   "aliases": []
+  },
+  {
+   "canon": "oysterman",
+   "aliases": []
+  },
+  {
+   "canon": "paceman",
+   "aliases": []
+  },
+  {
+   "canon": "packman",
+   "aliases": []
+  },
+  {
+   "canon": "panhuman",
+   "aliases": []
+  },
+  {
+   "canon": "pantryman",
+   "aliases": []
+  },
+  {
+   "canon": "passman",
+   "aliases": []
+  },
+  {
+   "canon": "patrolman",
+   "aliases": []
+  },
+  {
+   "canon": "patrolwoman",
+   "aliases": []
+  },
+  {
+   "canon": "peatman",
+   "aliases": []
+  },
+  {
+   "canon": "penman",
+   "aliases": []
+  },
+  {
+   "canon": "penwoman",
+   "aliases": []
+  },
+  {
+   "canon": "peterman",
+   "aliases": []
+  },
+  {
+   "canon": "phraseman",
+   "aliases": []
+  },
+  {
+   "canon": "pieman",
+   "aliases": []
+  },
+  {
+   "canon": "pikeman",
+   "aliases": []
+  },
+  {
+   "canon": "pilotman",
+   "aliases": []
+  },
+  {
+   "canon": "pitchman",
+   "aliases": []
+  },
+  {
+   "canon": "pitchwoman",
+   "aliases": []
+  },
+  {
+   "canon": "pitman",
+   "aliases": []
+  },
+  {
+   "canon": "pivotman",
+   "aliases": []
+  },
+  {
+   "canon": "placeman",
+   "aliases": []
+  },
+  {
+   "canon": "plaidman",
+   "aliases": []
+  },
+  {
+   "canon": "plainsman",
+   "aliases": []
+  },
+  {
+   "canon": "plantsman",
+   "aliases": []
+  },
+  {
+   "canon": "plantswoman",
+   "aliases": []
+  },
+  {
+   "canon": "plateman",
+   "aliases": []
+  },
+  {
+   "canon": "pleaseman",
+   "aliases": []
+  },
+  {
+   "canon": "ploughman",
+   "aliases": []
+  },
+  {
+   "canon": "plowman",
+   "aliases": []
+  },
+  {
+   "canon": "pointman",
+   "aliases": []
+  },
+  {
+   "canon": "pointsman",
+   "aliases": []
+  },
+  {
+   "canon": "policeman",
+   "aliases": []
+  },
+  {
+   "canon": "policewoman",
+   "aliases": []
+  },
+  {
+   "canon": "pollman",
+   "aliases": []
+  },
+  {
+   "canon": "portman",
+   "aliases": []
+  },
+  {
+   "canon": "postman",
+   "aliases": []
+  },
+  {
+   "canon": "postwoman",
+   "aliases": []
+  },
+  {
+   "canon": "potman",
+   "aliases": []
+  },
+  {
+   "canon": "poultryman",
+   "aliases": []
+  },
+  {
+   "canon": "prefreshman",
+   "aliases": []
+  },
+  {
+   "canon": "prehuman",
+   "aliases": []
+  },
+  {
+   "canon": "preman",
+   "aliases": []
+  },
+  {
+   "canon": "pressman",
+   "aliases": []
+  },
+  {
+   "canon": "presswoman",
+   "aliases": []
+  },
+  {
+   "canon": "preterhuman",
+   "aliases": []
+  },
+  {
+   "canon": "prizeman",
+   "aliases": []
+  },
+  {
+   "canon": "prizewoman",
+   "aliases": []
+  },
+  {
+   "canon": "propman",
+   "aliases": []
+  },
+  {
+   "canon": "proseman",
+   "aliases": []
+  },
+  {
+   "canon": "protohuman",
+   "aliases": []
+  },
+  {
+   "canon": "pullman",
+   "aliases": []
+  },
+  {
+   "canon": "puntsman",
+   "aliases": []
+  },
+  {
+   "canon": "quadruman",
+   "aliases": []
+  },
+  {
+   "canon": "quarryman",
+   "aliases": []
+  },
+  {
+   "canon": "quillman",
+   "aliases": []
+  },
+  {
+   "canon": "raddleman",
+   "aliases": []
+  },
+  {
+   "canon": "radioman",
+   "aliases": []
+  },
+  {
+   "canon": "raftman",
+   "aliases": []
+  },
+  {
+   "canon": "raftsman",
+   "aliases": []
+  },
+  {
+   "canon": "ragman",
+   "aliases": []
+  },
+  {
+   "canon": "railman",
+   "aliases": []
+  },
+  {
+   "canon": "railwayman",
+   "aliases": []
+  },
+  {
+   "canon": "railwoman",
+   "aliases": []
+  },
+  {
+   "canon": "rampsman",
+   "aliases": []
+  },
+  {
+   "canon": "ranchman",
+   "aliases": []
+  },
+  {
+   "canon": "ranzelman",
+   "aliases": []
+  },
+  {
+   "canon": "reddleman",
+   "aliases": []
+  },
+  {
+   "canon": "reedman",
+   "aliases": []
+  },
+  {
+   "canon": "reelman",
+   "aliases": []
+  },
+  {
+   "canon": "reinsman",
+   "aliases": []
+  },
+  {
+   "canon": "remainderman",
+   "aliases": []
+  },
+  {
+   "canon": "reman",
+   "aliases": []
+  },
+  {
+   "canon": "repairman",
+   "aliases": []
+  },
+  {
+   "canon": "repoman",
+   "aliases": []
+  },
+  {
+   "canon": "rifleman",
+   "aliases": []
+  },
+  {
+   "canon": "ringman",
+   "aliases": []
+  },
+  {
+   "canon": "riverman",
+   "aliases": []
+  },
+  {
+   "canon": "roadman",
+   "aliases": []
+  },
+  {
+   "canon": "roadsman",
+   "aliases": []
+  },
+  {
+   "canon": "roberdsman",
+   "aliases": []
+  },
+  {
+   "canon": "robertsman",
+   "aliases": []
+  },
+  {
+   "canon": "rodman",
+   "aliases": []
+  },
+  {
+   "canon": "rodsman",
+   "aliases": []
+  },
+  {
+   "canon": "roundsman",
+   "aliases": []
+  },
+  {
+   "canon": "routeman",
+   "aliases": []
+  },
+  {
+   "canon": "ruckman",
+   "aliases": []
+  },
+  {
+   "canon": "ruddleman",
+   "aliases": []
+  },
+  {
+   "canon": "safetyman",
+   "aliases": []
+  },
+  {
+   "canon": "sagaman",
+   "aliases": []
+  },
+  {
+   "canon": "salaryman",
+   "aliases": []
+  },
+  {
+   "canon": "salesman",
+   "aliases": []
+  },
+  {
+   "canon": "saleswoman",
+   "aliases": []
+  },
+  {
+   "canon": "saltpetreman",
+   "aliases": []
+  },
+  {
+   "canon": "saman",
+   "aliases": []
+  },
+  {
+   "canon": "sandman",
+   "aliases": []
+  },
+  {
+   "canon": "sceneman",
+   "aliases": []
+  },
+  {
+   "canon": "schoolman",
+   "aliases": []
+  },
+  {
+   "canon": "scrubwoman",
+   "aliases": []
+  },
+  {
+   "canon": "scytheman",
+   "aliases": []
+  },
+  {
+   "canon": "seaman",
+   "aliases": []
+  },
+  {
+   "canon": "seawoman",
+   "aliases": []
+  },
+  {
+   "canon": "seedman",
+   "aliases": []
+  },
+  {
+   "canon": "seedsman",
+   "aliases": []
+  },
+  {
+   "canon": "selectman",
+   "aliases": []
+  },
+  {
+   "canon": "serviceman",
+   "aliases": []
+  },
+  {
+   "canon": "servicewoman",
+   "aliases": []
+  },
+  {
+   "canon": "shaman",
+   "aliases": []
+  },
+  {
+   "canon": "shantyman",
+   "aliases": []
+  },
+  {
+   "canon": "shareman",
+   "aliases": []
+  },
+  {
+   "canon": "sharesman",
+   "aliases": []
+  },
+  {
+   "canon": "shearman",
+   "aliases": []
+  },
+  {
+   "canon": "sheepman",
+   "aliases": []
+  },
+  {
+   "canon": "shipman",
+   "aliases": []
+  },
+  {
+   "canon": "shireman",
+   "aliases": []
+  },
+  {
+   "canon": "shopman",
+   "aliases": []
+  },
+  {
+   "canon": "shopwoman",
+   "aliases": []
+  },
+  {
+   "canon": "shoreman",
+   "aliases": []
+  },
+  {
+   "canon": "shoresman",
+   "aliases": []
+  },
+  {
+   "canon": "showman",
+   "aliases": []
+  },
+  {
+   "canon": "sickleman",
+   "aliases": []
+  },
+  {
+   "canon": "sideman",
+   "aliases": []
+  },
+  {
+   "canon": "sidesman",
+   "aliases": []
+  },
+  {
+   "canon": "sightsman",
+   "aliases": []
+  },
+  {
+   "canon": "signalman",
+   "aliases": []
+  },
+  {
+   "canon": "skyman",
+   "aliases": []
+  },
+  {
+   "canon": "slaughterman",
+   "aliases": []
+  },
+  {
+   "canon": "snowman",
+   "aliases": []
+  },
+  {
+   "canon": "sockman",
+   "aliases": []
+  },
+  {
+   "canon": "socman",
+   "aliases": []
+  },
+  {
+   "canon": "sokeman",
+   "aliases": []
+  },
+  {
+   "canon": "soman",
+   "aliases": []
+  },
+  {
+   "canon": "sonarman",
+   "aliases": []
+  },
+  {
+   "canon": "songman",
+   "aliases": []
+  },
+  {
+   "canon": "soundman",
+   "aliases": []
+  },
+  {
+   "canon": "spaceman",
+   "aliases": []
+  },
+  {
+   "canon": "spacewoman",
+   "aliases": []
+  },
+  {
+   "canon": "spademan",
+   "aliases": []
+  },
+  {
+   "canon": "spadesman",
+   "aliases": []
+  },
+  {
+   "canon": "spaeman",
+   "aliases": []
+  },
+  {
+   "canon": "spearman",
+   "aliases": []
+  },
+  {
+   "canon": "spoilsman",
+   "aliases": []
+  },
+  {
+   "canon": "spokeswoman",
+   "aliases": []
+  },
+  {
+   "canon": "sportsman",
+   "aliases": []
+  },
+  {
+   "canon": "sportswoman",
+   "aliases": []
+  },
+  {
+   "canon": "squawman",
+   "aliases": []
+  },
+  {
+   "canon": "stableman",
+   "aliases": []
+  },
+  {
+   "canon": "staffman",
+   "aliases": []
+  },
+  {
+   "canon": "stallman",
+   "aliases": []
+  },
+  {
+   "canon": "statesman",
+   "aliases": []
+  },
+  {
+   "canon": "stateswoman",
+   "aliases": []
+  },
+  {
+   "canon": "stearsman",
+   "aliases": []
+  },
+  {
+   "canon": "steelman",
+   "aliases": []
+  },
+  {
+   "canon": "steersman",
+   "aliases": []
+  },
+  {
+   "canon": "stickman",
+   "aliases": []
+  },
+  {
+   "canon": "stillman",
+   "aliases": []
+  },
+  {
+   "canon": "stockman",
+   "aliases": []
+  },
+  {
+   "canon": "storeman",
+   "aliases": []
+  },
+  {
+   "canon": "strongman",
+   "aliases": []
+  },
+  {
+   "canon": "stuntman",
+   "aliases": []
+  },
+  {
+   "canon": "stuntwoman",
+   "aliases": []
+  },
+  {
+   "canon": "subhuman",
+   "aliases": []
+  },
+  {
+   "canon": "subman",
+   "aliases": []
+  },
+  {
+   "canon": "subtacksman",
+   "aliases": []
+  },
+  {
+   "canon": "superhuman",
+   "aliases": []
+  },
+  {
+   "canon": "superwoman",
+   "aliases": []
+  },
+  {
+   "canon": "surfaceman",
+   "aliases": []
+  },
+  {
+   "canon": "surfman",
+   "aliases": []
+  },
+  {
+   "canon": "swagman",
+   "aliases": []
+  },
+  {
+   "canon": "swagsman",
+   "aliases": []
+  },
+  {
+   "canon": "sweetman",
+   "aliases": []
+  },
+  {
+   "canon": "swingman",
+   "aliases": []
+  },
+  {
+   "canon": "switchman",
+   "aliases": []
+  },
+  {
+   "canon": "swordman",
+   "aliases": []
+  },
+  {
+   "canon": "swordsman",
+   "aliases": []
+  },
+  {
+   "canon": "synodsman",
+   "aliases": []
+  },
+  {
+   "canon": "tacksman",
+   "aliases": []
+  },
+  {
+   "canon": "talesman",
+   "aliases": []
+  },
+  {
+   "canon": "talisman",
+   "aliases": []
+  },
+  {
+   "canon": "tallyman",
+   "aliases": []
+  },
+  {
+   "canon": "tallywoman",
+   "aliases": []
+  },
+  {
+   "canon": "tapsman",
+   "aliases": []
+  },
+  {
+   "canon": "taximan",
+   "aliases": []
+  },
+  {
+   "canon": "taxman",
+   "aliases": []
+  },
+  {
+   "canon": "teleman",
+   "aliases": []
+  },
+  {
+   "canon": "telpherman",
+   "aliases": []
+  },
+  {
+   "canon": "thirdsman",
+   "aliases": []
+  },
+  {
+   "canon": "tidesman",
+   "aliases": []
+  },
+  {
+   "canon": "tillerman",
+   "aliases": []
+  },
+  {
+   "canon": "timberman",
+   "aliases": []
+  },
+  {
+   "canon": "tinkerman",
+   "aliases": []
+  },
+  {
+   "canon": "tinman",
+   "aliases": []
+  },
+  {
+   "canon": "tirewoman",
+   "aliases": []
+  },
+  {
+   "canon": "tollman",
+   "aliases": []
+  },
+  {
+   "canon": "toman",
+   "aliases": []
+  },
+  {
+   "canon": "tongman",
+   "aliases": []
+  },
+  {
+   "canon": "toolman",
+   "aliases": []
+  },
+  {
+   "canon": "topman",
+   "aliases": []
+  },
+  {
+   "canon": "topsman",
+   "aliases": []
+  },
+  {
+   "canon": "townsman",
+   "aliases": []
+  },
+  {
+   "canon": "townswoman",
+   "aliases": []
+  },
+  {
+   "canon": "toyman",
+   "aliases": []
+  },
+  {
+   "canon": "toywoman",
+   "aliases": []
+  },
+  {
+   "canon": "trackman",
+   "aliases": []
+  },
+  {
+   "canon": "tradesman",
+   "aliases": []
+  },
+  {
+   "canon": "tradeswoman",
+   "aliases": []
+  },
+  {
+   "canon": "trainman",
+   "aliases": []
+  },
+  {
+   "canon": "trashman",
+   "aliases": []
+  },
+  {
+   "canon": "trawlerman",
+   "aliases": []
+  },
+  {
+   "canon": "trencherman",
+   "aliases": []
+  },
+  {
+   "canon": "trewsman",
+   "aliases": []
+  },
+  {
+   "canon": "tribesman",
+   "aliases": []
+  },
+  {
+   "canon": "tribeswoman",
+   "aliases": []
+  },
+  {
+   "canon": "triggerman",
+   "aliases": []
+  },
+  {
+   "canon": "truchman",
+   "aliases": []
+  },
+  {
+   "canon": "truckman",
+   "aliases": []
+  },
+  {
+   "canon": "trueman",
+   "aliases": []
+  },
+  {
+   "canon": "turfman",
+   "aliases": []
+  },
+  {
+   "canon": "tutman",
+   "aliases": []
+  },
+  {
+   "canon": "tutworkman",
+   "aliases": []
+  },
+  {
+   "canon": "ultrahuman",
+   "aliases": []
+  },
+  {
+   "canon": "underman",
+   "aliases": []
+  },
+  {
+   "canon": "unfreeman",
+   "aliases": []
+  },
+  {
+   "canon": "unhuman",
+   "aliases": []
+  },
+  {
+   "canon": "unman",
+   "aliases": []
+  },
+  {
+   "canon": "unwoman",
+   "aliases": []
+  },
+  {
+   "canon": "urman",
+   "aliases": []
+  },
+  {
+   "canon": "vanman",
+   "aliases": []
+  },
+  {
+   "canon": "vatman",
+   "aliases": []
+  },
+  {
+   "canon": "venireman",
+   "aliases": []
+  },
+  {
+   "canon": "verseman",
+   "aliases": []
+  },
+  {
+   "canon": "vestryman",
+   "aliases": []
+  },
+  {
+   "canon": "wakeman",
+   "aliases": []
+  },
+  {
+   "canon": "warehouseman",
+   "aliases": []
+  },
+  {
+   "canon": "warman",
+   "aliases": []
+  },
+  {
+   "canon": "washerman",
+   "aliases": []
+  },
+  {
+   "canon": "washerwoman",
+   "aliases": []
+  },
+  {
+   "canon": "washwoman",
+   "aliases": []
+  },
+  {
+   "canon": "wasserman",
+   "aliases": []
+  },
+  {
+   "canon": "watchman",
+   "aliases": []
+  },
+  {
+   "canon": "waterman",
+   "aliases": []
+  },
+  {
+   "canon": "wealsman",
+   "aliases": []
+  },
+  {
+   "canon": "weatherman",
+   "aliases": []
+  },
+  {
+   "canon": "weighman",
+   "aliases": []
+  },
+  {
+   "canon": "whaleman",
+   "aliases": []
+  },
+  {
+   "canon": "wheelman",
+   "aliases": []
+  },
+  {
+   "canon": "wheelsman",
+   "aliases": []
+  },
+  {
+   "canon": "wherryman",
+   "aliases": []
+  },
+  {
+   "canon": "widowman",
+   "aliases": []
+  },
+  {
+   "canon": "winchman",
+   "aliases": []
+  },
+  {
+   "canon": "wingman",
+   "aliases": []
+  },
+  {
+   "canon": "wireman",
+   "aliases": []
+  },
+  {
+   "canon": "wisewoman",
+   "aliases": []
+  },
+  {
+   "canon": "woodman",
+   "aliases": []
+  },
+  {
+   "canon": "woodsman",
+   "aliases": []
+  },
+  {
+   "canon": "woolman",
+   "aliases": []
+  },
+  {
+   "canon": "workingman",
+   "aliases": []
+  },
+  {
+   "canon": "workingwoman",
+   "aliases": []
+  },
+  {
+   "canon": "workman",
+   "aliases": []
+  },
+  {
+   "canon": "workwoman",
+   "aliases": []
+  },
+  {
+   "canon": "yachtman",
+   "aliases": []
+  },
+  {
+   "canon": "yachtsman",
+   "aliases": []
+  },
+  {
+   "canon": "yachtswoman",
+   "aliases": []
+  },
+  {
+   "canon": "yardman",
+   "aliases": []
+  },
+  {
+   "canon": "yarraman",
+   "aliases": []
+  },
+  {
+   "canon": "yeggman",
+   "aliases": []
+  },
+  {
+   "canon": "yeoman",
+   "aliases": []
+  },
+  {
+   "canon": "zaman",
+   "aliases": []
+  }
+ ],
+ "Rhymes with SNACK (-ACK)": [
+  {
+   "canon": "back",
+   "aliases": []
+  },
+  {
+   "canon": "black",
+   "aliases": []
+  },
+  {
+   "canon": "feedback",
+   "aliases": []
+  },
+  {
+   "canon": "track",
+   "aliases": []
+  },
+  {
+   "canon": "pack",
+   "aliases": []
+  },
+  {
+   "canon": "jack",
+   "aliases": []
+  },
+  {
+   "canon": "paperback",
+   "aliases": []
+  },
+  {
+   "canon": "attack",
+   "aliases": []
+  },
+  {
+   "canon": "lack",
+   "aliases": []
+  },
+  {
+   "canon": "blackjack",
+   "aliases": []
+  },
+  {
+   "canon": "crack",
+   "aliases": []
+  },
+  {
+   "canon": "rack",
+   "aliases": []
+  },
+  {
+   "canon": "stack",
+   "aliases": []
+  },
+  {
+   "canon": "soundtrack",
+   "aliases": []
+  },
+  {
+   "canon": "hack",
+   "aliases": []
+  },
+  {
+   "canon": "playback",
+   "aliases": []
+  },
+  {
+   "canon": "backpack",
+   "aliases": []
+  },
+  {
+   "canon": "snack",
+   "aliases": []
+  },
+  {
+   "canon": "hardback",
+   "aliases": []
+  },
+  {
+   "canon": "mack",
+   "aliases": []
+  },
+  {
+   "canon": "shack",
+   "aliases": []
+  },
+  {
+   "canon": "tack",
+   "aliases": []
+  },
+  {
+   "canon": "sack",
+   "aliases": []
+  },
+  {
+   "canon": "hatchback",
+   "aliases": []
+  },
+  {
+   "canon": "talkback",
+   "aliases": []
+  },
+  {
+   "canon": "horseback",
+   "aliases": []
+  },
+  {
+   "canon": "callback",
+   "aliases": []
+  },
+  {
+   "canon": "outback",
+   "aliases": []
+  },
+  {
+   "canon": "slack",
+   "aliases": []
+  },
+  {
+   "canon": "comeback",
+   "aliases": []
+  },
+  {
+   "canon": "aback",
+   "aliases": []
+  },
+  {
+   "canon": "ahorseback",
+   "aliases": []
+  },
+  {
+   "canon": "alack",
+   "aliases": []
+  },
+  {
+   "canon": "almanack",
+   "aliases": []
+  },
+  {
+   "canon": "amberjack",
+   "aliases": []
+  },
+  {
+   "canon": "amtrack",
+   "aliases": []
+  },
+  {
+   "canon": "antiblack",
+   "aliases": []
+  },
+  {
+   "canon": "anticrack",
+   "aliases": []
+  },
+  {
+   "canon": "antihijack",
+   "aliases": []
+  },
+  {
+   "canon": "antikickback",
+   "aliases": []
+  },
+  {
+   "canon": "applejack",
+   "aliases": []
+  },
+  {
+   "canon": "arrack",
+   "aliases": []
+  },
+  {
+   "canon": "awrack",
+   "aliases": []
+  },
+  {
+   "canon": "backtrack",
+   "aliases": []
+  },
+  {
+   "canon": "bareback",
+   "aliases": []
+  },
+  {
+   "canon": "barmbrack",
+   "aliases": []
+  },
+  {
+   "canon": "barnbrack",
+   "aliases": []
+  },
+  {
+   "canon": "barrack",
+   "aliases": []
+  },
+  {
+   "canon": "bethwack",
+   "aliases": []
+  },
+  {
+   "canon": "biofeedback",
+   "aliases": []
+  },
+  {
+   "canon": "bipack",
+   "aliases": []
+  },
+  {
+   "canon": "bladderwrack",
+   "aliases": []
+  },
+  {
+   "canon": "blowback",
+   "aliases": []
+  },
+  {
+   "canon": "blueback",
+   "aliases": []
+  },
+  {
+   "canon": "bluejack",
+   "aliases": []
+  },
+  {
+   "canon": "boneblack",
+   "aliases": []
+  },
+  {
+   "canon": "bookrack",
+   "aliases": []
+  },
+  {
+   "canon": "bootblack",
+   "aliases": []
+  },
+  {
+   "canon": "bootjack",
+   "aliases": []
+  },
+  {
+   "canon": "brack",
+   "aliases": []
+  },
+  {
+   "canon": "bratpack",
+   "aliases": []
+  },
+  {
+   "canon": "breakback",
+   "aliases": []
+  },
+  {
+   "canon": "brushback",
+   "aliases": []
+  },
+  {
+   "canon": "bullwhack",
+   "aliases": []
+  },
+  {
+   "canon": "bushwhack",
+   "aliases": []
+  },
+  {
+   "canon": "buyback",
+   "aliases": []
+  },
+  {
+   "canon": "cack",
+   "aliases": []
+  },
+  {
+   "canon": "calpack",
+   "aliases": []
+  },
+  {
+   "canon": "camelback",
+   "aliases": []
+  },
+  {
+   "canon": "canvasback",
+   "aliases": []
+  },
+  {
+   "canon": "carack",
+   "aliases": []
+  },
+  {
+   "canon": "carjack",
+   "aliases": []
+  },
+  {
+   "canon": "carrack",
+   "aliases": []
+  },
+  {
+   "canon": "carryback",
+   "aliases": []
+  },
+  {
+   "canon": "cashback",
+   "aliases": []
+  },
+  {
+   "canon": "chack",
+   "aliases": []
+  },
+  {
+   "canon": "chargeback",
+   "aliases": []
+  },
+  {
+   "canon": "cheapjack",
+   "aliases": []
+  },
+  {
+   "canon": "chiack",
+   "aliases": []
+  },
+  {
+   "canon": "chyack",
+   "aliases": []
+  },
+  {
+   "canon": "clack",
+   "aliases": []
+  },
+  {
+   "canon": "clawback",
+   "aliases": []
+  },
+  {
+   "canon": "coalsack",
+   "aliases": []
+  },
+  {
+   "canon": "coatrack",
+   "aliases": []
+  },
+  {
+   "canon": "cookshack",
+   "aliases": []
+  },
+  {
+   "canon": "cornerback",
+   "aliases": []
+  },
+  {
+   "canon": "cossack",
+   "aliases": []
+  },
+  {
+   "canon": "countback",
+   "aliases": []
+  },
+  {
+   "canon": "crackajack",
+   "aliases": []
+  },
+  {
+   "canon": "crackback",
+   "aliases": []
+  },
+  {
+   "canon": "crackerjack",
+   "aliases": []
+  },
+  {
+   "canon": "cromack",
+   "aliases": []
+  },
+  {
+   "canon": "crookback",
+   "aliases": []
+  },
+  {
+   "canon": "crossjack",
+   "aliases": []
+  },
+  {
+   "canon": "crummack",
+   "aliases": []
+  },
+  {
+   "canon": "cutback",
+   "aliases": []
+  },
+  {
+   "canon": "dack",
+   "aliases": []
+  },
+  {
+   "canon": "daypack",
+   "aliases": []
+  },
+  {
+   "canon": "daysack",
+   "aliases": []
+  },
+  {
+   "canon": "diamondback",
+   "aliases": []
+  },
+  {
+   "canon": "dieback",
+   "aliases": []
+  },
+  {
+   "canon": "digipack",
+   "aliases": []
+  },
+  {
+   "canon": "drack",
+   "aliases": []
+  },
+  {
+   "canon": "drawback",
+   "aliases": []
+  },
+  {
+   "canon": "eelwrack",
+   "aliases": []
+  },
+  {
+   "canon": "eirack",
+   "aliases": []
+  },
+  {
+   "canon": "eyeblack",
+   "aliases": []
+  },
+  {
+   "canon": "fallback",
+   "aliases": []
+  },
+  {
+   "canon": "fastback",
+   "aliases": []
+  },
+  {
+   "canon": "fatback",
+   "aliases": []
+  },
+  {
+   "canon": "fiddleback",
+   "aliases": []
+  },
+  {
+   "canon": "fightback",
+   "aliases": []
+  },
+  {
+   "canon": "finback",
+   "aliases": []
+  },
+  {
+   "canon": "finnack",
+   "aliases": []
+  },
+  {
+   "canon": "fireback",
+   "aliases": []
+  },
+  {
+   "canon": "fishyback",
+   "aliases": []
+  },
+  {
+   "canon": "flack",
+   "aliases": []
+  },
+  {
+   "canon": "flapjack",
+   "aliases": []
+  },
+  {
+   "canon": "flaptrack",
+   "aliases": []
+  },
+  {
+   "canon": "flareback",
+   "aliases": []
+  },
+  {
+   "canon": "flashback",
+   "aliases": []
+  },
+  {
+   "canon": "flatback",
+   "aliases": []
+  },
+  {
+   "canon": "flatpack",
+   "aliases": []
+  },
+  {
+   "canon": "flyback",
+   "aliases": []
+  },
+  {
+   "canon": "foldback",
+   "aliases": []
+  },
+  {
+   "canon": "foreslack",
+   "aliases": []
+  },
+  {
+   "canon": "forslack",
+   "aliases": []
+  },
+  {
+   "canon": "frack",
+   "aliases": []
+  },
+  {
+   "canon": "fullback",
+   "aliases": []
+  },
+  {
+   "canon": "gimcrack",
+   "aliases": []
+  },
+  {
+   "canon": "giveback",
+   "aliases": []
+  },
+  {
+   "canon": "googlewhack",
+   "aliases": []
+  },
+  {
+   "canon": "grasswrack",
+   "aliases": []
+  },
+  {
+   "canon": "grayback",
+   "aliases": []
+  },
+  {
+   "canon": "greenback",
+   "aliases": []
+  },
+  {
+   "canon": "greyback",
+   "aliases": []
+  },
+  {
+   "canon": "gripsack",
+   "aliases": []
+  },
+  {
+   "canon": "gunnysack",
+   "aliases": []
+  },
+  {
+   "canon": "hackmatack",
+   "aliases": []
+  },
+  {
+   "canon": "hairyback",
+   "aliases": []
+  },
+  {
+   "canon": "halfback",
+   "aliases": []
+  },
+  {
+   "canon": "halftrack",
+   "aliases": []
+  },
+  {
+   "canon": "hardhack",
+   "aliases": []
+  },
+  {
+   "canon": "hardpack",
+   "aliases": []
+  },
+  {
+   "canon": "hardtack",
+   "aliases": []
+  },
+  {
+   "canon": "hatrack",
+   "aliases": []
+  },
+  {
+   "canon": "haversack",
+   "aliases": []
+  },
+  {
+   "canon": "hayrack",
+   "aliases": []
+  },
+  {
+   "canon": "haystack",
+   "aliases": []
+  },
+  {
+   "canon": "highjack",
+   "aliases": []
+  },
+  {
+   "canon": "hijack",
+   "aliases": []
+  },
+  {
+   "canon": "hogback",
+   "aliases": []
+  },
+  {
+   "canon": "holdback",
+   "aliases": []
+  },
+  {
+   "canon": "hopsack",
+   "aliases": []
+  },
+  {
+   "canon": "hornwrack",
+   "aliases": []
+  },
+  {
+   "canon": "howlback",
+   "aliases": []
+  },
+  {
+   "canon": "huckaback",
+   "aliases": []
+  },
+  {
+   "canon": "humpback",
+   "aliases": []
+  },
+  {
+   "canon": "hunchback",
+   "aliases": []
+  },
+  {
+   "canon": "hydrocrack",
+   "aliases": []
+  },
+  {
+   "canon": "icepack",
+   "aliases": []
+  },
+  {
+   "canon": "jimcrack",
+   "aliases": []
+  },
+  {
+   "canon": "kack",
+   "aliases": []
+  },
+  {
+   "canon": "kickback",
+   "aliases": []
+  },
+  {
+   "canon": "knack",
+   "aliases": []
+  },
+  {
+   "canon": "knapsack",
+   "aliases": []
+  },
+  {
+   "canon": "knickknack",
+   "aliases": []
+  },
+  {
+   "canon": "kyack",
+   "aliases": []
+  },
+  {
+   "canon": "lampblack",
+   "aliases": []
+  },
+  {
+   "canon": "lancejack",
+   "aliases": []
+  },
+  {
+   "canon": "layback",
+   "aliases": []
+  },
+  {
+   "canon": "leaseback",
+   "aliases": []
+  },
+  {
+   "canon": "leatherback",
+   "aliases": []
+  },
+  {
+   "canon": "lifehack",
+   "aliases": []
+  },
+  {
+   "canon": "liftback",
+   "aliases": []
+  },
+  {
+   "canon": "loanback",
+   "aliases": []
+  },
+  {
+   "canon": "lumberjack",
+   "aliases": []
+  },
+  {
+   "canon": "mailsack",
+   "aliases": []
+  },
+  {
+   "canon": "manjack",
+   "aliases": []
+  },
+  {
+   "canon": "manpack",
+   "aliases": []
+  },
+  {
+   "canon": "microcrack",
+   "aliases": []
+  },
+  {
+   "canon": "minitrack",
+   "aliases": []
+  },
+  {
+   "canon": "mossback",
+   "aliases": []
+  },
+  {
+   "canon": "mudpack",
+   "aliases": []
+  },
+  {
+   "canon": "multipack",
+   "aliases": []
+  },
+  {
+   "canon": "natterjack",
+   "aliases": []
+  },
+  {
+   "canon": "nicknack",
+   "aliases": []
+  },
+  {
+   "canon": "nonblack",
+   "aliases": []
+  },
+  {
+   "canon": "notchback",
+   "aliases": []
+  },
+  {
+   "canon": "offtrack",
+   "aliases": []
+  },
+  {
+   "canon": "oomiack",
+   "aliases": []
+  },
+  {
+   "canon": "overpack",
+   "aliases": []
+  },
+  {
+   "canon": "overrack",
+   "aliases": []
+  },
+  {
+   "canon": "packsack",
+   "aliases": []
+  },
+  {
+   "canon": "paddywack",
+   "aliases": []
+  },
+  {
+   "canon": "paddywhack",
+   "aliases": []
+  },
+  {
+   "canon": "payback",
+   "aliases": []
+  },
+  {
+   "canon": "pellack",
+   "aliases": []
+  },
+  {
+   "canon": "peritrack",
+   "aliases": []
+  },
+  {
+   "canon": "pickaback",
+   "aliases": []
+  },
+  {
+   "canon": "pickapack",
+   "aliases": []
+  },
+  {
+   "canon": "pickback",
+   "aliases": []
+  },
+  {
+   "canon": "piggyback",
+   "aliases": []
+  },
+  {
+   "canon": "plack",
+   "aliases": []
+  },
+  {
+   "canon": "plowback",
+   "aliases": []
+  },
+  {
+   "canon": "pollack",
+   "aliases": []
+  },
+  {
+   "canon": "portapack",
+   "aliases": []
+  },
+  {
+   "canon": "postattack",
+   "aliases": []
+  },
+  {
+   "canon": "prepack",
+   "aliases": []
+  },
+  {
+   "canon": "pullback",
+   "aliases": []
+  },
+  {
+   "canon": "pushback",
+   "aliases": []
+  },
+  {
+   "canon": "quack",
+   "aliases": []
+  },
+  {
+   "canon": "quarterback",
+   "aliases": []
+  },
+  {
+   "canon": "quillback",
+   "aliases": []
+  },
+  {
+   "canon": "racetrack",
+   "aliases": []
+  },
+  {
+   "canon": "ransack",
+   "aliases": []
+  },
+  {
+   "canon": "ratpack",
+   "aliases": []
+  },
+  {
+   "canon": "razorback",
+   "aliases": []
+  },
+  {
+   "canon": "reattack",
+   "aliases": []
+  },
+  {
+   "canon": "reback",
+   "aliases": []
+  },
+  {
+   "canon": "redback",
+   "aliases": []
+  },
+  {
+   "canon": "repack",
+   "aliases": []
+  },
+  {
+   "canon": "rerack",
+   "aliases": []
+  },
+  {
+   "canon": "restack",
+   "aliases": []
+  },
+  {
+   "canon": "retack",
+   "aliases": []
+  },
+  {
+   "canon": "retrack",
+   "aliases": []
+  },
+  {
+   "canon": "retropack",
+   "aliases": []
+  },
+  {
+   "canon": "rickrack",
+   "aliases": []
+  },
+  {
+   "canon": "ridgeback",
+   "aliases": []
+  },
+  {
+   "canon": "rollback",
+   "aliases": []
+  },
+  {
+   "canon": "roorback",
+   "aliases": []
+  },
+  {
+   "canon": "roughback",
+   "aliases": []
+  },
+  {
+   "canon": "rucksack",
+   "aliases": []
+  },
+  {
+   "canon": "runback",
+   "aliases": []
+  },
+  {
+   "canon": "saddleback",
+   "aliases": []
+  },
+  {
+   "canon": "sandcrack",
+   "aliases": []
+  },
+  {
+   "canon": "scatback",
+   "aliases": []
+  },
+  {
+   "canon": "scratchback",
+   "aliases": []
+  },
+  {
+   "canon": "seatback",
+   "aliases": []
+  },
+  {
+   "canon": "setback",
+   "aliases": []
+  },
+  {
+   "canon": "shabrack",
+   "aliases": []
+  },
+  {
+   "canon": "sheeptrack",
+   "aliases": []
+  },
+  {
+   "canon": "shellack",
+   "aliases": []
+  },
+  {
+   "canon": "shellback",
+   "aliases": []
+  },
+  {
+   "canon": "shoeblack",
+   "aliases": []
+  },
+  {
+   "canon": "shoepack",
+   "aliases": []
+  },
+  {
+   "canon": "shrinkpack",
+   "aliases": []
+  },
+  {
+   "canon": "sidetrack",
+   "aliases": []
+  },
+  {
+   "canon": "silverback",
+   "aliases": []
+  },
+  {
+   "canon": "singletrack",
+   "aliases": []
+  },
+  {
+   "canon": "skewback",
+   "aliases": []
+  },
+  {
+   "canon": "skipjack",
+   "aliases": []
+  },
+  {
+   "canon": "skyjack",
+   "aliases": []
+  },
+  {
+   "canon": "slapjack",
+   "aliases": []
+  },
+  {
+   "canon": "slingback",
+   "aliases": []
+  },
+  {
+   "canon": "slotback",
+   "aliases": []
+  },
+  {
+   "canon": "slowback",
+   "aliases": []
+  },
+  {
+   "canon": "smack",
+   "aliases": []
+  },
+  {
+   "canon": "smokejack",
+   "aliases": []
+  },
+  {
+   "canon": "smokestack",
+   "aliases": []
+  },
+  {
+   "canon": "snapback",
+   "aliases": []
+  },
+  {
+   "canon": "snowpack",
+   "aliases": []
+  },
+  {
+   "canon": "softback",
+   "aliases": []
+  },
+  {
+   "canon": "sowback",
+   "aliases": []
+  },
+  {
+   "canon": "splashback",
+   "aliases": []
+  },
+  {
+   "canon": "sprack",
+   "aliases": []
+  },
+  {
+   "canon": "steeplejack",
+   "aliases": []
+  },
+  {
+   "canon": "stickleback",
+   "aliases": []
+  },
+  {
+   "canon": "stomack",
+   "aliases": []
+  },
+  {
+   "canon": "strack",
+   "aliases": []
+  },
+  {
+   "canon": "straddleback",
+   "aliases": []
+  },
+  {
+   "canon": "subtack",
+   "aliases": []
+  },
+  {
+   "canon": "sunback",
+   "aliases": []
+  },
+  {
+   "canon": "superflack",
+   "aliases": []
+  },
+  {
+   "canon": "supplejack",
+   "aliases": []
+  },
+  {
+   "canon": "swack",
+   "aliases": []
+  },
+  {
+   "canon": "swayback",
+   "aliases": []
+  },
+  {
+   "canon": "sweepback",
+   "aliases": []
+  },
+  {
+   "canon": "sweptback",
+   "aliases": []
+  },
+  {
+   "canon": "switchback",
+   "aliases": []
+  },
+  {
+   "canon": "tacmahack",
+   "aliases": []
+  },
+  {
+   "canon": "tailback",
+   "aliases": []
+  },
+  {
+   "canon": "tamarack",
+   "aliases": []
+  },
+  {
+   "canon": "thack",
+   "aliases": []
+  },
+  {
+   "canon": "thornback",
+   "aliases": []
+  },
+  {
+   "canon": "throwback",
+   "aliases": []
+  },
+  {
+   "canon": "thumbtack",
+   "aliases": []
+  },
+  {
+   "canon": "thwack",
+   "aliases": []
+  },
+  {
+   "canon": "ticktack",
+   "aliases": []
+  },
+  {
+   "canon": "tieback",
+   "aliases": []
+  },
+  {
+   "canon": "tietack",
+   "aliases": []
+  },
+  {
+   "canon": "tintack",
+   "aliases": []
+  },
+  {
+   "canon": "tomback",
+   "aliases": []
+  },
+  {
+   "canon": "touchback",
+   "aliases": []
+  },
+  {
+   "canon": "towsack",
+   "aliases": []
+  },
+  {
+   "canon": "tricktrack",
+   "aliases": []
+  },
+  {
+   "canon": "tripack",
+   "aliases": []
+  },
+  {
+   "canon": "turnback",
+   "aliases": []
+  },
+  {
+   "canon": "turtleback",
+   "aliases": []
+  },
+  {
+   "canon": "umiack",
+   "aliases": []
+  },
+  {
+   "canon": "unpack",
+   "aliases": []
+  },
+  {
+   "canon": "unstack",
+   "aliases": []
+  },
+  {
+   "canon": "untack",
+   "aliases": []
+  },
+  {
+   "canon": "untrack",
+   "aliases": []
+  },
+  {
+   "canon": "wack",
+   "aliases": []
+  },
+  {
+   "canon": "whack",
+   "aliases": []
+  },
+  {
+   "canon": "whaleback",
+   "aliases": []
+  },
+  {
+   "canon": "whipjack",
+   "aliases": []
+  },
+  {
+   "canon": "whitrack",
+   "aliases": []
+  },
+  {
+   "canon": "wingback",
+   "aliases": []
+  },
+  {
+   "canon": "wisecrack",
+   "aliases": []
+  },
+  {
+   "canon": "woollyback",
+   "aliases": []
+  },
+  {
+   "canon": "woolpack",
+   "aliases": []
+  },
+  {
+   "canon": "woolsack",
+   "aliases": []
+  },
+  {
+   "canon": "wrack",
+   "aliases": []
+  },
+  {
+   "canon": "yack",
+   "aliases": []
+  },
+  {
+   "canon": "yellowback",
+   "aliases": []
+  },
+  {
+   "canon": "zack",
+   "aliases": []
+  },
+  {
+   "canon": "zwieback",
+   "aliases": []
+  }
+ ],
+ "Rhymes with CLOCK (-OCK)": [
+  {
+   "canon": "stock",
+   "aliases": []
+  },
+  {
+   "canon": "rock",
+   "aliases": []
+  },
+  {
+   "canon": "block",
+   "aliases": []
+  },
+  {
+   "canon": "clock",
+   "aliases": []
+  },
+  {
+   "canon": "lock",
+   "aliases": []
+  },
+  {
+   "canon": "shock",
+   "aliases": []
+  },
+  {
+   "canon": "livestock",
+   "aliases": []
+  },
+  {
+   "canon": "unlock",
+   "aliases": []
+  },
+  {
+   "canon": "dock",
+   "aliases": []
+  },
+  {
+   "canon": "knock",
+   "aliases": []
+  },
+  {
+   "canon": "overstock",
+   "aliases": []
+  },
+  {
+   "canon": "sock",
+   "aliases": []
+  },
+  {
+   "canon": "mock",
+   "aliases": []
+  },
+  {
+   "canon": "flock",
+   "aliases": []
+  },
+  {
+   "canon": "brock",
+   "aliases": []
+  },
+  {
+   "canon": "aftershock",
+   "aliases": []
+  },
+  {
+   "canon": "airlock",
+   "aliases": []
+  },
+  {
+   "canon": "alcolock",
+   "aliases": []
+  },
+  {
+   "canon": "alpenstock",
+   "aliases": []
+  },
+  {
+   "canon": "antiknock",
+   "aliases": []
+  },
+  {
+   "canon": "antilock",
+   "aliases": []
+  },
+  {
+   "canon": "antirock",
+   "aliases": []
+  },
+  {
+   "canon": "antishock",
+   "aliases": []
+  },
+  {
+   "canon": "armlock",
+   "aliases": []
+  },
+  {
+   "canon": "backblock",
+   "aliases": []
+  },
+  {
+   "canon": "badderlock",
+   "aliases": []
+  },
+  {
+   "canon": "bannock",
+   "aliases": []
+  },
+  {
+   "canon": "barock",
+   "aliases": []
+  },
+  {
+   "canon": "bedrock",
+   "aliases": []
+  },
+  {
+   "canon": "bellock",
+   "aliases": []
+  },
+  {
+   "canon": "bemock",
+   "aliases": []
+  },
+  {
+   "canon": "bitstock",
+   "aliases": []
+  },
+  {
+   "canon": "bittock",
+   "aliases": []
+  },
+  {
+   "canon": "bloodstock",
+   "aliases": []
+  },
+  {
+   "canon": "bobbysock",
+   "aliases": []
+  },
+  {
+   "canon": "bock",
+   "aliases": []
+  },
+  {
+   "canon": "bonnock",
+   "aliases": []
+  },
+  {
+   "canon": "boondock",
+   "aliases": []
+  },
+  {
+   "canon": "breechblock",
+   "aliases": []
+  },
+  {
+   "canon": "bullock",
+   "aliases": []
+  },
+  {
+   "canon": "bummock",
+   "aliases": []
+  },
+  {
+   "canon": "burdock",
+   "aliases": []
+  },
+  {
+   "canon": "candock",
+   "aliases": []
+  },
+  {
+   "canon": "caprock",
+   "aliases": []
+  },
+  {
+   "canon": "carlock",
+   "aliases": []
+  },
+  {
+   "canon": "cassock",
+   "aliases": []
+  },
+  {
+   "canon": "castock",
+   "aliases": []
+  },
+  {
+   "canon": "cellblock",
+   "aliases": []
+  },
+  {
+   "canon": "charlock",
+   "aliases": []
+  },
+  {
+   "canon": "chock",
+   "aliases": []
+  },
+  {
+   "canon": "chockablock",
+   "aliases": []
+  },
+  {
+   "canon": "crock",
+   "aliases": []
+  },
+  {
+   "canon": "crummock",
+   "aliases": []
+  },
+  {
+   "canon": "custock",
+   "aliases": []
+  },
+  {
+   "canon": "daddock",
+   "aliases": []
+  },
+  {
+   "canon": "daglock",
+   "aliases": []
+  },
+  {
+   "canon": "deadlock",
+   "aliases": []
+  },
+  {
+   "canon": "deadstock",
+   "aliases": []
+  },
+  {
+   "canon": "defrock",
+   "aliases": []
+  },
+  {
+   "canon": "destock",
+   "aliases": []
+  },
+  {
+   "canon": "diestock",
+   "aliases": []
+  },
+  {
+   "canon": "disfrock",
+   "aliases": []
+  },
+  {
+   "canon": "doorknock",
+   "aliases": []
+  },
+  {
+   "canon": "dornock",
+   "aliases": []
+  },
+  {
+   "canon": "drammock",
+   "aliases": []
+  },
+  {
+   "canon": "dreadlock",
+   "aliases": []
+  },
+  {
+   "canon": "drillstock",
+   "aliases": []
+  },
+  {
+   "canon": "droplock",
+   "aliases": []
+  },
+  {
+   "canon": "drummock",
+   "aliases": []
+  },
+  {
+   "canon": "dunnock",
+   "aliases": []
+  },
+  {
+   "canon": "earlock",
+   "aliases": []
+  },
+  {
+   "canon": "electroshock",
+   "aliases": []
+  },
+  {
+   "canon": "elflock",
+   "aliases": []
+  },
+  {
+   "canon": "enlock",
+   "aliases": []
+  },
+  {
+   "canon": "fatstock",
+   "aliases": []
+  },
+  {
+   "canon": "feedstock",
+   "aliases": []
+  },
+  {
+   "canon": "fetlock",
+   "aliases": []
+  },
+  {
+   "canon": "fetterlock",
+   "aliases": []
+  },
+  {
+   "canon": "finnock",
+   "aliases": []
+  },
+  {
+   "canon": "firelock",
+   "aliases": []
+  },
+  {
+   "canon": "flintlock",
+   "aliases": []
+  },
+  {
+   "canon": "footstock",
+   "aliases": []
+  },
+  {
+   "canon": "forehock",
+   "aliases": []
+  },
+  {
+   "canon": "forelock",
+   "aliases": []
+  },
+  {
+   "canon": "foreshock",
+   "aliases": []
+  },
+  {
+   "canon": "frock",
+   "aliases": []
+  },
+  {
+   "canon": "futtock",
+   "aliases": []
+  },
+  {
+   "canon": "gallock",
+   "aliases": []
+  },
+  {
+   "canon": "gammock",
+   "aliases": []
+  },
+  {
+   "canon": "garvock",
+   "aliases": []
+  },
+  {
+   "canon": "gavelock",
+   "aliases": []
+  },
+  {
+   "canon": "genlock",
+   "aliases": []
+  },
+  {
+   "canon": "gridlock",
+   "aliases": []
+  },
+  {
+   "canon": "gunlock",
+   "aliases": []
+  },
+  {
+   "canon": "gunstock",
+   "aliases": []
+  },
+  {
+   "canon": "haddock",
+   "aliases": []
+  },
+  {
+   "canon": "hairlock",
+   "aliases": []
+  },
+  {
+   "canon": "hammerlock",
+   "aliases": []
+  },
+  {
+   "canon": "hammock",
+   "aliases": []
+  },
+  {
+   "canon": "hardrock",
+   "aliases": []
+  },
+  {
+   "canon": "hassock",
+   "aliases": []
+  },
+  {
+   "canon": "hattock",
+   "aliases": []
+  },
+  {
+   "canon": "havelock",
+   "aliases": []
+  },
+  {
+   "canon": "headlock",
+   "aliases": []
+  },
+  {
+   "canon": "headstock",
+   "aliases": []
+  },
+  {
+   "canon": "hemlock",
+   "aliases": []
+  },
+  {
+   "canon": "hillock",
+   "aliases": []
+  },
+  {
+   "canon": "hock",
+   "aliases": []
+  },
+  {
+   "canon": "hollyhock",
+   "aliases": []
+  },
+  {
+   "canon": "hommock",
+   "aliases": []
+  },
+  {
+   "canon": "hoolock",
+   "aliases": []
+  },
+  {
+   "canon": "hordock",
+   "aliases": []
+  },
+  {
+   "canon": "hummock",
+   "aliases": []
+  },
+  {
+   "canon": "inlock",
+   "aliases": []
+  },
+  {
+   "canon": "interlock",
+   "aliases": []
+  },
+  {
+   "canon": "jabberwock",
+   "aliases": []
+  },
+  {
+   "canon": "jannock",
+   "aliases": []
+  },
+  {
+   "canon": "jock",
+   "aliases": []
+  },
+  {
+   "canon": "jonnock",
+   "aliases": []
+  },
+  {
+   "canon": "kebbock",
+   "aliases": []
+  },
+  {
+   "canon": "kneesock",
+   "aliases": []
+  },
+  {
+   "canon": "komondorock",
+   "aliases": []
+  },
+  {
+   "canon": "lassock",
+   "aliases": []
+  },
+  {
+   "canon": "laverock",
+   "aliases": []
+  },
+  {
+   "canon": "lavrock",
+   "aliases": []
+  },
+  {
+   "canon": "laylock",
+   "aliases": []
+  },
+  {
+   "canon": "linstock",
+   "aliases": []
+  },
+  {
+   "canon": "lintstock",
+   "aliases": []
+  },
+  {
+   "canon": "lovelock",
+   "aliases": []
+  },
+  {
+   "canon": "maddock",
+   "aliases": []
+  },
+  {
+   "canon": "mammock",
+   "aliases": []
+  },
+  {
+   "canon": "matchlock",
+   "aliases": []
+  },
+  {
+   "canon": "mattock",
+   "aliases": []
+  },
+  {
+   "canon": "minnock",
+   "aliases": []
+  },
+  {
+   "canon": "monadnock",
+   "aliases": []
+  },
+  {
+   "canon": "moonrock",
+   "aliases": []
+  },
+  {
+   "canon": "mudrock",
+   "aliases": []
+  },
+  {
+   "canon": "mullock",
+   "aliases": []
+  },
+  {
+   "canon": "mummock",
+   "aliases": []
+  },
+  {
+   "canon": "netherstock",
+   "aliases": []
+  },
+  {
+   "canon": "nock",
+   "aliases": []
+  },
+  {
+   "canon": "oarlock",
+   "aliases": []
+  },
+  {
+   "canon": "outrock",
+   "aliases": []
+  },
+  {
+   "canon": "overclock",
+   "aliases": []
+  },
+  {
+   "canon": "overlock",
+   "aliases": []
+  },
+  {
+   "canon": "paddock",
+   "aliases": []
+  },
+  {
+   "canon": "padlock",
+   "aliases": []
+  },
+  {
+   "canon": "paiock",
+   "aliases": []
+  },
+  {
+   "canon": "pajock",
+   "aliases": []
+  },
+  {
+   "canon": "parrock",
+   "aliases": []
+  },
+  {
+   "canon": "pellock",
+   "aliases": []
+  },
+  {
+   "canon": "penstock",
+   "aliases": []
+  },
+  {
+   "canon": "phinnock",
+   "aliases": []
+  },
+  {
+   "canon": "picklock",
+   "aliases": []
+  },
+  {
+   "canon": "piddock",
+   "aliases": []
+  },
+  {
+   "canon": "pillock",
+   "aliases": []
+  },
+  {
+   "canon": "pinnock",
+   "aliases": []
+  },
+  {
+   "canon": "pock",
+   "aliases": []
+  },
+  {
+   "canon": "pollock",
+   "aliases": []
+  },
+  {
+   "canon": "popsock",
+   "aliases": []
+  },
+  {
+   "canon": "porlock",
+   "aliases": []
+  },
+  {
+   "canon": "prerock",
+   "aliases": []
+  },
+  {
+   "canon": "puddock",
+   "aliases": []
+  },
+  {
+   "canon": "putchock",
+   "aliases": []
+  },
+  {
+   "canon": "putlock",
+   "aliases": []
+  },
+  {
+   "canon": "puttock",
+   "aliases": []
+  },
+  {
+   "canon": "redock",
+   "aliases": []
+  },
+  {
+   "canon": "relock",
+   "aliases": []
+  },
+  {
+   "canon": "restock",
+   "aliases": []
+  },
+  {
+   "canon": "rimrock",
+   "aliases": []
+  },
+  {
+   "canon": "roadblock",
+   "aliases": []
+  },
+  {
+   "canon": "rollock",
+   "aliases": []
+  },
+  {
+   "canon": "rootstock",
+   "aliases": []
+  },
+  {
+   "canon": "rowlock",
+   "aliases": []
+  },
+  {
+   "canon": "rudderstock",
+   "aliases": []
+  },
+  {
+   "canon": "ruddock",
+   "aliases": []
+  },
+  {
+   "canon": "rullock",
+   "aliases": []
+  },
+  {
+   "canon": "schlock",
+   "aliases": []
+  },
+  {
+   "canon": "schmock",
+   "aliases": []
+  },
+  {
+   "canon": "seedstock",
+   "aliases": []
+  },
+  {
+   "canon": "shaddock",
+   "aliases": []
+  },
+  {
+   "canon": "shamrock",
+   "aliases": []
+  },
+  {
+   "canon": "sheetrock",
+   "aliases": []
+  },
+  {
+   "canon": "shellshock",
+   "aliases": []
+  },
+  {
+   "canon": "sherlock",
+   "aliases": []
+  },
+  {
+   "canon": "shlock",
+   "aliases": []
+  },
+  {
+   "canon": "shmock",
+   "aliases": []
+  },
+  {
+   "canon": "sidelock",
+   "aliases": []
+  },
+  {
+   "canon": "sillock",
+   "aliases": []
+  },
+  {
+   "canon": "slickrock",
+   "aliases": []
+  },
+  {
+   "canon": "slommock",
+   "aliases": []
+  },
+  {
+   "canon": "slummock",
+   "aliases": []
+  },
+  {
+   "canon": "smock",
+   "aliases": []
+  },
+  {
+   "canon": "sourock",
+   "aliases": []
+  },
+  {
+   "canon": "spatterdock",
+   "aliases": []
+  },
+  {
+   "canon": "steinbock",
+   "aliases": []
+  },
+  {
+   "canon": "stenlock",
+   "aliases": []
+  },
+  {
+   "canon": "stocklock",
+   "aliases": []
+  },
+  {
+   "canon": "subblock",
+   "aliases": []
+  },
+  {
+   "canon": "sunblock",
+   "aliases": []
+  },
+  {
+   "canon": "superblock",
+   "aliases": []
+  },
+  {
+   "canon": "superjock",
+   "aliases": []
+  },
+  {
+   "canon": "superstock",
+   "aliases": []
+  },
+  {
+   "canon": "swivelblock",
+   "aliases": []
+  },
+  {
+   "canon": "tailstock",
+   "aliases": []
+  },
+  {
+   "canon": "tarrock",
+   "aliases": []
+  },
+  {
+   "canon": "ticktock",
+   "aliases": []
+  },
+  {
+   "canon": "tipstock",
+   "aliases": []
+  },
+  {
+   "canon": "tock",
+   "aliases": []
+  },
+  {
+   "canon": "traprock",
+   "aliases": []
+  },
+  {
+   "canon": "trock",
+   "aliases": []
+  },
+  {
+   "canon": "tussock",
+   "aliases": []
+  },
+  {
+   "canon": "unblock",
+   "aliases": []
+  },
+  {
+   "canon": "understock",
+   "aliases": []
+  },
+  {
+   "canon": "undock",
+   "aliases": []
+  },
+  {
+   "canon": "unfrock",
+   "aliases": []
+  },
+  {
+   "canon": "unstock",
+   "aliases": []
+  },
+  {
+   "canon": "uplock",
+   "aliases": []
+  },
+  {
+   "canon": "warlock",
+   "aliases": []
+  },
+  {
+   "canon": "wazzock",
+   "aliases": []
+  },
+  {
+   "canon": "wedlock",
+   "aliases": []
+  },
+  {
+   "canon": "whipstock",
+   "aliases": []
+  },
+  {
+   "canon": "windock",
+   "aliases": []
+  },
+  {
+   "canon": "windsock",
+   "aliases": []
+  },
+  {
+   "canon": "winnock",
+   "aliases": []
+  },
+  {
+   "canon": "wock",
+   "aliases": []
+  },
+  {
+   "canon": "woodblock",
+   "aliases": []
+  },
+  {
+   "canon": "woodshock",
+   "aliases": []
+  },
+  {
+   "canon": "wristlock",
+   "aliases": []
+  },
+  {
+   "canon": "yapock",
+   "aliases": []
+  },
+  {
+   "canon": "yeldrock",
+   "aliases": []
+  },
+  {
+   "canon": "yock",
+   "aliases": []
+  },
+  {
+   "canon": "ziplock",
+   "aliases": []
+  }
+ ],
+ "Rhymes with HOUSE (-OUSE)": [
+  {
+   "canon": "house",
+   "aliases": []
+  },
+  {
+   "canon": "mouse",
+   "aliases": []
+  },
+  {
+   "canon": "warehouse",
+   "aliases": []
+  },
+  {
+   "canon": "spouse",
+   "aliases": []
+  },
+  {
+   "canon": "greenhouse",
+   "aliases": []
+  },
+  {
+   "canon": "lighthouse",
+   "aliases": []
+  },
+  {
+   "canon": "courthouse",
+   "aliases": []
+  },
+  {
+   "canon": "townhouse",
+   "aliases": []
+  },
+  {
+   "canon": "penthouse",
+   "aliases": []
+  },
+  {
+   "canon": "alehouse",
+   "aliases": []
+  },
+  {
+   "canon": "almshouse",
+   "aliases": []
+  },
+  {
+   "canon": "arouse",
+   "aliases": []
+  },
+  {
+   "canon": "arthouse",
+   "aliases": []
+  },
+  {
+   "canon": "backhouse",
+   "aliases": []
+  },
+  {
+   "canon": "baghouse",
+   "aliases": []
+  },
+  {
+   "canon": "bakehouse",
+   "aliases": []
+  },
+  {
+   "canon": "barrelhouse",
+   "aliases": []
+  },
+  {
+   "canon": "bathhouse",
+   "aliases": []
+  },
+  {
+   "canon": "bawdyhouse",
+   "aliases": []
+  },
+  {
+   "canon": "beadhouse",
+   "aliases": []
+  },
+  {
+   "canon": "bedehouse",
+   "aliases": []
+  },
+  {
+   "canon": "bespouse",
+   "aliases": []
+  },
+  {
+   "canon": "birdhouse",
+   "aliases": []
+  },
+  {
+   "canon": "blockhouse",
+   "aliases": []
+  },
+  {
+   "canon": "blouse",
+   "aliases": []
+  },
+  {
+   "canon": "boathouse",
+   "aliases": []
+  },
+  {
+   "canon": "booklouse",
+   "aliases": []
+  },
+  {
+   "canon": "bouse",
+   "aliases": []
+  },
+  {
+   "canon": "bughouse",
+   "aliases": []
+  },
+  {
+   "canon": "bunkhouse",
+   "aliases": []
+  },
+  {
+   "canon": "burnouse",
+   "aliases": []
+  },
+  {
+   "canon": "carouse",
+   "aliases": []
+  },
+  {
+   "canon": "cathouse",
+   "aliases": []
+  },
+  {
+   "canon": "chapterhouse",
+   "aliases": []
+  },
+  {
+   "canon": "charthouse",
+   "aliases": []
+  },
+  {
+   "canon": "chophouse",
+   "aliases": []
+  },
+  {
+   "canon": "chouse",
+   "aliases": []
+  },
+  {
+   "canon": "clubhouse",
+   "aliases": []
+  },
+  {
+   "canon": "coalhouse",
+   "aliases": []
+  },
+  {
+   "canon": "coffeehouse",
+   "aliases": []
+  },
+  {
+   "canon": "coldhouse",
+   "aliases": []
+  },
+  {
+   "canon": "cookhouse",
+   "aliases": []
+  },
+  {
+   "canon": "coolhouse",
+   "aliases": []
+  },
+  {
+   "canon": "corfhouse",
+   "aliases": []
+  },
+  {
+   "canon": "cowhouse",
+   "aliases": []
+  },
+  {
+   "canon": "creepmouse",
+   "aliases": []
+  },
+  {
+   "canon": "crouse",
+   "aliases": []
+  },
+  {
+   "canon": "customhouse",
+   "aliases": []
+  },
+  {
+   "canon": "customshouse",
+   "aliases": []
+  },
+  {
+   "canon": "deadhouse",
+   "aliases": []
+  },
+  {
+   "canon": "deckhouse",
+   "aliases": []
+  },
+  {
+   "canon": "delouse",
+   "aliases": []
+  },
+  {
+   "canon": "disespouse",
+   "aliases": []
+  },
+  {
+   "canon": "dishouse",
+   "aliases": []
+  },
+  {
+   "canon": "doghouse",
+   "aliases": []
+  },
+  {
+   "canon": "dollhouse",
+   "aliases": []
+  },
+  {
+   "canon": "dormouse",
+   "aliases": []
+  },
+  {
+   "canon": "dosshouse",
+   "aliases": []
+  },
+  {
+   "canon": "douse",
+   "aliases": []
+  },
+  {
+   "canon": "espouse",
+   "aliases": []
+  },
+  {
+   "canon": "farmhouse",
+   "aliases": []
+  },
+  {
+   "canon": "fieldmouse",
+   "aliases": []
+  },
+  {
+   "canon": "firehouse",
+   "aliases": []
+  },
+  {
+   "canon": "flittermouse",
+   "aliases": []
+  },
+  {
+   "canon": "flophouse",
+   "aliases": []
+  },
+  {
+   "canon": "flouse",
+   "aliases": []
+  },
+  {
+   "canon": "funhouse",
+   "aliases": []
+  },
+  {
+   "canon": "gashouse",
+   "aliases": []
+  },
+  {
+   "canon": "gatehouse",
+   "aliases": []
+  },
+  {
+   "canon": "ginhouse",
+   "aliases": []
+  },
+  {
+   "canon": "glasshouse",
+   "aliases": []
+  },
+  {
+   "canon": "grindhouse",
+   "aliases": []
+  },
+  {
+   "canon": "grouse",
+   "aliases": []
+  },
+  {
+   "canon": "guardhouse",
+   "aliases": []
+  },
+  {
+   "canon": "guesthouse",
+   "aliases": []
+  },
+  {
+   "canon": "gunhouse",
+   "aliases": []
+  },
+  {
+   "canon": "henhouse",
+   "aliases": []
+  },
+  {
+   "canon": "hothouse",
+   "aliases": []
+  },
+  {
+   "canon": "icehouse",
+   "aliases": []
+  },
+  {
+   "canon": "jailhouse",
+   "aliases": []
+  },
+  {
+   "canon": "jalouse",
+   "aliases": []
+  },
+  {
+   "canon": "jealouse",
+   "aliases": []
+  },
+  {
+   "canon": "lobscouse",
+   "aliases": []
+  },
+  {
+   "canon": "lockhouse",
+   "aliases": []
+  },
+  {
+   "canon": "longhouse",
+   "aliases": []
+  },
+  {
+   "canon": "louse",
+   "aliases": []
+  },
+  {
+   "canon": "madhouse",
+   "aliases": []
+  },
+  {
+   "canon": "masthouse",
+   "aliases": []
+  },
+  {
+   "canon": "meetinghouse",
+   "aliases": []
+  },
+  {
+   "canon": "millhouse",
+   "aliases": []
+  },
+  {
+   "canon": "motherhouse",
+   "aliases": []
+  },
+  {
+   "canon": "nuthouse",
+   "aliases": []
+  },
+  {
+   "canon": "oasthouse",
+   "aliases": []
+  },
+  {
+   "canon": "outhouse",
+   "aliases": []
+  },
+  {
+   "canon": "overblouse",
+   "aliases": []
+  },
+  {
+   "canon": "packinghouse",
+   "aliases": []
+  },
+  {
+   "canon": "palmhouse",
+   "aliases": []
+  },
+  {
+   "canon": "pampelmouse",
+   "aliases": []
+  },
+  {
+   "canon": "pesthouse",
+   "aliases": []
+  },
+  {
+   "canon": "pilothouse",
+   "aliases": []
+  },
+  {
+   "canon": "playhouse",
+   "aliases": []
+  },
+  {
+   "canon": "pompelmouse",
+   "aliases": []
+  },
+  {
+   "canon": "poorhouse",
+   "aliases": []
+  },
+  {
+   "canon": "porterhouse",
+   "aliases": []
+  },
+  {
+   "canon": "porthouse",
+   "aliases": []
+  },
+  {
+   "canon": "posthouse",
+   "aliases": []
+  },
+  {
+   "canon": "pothouse",
+   "aliases": []
+  },
+  {
+   "canon": "powerhouse",
+   "aliases": []
+  },
+  {
+   "canon": "rathouse",
+   "aliases": []
+  },
+  {
+   "canon": "rearmouse",
+   "aliases": []
+  },
+  {
+   "canon": "rearouse",
+   "aliases": []
+  },
+  {
+   "canon": "rehouse",
+   "aliases": []
+  },
+  {
+   "canon": "reremouse",
+   "aliases": []
+  },
+  {
+   "canon": "roadhouse",
+   "aliases": []
+  },
+  {
+   "canon": "roughhouse",
+   "aliases": []
+  },
+  {
+   "canon": "roundhouse",
+   "aliases": []
+  },
+  {
+   "canon": "rouse",
+   "aliases": []
+  },
+  {
+   "canon": "sandgrouse",
+   "aliases": []
+  },
+  {
+   "canon": "schoolhouse",
+   "aliases": []
+  },
+  {
+   "canon": "scouse",
+   "aliases": []
+  },
+  {
+   "canon": "shouse",
+   "aliases": []
+  },
+  {
+   "canon": "shrewmouse",
+   "aliases": []
+  },
+  {
+   "canon": "smokehouse",
+   "aliases": []
+  },
+  {
+   "canon": "smouse",
+   "aliases": []
+  },
+  {
+   "canon": "souse",
+   "aliases": []
+  },
+  {
+   "canon": "springhouse",
+   "aliases": []
+  },
+  {
+   "canon": "statehouse",
+   "aliases": []
+  },
+  {
+   "canon": "steakhouse",
+   "aliases": []
+  },
+  {
+   "canon": "stillhouse",
+   "aliases": []
+  },
+  {
+   "canon": "storehouse",
+   "aliases": []
+  },
+  {
+   "canon": "sugarhouse",
+   "aliases": []
+  },
+  {
+   "canon": "summerhouse",
+   "aliases": []
+  },
+  {
+   "canon": "taphouse",
+   "aliases": []
+  },
+  {
+   "canon": "teahouse",
+   "aliases": []
+  },
+  {
+   "canon": "tollhouse",
+   "aliases": []
+  },
+  {
+   "canon": "toolhouse",
+   "aliases": []
+  },
+  {
+   "canon": "touse",
+   "aliases": []
+  },
+  {
+   "canon": "treehouse",
+   "aliases": []
+  },
+  {
+   "canon": "trouse",
+   "aliases": []
+  },
+  {
+   "canon": "unhouse",
+   "aliases": []
+  },
+  {
+   "canon": "uprouse",
+   "aliases": []
+  },
+  {
+   "canon": "ventouse",
+   "aliases": []
+  },
+  {
+   "canon": "washhouse",
+   "aliases": []
+  },
+  {
+   "canon": "wellhouse",
+   "aliases": []
+  },
+  {
+   "canon": "wheelhouse",
+   "aliases": []
+  },
+  {
+   "canon": "woodgrouse",
+   "aliases": []
+  },
+  {
+   "canon": "woodhouse",
+   "aliases": []
+  },
+  {
+   "canon": "woodlouse",
+   "aliases": []
+  },
+  {
+   "canon": "woodmouse",
+   "aliases": []
+  },
+  {
+   "canon": "workhouse",
+   "aliases": []
+  },
+  {
+   "canon": "youse",
+   "aliases": []
+  },
+  {
+   "canon": "zamouse",
    "aliases": []
   }
  ]
