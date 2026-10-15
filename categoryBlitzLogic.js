@@ -627,6 +627,27 @@ const BENCHED = new Set([
   'US states starting with M', 'US states starting with N', 'US states on the Atlantic coast', 'US states bordering Canada',
   'Countries starting with B', 'Countries starting with C', 'Countries starting with M', 'Countries starting with P',
   'Countries starting with T', 'Countries starting with S', 'Organs of the human digestive system',
+  // Andy oct15 morning "fine tune categories (be strict - i want good ones)": out go schoolwork (bones, elements,
+  // moon phases), lists only a specialist finishes (capitals, national parks, Roman emperors), trivial ones nobody
+  // races on (days of the week, 3 Neapolitan flavours), and the extra rhyme / word-start / country lists (6 rhymes stay).
+  'Colors in Spanish', 'Months in Spanish', 'Numbers from one to twenty (spelled out)',
+  'Palindromes (same backwards)', 'Rhymes with BOOK (-OOK)', 'Rhymes with BUG (-UG)', 'Rhymes with CLOCK (-OCK)',
+  'Rhymes with COOL (-OOL)', 'Rhymes with CRASH (-ASH)', 'Rhymes with HOUSE (-OUSE)', 'Rhymes with JUMP (-UMP)',
+  'Rhymes with THINK (-INK)', 'Rhymes with FUN (-UN)', 'Words ending in -BOARD', 'Words ending in -PHONE',
+  'Words starting with RAIN', 'Words starting with PAN', 'Apollo missions', 'Birthstones', 'Bones of the human body',
+  'First 20 elements of the periodic table', 'Human body systems', 'Layers of the Earth', 'Major human organs',
+  'Noble gases', 'Phases of the Moon', 'Polygons with 3 to 12 sides', 'Primary & secondary colors',
+  'States of matter', 'Types of human teeth', 'Units of time', '3D shapes', 'African countries',
+  'Latin American countries', 'Middle Eastern countries', 'Countries of Oceania', 'European national capitals',
+  'Days of the week', 'NATO phonetic alphabet', 'US National Parks', 'US state capitals',
+  'Wonders of the World (Ancient & New 7)', 'Fellowship of the Ring members', 'Studio Ghibli Movies',
+  'James Bond films', 'Rocky & Creed films', 'Harry Potter films', 'Marvel Infinity Saga films',
+  'Peanuts characters', 'Chronicles of Narnia books', 'Shakespeare plays', 'American football positions',
+  'Soccer positions', 'F1 teams (2026 grid)', 'MLS teams', 'WNBA teams', 'Olympic track and field events',
+  'Call of Duty games', 'Resident Evil games', 'Minecraft potions', 'Monopoly properties (US board)',
+  'Playing card ranks', 'Poker hands', 'Hawaiian islands', 'Neapolitan ice cream flavors', 'The five basic tastes',
+  'Food groups', 'McDonaldland characters', 'Pumpkin spice spices', 'Windows versions', 'Egyptian gods',
+  'Greek Titans', 'Roman gods', 'Greek alphabet letters', 'Roman emperors', 'US First Ladies',
 ]);
 const CATEGORIES = BLITZ_LISTS.NAMES.filter((c) => !BENCHED.has(c));
 // Pack of each curated category, and the packs offered to players: only a pack with enough curated
