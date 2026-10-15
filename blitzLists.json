@@ -17096,7 +17096,7 @@
  {
   "name": "School subjects",
   "pack": "science",
-  "size": 38,
+  "size": 36,
   "answers": [
    "algebra",
    "anatomy",
@@ -17139,7 +17139,6 @@
    "language arts",
    "latin",
    "literature",
-   "lunch",
    "mandarin",
    "math",
    "mathematics",
@@ -17153,7 +17152,6 @@
    "physics",
    "psychology",
    "reading",
-   "recess",
    "religion",
    "religious studies",
    "science",
@@ -17195,7 +17193,7 @@
  {
   "name": "Things on your face",
   "pack": "science",
-  "size": 36,
+  "size": 35,
   "answers": [
    "acne",
    "beard",
@@ -17221,7 +17219,6 @@
    "freckle",
    "freckles",
    "glasses",
-   "gums",
    "iris",
    "jaw",
    "jawline",
@@ -17281,11 +17278,10 @@
  {
   "name": "Fast food mascots",
   "pack": "food",
-  "size": 18,
+  "size": 16,
   "answers": [
    "big boy",
    "burger king",
-   "chester cheetah",
    "chihuahua",
    "chuck e",
    "chuck e cheese",
@@ -17306,7 +17302,6 @@
    "ronald",
    "ronald mcdonald",
    "speedee",
-   "subway jared",
    "taco bell chihuahua",
    "the colonel",
    "the king",
@@ -20465,7 +20460,7 @@
  {
   "name": "Rhymes with NIGHT (-IGHT)",
   "pack": "wordplay",
-  "size": 194,
+  "size": 189,
   "answers": [
    "acquight",
    "affright",
@@ -20514,7 +20509,6 @@
    "downright",
    "droplight",
    "earthlight",
-   "eight",
    "empight",
    "enlight",
    "eyebright",
@@ -20532,7 +20526,6 @@
    "footlight",
    "foresight",
    "forthright",
-   "freight",
    "fright",
    "gaslight",
    "gastight",
@@ -20554,7 +20547,6 @@
    "lamplight",
    "light",
    "lighttight",
-   "lightweight",
    "limelight",
    "lovelight",
    "lowlight",
@@ -20619,7 +20611,6 @@
    "steamtight",
    "sticktight",
    "stoplight",
-   "straight",
    "strawweight",
    "streetlight",
    "streight",
@@ -20652,7 +20643,6 @@
    "wagonwright",
    "wainwright",
    "watertight",
-   "weight",
    "welterweight",
    "wheelwright",
    "wight",
@@ -21887,11 +21877,9 @@
  {
   "name": "Rhymes with CAKE (-AKE)",
   "pack": "wordplay",
-  "size": 159,
+  "size": 157,
   "answers": [
    "aerobrake",
-   "ake",
-   "akeake",
    "antishake",
    "ashake",
    "ashcake",
@@ -22074,7 +22062,7 @@
  {
   "name": "Rhymes with BEE (-EE)",
   "pack": "wordplay",
-  "size": 539,
+  "size": 536,
   "answers": [
    "abandonee",
    "abcee",
@@ -22176,10 +22164,8 @@
    "cicoree",
    "coachee",
    "coatee",
-   "coffee",
    "cohabitee",
    "colessee",
-   "committee",
    "communicatee",
    "conferee",
    "conferree",
@@ -22611,7 +22597,6 @@
    "whoopee",
    "woodfree",
    "wowee",
-   "yankee",
    "yippee",
    "yogee",
    "zee"
@@ -22623,8 +22608,8 @@
    "free",
    "three",
    "knee",
-   "coffee",
-   "degree"
+   "degree",
+   "employee"
   ],
   "junk": [
    "sea",
@@ -23077,7 +23062,7 @@
  {
   "name": "Words with no vowels (Y is fine)",
   "pack": "wordplay",
-  "size": 181,
+  "size": 179,
   "answers": [
    "brr",
    "brrr",
@@ -23129,7 +23114,6 @@
    "gyp",
    "gyppy",
    "gyps",
-   "gypsy",
    "hm",
    "hmm",
    "hwyl",
@@ -23149,7 +23133,6 @@
    "lymph",
    "lymphs",
    "lyms",
-   "lynch",
    "lynx",
    "mm",
    "my",
@@ -24879,7 +24862,7 @@
  {
   "name": "Words ending in -BALL",
   "pack": "wordplay",
-  "size": 81,
+  "size": 80,
   "answers": [
    "ball",
    "baseball",
@@ -24888,7 +24871,6 @@
    "beanball",
    "blackball",
    "blowball",
-   "blueball",
    "boxball",
    "broomball",
    "buckyball",
@@ -29051,7 +29033,7 @@
  {
   "name": "Rhymes with CAT (-AT)",
   "pack": "wordplay",
-  "size": 506,
+  "size": 493,
   "answers": [
    "achromat",
    "acrobat",
@@ -29098,7 +29080,6 @@
    "bat",
    "bathmat",
    "bearcat",
-   "beat",
    "begat",
    "bepat",
    "besat",
@@ -29110,7 +29091,6 @@
    "bluebeat",
    "bluecoat",
    "bluethroat",
-   "boat",
    "bobcat",
    "bobfloat",
    "bowat",
@@ -29186,7 +29166,6 @@
    "drybeat",
    "ducat",
    "dustcoat",
-   "eat",
    "eclat",
    "entreat",
    "entrechat",
@@ -29232,7 +29211,6 @@
    "gnat",
    "goat",
    "grat",
-   "great",
    "greatcoat",
    "groat",
    "gunboat",
@@ -29243,7 +29221,6 @@
    "hat",
    "hazmat",
    "heartbeat",
-   "heat",
    "heliostat",
    "hellcat",
    "hellicat",
@@ -29305,7 +29282,6 @@
    "marrowfat",
    "mat",
    "maxicoat",
-   "meat",
    "meercat",
    "meerkat",
    "mercat",
@@ -29419,7 +29395,6 @@
    "reformat",
    "reheat",
    "remediat",
-   "repeat",
    "requiescat",
    "rerepeat",
    "resat",
@@ -29449,7 +29424,6 @@
    "scelerat",
    "scrat",
    "searat",
-   "seat",
    "secretariat",
    "securocrat",
    "semimat",
@@ -29465,7 +29439,6 @@
    "slavocrat",
    "smallsat",
    "snowcat",
-   "somewhat",
    "spat",
    "speat",
    "speedboat",
@@ -29508,15 +29481,12 @@
    "theocrat",
    "thereat",
    "thermostat",
-   "threat",
    "threepeat",
-   "throat",
    "tipcat",
    "tomcat",
    "topcoat",
    "towboat",
    "trat",
-   "treat",
    "trichromat",
    "troat",
    "tugboat",
@@ -29533,7 +29503,6 @@
    "waistcoat",
    "wat",
    "whaleboat",
-   "what",
    "wheat",
    "whereat",
    "whinchat",
@@ -31061,13 +31030,12 @@
  {
   "name": "Famous bears",
   "pack": "movies",
-  "size": 89,
+  "size": 86,
   "answers": [
    "baby bear",
    "bad news bears",
    "baloo",
    "barney bear",
-   "bear",
    "bear grylls",
    "bearbrick",
    "beary",
@@ -31095,7 +31063,6 @@
    "glacier bear",
    "goldilocks bears",
    "grammi",
-   "grizzly",
    "gruffi",
    "grumpy bear",
    "gummi bears",
@@ -31123,7 +31090,6 @@
    "monokuma",
    "mr bean's teddy",
    "paddington",
-   "panda",
    "papa bear",
    "po",
    "polar bear",
@@ -32692,7 +32658,7 @@
  {
   "name": "Desserts",
   "pack": "food",
-  "size": 115,
+  "size": 113,
   "answers": [
    "affogato",
    "angel food cake",
@@ -32772,7 +32738,6 @@
    "mousse",
    "mud pie",
    "muffin",
-   "pancakes",
    "panna cotta",
    "parfait",
    "pavlova",
@@ -32807,7 +32772,6 @@
    "trifle",
    "truffle",
    "truffles",
-   "waffles",
    "whoopie pie"
   ],
   "good": [
@@ -40798,7 +40762,7 @@
  {
   "name": "Things that come in a can",
   "pack": "food",
-  "size": 149,
+  "size": 148,
   "answers": [
    "a can of worms",
    "air freshener",
@@ -40812,7 +40776,6 @@
    "baked beans",
    "bamboo shoots",
    "beans",
-   "beer",
    "beets",
    "black beans",
    "black olives",
@@ -45733,7 +45696,7 @@
  {
   "name": "Things you shouldn't microwave",
   "pack": "science",
-  "size": 114,
+  "size": 112,
   "answers": [
    "a fork",
    "airpods",
@@ -45751,7 +45714,6 @@
    "butter container",
    "candle",
    "cardboard",
-   "cat",
    "cd",
    "cds",
    "chicken",
@@ -45783,7 +45745,6 @@
    "gold plate",
    "grape",
    "grapes",
-   "hamster",
    "hand",
    "headphones",
    "homework",
@@ -51050,7 +51011,7 @@
  {
   "name": "Things you can kick",
   "pack": "sports",
-  "size": 100,
+  "size": 99,
   "answers": [
    "acorn",
    "ankle",
@@ -51095,7 +51056,6 @@
    "gas pedal",
    "goal",
    "gravel",
-   "habit",
    "hacky sack",
    "hackysack",
    "heavy bag",
@@ -51158,10 +51118,10 @@
    "can",
    "door",
    "rock",
-   "habit",
    "bucket",
    "tire",
-   "vending machine"
+   "vending machine",
+   "bucket"
   ],
   "junk": [
    "sky",
@@ -57687,7 +57647,7 @@
  {
   "name": "Things with a tail",
   "pack": "science",
-  "size": 110,
+  "size": 107,
   "answers": [
    "aardvark",
    "airplane",
@@ -57706,7 +57666,6 @@
    "cheetah",
    "chicken",
    "chipmunk",
-   "coin",
    "comet",
    "corgi",
    "cow",
@@ -57757,7 +57716,6 @@
    "pangolin",
    "parrot",
    "peacock",
-   "penny",
    "phoenix",
    "pig",
    "pigtail",
@@ -57767,7 +57725,6 @@
    "ponytail",
    "possum",
    "puppy",
-   "quarter",
    "rabbit",
    "raccoon",
    "rat",
@@ -57807,8 +57764,8 @@
    "comet",
    "kite",
    "tadpole",
-   "coin",
-   "ponytail"
+   "ponytail",
+   "pig"
   ],
   "junk": [
    "frog",

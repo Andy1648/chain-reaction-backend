@@ -32576,14 +32576,6 @@
    ]
   },
   {
-   "canon": "recess",
-   "aliases": []
-  },
-  {
-   "canon": "lunch",
-   "aliases": []
-  },
-  {
    "canon": "study hall",
    "aliases": []
   },
@@ -32771,10 +32763,6 @@
    ]
   },
   {
-   "canon": "gums",
-   "aliases": []
-  },
-  {
    "canon": "wrinkles",
    "aliases": [
     "wrinkle"
@@ -32893,10 +32881,6 @@
    ]
   },
   {
-   "canon": "subway jared",
-   "aliases": []
-  },
-  {
    "canon": "jolly bee",
    "aliases": []
   },
@@ -32910,10 +32894,6 @@
   },
   {
    "canon": "mr pib",
-   "aliases": []
-  },
-  {
-   "canon": "chester cheetah",
    "aliases": []
   }
  ],
@@ -41739,19 +41719,7 @@
    "aliases": []
   },
   {
-   "canon": "weight",
-   "aliases": []
-  },
-  {
    "canon": "flight",
-   "aliases": []
-  },
-  {
-   "canon": "eight",
-   "aliases": []
-  },
-  {
-   "canon": "straight",
    "aliases": []
   },
   {
@@ -41791,15 +41759,7 @@
    "aliases": []
   },
   {
-   "canon": "freight",
-   "aliases": []
-  },
-  {
    "canon": "slight",
-   "aliases": []
-  },
-  {
-   "canon": "lightweight",
    "aliases": []
   },
   {
@@ -46843,14 +46803,6 @@
    "aliases": []
   },
   {
-   "canon": "ake",
-   "aliases": []
-  },
-  {
-   "canon": "akeake",
-   "aliases": []
-  },
-  {
    "canon": "antishake",
    "aliases": []
   },
@@ -47401,10 +47353,6 @@
    "aliases": []
   },
   {
-   "canon": "committee",
-   "aliases": []
-  },
-  {
    "canon": "degree",
    "aliases": []
   },
@@ -47426,10 +47374,6 @@
   },
   {
    "canon": "lee",
-   "aliases": []
-  },
-  {
-   "canon": "coffee",
    "aliases": []
   },
   {
@@ -47474,10 +47418,6 @@
   },
   {
    "canon": "licensee",
-   "aliases": []
-  },
-  {
-   "canon": "yankee",
    "aliases": []
   },
   {
@@ -51013,10 +50953,6 @@
    "aliases": []
   },
   {
-   "canon": "lynch",
-   "aliases": []
-  },
-  {
    "canon": "fry",
    "aliases": []
   },
@@ -51042,10 +50978,6 @@
   },
   {
    "canon": "rhythms",
-   "aliases": []
-  },
-  {
-   "canon": "gypsy",
    "aliases": []
   },
   {
@@ -56272,10 +56204,6 @@
   },
   {
    "canon": "blowball",
-   "aliases": []
-  },
-  {
-   "canon": "blueball",
    "aliases": []
   },
   {
@@ -69699,14 +69627,6 @@
    "aliases": []
   },
   {
-   "canon": "what",
-   "aliases": []
-  },
-  {
-   "canon": "great",
-   "aliases": []
-  },
-  {
    "canon": "format",
    "aliases": []
   },
@@ -69731,47 +69651,11 @@
    "aliases": []
   },
   {
-   "canon": "heat",
-   "aliases": []
-  },
-  {
-   "canon": "boat",
-   "aliases": []
-  },
-  {
-   "canon": "eat",
-   "aliases": []
-  },
-  {
-   "canon": "seat",
-   "aliases": []
-  },
-  {
-   "canon": "beat",
-   "aliases": []
-  },
-  {
    "canon": "hat",
    "aliases": []
   },
   {
    "canon": "vat",
-   "aliases": []
-  },
-  {
-   "canon": "treat",
-   "aliases": []
-  },
-  {
-   "canon": "threat",
-   "aliases": []
-  },
-  {
-   "canon": "meat",
-   "aliases": []
-  },
-  {
-   "canon": "somewhat",
    "aliases": []
   },
   {
@@ -69783,15 +69667,7 @@
    "aliases": []
   },
   {
-   "canon": "throat",
-   "aliases": []
-  },
-  {
    "canon": "acrobat",
-   "aliases": []
-  },
-  {
-   "canon": "repeat",
    "aliases": []
   },
   {
@@ -76307,15 +76183,7 @@
    "aliases": []
   },
   {
-   "canon": "grizzly",
-   "aliases": []
-  },
-  {
    "canon": "ice bear",
-   "aliases": []
-  },
-  {
-   "canon": "panda",
    "aliases": []
   },
   {
@@ -76332,10 +76200,6 @@
   },
   {
    "canon": "freddy fazbear",
-   "aliases": []
-  },
-  {
-   "canon": "bear",
    "aliases": []
   },
   {
@@ -81756,14 +81620,6 @@
   },
   {
    "canon": "muffin",
-   "aliases": []
-  },
-  {
-   "canon": "pancakes",
-   "aliases": []
-  },
-  {
-   "canon": "waffles",
    "aliases": []
   },
   {
@@ -108985,10 +108841,6 @@
    "aliases": []
   },
   {
-   "canon": "beer",
-   "aliases": []
-  },
-  {
    "canon": "spam",
    "aliases": []
   },
@@ -125015,19 +124867,11 @@
    "aliases": []
   },
   {
-   "canon": "cat",
-   "aliases": []
-  },
-  {
    "canon": "dog",
    "aliases": []
   },
   {
    "canon": "pet",
-   "aliases": []
-  },
-  {
-   "canon": "hamster",
    "aliases": []
   },
   {
@@ -142860,10 +142704,6 @@
   },
   {
    "canon": "pebble",
-   "aliases": []
-  },
-  {
-   "canon": "habit",
    "aliases": []
   },
   {
@@ -164796,18 +164636,6 @@
   },
   {
    "canon": "pigtail",
-   "aliases": []
-  },
-  {
-   "canon": "coin",
-   "aliases": []
-  },
-  {
-   "canon": "penny",
-   "aliases": []
-  },
-  {
-   "canon": "quarter",
    "aliases": []
   },
   {

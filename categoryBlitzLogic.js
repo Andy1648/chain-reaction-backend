@@ -674,6 +674,24 @@ const BENCHED = new Set([
   'Angry Birds birds', 'Universal classic monsters', 'Greek Olympian gods', 'Norse gods and goddesses',
   'Harry Potter spells', 'Roald Dahl books', 'Pixar feature films', 'DreamWorks animated films',
   'Super Mario power-ups', 'Mario Kart items', 'Minecraft biomes', 'Popular Roblox games',
+  // oct15 afternoon strict audit (EASY + FUNNY + WINNABLE): fixed team rosters, niche franchise lists, near-duplicates,
+  // weak places — and every RHYME list (they matched spelling, not sound: "great" scored as a rhyme for CAT)
+  'Planets & dwarf planets', 'South American countries', '3-letter body parts', 'Winter Olympic sports',
+  'Sports played with a racket', 'Keyboard keys (not letters or numbers)', 'NBA teams', 'NFL teams', 'NHL teams',
+  'MLB teams', 'Premier League clubs (all-time)', 'US presidents', 'School subjects', 'Asian countries',
+  'Citrus fruits', 'Nuts', 'Cereal mascots', 'Fast food mascots', 'Girl Scout cookies', 'Pokemon from Gen 1',
+  'Minecraft mobs', 'Minecraft tools & weapons', 'Taco Bell menu items', "McDonald's menu items",
+  'Nintendo, PlayStation, Xbox & Sega consoles', 'Instruments in an orchestra', 'Sharks', 'Dinosaurs',
+  'Martial arts', 'Baby animal names', 'Shades of blue', 'Famous people named Chris', 'Famous bears',
+  'Words ending in -CAKE', 'Words ending in -DOG', 'Body parts you have two of', 'Things on your face', 'Big cats',
+  'Things at the mall', "Things you'd find at a sleepover", 'Christmas decorations', 'Things at a movie theater',
+  "Things you'd find at a carnival", "Things in a teacher's desk", "Things at the dentist's office",
+  'Things in a hospital', 'Things that grow back', 'Things that beep', 'Things that have a remote',
+  'Social media apps', 'Easter things', 'Ways to say hello around the world', 'Rhymes with JUMP (-UMP)',
+  'Rhymes with THINK (-INK)', 'Rhymes with NIGHT (-IGHT)', 'Rhymes with COOL (-OOL)', 'Rhymes with CRASH (-ASH)',
+  'Rhymes with BOOK (-OOK)', 'Rhymes with CAKE (-AKE)', 'Rhymes with BEE (-EE)', 'Rhymes with BUG (-UG)',
+  'Rhymes with DOG (-OG)', 'Rhymes with SNACK (-ACK)', 'Rhymes with CLOCK (-OCK)', 'Rhymes with HOUSE (-OUSE)',
+  'Rhymes with CAT (-AT)', 'Rhymes with FUN (-UN)',
 ]);
 const CATEGORIES = BLITZ_LISTS.NAMES.filter((c) => !BENCHED.has(c));
 const PACK_IDS = (() => {
@@ -888,6 +906,16 @@ function tierForCategory(name) {
 // The stored tier for every ACTIVE category (name -> 1|2|3), computed once.
 const CATEGORY_TIER = {};
 for (const c of CATEGORIES) CATEGORY_TIER[c] = tierForCategory(c);
+// oct15 afternoon: after the strict pass nearly every list in play is EASY by design, so the 1/2/3 ramp (the Daily, the
+// ~50/35/15 room weighting) is read from the lists themselves among the broad ones: word-hunt lists and small pools
+// (< 70 answers) are the hardest, mid pools (< 110) the middle, big everyday pools stay broad.
+for (const c of CATEGORIES) {
+  if (CATEGORY_TIER[c] !== 1) continue;
+  const l = BLITZ_LISTS.listFor(c);
+  const n = l ? l.size || (l.answers || []).length : 0;
+  if ((l && l.pack === 'wordplay') || n < 70) CATEGORY_TIER[c] = 3;
+  else if (n < 110) CATEGORY_TIER[c] = 2;
+}
 // Tier -> sorted category pool (sorted so the seeded daily picks are stable across
 // deploys regardless of declaration order).
 const TIER_POOLS = { 1: [], 2: [], 3: [] };
