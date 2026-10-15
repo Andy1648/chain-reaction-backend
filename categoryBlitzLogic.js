@@ -606,6 +606,11 @@ const QUARANTINED_CATEGORIES = new Set([
 // (bot-playtest sim: Japanese shoguns 1.00, Inca emperors 0.99, Skyrim races 0.75, ...). Kept in
 // blitzLists.json (tooling, the judge), out of rotation.
 const BENCHED = new Set([
+  // oct15 audit 2: near-duplicates, dull brand lists, phrase-heavy or unbounded answers.
+  "Popular baby names", "Words ending in -OLOGY", "Things you do in winter", "Things your mom tells you to do",
+  "Things at a cookout", "Things in a car's cup holder", "Things you'd find in a treasure chest",
+  "Grocery store chains", "Ice cream brands", "Things that are free", "Things in a haunted house",
+  "Emoji people use", "Sit-down restaurant chains", "Things in a laundry room",
   'Japanese shoguns', 'Inca emperors', 'Skyrim races', 'Minecraft Ore Blocks', 'Dark Souls 1 bosses',
   "Donkey Kong's Kong family", 'Pokémon starters',
   // Andy oct15 night "FUN categories - think for the user, easy to answer ... dont make them too close (us states and us

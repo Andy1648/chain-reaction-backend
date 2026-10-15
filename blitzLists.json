@@ -50733,7 +50733,7 @@
  {
   "name": "Sports with a ball",
   "pack": "sports",
-  "size": 106,
+  "size": 105,
   "answers": [
    "american football",
    "aussie rules",
@@ -50790,7 +50790,6 @@
    "lacrosse",
    "lawn bowls",
    "marbles",
-   "medicine ball",
    "mini golf",
    "miniature golf",
    "netball",
@@ -52123,7 +52122,7 @@
  {
   "name": "Things with a screen",
   "pack": "tech",
-  "size": 150,
+  "size": 148,
   "answers": [
    "3ds",
    "air fryer",
@@ -52235,7 +52234,6 @@
    "seatback tv",
    "self checkout",
    "sewing machine",
-   "sieve",
    "slot machine",
    "smart display",
    "smart fridge",
@@ -52262,7 +52260,6 @@
    "train departure board",
    "treadmill",
    "tv",
-   "typewriter",
    "ultrasound",
    "universal remote",
    "vcr",
@@ -52477,7 +52474,7 @@
  {
   "name": "Musical instruments",
   "pack": "music",
-  "size": 150,
+  "size": 149,
   "answers": [
    "accordion",
    "acoustic guitar",
@@ -52547,7 +52544,6 @@
    "hi hat",
    "horn",
    "jaw harp",
-   "jews harp",
    "jingle bells",
    "jug",
    "kalimba",
@@ -53008,7 +53004,7 @@
  {
   "name": "Things you can inflate",
   "pack": "world",
-  "size": 142,
+  "size": 139,
   "answers": [
    "accordion",
    "air bed",
@@ -53026,7 +53022,6 @@
    "banana boat",
    "basketball",
    "beach ball",
-   "bean bag",
    "bellows",
    "biceps",
    "bike tire",
@@ -53084,14 +53079,12 @@
    "inner tube",
    "kayak",
    "kiddie pool",
-   "kite",
    "lazy bag",
    "life jacket",
    "life raft",
    "life vest",
    "lounger",
    "lungs",
-   "medicine ball",
    "moon bounce",
    "mylar balloon",
    "neck pillow",
@@ -54289,16 +54282,14 @@
  {
   "name": "Things that taste sour",
   "pack": "food",
-  "size": 122,
+  "size": 118,
   "answers": [
    "airhead extreme",
    "apple cider vinegar",
    "balsamic vinegar",
-   "barbecue sauce",
    "blackberry",
    "blood orange",
    "buttermilk",
-   "caper",
    "ceviche",
    "chamoy",
    "citric acid",
@@ -54324,7 +54315,6 @@
    "hot sauce",
    "jolly rancher",
    "kefir",
-   "ketchup",
    "key lime pie",
    "kimchi",
    "kiwi",
@@ -54346,7 +54336,6 @@
    "mango with chili",
    "mustard",
    "nerds",
-   "olive",
    "orange",
    "orange juice",
    "passion fruit",
@@ -55247,7 +55236,7 @@
  {
   "name": "Things you see in fall",
   "pack": "holidays",
-  "size": 139,
+  "size": 138,
   "answers": [
    "acorn",
    "allergy",
@@ -55258,7 +55247,6 @@
    "back to school",
    "bare tree",
    "baseball playoffs",
-   "basic white girl",
    "basketball season",
    "bat",
    "beanie",
@@ -57897,7 +57885,7 @@
  {
   "name": "Internet slang",
   "pack": "wordplay",
-  "size": 140,
+  "size": 139,
   "answers": [
    "afk",
    "asap",
@@ -57949,7 +57937,6 @@
    "highkey",
    "hits different",
    "hmu",
-   "huzz",
    "hype",
    "ick",
    "idk",
@@ -60792,7 +60779,7 @@
  {
   "name": "Names for grandparents",
   "pack": "world",
-  "size": 98,
+  "size": 97,
   "answers": [
    "abuela",
    "abuelita",
@@ -60850,7 +60837,6 @@
    "lola",
    "lolo",
    "mamaw",
-   "mammy",
    "mawmaw",
    "meemaw",
    "memaw",
@@ -61543,7 +61529,7 @@
  {
   "name": "Words with EGG in them",
   "pack": "wordplay",
-  "size": 80,
+  "size": 79,
   "answers": [
    "beggar",
    "begged",
@@ -61620,7 +61606,6 @@
    "scotch egg",
    "scrambled egg",
    "soft boiled egg",
-   "tamago",
    "veggie",
    "veggie burger",
    "veggie tales",
@@ -61888,7 +61873,7 @@
  {
   "name": "Words ending in -HEAD",
   "pack": "wordplay",
-  "size": 95,
+  "size": 93,
   "answers": [
    "ahead",
    "airhead",
@@ -61905,7 +61890,6 @@
    "bobble head",
    "bobblehead",
    "bonehead",
-   "boneheaded",
    "bridgehead",
    "bubblehead",
    "bulkhead",
@@ -61975,7 +61959,6 @@
    "softhead",
    "sorehead",
    "spearhead",
-   "squarehead",
    "steelhead",
    "talking head",
    "thickhead",
