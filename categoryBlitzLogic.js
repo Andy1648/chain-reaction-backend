@@ -719,6 +719,9 @@ const TIER_BROAD = new Set([
   'Words starting with SNOW', 'Words starting with FIRE', 'Words starting with SUN', 'Car brands', 'Fast food chains', 'Soda brands',
   'Candy brands', 'Breakfast cereals', 'Social media apps', 'Streaming services', 'Rooms in a house', 'Types of weather',
   'Kitchen appliances', 'Disney villains', 'Directions on a compass', 'US coins', 'Scream films',
+  'Words ending in -BALL', 'Words ending in -FISH', 'Words ending in -BOARD', 'Words ending in -PHONE', 'Words ending in -CAKE',
+  'Words ending in -DOG', 'Dog breeds', 'Sharks', 'Dinosaurs', 'Berries', 'Citrus fruits', 'Nuts', '3D shapes',
+  'Body parts you have two of', 'Phineas and Ferb characters', 'DreamWorks animated films', 'Popular Roblox games', 'Italian brainrot characters',
 ]);
 // Mainstream franchises where naming a few is EASY (not enthusiasts-only): they
 // match a niche franchise pattern below but belong in MEDIUM, not NICHE.
