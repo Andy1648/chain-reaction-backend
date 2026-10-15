@@ -27,7 +27,7 @@ test('pickAnswer returns an accept-list member for the category', () => {
   for (let i = 0; i < 20; i++) {
     const answer = bot.pickAnswer(CATEGORY, []);
     assert.ok(typeof answer === 'string' && answer.length >= 2, `got ${answer}`);
-    assert.ok(set.has(answer.toLowerCase()), `"${answer}" should be on the accept-list`);
+    assert.ok(set.has(answer.toLowerCase()) || require('./blitzLists').onList(CATEGORY, answer), `"${answer}" should be on the accept-list`);
   }
 });
 

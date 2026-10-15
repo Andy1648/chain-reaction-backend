@@ -338,14 +338,7 @@ for (const name of Object.keys(CATEGORY_PACKS)) {
 // The distinct pack ids — the contract shared with the frontend (set_packs). Derived
 // from CATEGORY_PACKS so it can never drift from the actual pack assignments.
 // STEP 9: derived from the CURATED categories, and only packs that can fill a game.
-const PACK_IDS = (() => {
-  const n = {};
-  for (const name of BLITZ_LISTS.NAMES) {
-    const p = BLITZ_LISTS.listFor(name).pack;
-    if (p) n[p] = (n[p] || 0) + 1;
-  }
-  return Object.keys(n).filter((p) => n[p] >= 3).sort(); // 3 = TOTAL_ROUNDS (declared below)
-})();
+
 
 // ---- Post-generation guardrail (enforces THE CATEGORY RULE) ----
 // Drop any category whose pre-generated accept-list shows it's NOT bounded/short:
@@ -648,8 +641,49 @@ const BENCHED = new Set([
   'Playing card ranks', 'Poker hands', 'Hawaiian islands', 'Neapolitan ice cream flavors', 'The five basic tastes',
   'Food groups', 'McDonaldland characters', 'Pumpkin spice spices', 'Windows versions', 'Egyptian gods',
   'Greek Titans', 'Roman gods', 'Greek alphabet letters', 'Roman emperors', 'US First Ladies',
+  // Andy oct15 afternoon "months of the year are easy but way too dumb, there are set answers and no skill, movie characters
+  // is also a horrible category ... go for EASY and FUNNY": out go every FIXED set (months, rainbow, zodiac, band
+  // members, numbered film series) and every single movie / show / game character ROSTER. Open, everyday pools stay.
+  'Months of the year', 'Colors of the rainbow', 'Continents', 'Directions on a compass', 'Olympic ring colors',
+  'Seven deadly sins', 'Zodiac signs', 'Chinese zodiac animals', "Santa's reindeer", "Snow White's seven dwarfs",
+  'Do-Re-Mi syllables', 'Counting to ten in Spanish', 'Original Power Rangers colors', "M&M's colors",
+  'Infinity Stones', 'Hogwarts houses & founders', 'Horcruxes', 'The five senses', 'Starbucks cup sizes',
+  'Steak doneness levels', 'Uno action cards', 'Chess pieces', 'Pac-Man ghosts', 'Rock Paper Scissors Lizard Spock',
+  'Friends main six', 'The original six Avengers', 'Beatles members', 'BLACKPINK members', 'BTS members',
+  'One Direction members', 'Spice Girls', 'Weasley siblings & parents', 'Eevee & its evolutions', 'Monopoly tokens',
+  'US coins', 'Faces on US money', 'The Thirteen Colonies', 'US federal holidays', 'The 12 Days of Christmas gifts',
+  'Scooby-Doo gang', 'Stranger Things kids', 'Inside Out emotions', 'Swimming strokes', 'Baseball positions',
+  'Basketball positions', 'Golf scoring terms', 'Pokémon types', 'Harry Potter books', 'Fast & Furious films',
+  'Jurassic Park & World films', 'Ice Age films', 'Saw films', 'Scream films', 'Final Destination films',
+  'Star Wars theatrical films', 'Taylor Swift studio albums', 'Countries ending in -STAN',
+  'Countries with LAND in the name', 'Australian states & territories', 'Canadian provinces & territories',
+  'Grand Theft Auto games', 'FIFA & EA FC games', 'iPhone models', 'Disney princesses', 'Aladdin characters',
+  'Avatar: The Last Airbender characters', 'Beauty and the Beast characters', 'Cars characters',
+  'Despicable Me characters', "Encanto's Madrigal family", 'Finding Nemo characters', 'Frozen characters',
+  'Kung Fu Panda characters', 'The Lion King characters', 'The Little Mermaid characters', 'Moana characters',
+  'Monsters, Inc. characters', 'Peter Pan characters', 'Shrek characters', 'Toy Story characters',
+  'The Incredibles characters', 'PAW Patrol team', 'Phineas and Ferb characters', 'Powerpuff Girls characters',
+  'Rugrats characters', 'SpongeBob characters', 'The Simpsons family', 'Looney Tunes characters',
+  'Mickey Mouse & friends', 'The Muppets', 'Sesame Street characters', 'Hocus Pocus characters',
+  'Home Alone characters', 'Hotel Transylvania characters', 'Ghostbusters characters',
+  'The Nightmare Before Christmas characters', 'The Addams Family', 'Alice in Wonderland characters',
+  'The Wizard of Oz characters', 'Winnie the Pooh characters', 'Justice League members',
+  'Clue suspects, weapons & rooms', 'Teenage Mutant Ninja Turtles characters', 'Mario characters',
+  'Sonic characters', 'Apex Legends legends', 'League of Legends Champions', 'Overwatch heroes', 'Valorant agents',
+  'Street Fighter fighters', 'Super Smash Bros. fighters', "Five Nights at Freddy's animatronics", 'Among Us colors',
+  'Angry Birds birds', 'Universal classic monsters', 'Greek Olympian gods', 'Norse gods and goddesses',
+  'Harry Potter spells', 'Roald Dahl books', 'Pixar feature films', 'DreamWorks animated films',
+  'Super Mario power-ups', 'Mario Kart items', 'Minecraft biomes', 'Popular Roblox games',
 ]);
 const CATEGORIES = BLITZ_LISTS.NAMES.filter((c) => !BENCHED.has(c));
+const PACK_IDS = (() => {
+  const n = {};
+  for (const name of CATEGORIES) { // in-play lists only (oct15 afternoon: a pack whose lists are all benched is not offered)
+    const p = BLITZ_LISTS.listFor(name).pack;
+    if (p) n[p] = (n[p] || 0) + 1;
+  }
+  return Object.keys(n).filter((p) => n[p] >= 3).sort(); // 3 = TOTAL_ROUNDS (declared below)
+})();
 // Pack of each curated category, and the packs offered to players: only a pack with enough curated
 // categories to fill a game (TOTAL_ROUNDS) exists at all — NO EMPTY PACKS.
 const CURATED_PACK = {};
@@ -752,6 +786,20 @@ const TIER_BROAD = new Set([
   'Famous cartoon dogs', 'Famous cartoon cats', 'Famous bears', 'Famous people named Chris', 'Farm animals', 'Sea creatures', 'Vegetables', 'Tropical fruits', 'Things you find at the beach', 'Things with wheels', 'Words starting with RAIN', 'Words starting with PAN',
   'Desserts', 'Breakfast foods', 'Things in a fridge', 'Camping gear', 'Pets', 'Jobs', 'Clothing', 'Birds', 'Things at a birthday party', 'Things that are sticky',
   'Superheroes', 'Famous robots', 'Video game characters', 'Things that are round', 'Things in space', 'Things with buttons', 'Things people are scared of', 'Flowers', 'Snack foods', 'Comic book sound effects',
+  // oct15 afternoon (Andy "EASY and FUNNY ... A LOT more"): Feud-style everyday lists, describe-it lists, teen life
+  'Things in a junk drawer', "Things in grandma's purse", "Things in a teacher's desk", 'Things in a backpack',
+  "Things you'd find at a gas station", "Things you'd find at a carnival", "Things you'd find at a wedding",
+  "Things you'd find at an airport", "Things you'd find at Walmart", "Things you'd find at a sleepover",
+  'Things you lose all the time', 'Things that beep', 'Things that come in pairs', 'Things you plug in',
+  'Things that have a remote', 'Things in a hospital', 'Foods that are crunchy', 'Foods that are orange',
+  'Foods that are green', 'Foods that are spicy', 'Foods you eat with your hands', 'Things that are cold',
+  'Things that are loud', 'Things that are squishy', 'Things that are fluffy', 'Things you can pop',
+  'Things that melt', 'Things that bounce', 'Things that smell bad', 'Things that come in a can',
+  "Things you'd bring to a desert island", "Things you'd need in a zombie apocalypse",
+  'Things kids get grounded for', "Things in a teenager's bedroom", 'Things you do on your phone',
+  'Things you send in a group chat', 'Things that make you sneeze', 'Hot dog toppings', 'Things you dip fries in',
+  'Animals that would be terrifying if huge', 'Fair & carnival foods', 'School cafeteria foods',
+  'Halloween costumes', 'Sleepover activities', "Reasons to go to the nurse's office", 'Household chores',
 ]);
 // Mainstream franchises where naming a few is EASY (not enthusiasts-only): they
 // match a niche franchise pattern below but belong in MEDIUM, not NICHE.
