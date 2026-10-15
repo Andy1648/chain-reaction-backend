@@ -36,20 +36,13 @@ test('isSlur flags slurs only — not mild profanity, not innocent homographs', 
   assert.equal(isSlur(42), false);
 });
 
-test('acceptance gate rejects slurs but accepts ordinary words', async () => {
-  const { isValidWord } = require('./dictionary');
-  // a real word from the wordlist that is ALSO a slur → must be rejected
-  assert.equal(await isValidWord('faggot'), false, 'slur must never validate');
-  assert.equal(await isValidWord('nigger'), false, 'slur must never validate');
-  // ordinary words still accept
-  assert.equal(await isValidWord('planet'), true, 'ordinary word must accept');
-  assert.equal(await isValidWord('bridge'), true, 'ordinary word must accept');
-});
-
-test('markAsValid cannot bypass the slur gate', async () => {
+test('NO WORD CENSORSHIP (Andy oct15): every real word a player types is accepted — rude ones included', async () => {
   const { isValidWord, markAsValid } = require('./dictionary');
-  markAsValid('kike'); // simulate a bot pre-warming the cache
-  assert.equal(await isValidWord('kike'), false, 'cached slur must still be rejected');
+  for (const w of ['faggot', 'nigger', 'kike', 'fuck', 'shit']) assert.equal(await isValidWord(w), true, w);
+  markAsValid('kike');
+  assert.equal(await isValidWord('kike'), true);
+  assert.equal(await isValidWord('planet'), true, 'ordinary word must accept');
+  assert.equal(await isValidWord('xqzvb'), false, 'a non-word still fails');
 });
 
 test('Category Blitz offline accept-lists contain no slur', () => {
