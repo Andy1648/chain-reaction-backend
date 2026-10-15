@@ -11620,7 +11620,7 @@
  {
   "name": "Roald Dahl books",
   "pack": "literature",
-  "size": 31,
+  "size": 30,
   "answers": [
    "bfg",
    "boy",
@@ -11644,7 +11644,6 @@
    "rhyme stew",
    "someone like you",
    "sometime never",
-   "switch bitch",
    "tales of the unexpected",
    "the bfg",
    "the enormous crocodile",
@@ -23842,7 +23841,7 @@
  {
   "name": "Dog breeds",
   "pack": "science",
-  "size": 157,
+  "size": 156,
   "answers": [
    "afghan hound",
    "airedale",
@@ -24002,7 +24001,6 @@
    "shiba inu",
    "shih poo",
    "shih tzu",
-   "shitzu",
    "siberian husky",
    "silky terrier",
    "spaniel",
@@ -24426,7 +24424,7 @@
  {
   "name": "Body parts you have two of",
   "pack": "science",
-  "size": 46,
+  "size": 44,
   "answers": [
    "adrenal glands",
    "ankles",
@@ -24434,7 +24432,6 @@
    "arms",
    "biceps",
    "big toes",
-   "buttocks",
    "calves",
    "cheeks",
    "collarbones",
@@ -24459,7 +24456,6 @@
    "legs",
    "lips",
    "lungs",
-   "nipples",
    "nostrils",
    "ovaries",
    "palms",
