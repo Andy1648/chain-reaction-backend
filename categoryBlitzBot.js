@@ -128,7 +128,10 @@ function pickAnswer(category, alreadyGiven, difficultyKey = 'medium') {
   if (Array.isArray(members) && members.length) {
     const givenKeys = new Set((alreadyGiven || []).map((a) => BLITZ_LISTS.answerKey(String(a))));
     const share = CANON_SHARE[difficultyKey] || CANON_SHARE.medium;
-    const known = members.slice(0, Math.max(1, Math.ceil(members.length * share)));
+    // botKnown (oct15 night): a dictionary PATTERN list (rhymes, -oo, zz …) accepts every real word, but the bot only
+    // knows its common head (the canon lists those first) — it never plays "bedight" or anything off the street.
+    const cap = (BLITZ_LISTS.listFor(category) || {}).botKnown || Infinity;
+    const known = members.slice(0, Math.max(1, Math.min(cap, Math.ceil(members.length * share))));
     const open = known.filter((m) => m.canon.length >= 2
       && ![m.canon, ...(m.aliases || [])].some((f) => givenKeys.has(BLITZ_LISTS.answerKey(f))));
     if (open.length === 0) return null;
