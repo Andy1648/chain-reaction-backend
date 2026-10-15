@@ -686,6 +686,14 @@ const TIER_BROAD = new Set([
   'Continents', 'Days of the week', 'Months of the year', 'US states starting with M', 'US states starting with N',
   'Colors of the rainbow', 'Units of time', 'Seven deadly sins', 'Countries starting with B', 'Countries starting with C',
   'Countries starting with M', 'Countries starting with P', 'Countries starting with T',
+  // oct15 batch (Andy "more categories … fun ones, like holiday"): HOLIDAYS + FOOD packs, cartoons, party games
+  'The Addams Family', 'Scooby-Doo gang', 'US federal holidays', 'Hotel Transylvania characters', 'Home Alone characters',
+  "M&M's colors", 'Steak doneness levels', 'Starbucks cup sizes', 'The five basic tastes', 'Food groups', 'Neapolitan ice cream flavors',
+  "Snow White's seven dwarfs", 'Monsters, Inc. characters', 'The Incredibles characters', 'Despicable Me characters', 'Moana characters',
+  "Encanto's Madrigal family", 'Aladdin characters', 'The Little Mermaid characters', 'Beauty and the Beast characters', 'Peter Pan characters',
+  'Cars characters', 'Kung Fu Panda characters', 'Powerpuff Girls characters', 'Original Power Rangers colors', 'Peanuts characters',
+  'The original six Avengers', 'Do-Re-Mi syllables', 'Olympic ring colors', 'The five senses', 'Primary & secondary colors', 'Layers of the Earth',
+  'States of matter', 'Uno action cards', 'Rock Paper Scissors Lizard Spock', 'Spice Girls', 'One Direction members',
 ]);
 // Mainstream franchises where naming a few is EASY (not enthusiasts-only): they
 // match a niche franchise pattern below but belong in MEDIUM, not NICHE.
@@ -699,6 +707,7 @@ const TIER_MEDIUM_OVERRIDE = new Set([
   'Marvel Infinity Saga films', 'Taylor Swift studio albums', // oct14: mainstream — the franchise patterns would file them as niche
   'Roman gods', 'Egyptian gods', 'Roald Dahl books', 'Chronicles of Narnia books', 'Clue suspects, weapons & rooms', // oct14 batch 2
   'Golf scoring terms', 'Hawaiian islands',
+  'Beatles members', 'Super Mario power-ups', 'Sonic characters', // oct15: mainstream — the franchise patterns would file them as niche
 ]);
 // Explicit niche (specialist/deep-cut) not always caught by the franchise patterns.
 const TIER_NICHE = new Set([

@@ -26227,5 +26227,4409 @@
    "canon": "tuvalu",
    "aliases": []
   }
+ ],
+ "The Addams Family": [
+  {
+   "canon": "gomez",
+   "aliases": [
+    "gomez addams"
+   ]
+  },
+  {
+   "canon": "morticia",
+   "aliases": [
+    "morticia addams"
+   ]
+  },
+  {
+   "canon": "wednesday",
+   "aliases": [
+    "wednesday addams"
+   ]
+  },
+  {
+   "canon": "pugsley",
+   "aliases": [
+    "pugsley addams"
+   ]
+  },
+  {
+   "canon": "uncle fester",
+   "aliases": [
+    "fester"
+   ]
+  },
+  {
+   "canon": "grandmama",
+   "aliases": [
+    "grandma",
+    "granny",
+    "grandmama addams"
+   ]
+  },
+  {
+   "canon": "lurch",
+   "aliases": []
+  },
+  {
+   "canon": "thing",
+   "aliases": []
+  },
+  {
+   "canon": "cousin itt",
+   "aliases": [
+    "itt"
+   ]
+  },
+  {
+   "canon": "pubert",
+   "aliases": []
+  },
+  {
+   "canon": "enid",
+   "aliases": [
+    "enid sinclair"
+   ]
+  },
+  {
+   "canon": "kitty kat",
+   "aliases": []
+  }
+ ],
+ "Scooby-Doo gang": [
+  {
+   "canon": "scooby doo",
+   "aliases": [
+    "scooby",
+    "scoobert",
+    "scooby-doo"
+   ]
+  },
+  {
+   "canon": "shaggy",
+   "aliases": [
+    "shaggy rogers",
+    "norville rogers",
+    "norville"
+   ]
+  },
+  {
+   "canon": "fred",
+   "aliases": [
+    "fred jones",
+    "freddie"
+   ]
+  },
+  {
+   "canon": "daphne",
+   "aliases": [
+    "daphne blake"
+   ]
+  },
+  {
+   "canon": "velma",
+   "aliases": [
+    "velma dinkley"
+   ]
+  },
+  {
+   "canon": "scrappy doo",
+   "aliases": [
+    "scrappy"
+   ]
+  },
+  {
+   "canon": "scooby dum",
+   "aliases": []
+  },
+  {
+   "canon": "yabba doo",
+   "aliases": []
+  },
+  {
+   "canon": "flim flam",
+   "aliases": []
+  },
+  {
+   "canon": "vincent van ghoul",
+   "aliases": []
+  },
+  {
+   "canon": "mystery machine",
+   "aliases": [
+    "the mystery machine"
+   ]
+  }
+ ],
+ "Universal classic monsters": [
+  {
+   "canon": "dracula",
+   "aliases": [
+    "count dracula",
+    "vampire"
+   ]
+  },
+  {
+   "canon": "frankenstein",
+   "aliases": [
+    "frankenstein's monster",
+    "frankenstein monster",
+    "the monster",
+    "frankensteins monster"
+   ]
+  },
+  {
+   "canon": "the wolf man",
+   "aliases": [
+    "wolfman",
+    "werewolf"
+   ]
+  },
+  {
+   "canon": "the mummy",
+   "aliases": [
+    "mummy",
+    "imhotep"
+   ]
+  },
+  {
+   "canon": "the invisible man",
+   "aliases": [
+    "invisible man"
+   ]
+  },
+  {
+   "canon": "creature from the black lagoon",
+   "aliases": [
+    "the creature",
+    "gill man",
+    "gillman"
+   ]
+  },
+  {
+   "canon": "bride of frankenstein",
+   "aliases": [
+    "the bride"
+   ]
+  },
+  {
+   "canon": "phantom of the opera",
+   "aliases": [
+    "the phantom"
+   ]
+  },
+  {
+   "canon": "the hunchback of notre dame",
+   "aliases": [
+    "quasimodo",
+    "hunchback"
+   ]
+  }
+ ],
+ "The Nightmare Before Christmas characters": [
+  {
+   "canon": "jack skellington",
+   "aliases": [
+    "jack",
+    "pumpkin king",
+    "the pumpkin king"
+   ]
+  },
+  {
+   "canon": "sally",
+   "aliases": []
+  },
+  {
+   "canon": "zero",
+   "aliases": []
+  },
+  {
+   "canon": "oogie boogie",
+   "aliases": []
+  },
+  {
+   "canon": "lock",
+   "aliases": []
+  },
+  {
+   "canon": "shock",
+   "aliases": []
+  },
+  {
+   "canon": "barrel",
+   "aliases": []
+  },
+  {
+   "canon": "the mayor",
+   "aliases": [
+    "mayor"
+   ]
+  },
+  {
+   "canon": "dr finkelstein",
+   "aliases": [
+    "finkelstein",
+    "doctor finkelstein"
+   ]
+  },
+  {
+   "canon": "santa claus",
+   "aliases": [
+    "santa",
+    "sandy claws"
+   ]
+  },
+  {
+   "canon": "clown with the tear away face",
+   "aliases": [
+    "the clown",
+    "clown"
+   ]
+  },
+  {
+   "canon": "behemoth",
+   "aliases": []
+  },
+  {
+   "canon": "harlequin demon",
+   "aliases": []
+  },
+  {
+   "canon": "igor",
+   "aliases": []
+  },
+  {
+   "canon": "undersea gal",
+   "aliases": []
+  },
+  {
+   "canon": "corpse kid",
+   "aliases": []
+  },
+  {
+   "canon": "the witches",
+   "aliases": [
+    "witches"
+   ]
+  },
+  {
+   "canon": "the vampires",
+   "aliases": [
+    "vampires"
+   ]
+  },
+  {
+   "canon": "the wolfman",
+   "aliases": [
+    "wolfman"
+   ]
+  },
+  {
+   "canon": "mr hyde",
+   "aliases": []
+  }
+ ],
+ "Ghostbusters characters": [
+  {
+   "canon": "peter venkman",
+   "aliases": [
+    "venkman",
+    "peter"
+   ]
+  },
+  {
+   "canon": "ray stantz",
+   "aliases": [
+    "ray",
+    "stantz"
+   ]
+  },
+  {
+   "canon": "egon spengler",
+   "aliases": [
+    "egon",
+    "spengler"
+   ]
+  },
+  {
+   "canon": "winston zeddemore",
+   "aliases": [
+    "winston"
+   ]
+  },
+  {
+   "canon": "janine melnitz",
+   "aliases": [
+    "janine"
+   ]
+  },
+  {
+   "canon": "slimer",
+   "aliases": []
+  },
+  {
+   "canon": "stay puft marshmallow man",
+   "aliases": [
+    "stay puft",
+    "marshmallow man"
+   ]
+  },
+  {
+   "canon": "gozer",
+   "aliases": []
+  },
+  {
+   "canon": "zuul",
+   "aliases": []
+  },
+  {
+   "canon": "vinz clortho",
+   "aliases": []
+  },
+  {
+   "canon": "dana barrett",
+   "aliases": [
+    "dana"
+   ]
+  },
+  {
+   "canon": "louis tully",
+   "aliases": [
+    "louis"
+   ]
+  },
+  {
+   "canon": "walter peck",
+   "aliases": [
+    "peck"
+   ]
+  },
+  {
+   "canon": "vigo",
+   "aliases": [
+    "vigo the carpathian"
+   ]
+  },
+  {
+   "canon": "phoebe",
+   "aliases": [
+    "phoebe spengler"
+   ]
+  },
+  {
+   "canon": "trevor",
+   "aliases": []
+  },
+  {
+   "canon": "callie",
+   "aliases": []
+  },
+  {
+   "canon": "gary grooberson",
+   "aliases": [
+    "grooberson"
+   ]
+  },
+  {
+   "canon": "podcast",
+   "aliases": []
+  },
+  {
+   "canon": "mini pufts",
+   "aliases": []
+  }
+ ],
+ "Home Alone characters": [
+  {
+   "canon": "kevin mccallister",
+   "aliases": [
+    "kevin"
+   ]
+  },
+  {
+   "canon": "harry",
+   "aliases": [
+    "harry lime"
+   ]
+  },
+  {
+   "canon": "marv",
+   "aliases": [
+    "marv merchants"
+   ]
+  },
+  {
+   "canon": "buzz",
+   "aliases": [
+    "buzz mccallister"
+   ]
+  },
+  {
+   "canon": "kate mccallister",
+   "aliases": [
+    "kate",
+    "mom"
+   ]
+  },
+  {
+   "canon": "peter mccallister",
+   "aliases": [
+    "peter",
+    "dad"
+   ]
+  },
+  {
+   "canon": "old man marley",
+   "aliases": [
+    "marley"
+   ]
+  },
+  {
+   "canon": "uncle frank",
+   "aliases": [
+    "frank"
+   ]
+  },
+  {
+   "canon": "aunt leslie",
+   "aliases": [
+    "leslie"
+   ]
+  },
+  {
+   "canon": "fuller",
+   "aliases": []
+  },
+  {
+   "canon": "megan",
+   "aliases": []
+  },
+  {
+   "canon": "linnie",
+   "aliases": []
+  },
+  {
+   "canon": "jeff",
+   "aliases": []
+  },
+  {
+   "canon": "tracy",
+   "aliases": []
+  },
+  {
+   "canon": "sondra",
+   "aliases": []
+  },
+  {
+   "canon": "rod",
+   "aliases": []
+  },
+  {
+   "canon": "heather",
+   "aliases": []
+  },
+  {
+   "canon": "brooke",
+   "aliases": []
+  },
+  {
+   "canon": "gus polinski",
+   "aliases": [
+    "gus"
+   ]
+  },
+  {
+   "canon": "pigeon lady",
+   "aliases": [
+    "the pigeon lady"
+   ]
+  },
+  {
+   "canon": "hector",
+   "aliases": []
+  },
+  {
+   "canon": "mr duncan",
+   "aliases": [
+    "duncan"
+   ]
+  },
+  {
+   "canon": "cedric",
+   "aliases": []
+  },
+  {
+   "canon": "johnny",
+   "aliases": []
+  },
+  {
+   "canon": "snakes",
+   "aliases": []
+  },
+  {
+   "canon": "axl",
+   "aliases": [
+    "tarantula"
+   ]
+  }
+ ],
+ "US federal holidays": [
+  {
+   "canon": "new year's day",
+   "aliases": [
+    "new years",
+    "new years day",
+    "new year"
+   ]
+  },
+  {
+   "canon": "martin luther king jr day",
+   "aliases": [
+    "mlk day",
+    "martin luther king day",
+    "mlk",
+    "mlk jr day"
+   ]
+  },
+  {
+   "canon": "presidents day",
+   "aliases": [
+    "presidents' day",
+    "washington's birthday",
+    "washingtons birthday"
+   ]
+  },
+  {
+   "canon": "memorial day",
+   "aliases": []
+  },
+  {
+   "canon": "juneteenth",
+   "aliases": []
+  },
+  {
+   "canon": "independence day",
+   "aliases": [
+    "fourth of july",
+    "4th of july",
+    "july 4th",
+    "july 4"
+   ]
+  },
+  {
+   "canon": "labor day",
+   "aliases": []
+  },
+  {
+   "canon": "columbus day",
+   "aliases": [
+    "indigenous peoples day"
+   ]
+  },
+  {
+   "canon": "veterans day",
+   "aliases": []
+  },
+  {
+   "canon": "thanksgiving",
+   "aliases": [
+    "thanksgiving day"
+   ]
+  },
+  {
+   "canon": "christmas",
+   "aliases": [
+    "christmas day"
+   ]
+  }
+ ],
+ "Pumpkin spice spices": [
+  {
+   "canon": "cinnamon",
+   "aliases": []
+  },
+  {
+   "canon": "nutmeg",
+   "aliases": []
+  },
+  {
+   "canon": "ginger",
+   "aliases": []
+  },
+  {
+   "canon": "allspice",
+   "aliases": []
+  },
+  {
+   "canon": "cloves",
+   "aliases": [
+    "clove"
+   ]
+  }
+ ],
+ "Hocus Pocus characters": [
+  {
+   "canon": "winifred sanderson",
+   "aliases": [
+    "winifred",
+    "winnie"
+   ]
+  },
+  {
+   "canon": "mary sanderson",
+   "aliases": [
+    "mary"
+   ]
+  },
+  {
+   "canon": "sarah sanderson",
+   "aliases": [
+    "sarah"
+   ]
+  },
+  {
+   "canon": "max dennison",
+   "aliases": [
+    "max"
+   ]
+  },
+  {
+   "canon": "dani dennison",
+   "aliases": [
+    "dani"
+   ]
+  },
+  {
+   "canon": "allison",
+   "aliases": [
+    "allison watts"
+   ]
+  },
+  {
+   "canon": "thackery binx",
+   "aliases": [
+    "binx",
+    "thackery"
+   ]
+  },
+  {
+   "canon": "billy butcherson",
+   "aliases": [
+    "billy"
+   ]
+  },
+  {
+   "canon": "emily binx",
+   "aliases": [
+    "emily"
+   ]
+  },
+  {
+   "canon": "ice",
+   "aliases": []
+  },
+  {
+   "canon": "jay",
+   "aliases": []
+  },
+  {
+   "canon": "becca",
+   "aliases": []
+  },
+  {
+   "canon": "izzy",
+   "aliases": []
+  },
+  {
+   "canon": "cammie",
+   "aliases": []
+  },
+  {
+   "canon": "gilbert",
+   "aliases": []
+  }
+ ],
+ "Hotel Transylvania characters": [
+  {
+   "canon": "dracula",
+   "aliases": [
+    "drac",
+    "count dracula"
+   ]
+  },
+  {
+   "canon": "mavis",
+   "aliases": []
+  },
+  {
+   "canon": "johnny",
+   "aliases": [
+    "jonathan"
+   ]
+  },
+  {
+   "canon": "frank",
+   "aliases": [
+    "frankenstein"
+   ]
+  },
+  {
+   "canon": "eunice",
+   "aliases": []
+  },
+  {
+   "canon": "wayne",
+   "aliases": []
+  },
+  {
+   "canon": "wanda",
+   "aliases": []
+  },
+  {
+   "canon": "murray",
+   "aliases": [
+    "murray the mummy"
+   ]
+  },
+  {
+   "canon": "griffin",
+   "aliases": [
+    "the invisible man",
+    "invisible man"
+   ]
+  },
+  {
+   "canon": "dennis",
+   "aliases": []
+  },
+  {
+   "canon": "vlad",
+   "aliases": []
+  },
+  {
+   "canon": "blobby",
+   "aliases": []
+  },
+  {
+   "canon": "van helsing",
+   "aliases": [
+    "abraham van helsing"
+   ]
+  },
+  {
+   "canon": "ericka",
+   "aliases": []
+  },
+  {
+   "canon": "winnie",
+   "aliases": []
+  },
+  {
+   "canon": "tinkles",
+   "aliases": []
+  },
+  {
+   "canon": "quasimodo",
+   "aliases": []
+  },
+  {
+   "canon": "esqueleto",
+   "aliases": []
+  },
+  {
+   "canon": "bigfoot",
+   "aliases": []
+  }
+ ],
+ "M&M's colors": [
+  {
+   "canon": "red",
+   "aliases": []
+  },
+  {
+   "canon": "orange",
+   "aliases": []
+  },
+  {
+   "canon": "yellow",
+   "aliases": []
+  },
+  {
+   "canon": "green",
+   "aliases": []
+  },
+  {
+   "canon": "blue",
+   "aliases": []
+  },
+  {
+   "canon": "brown",
+   "aliases": []
+  },
+  {
+   "canon": "purple",
+   "aliases": []
+  }
+ ],
+ "Steak doneness levels": [
+  {
+   "canon": "blue",
+   "aliases": [
+    "blue rare"
+   ]
+  },
+  {
+   "canon": "rare",
+   "aliases": []
+  },
+  {
+   "canon": "medium rare",
+   "aliases": []
+  },
+  {
+   "canon": "medium",
+   "aliases": []
+  },
+  {
+   "canon": "medium well",
+   "aliases": []
+  },
+  {
+   "canon": "well done",
+   "aliases": [
+    "well"
+   ]
+  }
+ ],
+ "Starbucks cup sizes": [
+  {
+   "canon": "short",
+   "aliases": []
+  },
+  {
+   "canon": "tall",
+   "aliases": []
+  },
+  {
+   "canon": "grande",
+   "aliases": []
+  },
+  {
+   "canon": "venti",
+   "aliases": []
+  },
+  {
+   "canon": "trenta",
+   "aliases": []
+  },
+  {
+   "canon": "demi",
+   "aliases": []
+  }
+ ],
+ "The five basic tastes": [
+  {
+   "canon": "sweet",
+   "aliases": []
+  },
+  {
+   "canon": "sour",
+   "aliases": []
+  },
+  {
+   "canon": "salty",
+   "aliases": []
+  },
+  {
+   "canon": "bitter",
+   "aliases": []
+  },
+  {
+   "canon": "umami",
+   "aliases": [
+    "savory",
+    "savoury"
+   ]
+  }
+ ],
+ "McDonaldland characters": [
+  {
+   "canon": "ronald mcdonald",
+   "aliases": [
+    "ronald"
+   ]
+  },
+  {
+   "canon": "grimace",
+   "aliases": []
+  },
+  {
+   "canon": "hamburglar",
+   "aliases": [
+    "the hamburglar"
+   ]
+  },
+  {
+   "canon": "birdie",
+   "aliases": [
+    "birdie the early bird"
+   ]
+  },
+  {
+   "canon": "mayor mccheese",
+   "aliases": []
+  },
+  {
+   "canon": "officer big mac",
+   "aliases": []
+  },
+  {
+   "canon": "fry kids",
+   "aliases": [
+    "fry guys",
+    "fryguys",
+    "the fry kids"
+   ]
+  },
+  {
+   "canon": "captain crook",
+   "aliases": []
+  },
+  {
+   "canon": "the professor",
+   "aliases": [
+    "professor"
+   ]
+  },
+  {
+   "canon": "uncle o'grimacey",
+   "aliases": []
+  },
+  {
+   "canon": "cosmc",
+   "aliases": []
+  },
+  {
+   "canon": "happy meal",
+   "aliases": []
+  }
+ ],
+ "Cereal mascots": [
+  {
+   "canon": "tony the tiger",
+   "aliases": [
+    "tony"
+   ]
+  },
+  {
+   "canon": "toucan sam",
+   "aliases": []
+  },
+  {
+   "canon": "snap crackle and pop",
+   "aliases": [
+    "snap",
+    "crackle",
+    "pop"
+   ]
+  },
+  {
+   "canon": "cap'n crunch",
+   "aliases": [
+    "captain crunch",
+    "capn crunch"
+   ]
+  },
+  {
+   "canon": "lucky the leprechaun",
+   "aliases": [
+    "lucky"
+   ]
+  },
+  {
+   "canon": "trix rabbit",
+   "aliases": [
+    "the trix rabbit",
+    "silly rabbit"
+   ]
+  },
+  {
+   "canon": "count chocula",
+   "aliases": []
+  },
+  {
+   "canon": "franken berry",
+   "aliases": [
+    "frankenberry"
+   ]
+  },
+  {
+   "canon": "boo berry",
+   "aliases": []
+  },
+  {
+   "canon": "sonny the cuckoo bird",
+   "aliases": [
+    "sonny"
+   ]
+  },
+  {
+   "canon": "buzz the bee",
+   "aliases": [
+    "buzzbee",
+    "honey nut cheerios bee",
+    "buzz"
+   ]
+  },
+  {
+   "canon": "dig em frog",
+   "aliases": [
+    "dig em"
+   ]
+  },
+  {
+   "canon": "cornelius the rooster",
+   "aliases": [
+    "cornelius",
+    "corny"
+   ]
+  },
+  {
+   "canon": "chip the wolf",
+   "aliases": [
+    "chip"
+   ]
+  },
+  {
+   "canon": "sugar bear",
+   "aliases": []
+  },
+  {
+   "canon": "wendell",
+   "aliases": []
+  },
+  {
+   "canon": "fruity yummy mummy",
+   "aliases": [
+    "yummy mummy"
+   ]
+  },
+  {
+   "canon": "fred flintstone",
+   "aliases": [
+    "fred"
+   ]
+  },
+  {
+   "canon": "barney rubble",
+   "aliases": [
+    "barney"
+   ]
+  },
+  {
+   "canon": "quisp",
+   "aliases": []
+  },
+  {
+   "canon": "king vitaman",
+   "aliases": []
+  },
+  {
+   "canon": "smacks frog",
+   "aliases": []
+  },
+  {
+   "canon": "crazy squares",
+   "aliases": []
+  }
+ ],
+ "Food groups": [
+  {
+   "canon": "fruits",
+   "aliases": [
+    "fruit"
+   ]
+  },
+  {
+   "canon": "vegetables",
+   "aliases": [
+    "veggies",
+    "vegetable",
+    "veg"
+   ]
+  },
+  {
+   "canon": "grains",
+   "aliases": [
+    "grain",
+    "bread"
+   ]
+  },
+  {
+   "canon": "protein",
+   "aliases": [
+    "meat",
+    "proteins"
+   ]
+  },
+  {
+   "canon": "dairy",
+   "aliases": [
+    "milk"
+   ]
+  },
+  {
+   "canon": "fats and oils",
+   "aliases": [
+    "fats",
+    "oils"
+   ]
+  }
+ ],
+ "Neapolitan ice cream flavors": [
+  {
+   "canon": "chocolate",
+   "aliases": []
+  },
+  {
+   "canon": "vanilla",
+   "aliases": []
+  },
+  {
+   "canon": "strawberry",
+   "aliases": []
+  }
+ ],
+ "Infinity Stones": [
+  {
+   "canon": "space",
+   "aliases": [
+    "space stone",
+    "tesseract"
+   ]
+  },
+  {
+   "canon": "mind",
+   "aliases": [
+    "mind stone"
+   ]
+  },
+  {
+   "canon": "reality",
+   "aliases": [
+    "reality stone",
+    "aether"
+   ]
+  },
+  {
+   "canon": "power",
+   "aliases": [
+    "power stone",
+    "orb"
+   ]
+  },
+  {
+   "canon": "time",
+   "aliases": [
+    "time stone",
+    "eye of agamotto"
+   ]
+  },
+  {
+   "canon": "soul",
+   "aliases": [
+    "soul stone"
+   ]
+  }
+ ],
+ "The original six Avengers": [
+  {
+   "canon": "iron man",
+   "aliases": [
+    "tony stark",
+    "tony"
+   ]
+  },
+  {
+   "canon": "captain america",
+   "aliases": [
+    "steve rogers",
+    "cap"
+   ]
+  },
+  {
+   "canon": "thor",
+   "aliases": []
+  },
+  {
+   "canon": "hulk",
+   "aliases": [
+    "bruce banner",
+    "the hulk",
+    "banner"
+   ]
+  },
+  {
+   "canon": "black widow",
+   "aliases": [
+    "natasha romanoff",
+    "natasha"
+   ]
+  },
+  {
+   "canon": "hawkeye",
+   "aliases": [
+    "clint barton",
+    "clint"
+   ]
+  }
+ ],
+ "Fellowship of the Ring members": [
+  {
+   "canon": "frodo",
+   "aliases": [
+    "frodo baggins"
+   ]
+  },
+  {
+   "canon": "sam",
+   "aliases": [
+    "samwise",
+    "samwise gamgee",
+    "sam gamgee"
+   ]
+  },
+  {
+   "canon": "merry",
+   "aliases": [
+    "meriadoc",
+    "meriadoc brandybuck"
+   ]
+  },
+  {
+   "canon": "pippin",
+   "aliases": [
+    "peregrin",
+    "peregrin took"
+   ]
+  },
+  {
+   "canon": "gandalf",
+   "aliases": [
+    "gandalf the grey"
+   ]
+  },
+  {
+   "canon": "aragorn",
+   "aliases": [
+    "strider"
+   ]
+  },
+  {
+   "canon": "legolas",
+   "aliases": []
+  },
+  {
+   "canon": "gimli",
+   "aliases": []
+  },
+  {
+   "canon": "boromir",
+   "aliases": []
+  }
+ ],
+ "Snow White's seven dwarfs": [
+  {
+   "canon": "doc",
+   "aliases": []
+  },
+  {
+   "canon": "grumpy",
+   "aliases": []
+  },
+  {
+   "canon": "happy",
+   "aliases": []
+  },
+  {
+   "canon": "sleepy",
+   "aliases": []
+  },
+  {
+   "canon": "bashful",
+   "aliases": []
+  },
+  {
+   "canon": "sneezy",
+   "aliases": []
+  },
+  {
+   "canon": "dopey",
+   "aliases": []
+  }
+ ],
+ "Powerpuff Girls characters": [
+  {
+   "canon": "blossom",
+   "aliases": []
+  },
+  {
+   "canon": "bubbles",
+   "aliases": []
+  },
+  {
+   "canon": "buttercup",
+   "aliases": []
+  },
+  {
+   "canon": "professor utonium",
+   "aliases": [
+    "the professor",
+    "professor"
+   ]
+  },
+  {
+   "canon": "mojo jojo",
+   "aliases": [
+    "mojo"
+   ]
+  },
+  {
+   "canon": "him",
+   "aliases": []
+  },
+  {
+   "canon": "fuzzy lumpkins",
+   "aliases": []
+  },
+  {
+   "canon": "princess morbucks",
+   "aliases": []
+  },
+  {
+   "canon": "the mayor",
+   "aliases": [
+    "mayor"
+   ]
+  },
+  {
+   "canon": "ms bellum",
+   "aliases": [
+    "sara bellum",
+    "miss bellum"
+   ]
+  },
+  {
+   "canon": "ms keane",
+   "aliases": []
+  },
+  {
+   "canon": "gangreen gang",
+   "aliases": [
+    "ace",
+    "snake",
+    "big billy",
+    "grubber",
+    "arturo"
+   ]
+  },
+  {
+   "canon": "amoeba boys",
+   "aliases": []
+  },
+  {
+   "canon": "sedusa",
+   "aliases": []
+  },
+  {
+   "canon": "rowdyruff boys",
+   "aliases": [
+    "brick",
+    "boomer",
+    "butch"
+   ]
+  },
+  {
+   "canon": "bunny",
+   "aliases": []
+  },
+  {
+   "canon": "octi",
+   "aliases": []
+  },
+  {
+   "canon": "talking dog",
+   "aliases": []
+  }
+ ],
+ "Kung Fu Panda characters": [
+  {
+   "canon": "po",
+   "aliases": []
+  },
+  {
+   "canon": "shifu",
+   "aliases": [
+    "master shifu"
+   ]
+  },
+  {
+   "canon": "tigress",
+   "aliases": [
+    "master tigress"
+   ]
+  },
+  {
+   "canon": "monkey",
+   "aliases": []
+  },
+  {
+   "canon": "mantis",
+   "aliases": []
+  },
+  {
+   "canon": "viper",
+   "aliases": []
+  },
+  {
+   "canon": "crane",
+   "aliases": []
+  },
+  {
+   "canon": "oogway",
+   "aliases": [
+    "master oogway"
+   ]
+  },
+  {
+   "canon": "tai lung",
+   "aliases": []
+  },
+  {
+   "canon": "mr ping",
+   "aliases": []
+  },
+  {
+   "canon": "lord shen",
+   "aliases": [
+    "shen"
+   ]
+  },
+  {
+   "canon": "kai",
+   "aliases": []
+  },
+  {
+   "canon": "li shan",
+   "aliases": []
+  },
+  {
+   "canon": "mei mei",
+   "aliases": []
+  },
+  {
+   "canon": "zhen",
+   "aliases": []
+  },
+  {
+   "canon": "the chameleon",
+   "aliases": [
+    "chameleon"
+   ]
+  },
+  {
+   "canon": "master thundering rhino",
+   "aliases": [
+    "thundering rhino"
+   ]
+  },
+  {
+   "canon": "master croc",
+   "aliases": [
+    "croc"
+   ]
+  },
+  {
+   "canon": "master storming ox",
+   "aliases": [
+    "storming ox"
+   ]
+  },
+  {
+   "canon": "boss wolf",
+   "aliases": []
+  },
+  {
+   "canon": "soothsayer",
+   "aliases": []
+  },
+  {
+   "canon": "zeng",
+   "aliases": []
+  },
+  {
+   "canon": "bao",
+   "aliases": []
+  },
+  {
+   "canon": "han",
+   "aliases": [
+    "mr han"
+   ]
+  }
+ ],
+ "Monsters, Inc. characters": [
+  {
+   "canon": "mike wazowski",
+   "aliases": [
+    "mike"
+   ]
+  },
+  {
+   "canon": "sulley",
+   "aliases": [
+    "sully",
+    "james p sullivan",
+    "sullivan"
+   ]
+  },
+  {
+   "canon": "boo",
+   "aliases": [
+    "mary"
+   ]
+  },
+  {
+   "canon": "randall",
+   "aliases": [
+    "randall boggs"
+   ]
+  },
+  {
+   "canon": "mr waternoose",
+   "aliases": [
+    "waternoose",
+    "henry j waternoose"
+   ]
+  },
+  {
+   "canon": "roz",
+   "aliases": []
+  },
+  {
+   "canon": "celia",
+   "aliases": [
+    "celia mae"
+   ]
+  },
+  {
+   "canon": "fungus",
+   "aliases": []
+  },
+  {
+   "canon": "george sanderson",
+   "aliases": [
+    "george"
+   ]
+  },
+  {
+   "canon": "needleman",
+   "aliases": []
+  },
+  {
+   "canon": "smitty",
+   "aliases": []
+  },
+  {
+   "canon": "the abominable snowman",
+   "aliases": [
+    "yeti",
+    "abominable snowman"
+   ]
+  },
+  {
+   "canon": "dean hardscrabble",
+   "aliases": [
+    "hardscrabble"
+   ]
+  },
+  {
+   "canon": "johnny worthington",
+   "aliases": [
+    "johnny"
+   ]
+  },
+  {
+   "canon": "art",
+   "aliases": []
+  },
+  {
+   "canon": "squishy",
+   "aliases": []
+  },
+  {
+   "canon": "don carlton",
+   "aliases": [
+    "don"
+   ]
+  },
+  {
+   "canon": "terri and terry",
+   "aliases": [
+    "terri",
+    "terry"
+   ]
+  }
+ ],
+ "The Incredibles characters": [
+  {
+   "canon": "mr incredible",
+   "aliases": [
+    "bob parr",
+    "bob"
+   ]
+  },
+  {
+   "canon": "elastigirl",
+   "aliases": [
+    "helen parr",
+    "helen",
+    "mrs incredible"
+   ]
+  },
+  {
+   "canon": "violet",
+   "aliases": [
+    "violet parr"
+   ]
+  },
+  {
+   "canon": "dash",
+   "aliases": [
+    "dash parr"
+   ]
+  },
+  {
+   "canon": "jack-jack",
+   "aliases": [
+    "jack jack"
+   ]
+  },
+  {
+   "canon": "frozone",
+   "aliases": [
+    "lucius best",
+    "lucius"
+   ]
+  },
+  {
+   "canon": "edna mode",
+   "aliases": [
+    "edna"
+   ]
+  },
+  {
+   "canon": "syndrome",
+   "aliases": [
+    "buddy pine",
+    "buddy",
+    "incrediboy"
+   ]
+  },
+  {
+   "canon": "mirage",
+   "aliases": []
+  },
+  {
+   "canon": "the underminer",
+   "aliases": [
+    "underminer"
+   ]
+  },
+  {
+   "canon": "screenslaver",
+   "aliases": [
+    "evelyn deavor",
+    "evelyn"
+   ]
+  },
+  {
+   "canon": "winston deavor",
+   "aliases": [
+    "winston"
+   ]
+  },
+  {
+   "canon": "rick dicker",
+   "aliases": []
+  },
+  {
+   "canon": "voyd",
+   "aliases": []
+  },
+  {
+   "canon": "bomb voyage",
+   "aliases": []
+  },
+  {
+   "canon": "honey",
+   "aliases": []
+  },
+  {
+   "canon": "kari",
+   "aliases": []
+  },
+  {
+   "canon": "tony rydinger",
+   "aliases": [
+    "tony"
+   ]
+  }
+ ],
+ "Despicable Me characters": [
+  {
+   "canon": "gru",
+   "aliases": [
+    "felonious gru"
+   ]
+  },
+  {
+   "canon": "margo",
+   "aliases": []
+  },
+  {
+   "canon": "edith",
+   "aliases": []
+  },
+  {
+   "canon": "agnes",
+   "aliases": []
+  },
+  {
+   "canon": "dr nefario",
+   "aliases": [
+    "nefario"
+   ]
+  },
+  {
+   "canon": "vector",
+   "aliases": [
+    "victor perkins"
+   ]
+  },
+  {
+   "canon": "lucy",
+   "aliases": [
+    "lucy wilde"
+   ]
+  },
+  {
+   "canon": "el macho",
+   "aliases": []
+  },
+  {
+   "canon": "balthazar bratt",
+   "aliases": [
+    "bratt"
+   ]
+  },
+  {
+   "canon": "dru",
+   "aliases": []
+  },
+  {
+   "canon": "minions",
+   "aliases": [
+    "minion"
+   ]
+  },
+  {
+   "canon": "kevin",
+   "aliases": []
+  },
+  {
+   "canon": "stuart",
+   "aliases": []
+  },
+  {
+   "canon": "bob",
+   "aliases": []
+  },
+  {
+   "canon": "dave",
+   "aliases": []
+  },
+  {
+   "canon": "jerry",
+   "aliases": []
+  },
+  {
+   "canon": "carl",
+   "aliases": []
+  },
+  {
+   "canon": "phil",
+   "aliases": []
+  },
+  {
+   "canon": "kyle",
+   "aliases": []
+  },
+  {
+   "canon": "scarlet overkill",
+   "aliases": [
+    "scarlet"
+   ]
+  },
+  {
+   "canon": "herb overkill",
+   "aliases": [
+    "herb"
+   ]
+  },
+  {
+   "canon": "gru jr",
+   "aliases": []
+  },
+  {
+   "canon": "maxime le mal",
+   "aliases": [
+    "maxime"
+   ]
+  },
+  {
+   "canon": "valentina",
+   "aliases": []
+  },
+  {
+   "canon": "mr perkins",
+   "aliases": []
+  },
+  {
+   "canon": "silas ramsbottom",
+   "aliases": [
+    "ramsbottom"
+   ]
+  },
+  {
+   "canon": "poppy prescott",
+   "aliases": [
+    "poppy"
+   ]
+  },
+  {
+   "canon": "wild knuckles",
+   "aliases": []
+  },
+  {
+   "canon": "belle bottom",
+   "aliases": []
+  },
+  {
+   "canon": "jean clawed",
+   "aliases": []
+  },
+  {
+   "canon": "svengeance",
+   "aliases": []
+  },
+  {
+   "canon": "nunchuck",
+   "aliases": []
+  },
+  {
+   "canon": "marlena",
+   "aliases": []
+  }
+ ],
+ "Moana characters": [
+  {
+   "canon": "moana",
+   "aliases": []
+  },
+  {
+   "canon": "maui",
+   "aliases": []
+  },
+  {
+   "canon": "heihei",
+   "aliases": [
+    "hei hei"
+   ]
+  },
+  {
+   "canon": "pua",
+   "aliases": []
+  },
+  {
+   "canon": "gramma tala",
+   "aliases": [
+    "tala",
+    "grandma tala",
+    "gramma"
+   ]
+  },
+  {
+   "canon": "chief tui",
+   "aliases": [
+    "tui"
+   ]
+  },
+  {
+   "canon": "sina",
+   "aliases": []
+  },
+  {
+   "canon": "tamatoa",
+   "aliases": []
+  },
+  {
+   "canon": "te fiti",
+   "aliases": []
+  },
+  {
+   "canon": "te ka",
+   "aliases": []
+  },
+  {
+   "canon": "kakamora",
+   "aliases": []
+  },
+  {
+   "canon": "simea",
+   "aliases": []
+  },
+  {
+   "canon": "matangi",
+   "aliases": []
+  },
+  {
+   "canon": "loto",
+   "aliases": []
+  },
+  {
+   "canon": "moni",
+   "aliases": []
+  },
+  {
+   "canon": "kele",
+   "aliases": []
+  },
+  {
+   "canon": "nalo",
+   "aliases": []
+  }
+ ],
+ "Encanto's Madrigal family": [
+  {
+   "canon": "mirabel",
+   "aliases": []
+  },
+  {
+   "canon": "isabela",
+   "aliases": [
+    "isabella"
+   ]
+  },
+  {
+   "canon": "luisa",
+   "aliases": []
+  },
+  {
+   "canon": "bruno",
+   "aliases": []
+  },
+  {
+   "canon": "julieta",
+   "aliases": []
+  },
+  {
+   "canon": "pepa",
+   "aliases": []
+  },
+  {
+   "canon": "abuela",
+   "aliases": [
+    "alma",
+    "abuela alma"
+   ]
+  },
+  {
+   "canon": "dolores",
+   "aliases": []
+  },
+  {
+   "canon": "camilo",
+   "aliases": []
+  },
+  {
+   "canon": "antonio",
+   "aliases": []
+  },
+  {
+   "canon": "agustin",
+   "aliases": []
+  },
+  {
+   "canon": "felix",
+   "aliases": []
+  },
+  {
+   "canon": "pedro",
+   "aliases": []
+  },
+  {
+   "canon": "casita",
+   "aliases": []
+  },
+  {
+   "canon": "mariano",
+   "aliases": []
+  }
+ ],
+ "Aladdin characters": [
+  {
+   "canon": "aladdin",
+   "aliases": [
+    "prince ali",
+    "al"
+   ]
+  },
+  {
+   "canon": "jasmine",
+   "aliases": [
+    "princess jasmine"
+   ]
+  },
+  {
+   "canon": "genie",
+   "aliases": [
+    "the genie"
+   ]
+  },
+  {
+   "canon": "jafar",
+   "aliases": []
+  },
+  {
+   "canon": "iago",
+   "aliases": []
+  },
+  {
+   "canon": "abu",
+   "aliases": []
+  },
+  {
+   "canon": "rajah",
+   "aliases": []
+  },
+  {
+   "canon": "the sultan",
+   "aliases": [
+    "sultan"
+   ]
+  },
+  {
+   "canon": "magic carpet",
+   "aliases": [
+    "carpet"
+   ]
+  },
+  {
+   "canon": "cave of wonders",
+   "aliases": []
+  },
+  {
+   "canon": "razoul",
+   "aliases": []
+  },
+  {
+   "canon": "gazeem",
+   "aliases": []
+  },
+  {
+   "canon": "the peddler",
+   "aliases": [
+    "peddler"
+   ]
+  },
+  {
+   "canon": "dalia",
+   "aliases": []
+  },
+  {
+   "canon": "prince anders",
+   "aliases": [
+    "anders"
+   ]
+  },
+  {
+   "canon": "hakim",
+   "aliases": []
+  }
+ ],
+ "The Little Mermaid characters": [
+  {
+   "canon": "ariel",
+   "aliases": []
+  },
+  {
+   "canon": "sebastian",
+   "aliases": []
+  },
+  {
+   "canon": "flounder",
+   "aliases": []
+  },
+  {
+   "canon": "ursula",
+   "aliases": []
+  },
+  {
+   "canon": "king triton",
+   "aliases": [
+    "triton"
+   ]
+  },
+  {
+   "canon": "prince eric",
+   "aliases": [
+    "eric"
+   ]
+  },
+  {
+   "canon": "scuttle",
+   "aliases": []
+  },
+  {
+   "canon": "flotsam",
+   "aliases": []
+  },
+  {
+   "canon": "jetsam",
+   "aliases": []
+  },
+  {
+   "canon": "max",
+   "aliases": []
+  },
+  {
+   "canon": "grimsby",
+   "aliases": []
+  },
+  {
+   "canon": "chef louis",
+   "aliases": [
+    "louis"
+   ]
+  },
+  {
+   "canon": "carlotta",
+   "aliases": []
+  },
+  {
+   "canon": "vanessa",
+   "aliases": []
+  },
+  {
+   "canon": "attina",
+   "aliases": []
+  },
+  {
+   "canon": "alana",
+   "aliases": []
+  },
+  {
+   "canon": "adella",
+   "aliases": []
+  },
+  {
+   "canon": "aquata",
+   "aliases": []
+  },
+  {
+   "canon": "arista",
+   "aliases": []
+  },
+  {
+   "canon": "andrina",
+   "aliases": []
+  },
+  {
+   "canon": "morgana",
+   "aliases": []
+  },
+  {
+   "canon": "melody",
+   "aliases": []
+  },
+  {
+   "canon": "glut",
+   "aliases": []
+  }
+ ],
+ "Beauty and the Beast characters": [
+  {
+   "canon": "belle",
+   "aliases": []
+  },
+  {
+   "canon": "the beast",
+   "aliases": [
+    "beast",
+    "prince adam",
+    "adam"
+   ]
+  },
+  {
+   "canon": "gaston",
+   "aliases": []
+  },
+  {
+   "canon": "lefou",
+   "aliases": []
+  },
+  {
+   "canon": "lumiere",
+   "aliases": []
+  },
+  {
+   "canon": "cogsworth",
+   "aliases": []
+  },
+  {
+   "canon": "mrs potts",
+   "aliases": []
+  },
+  {
+   "canon": "chip",
+   "aliases": []
+  },
+  {
+   "canon": "maurice",
+   "aliases": []
+  },
+  {
+   "canon": "babette",
+   "aliases": [
+    "plumette",
+    "featherduster"
+   ]
+  },
+  {
+   "canon": "wardrobe",
+   "aliases": [
+    "madame de garderobe",
+    "garderobe"
+   ]
+  },
+  {
+   "canon": "philippe",
+   "aliases": []
+  },
+  {
+   "canon": "footstool",
+   "aliases": []
+  },
+  {
+   "canon": "monsieur d'arque",
+   "aliases": [
+    "d'arque"
+   ]
+  },
+  {
+   "canon": "the enchantress",
+   "aliases": [
+    "enchantress",
+    "agathe"
+   ]
+  },
+  {
+   "canon": "cadenza",
+   "aliases": []
+  },
+  {
+   "canon": "forte",
+   "aliases": []
+  }
+ ],
+ "Peter Pan characters": [
+  {
+   "canon": "peter pan",
+   "aliases": [
+    "peter"
+   ]
+  },
+  {
+   "canon": "tinker bell",
+   "aliases": [
+    "tinkerbell",
+    "tink"
+   ]
+  },
+  {
+   "canon": "wendy",
+   "aliases": [
+    "wendy darling"
+   ]
+  },
+  {
+   "canon": "john",
+   "aliases": [
+    "john darling"
+   ]
+  },
+  {
+   "canon": "michael",
+   "aliases": [
+    "michael darling"
+   ]
+  },
+  {
+   "canon": "captain hook",
+   "aliases": [
+    "hook",
+    "james hook"
+   ]
+  },
+  {
+   "canon": "mr smee",
+   "aliases": [
+    "smee"
+   ]
+  },
+  {
+   "canon": "tick tock the crocodile",
+   "aliases": [
+    "tick tock",
+    "the crocodile",
+    "crocodile"
+   ]
+  },
+  {
+   "canon": "tiger lily",
+   "aliases": []
+  },
+  {
+   "canon": "nana",
+   "aliases": []
+  },
+  {
+   "canon": "lost boys",
+   "aliases": [
+    "the lost boys"
+   ]
+  },
+  {
+   "canon": "mr darling",
+   "aliases": [
+    "george darling"
+   ]
+  },
+  {
+   "canon": "mrs darling",
+   "aliases": [
+    "mary darling"
+   ]
+  },
+  {
+   "canon": "slightly",
+   "aliases": []
+  },
+  {
+   "canon": "nibs",
+   "aliases": []
+  },
+  {
+   "canon": "tootles",
+   "aliases": []
+  },
+  {
+   "canon": "the twins",
+   "aliases": [
+    "twins"
+   ]
+  },
+  {
+   "canon": "curly",
+   "aliases": []
+  },
+  {
+   "canon": "cubby",
+   "aliases": []
+  },
+  {
+   "canon": "starkey",
+   "aliases": []
+  },
+  {
+   "canon": "jane",
+   "aliases": []
+  }
+ ],
+ "Cars characters": [
+  {
+   "canon": "lightning mcqueen",
+   "aliases": [
+    "mcqueen",
+    "lightning"
+   ]
+  },
+  {
+   "canon": "mater",
+   "aliases": [
+    "tow mater"
+   ]
+  },
+  {
+   "canon": "sally",
+   "aliases": [
+    "sally carrera"
+   ]
+  },
+  {
+   "canon": "doc hudson",
+   "aliases": [
+    "doc",
+    "hudson hornet"
+   ]
+  },
+  {
+   "canon": "luigi",
+   "aliases": []
+  },
+  {
+   "canon": "guido",
+   "aliases": []
+  },
+  {
+   "canon": "ramone",
+   "aliases": []
+  },
+  {
+   "canon": "flo",
+   "aliases": []
+  },
+  {
+   "canon": "sarge",
+   "aliases": []
+  },
+  {
+   "canon": "fillmore",
+   "aliases": []
+  },
+  {
+   "canon": "sheriff",
+   "aliases": []
+  },
+  {
+   "canon": "mack",
+   "aliases": []
+  },
+  {
+   "canon": "chick hicks",
+   "aliases": []
+  },
+  {
+   "canon": "the king",
+   "aliases": [
+    "strip weathers",
+    "king"
+   ]
+  },
+  {
+   "canon": "lizzie",
+   "aliases": []
+  },
+  {
+   "canon": "red",
+   "aliases": []
+  },
+  {
+   "canon": "mia",
+   "aliases": []
+  },
+  {
+   "canon": "tia",
+   "aliases": []
+  },
+  {
+   "canon": "francesco bernoulli",
+   "aliases": [
+    "francesco"
+   ]
+  },
+  {
+   "canon": "finn mcmissile",
+   "aliases": [
+    "finn"
+   ]
+  },
+  {
+   "canon": "holley shiftwell",
+   "aliases": [
+    "holley"
+   ]
+  },
+  {
+   "canon": "jackson storm",
+   "aliases": [
+    "storm"
+   ]
+  },
+  {
+   "canon": "cruz ramirez",
+   "aliases": [
+    "cruz"
+   ]
+  },
+  {
+   "canon": "smokey",
+   "aliases": []
+  },
+  {
+   "canon": "miss fritter",
+   "aliases": []
+  },
+  {
+   "canon": "professor z",
+   "aliases": []
+  },
+  {
+   "canon": "sterling",
+   "aliases": []
+  },
+  {
+   "canon": "tex",
+   "aliases": []
+  },
+  {
+   "canon": "frank",
+   "aliases": []
+  },
+  {
+   "canon": "darrell cartrip",
+   "aliases": []
+  },
+  {
+   "canon": "bob cutlass",
+   "aliases": []
+  }
+ ],
+ "Rugrats characters": [
+  {
+   "canon": "tommy pickles",
+   "aliases": [
+    "tommy"
+   ]
+  },
+  {
+   "canon": "chuckie finster",
+   "aliases": [
+    "chuckie"
+   ]
+  },
+  {
+   "canon": "phil",
+   "aliases": [
+    "phil deville"
+   ]
+  },
+  {
+   "canon": "lil",
+   "aliases": [
+    "lil deville"
+   ]
+  },
+  {
+   "canon": "angelica pickles",
+   "aliases": [
+    "angelica"
+   ]
+  },
+  {
+   "canon": "susie carmichael",
+   "aliases": [
+    "susie"
+   ]
+  },
+  {
+   "canon": "dil pickles",
+   "aliases": [
+    "dil"
+   ]
+  },
+  {
+   "canon": "kimi",
+   "aliases": []
+  },
+  {
+   "canon": "spike",
+   "aliases": []
+  },
+  {
+   "canon": "stu pickles",
+   "aliases": [
+    "stu"
+   ]
+  },
+  {
+   "canon": "didi pickles",
+   "aliases": [
+    "didi"
+   ]
+  },
+  {
+   "canon": "grandpa lou",
+   "aliases": [
+    "lou",
+    "lou pickles"
+   ]
+  },
+  {
+   "canon": "drew pickles",
+   "aliases": [
+    "drew"
+   ]
+  },
+  {
+   "canon": "charlotte pickles",
+   "aliases": [
+    "charlotte"
+   ]
+  },
+  {
+   "canon": "betty deville",
+   "aliases": [
+    "betty"
+   ]
+  },
+  {
+   "canon": "howard deville",
+   "aliases": [
+    "howard"
+   ]
+  },
+  {
+   "canon": "chas finster",
+   "aliases": [
+    "chas"
+   ]
+  },
+  {
+   "canon": "cynthia",
+   "aliases": []
+  },
+  {
+   "canon": "reptar",
+   "aliases": []
+  },
+  {
+   "canon": "kira",
+   "aliases": []
+  }
+ ],
+ "Avatar: The Last Airbender characters": [
+  {
+   "canon": "aang",
+   "aliases": []
+  },
+  {
+   "canon": "katara",
+   "aliases": []
+  },
+  {
+   "canon": "sokka",
+   "aliases": []
+  },
+  {
+   "canon": "toph",
+   "aliases": [
+    "toph beifong"
+   ]
+  },
+  {
+   "canon": "zuko",
+   "aliases": [
+    "prince zuko"
+   ]
+  },
+  {
+   "canon": "iroh",
+   "aliases": [
+    "uncle iroh"
+   ]
+  },
+  {
+   "canon": "azula",
+   "aliases": []
+  },
+  {
+   "canon": "appa",
+   "aliases": []
+  },
+  {
+   "canon": "momo",
+   "aliases": []
+  },
+  {
+   "canon": "suki",
+   "aliases": []
+  },
+  {
+   "canon": "ozai",
+   "aliases": [
+    "fire lord ozai"
+   ]
+  },
+  {
+   "canon": "mai",
+   "aliases": []
+  },
+  {
+   "canon": "ty lee",
+   "aliases": []
+  },
+  {
+   "canon": "jet",
+   "aliases": []
+  },
+  {
+   "canon": "roku",
+   "aliases": [
+    "avatar roku"
+   ]
+  },
+  {
+   "canon": "bumi",
+   "aliases": [
+    "king bumi"
+   ]
+  },
+  {
+   "canon": "yue",
+   "aliases": [
+    "princess yue"
+   ]
+  },
+  {
+   "canon": "hakoda",
+   "aliases": []
+  },
+  {
+   "canon": "zhao",
+   "aliases": [
+    "admiral zhao"
+   ]
+  },
+  {
+   "canon": "combustion man",
+   "aliases": [
+    "sparky sparky boom man"
+   ]
+  },
+  {
+   "canon": "long feng",
+   "aliases": []
+  },
+  {
+   "canon": "cabbage merchant",
+   "aliases": [
+    "cabbage man"
+   ]
+  },
+  {
+   "canon": "kyoshi",
+   "aliases": [
+    "avatar kyoshi"
+   ]
+  },
+  {
+   "canon": "guru pathik",
+   "aliases": [
+    "pathik"
+   ]
+  },
+  {
+   "canon": "hama",
+   "aliases": []
+  },
+  {
+   "canon": "piandao",
+   "aliases": []
+  },
+  {
+   "canon": "haru",
+   "aliases": []
+  },
+  {
+   "canon": "teo",
+   "aliases": []
+  },
+  {
+   "canon": "the duke",
+   "aliases": [
+    "duke"
+   ]
+  },
+  {
+   "canon": "pipsqueak",
+   "aliases": []
+  },
+  {
+   "canon": "smellerbee",
+   "aliases": []
+  },
+  {
+   "canon": "longshot",
+   "aliases": []
+  },
+  {
+   "canon": "gyatso",
+   "aliases": [
+    "monk gyatso"
+   ]
+  },
+  {
+   "canon": "ursa",
+   "aliases": []
+  },
+  {
+   "canon": "jeong jeong",
+   "aliases": []
+  },
+  {
+   "canon": "king kuei",
+   "aliases": []
+  },
+  {
+   "canon": "lu ten",
+   "aliases": []
+  },
+  {
+   "canon": "gran gran",
+   "aliases": [
+    "kanna"
+   ]
+  },
+  {
+   "canon": "pakku",
+   "aliases": []
+  },
+  {
+   "canon": "the mechanist",
+   "aliases": [
+    "mechanist"
+   ]
+  },
+  {
+   "canon": "wan shi tong",
+   "aliases": []
+  },
+  {
+   "canon": "koh",
+   "aliases": []
+  },
+  {
+   "canon": "hei bai",
+   "aliases": []
+  },
+  {
+   "canon": "joo dee",
+   "aliases": []
+  },
+  {
+   "canon": "foo foo cuddlypoops",
+   "aliases": []
+  },
+  {
+   "canon": "korra",
+   "aliases": []
+  }
+ ],
+ "Original Power Rangers colors": [
+  {
+   "canon": "red",
+   "aliases": []
+  },
+  {
+   "canon": "black",
+   "aliases": []
+  },
+  {
+   "canon": "blue",
+   "aliases": []
+  },
+  {
+   "canon": "yellow",
+   "aliases": []
+  },
+  {
+   "canon": "pink",
+   "aliases": []
+  },
+  {
+   "canon": "green",
+   "aliases": []
+  },
+  {
+   "canon": "white",
+   "aliases": []
+  }
+ ],
+ "Peanuts characters": [
+  {
+   "canon": "charlie brown",
+   "aliases": []
+  },
+  {
+   "canon": "snoopy",
+   "aliases": []
+  },
+  {
+   "canon": "linus",
+   "aliases": [
+    "linus van pelt"
+   ]
+  },
+  {
+   "canon": "lucy",
+   "aliases": [
+    "lucy van pelt"
+   ]
+  },
+  {
+   "canon": "sally",
+   "aliases": [
+    "sally brown"
+   ]
+  },
+  {
+   "canon": "schroeder",
+   "aliases": []
+  },
+  {
+   "canon": "peppermint patty",
+   "aliases": []
+  },
+  {
+   "canon": "marcie",
+   "aliases": []
+  },
+  {
+   "canon": "pig-pen",
+   "aliases": [
+    "pigpen"
+   ]
+  },
+  {
+   "canon": "woodstock",
+   "aliases": []
+  },
+  {
+   "canon": "franklin",
+   "aliases": []
+  },
+  {
+   "canon": "rerun",
+   "aliases": [
+    "rerun van pelt"
+   ]
+  },
+  {
+   "canon": "spike",
+   "aliases": []
+  },
+  {
+   "canon": "frieda",
+   "aliases": []
+  },
+  {
+   "canon": "violet",
+   "aliases": []
+  },
+  {
+   "canon": "patty",
+   "aliases": []
+  },
+  {
+   "canon": "shermy",
+   "aliases": []
+  },
+  {
+   "canon": "little red haired girl",
+   "aliases": [
+    "little red-haired girl"
+   ]
+  },
+  {
+   "canon": "the great pumpkin",
+   "aliases": [
+    "great pumpkin"
+   ]
+  },
+  {
+   "canon": "red baron",
+   "aliases": [
+    "the red baron"
+   ]
+  },
+  {
+   "canon": "olaf",
+   "aliases": []
+  },
+  {
+   "canon": "andy",
+   "aliases": []
+  },
+  {
+   "canon": "belle",
+   "aliases": []
+  },
+  {
+   "canon": "marbles",
+   "aliases": []
+  },
+  {
+   "canon": "eudora",
+   "aliases": []
+  },
+  {
+   "canon": "joe cool",
+   "aliases": []
+  }
+ ],
+ "Hogwarts houses & founders": [
+  {
+   "canon": "gryffindor",
+   "aliases": []
+  },
+  {
+   "canon": "hufflepuff",
+   "aliases": []
+  },
+  {
+   "canon": "ravenclaw",
+   "aliases": []
+  },
+  {
+   "canon": "slytherin",
+   "aliases": []
+  },
+  {
+   "canon": "godric gryffindor",
+   "aliases": [
+    "godric"
+   ]
+  },
+  {
+   "canon": "helga hufflepuff",
+   "aliases": [
+    "helga"
+   ]
+  },
+  {
+   "canon": "rowena ravenclaw",
+   "aliases": [
+    "rowena"
+   ]
+  },
+  {
+   "canon": "salazar slytherin",
+   "aliases": [
+    "salazar"
+   ]
+  }
+ ],
+ "Horcruxes": [
+  {
+   "canon": "tom riddle's diary",
+   "aliases": [
+    "diary",
+    "riddle's diary",
+    "the diary"
+   ]
+  },
+  {
+   "canon": "marvolo gaunt's ring",
+   "aliases": [
+    "ring",
+    "gaunt's ring",
+    "gaunt ring"
+   ]
+  },
+  {
+   "canon": "slytherin's locket",
+   "aliases": [
+    "locket"
+   ]
+  },
+  {
+   "canon": "hufflepuff's cup",
+   "aliases": [
+    "cup"
+   ]
+  },
+  {
+   "canon": "ravenclaw's diadem",
+   "aliases": [
+    "diadem"
+   ]
+  },
+  {
+   "canon": "nagini",
+   "aliases": []
+  },
+  {
+   "canon": "harry potter",
+   "aliases": [
+    "harry"
+   ]
+  }
+ ],
+ "Spice Girls": [
+  {
+   "canon": "scary spice",
+   "aliases": [
+    "scary",
+    "mel b",
+    "melanie brown"
+   ]
+  },
+  {
+   "canon": "sporty spice",
+   "aliases": [
+    "sporty",
+    "mel c",
+    "melanie chisholm"
+   ]
+  },
+  {
+   "canon": "baby spice",
+   "aliases": [
+    "baby",
+    "emma bunton",
+    "emma"
+   ]
+  },
+  {
+   "canon": "ginger spice",
+   "aliases": [
+    "ginger",
+    "geri halliwell",
+    "geri"
+   ]
+  },
+  {
+   "canon": "posh spice",
+   "aliases": [
+    "posh",
+    "victoria beckham",
+    "victoria"
+   ]
+  }
+ ],
+ "Beatles members": [
+  {
+   "canon": "john lennon",
+   "aliases": [
+    "john",
+    "lennon"
+   ]
+  },
+  {
+   "canon": "paul mccartney",
+   "aliases": [
+    "paul",
+    "mccartney"
+   ]
+  },
+  {
+   "canon": "george harrison",
+   "aliases": [
+    "george",
+    "harrison"
+   ]
+  },
+  {
+   "canon": "ringo starr",
+   "aliases": [
+    "ringo",
+    "starr",
+    "richard starkey"
+   ]
+  },
+  {
+   "canon": "pete best",
+   "aliases": []
+  },
+  {
+   "canon": "stuart sutcliffe",
+   "aliases": [
+    "stu sutcliffe"
+   ]
+  }
+ ],
+ "One Direction members": [
+  {
+   "canon": "harry styles",
+   "aliases": [
+    "harry",
+    "styles"
+   ]
+  },
+  {
+   "canon": "niall horan",
+   "aliases": [
+    "niall"
+   ]
+  },
+  {
+   "canon": "liam payne",
+   "aliases": [
+    "liam"
+   ]
+  },
+  {
+   "canon": "louis tomlinson",
+   "aliases": [
+    "louis"
+   ]
+  },
+  {
+   "canon": "zayn malik",
+   "aliases": [
+    "zayn"
+   ]
+  }
+ ],
+ "BTS members": [
+  {
+   "canon": "rm",
+   "aliases": [
+    "namjoon",
+    "kim namjoon",
+    "rap monster"
+   ]
+  },
+  {
+   "canon": "jin",
+   "aliases": [
+    "seokjin",
+    "kim seokjin"
+   ]
+  },
+  {
+   "canon": "suga",
+   "aliases": [
+    "yoongi",
+    "min yoongi",
+    "agust d"
+   ]
+  },
+  {
+   "canon": "j-hope",
+   "aliases": [
+    "jhope",
+    "hoseok",
+    "jung hoseok"
+   ]
+  },
+  {
+   "canon": "jimin",
+   "aliases": [
+    "park jimin"
+   ]
+  },
+  {
+   "canon": "taehyung",
+   "aliases": [
+    "kim taehyung",
+    "v"
+   ]
+  },
+  {
+   "canon": "jungkook",
+   "aliases": [
+    "jeon jungkook"
+   ]
+  }
+ ],
+ "BLACKPINK members": [
+  {
+   "canon": "jisoo",
+   "aliases": [
+    "kim jisoo"
+   ]
+  },
+  {
+   "canon": "jennie",
+   "aliases": [
+    "jennie kim"
+   ]
+  },
+  {
+   "canon": "rose",
+   "aliases": [
+    "roseanne park",
+    "rosie"
+   ]
+  },
+  {
+   "canon": "lisa",
+   "aliases": [
+    "lalisa",
+    "lalisa manoban"
+   ]
+  }
+ ],
+ "Do-Re-Mi syllables": [
+  {
+   "canon": "do",
+   "aliases": [
+    "doh",
+    "doe"
+   ]
+  },
+  {
+   "canon": "re",
+   "aliases": [
+    "ray"
+   ]
+  },
+  {
+   "canon": "mi",
+   "aliases": [
+    "me"
+   ]
+  },
+  {
+   "canon": "fa",
+   "aliases": [
+    "fah",
+    "far"
+   ]
+  },
+  {
+   "canon": "sol",
+   "aliases": [
+    "so",
+    "soh",
+    "sew"
+   ]
+  },
+  {
+   "canon": "la",
+   "aliases": [
+    "lah"
+   ]
+  },
+  {
+   "canon": "ti",
+   "aliases": [
+    "te",
+    "si",
+    "tea"
+   ]
+  }
+ ],
+ "Olympic ring colors": [
+  {
+   "canon": "blue",
+   "aliases": []
+  },
+  {
+   "canon": "yellow",
+   "aliases": []
+  },
+  {
+   "canon": "black",
+   "aliases": []
+  },
+  {
+   "canon": "green",
+   "aliases": []
+  },
+  {
+   "canon": "red",
+   "aliases": []
+  }
+ ],
+ "The five senses": [
+  {
+   "canon": "sight",
+   "aliases": [
+    "vision",
+    "seeing",
+    "see"
+   ]
+  },
+  {
+   "canon": "hearing",
+   "aliases": [
+    "hear",
+    "sound"
+   ]
+  },
+  {
+   "canon": "smell",
+   "aliases": [
+    "smelling",
+    "scent"
+   ]
+  },
+  {
+   "canon": "taste",
+   "aliases": [
+    "tasting"
+   ]
+  },
+  {
+   "canon": "touch",
+   "aliases": [
+    "feel",
+    "feeling"
+   ]
+  }
+ ],
+ "Primary & secondary colors": [
+  {
+   "canon": "red",
+   "aliases": []
+  },
+  {
+   "canon": "yellow",
+   "aliases": []
+  },
+  {
+   "canon": "blue",
+   "aliases": []
+  },
+  {
+   "canon": "green",
+   "aliases": []
+  },
+  {
+   "canon": "orange",
+   "aliases": []
+  },
+  {
+   "canon": "purple",
+   "aliases": [
+    "violet"
+   ]
+  }
+ ],
+ "Layers of the Earth": [
+  {
+   "canon": "crust",
+   "aliases": []
+  },
+  {
+   "canon": "mantle",
+   "aliases": [
+    "upper mantle",
+    "lower mantle"
+   ]
+  },
+  {
+   "canon": "outer core",
+   "aliases": []
+  },
+  {
+   "canon": "inner core",
+   "aliases": []
+  },
+  {
+   "canon": "core",
+   "aliases": []
+  }
+ ],
+ "Noble gases": [
+  {
+   "canon": "helium",
+   "aliases": []
+  },
+  {
+   "canon": "neon",
+   "aliases": []
+  },
+  {
+   "canon": "argon",
+   "aliases": []
+  },
+  {
+   "canon": "krypton",
+   "aliases": []
+  },
+  {
+   "canon": "xenon",
+   "aliases": []
+  },
+  {
+   "canon": "radon",
+   "aliases": []
+  },
+  {
+   "canon": "oganesson",
+   "aliases": []
+  }
+ ],
+ "States of matter": [
+  {
+   "canon": "solid",
+   "aliases": []
+  },
+  {
+   "canon": "liquid",
+   "aliases": []
+  },
+  {
+   "canon": "gas",
+   "aliases": []
+  },
+  {
+   "canon": "plasma",
+   "aliases": []
+  },
+  {
+   "canon": "bose-einstein condensate",
+   "aliases": [
+    "bose einstein condensate",
+    "bec"
+   ]
+  }
+ ],
+ "Uno action cards": [
+  {
+   "canon": "skip",
+   "aliases": []
+  },
+  {
+   "canon": "reverse",
+   "aliases": []
+  },
+  {
+   "canon": "draw two",
+   "aliases": [
+    "draw 2",
+    "plus two",
+    "plus 2"
+   ]
+  },
+  {
+   "canon": "wild",
+   "aliases": [
+    "wild card"
+   ]
+  },
+  {
+   "canon": "wild draw four",
+   "aliases": [
+    "wild draw 4",
+    "draw four",
+    "draw 4",
+    "plus four",
+    "plus 4"
+   ]
+  },
+  {
+   "canon": "wild shuffle hands",
+   "aliases": [
+    "shuffle hands"
+   ]
+  },
+  {
+   "canon": "wild customizable",
+   "aliases": [
+    "customizable"
+   ]
+  },
+  {
+   "canon": "wild swap hands",
+   "aliases": [
+    "swap hands"
+   ]
+  }
+ ],
+ "Rock Paper Scissors Lizard Spock": [
+  {
+   "canon": "rock",
+   "aliases": []
+  },
+  {
+   "canon": "paper",
+   "aliases": []
+  },
+  {
+   "canon": "scissors",
+   "aliases": []
+  },
+  {
+   "canon": "lizard",
+   "aliases": []
+  },
+  {
+   "canon": "spock",
+   "aliases": []
+  }
+ ],
+ "Pac-Man ghosts": [
+  {
+   "canon": "blinky",
+   "aliases": []
+  },
+  {
+   "canon": "pinky",
+   "aliases": []
+  },
+  {
+   "canon": "inky",
+   "aliases": []
+  },
+  {
+   "canon": "clyde",
+   "aliases": []
+  },
+  {
+   "canon": "sue",
+   "aliases": []
+  },
+  {
+   "canon": "funky",
+   "aliases": []
+  },
+  {
+   "canon": "spunky",
+   "aliases": []
+  }
+ ],
+ "Five Nights at Freddy's animatronics": [
+  {
+   "canon": "freddy",
+   "aliases": [
+    "freddy fazbear"
+   ]
+  },
+  {
+   "canon": "bonnie",
+   "aliases": []
+  },
+  {
+   "canon": "chica",
+   "aliases": []
+  },
+  {
+   "canon": "foxy",
+   "aliases": []
+  },
+  {
+   "canon": "golden freddy",
+   "aliases": []
+  },
+  {
+   "canon": "fredbear",
+   "aliases": []
+  },
+  {
+   "canon": "springtrap",
+   "aliases": []
+  },
+  {
+   "canon": "mangle",
+   "aliases": []
+  },
+  {
+   "canon": "toy freddy",
+   "aliases": []
+  },
+  {
+   "canon": "toy bonnie",
+   "aliases": []
+  },
+  {
+   "canon": "toy chica",
+   "aliases": []
+  },
+  {
+   "canon": "balloon boy",
+   "aliases": [
+    "bb"
+   ]
+  },
+  {
+   "canon": "the puppet",
+   "aliases": [
+    "puppet",
+    "marionette"
+   ]
+  },
+  {
+   "canon": "withered freddy",
+   "aliases": []
+  },
+  {
+   "canon": "withered bonnie",
+   "aliases": []
+  },
+  {
+   "canon": "withered chica",
+   "aliases": []
+  },
+  {
+   "canon": "withered foxy",
+   "aliases": []
+  },
+  {
+   "canon": "nightmare freddy",
+   "aliases": []
+  },
+  {
+   "canon": "nightmare bonnie",
+   "aliases": []
+  },
+  {
+   "canon": "nightmare chica",
+   "aliases": []
+  },
+  {
+   "canon": "nightmare foxy",
+   "aliases": []
+  },
+  {
+   "canon": "nightmare fredbear",
+   "aliases": []
+  },
+  {
+   "canon": "nightmare",
+   "aliases": []
+  },
+  {
+   "canon": "plushtrap",
+   "aliases": []
+  },
+  {
+   "canon": "circus baby",
+   "aliases": [
+    "baby"
+   ]
+  },
+  {
+   "canon": "ballora",
+   "aliases": []
+  },
+  {
+   "canon": "funtime freddy",
+   "aliases": []
+  },
+  {
+   "canon": "funtime foxy",
+   "aliases": []
+  },
+  {
+   "canon": "ennard",
+   "aliases": []
+  },
+  {
+   "canon": "glamrock freddy",
+   "aliases": []
+  },
+  {
+   "canon": "montgomery gator",
+   "aliases": [
+    "monty"
+   ]
+  },
+  {
+   "canon": "roxanne wolf",
+   "aliases": [
+    "roxy"
+   ]
+  },
+  {
+   "canon": "glamrock chica",
+   "aliases": []
+  },
+  {
+   "canon": "vanny",
+   "aliases": []
+  },
+  {
+   "canon": "sun",
+   "aliases": []
+  },
+  {
+   "canon": "moon",
+   "aliases": []
+  },
+  {
+   "canon": "daycare attendant",
+   "aliases": []
+  },
+  {
+   "canon": "music man",
+   "aliases": []
+  },
+  {
+   "canon": "lefty",
+   "aliases": []
+  },
+  {
+   "canon": "molten freddy",
+   "aliases": []
+  },
+  {
+   "canon": "scrap baby",
+   "aliases": []
+  },
+  {
+   "canon": "helpy",
+   "aliases": []
+  },
+  {
+   "canon": "shadow freddy",
+   "aliases": []
+  },
+  {
+   "canon": "shadow bonnie",
+   "aliases": []
+  },
+  {
+   "canon": "phantom freddy",
+   "aliases": []
+  },
+  {
+   "canon": "phantom foxy",
+   "aliases": []
+  },
+  {
+   "canon": "phantom chica",
+   "aliases": []
+  },
+  {
+   "canon": "phantom bb",
+   "aliases": []
+  },
+  {
+   "canon": "phantom mangle",
+   "aliases": []
+  },
+  {
+   "canon": "phantom puppet",
+   "aliases": []
+  },
+  {
+   "canon": "jj",
+   "aliases": [
+    "balloon girl"
+   ]
+  },
+  {
+   "canon": "dreadbear",
+   "aliases": []
+  },
+  {
+   "canon": "glitchtrap",
+   "aliases": []
+  },
+  {
+   "canon": "minireenas",
+   "aliases": []
+  },
+  {
+   "canon": "bidybabs",
+   "aliases": []
+  },
+  {
+   "canon": "bon-bon",
+   "aliases": [
+    "bonbon"
+   ]
+  },
+  {
+   "canon": "lolbit",
+   "aliases": []
+  },
+  {
+   "canon": "yenndo",
+   "aliases": []
+  },
+  {
+   "canon": "nightmarionne",
+   "aliases": []
+  },
+  {
+   "canon": "endoskeleton",
+   "aliases": [
+    "endo"
+   ]
+  }
+ ],
+ "Super Mario power-ups": [
+  {
+   "canon": "super mushroom",
+   "aliases": [
+    "mushroom"
+   ]
+  },
+  {
+   "canon": "fire flower",
+   "aliases": []
+  },
+  {
+   "canon": "super star",
+   "aliases": [
+    "star",
+    "starman",
+    "invincibility star"
+   ]
+  },
+  {
+   "canon": "1-up mushroom",
+   "aliases": [
+    "1 up",
+    "1up",
+    "one up"
+   ]
+  },
+  {
+   "canon": "mini mushroom",
+   "aliases": []
+  },
+  {
+   "canon": "mega mushroom",
+   "aliases": []
+  },
+  {
+   "canon": "super leaf",
+   "aliases": [
+    "leaf",
+    "raccoon leaf"
+   ]
+  },
+  {
+   "canon": "tanooki suit",
+   "aliases": [
+    "tanooki"
+   ]
+  },
+  {
+   "canon": "frog suit",
+   "aliases": []
+  },
+  {
+   "canon": "hammer suit",
+   "aliases": []
+  },
+  {
+   "canon": "cape feather",
+   "aliases": [
+    "feather"
+   ]
+  },
+  {
+   "canon": "propeller mushroom",
+   "aliases": []
+  },
+  {
+   "canon": "ice flower",
+   "aliases": []
+  },
+  {
+   "canon": "penguin suit",
+   "aliases": []
+  },
+  {
+   "canon": "boomerang flower",
+   "aliases": []
+  },
+  {
+   "canon": "cloud flower",
+   "aliases": []
+  },
+  {
+   "canon": "super bell",
+   "aliases": [
+    "cat suit",
+    "bell"
+   ]
+  },
+  {
+   "canon": "double cherry",
+   "aliases": []
+  },
+  {
+   "canon": "gold flower",
+   "aliases": []
+  },
+  {
+   "canon": "super acorn",
+   "aliases": [
+    "acorn"
+   ]
+  },
+  {
+   "canon": "p-wing",
+   "aliases": [
+    "p wing"
+   ]
+  },
+  {
+   "canon": "p-balloon",
+   "aliases": [
+    "p balloon"
+   ]
+  },
+  {
+   "canon": "poison mushroom",
+   "aliases": []
+  },
+  {
+   "canon": "blue shell",
+   "aliases": [
+    "koopa shell"
+   ]
+  },
+  {
+   "canon": "super crown",
+   "aliases": []
+  },
+  {
+   "canon": "wonder flower",
+   "aliases": []
+  },
+  {
+   "canon": "elephant fruit",
+   "aliases": []
+  },
+  {
+   "canon": "bubble flower",
+   "aliases": []
+  },
+  {
+   "canon": "drill mushroom",
+   "aliases": []
+  },
+  {
+   "canon": "spin drill",
+   "aliases": []
+  },
+  {
+   "canon": "bee mushroom",
+   "aliases": []
+  },
+  {
+   "canon": "boo mushroom",
+   "aliases": []
+  },
+  {
+   "canon": "rock mushroom",
+   "aliases": []
+  },
+  {
+   "canon": "spring mushroom",
+   "aliases": []
+  },
+  {
+   "canon": "yoshi egg",
+   "aliases": [
+    "yoshi"
+   ]
+  },
+  {
+   "canon": "frog switch",
+   "aliases": []
+  },
+  {
+   "canon": "kuribo's shoe",
+   "aliases": [
+    "goomba shoe"
+   ]
+  }
+ ],
+ "Eevee & its evolutions": [
+  {
+   "canon": "eevee",
+   "aliases": []
+  },
+  {
+   "canon": "vaporeon",
+   "aliases": []
+  },
+  {
+   "canon": "jolteon",
+   "aliases": []
+  },
+  {
+   "canon": "flareon",
+   "aliases": []
+  },
+  {
+   "canon": "espeon",
+   "aliases": []
+  },
+  {
+   "canon": "umbreon",
+   "aliases": []
+  },
+  {
+   "canon": "leafeon",
+   "aliases": []
+  },
+  {
+   "canon": "glaceon",
+   "aliases": []
+  },
+  {
+   "canon": "sylveon",
+   "aliases": []
+  }
+ ],
+ "Sonic characters": [
+  {
+   "canon": "sonic",
+   "aliases": [
+    "sonic the hedgehog"
+   ]
+  },
+  {
+   "canon": "tails",
+   "aliases": [
+    "miles prower",
+    "miles tails prower"
+   ]
+  },
+  {
+   "canon": "knuckles",
+   "aliases": [
+    "knuckles the echidna"
+   ]
+  },
+  {
+   "canon": "amy rose",
+   "aliases": [
+    "amy"
+   ]
+  },
+  {
+   "canon": "shadow",
+   "aliases": [
+    "shadow the hedgehog"
+   ]
+  },
+  {
+   "canon": "dr eggman",
+   "aliases": [
+    "eggman",
+    "robotnik",
+    "dr robotnik",
+    "doctor eggman",
+    "ivo robotnik"
+   ]
+  },
+  {
+   "canon": "rouge",
+   "aliases": [
+    "rouge the bat"
+   ]
+  },
+  {
+   "canon": "cream",
+   "aliases": [
+    "cream the rabbit"
+   ]
+  },
+  {
+   "canon": "cheese",
+   "aliases": []
+  },
+  {
+   "canon": "big the cat",
+   "aliases": [
+    "big"
+   ]
+  },
+  {
+   "canon": "silver",
+   "aliases": [
+    "silver the hedgehog"
+   ]
+  },
+  {
+   "canon": "blaze",
+   "aliases": [
+    "blaze the cat"
+   ]
+  },
+  {
+   "canon": "metal sonic",
+   "aliases": []
+  },
+  {
+   "canon": "chaos",
+   "aliases": []
+  },
+  {
+   "canon": "e-123 omega",
+   "aliases": [
+    "omega"
+   ]
+  },
+  {
+   "canon": "e-102 gamma",
+   "aliases": [
+    "gamma"
+   ]
+  },
+  {
+   "canon": "espio",
+   "aliases": []
+  },
+  {
+   "canon": "vector",
+   "aliases": []
+  },
+  {
+   "canon": "charmy",
+   "aliases": [
+    "charmy bee"
+   ]
+  },
+  {
+   "canon": "infinite",
+   "aliases": []
+  },
+  {
+   "canon": "sticks",
+   "aliases": []
+  },
+  {
+   "canon": "tikal",
+   "aliases": []
+  },
+  {
+   "canon": "jet",
+   "aliases": []
+  },
+  {
+   "canon": "wave",
+   "aliases": []
+  },
+  {
+   "canon": "storm",
+   "aliases": []
+  },
+  {
+   "canon": "mighty",
+   "aliases": []
+  },
+  {
+   "canon": "ray",
+   "aliases": []
+  },
+  {
+   "canon": "fang",
+   "aliases": []
+  },
+  {
+   "canon": "bean",
+   "aliases": []
+  },
+  {
+   "canon": "bark",
+   "aliases": []
+  },
+  {
+   "canon": "zavok",
+   "aliases": []
+  },
+  {
+   "canon": "zazz",
+   "aliases": []
+  },
+  {
+   "canon": "zomom",
+   "aliases": []
+  },
+  {
+   "canon": "zor",
+   "aliases": []
+  },
+  {
+   "canon": "zeena",
+   "aliases": []
+  },
+  {
+   "canon": "master zik",
+   "aliases": []
+  },
+  {
+   "canon": "orbot",
+   "aliases": []
+  },
+  {
+   "canon": "cubot",
+   "aliases": []
+  },
+  {
+   "canon": "sage",
+   "aliases": []
+  },
+  {
+   "canon": "mephiles",
+   "aliases": []
+  },
+  {
+   "canon": "black doom",
+   "aliases": []
+  },
+  {
+   "canon": "marine",
+   "aliases": []
+  },
+  {
+   "canon": "gemerl",
+   "aliases": []
+  },
+  {
+   "canon": "emerl",
+   "aliases": []
+  },
+  {
+   "canon": "chip",
+   "aliases": []
+  },
+  {
+   "canon": "tangle",
+   "aliases": []
+  },
+  {
+   "canon": "whisper",
+   "aliases": []
+  },
+  {
+   "canon": "chao",
+   "aliases": []
+  },
+  {
+   "canon": "maria",
+   "aliases": [
+    "maria robotnik"
+   ]
+  },
+  {
+   "canon": "gerald",
+   "aliases": [
+    "gerald robotnik"
+   ]
+  },
+  {
+   "canon": "froggy",
+   "aliases": []
+  },
+  {
+   "canon": "scourge",
+   "aliases": []
+  }
  ]
 }
