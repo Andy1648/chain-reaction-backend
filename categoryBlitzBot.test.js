@@ -163,3 +163,15 @@ test('picks lean famous: most MEDIUM answers come from the best-known quarter', 
   for (let i = 0; i < 2000; i++) if (top.has(bot.pickAnswer('Girl Scout cookies', [], 'medium'))) hits += 1;
   assert.ok(hits / 2000 > 0.55, `${hits / 20}% from the top quarter`);
 });
+
+test('oct15 night: on a dictionary PATTERN list the bot only plays the common head (botKnown), never the obscure tail', () => {
+  for (const name of BLITZ.NAMES) {
+    const cap = BLITZ.listFor(name).botKnown;
+    if (!cap) continue;
+    const head = new Set(CANON_DATA[name].slice(0, cap).map((m) => m.canon));
+    for (let i = 0; i < 40; i++) {
+      const a = bot.pickAnswer(name, [], 'hard');
+      assert.ok(a === null || head.has(a), `${name}: bot played "${a}" outside its known head`);
+    }
+  }
+});
