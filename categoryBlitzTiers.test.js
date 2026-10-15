@@ -80,3 +80,18 @@ test('pack filtering (and no-repeat) still holds under tier weighting', () => {
     played.add(c);
   }
 });
+
+test('oct15 night: ONE PER FAMILY — a game never deals two rhyme/pattern lists, two country lists, two US-state lists …', () => {
+  const L = require('./categoryBlitzLogic');
+  assert.equal(L.familyOf('Rhymes with CAT (-AT)'), 'wordplay-pattern');
+  assert.equal(L.familyOf('Words ending in -BALL'), 'wordplay-pattern');
+  assert.equal(L.familyOf('US states'), 'us-states');
+  assert.equal(L.familyOf('Asian countries'), 'countries');
+  assert.equal(L.familyOf('Dog breeds'), null);
+  for (let g = 0; g < 200; g++) {
+    const used = new Set();
+    for (let r = 0; r < 10; r++) used.add(L.pickRandomCategory(used, null, 10));
+    const fams = [...used].map(L.familyOf).filter(Boolean);
+    assert.equal(new Set(fams).size, fams.length, `two of one family in a game: ${[...used].join(' / ')}`);
+  }
+});

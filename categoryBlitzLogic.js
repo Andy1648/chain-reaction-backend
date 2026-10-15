@@ -850,6 +850,25 @@ function pickWeightedByTier(pool, rng = Math.random) {
  * (optional) restricts the pool to those packs. Falls back to the (filtered) base
  * list in the impossible case that every option is excluded.
  */
+// ONE PER FAMILY (Andy oct15 night "dont make them too close (like rn you have us states and us states that start with
+// n)"): lists that share most of their answers — or are the same gimmick — form a family, and a game never deals a
+// second list from a family it already played (rerolls included). Soft: if the filter would leave nothing, it's ignored.
+const FAMILIES = [
+  ['wordplay-pattern', /^(Rhymes with|Words ending in|Words starting with|Words with)/i],
+  ['us-states', /^US state/i],
+  ['countries', /countries|^Countries/i],
+  ['spanish', /Spanish/i],
+  ['harry-potter', /Harry Potter|Hogwarts|Horcrux|Weasley/i],
+  ['minecraft', /^Minecraft/i],
+  ['pokemon', /Pok[eé]mon|Eevee/i],
+  ['mario', /Mario/i],
+  ['brands-food', /^(Fast food|Soda|Candy|Breakfast cereals|Cereal mascots|McDonaldland)/i],
+  ['halloween-films', /^(Saw|Scream|Final Destination) films/i],
+];
+function familyOf(name) {
+  for (const [fam, re] of FAMILIES) if (re.test(name)) return fam;
+  return null;
+}
 function pickRandomCategory(excludeSet, selectedPacks, rounds = TOTAL_ROUNDS) {
   const base = categoriesForPacks(selectedPacks, rounds);
   const fresh = (list) => (excludeSet ? list.filter((c) => !excludeSet.has(c)) : list);
@@ -857,6 +876,11 @@ function pickRandomCategory(excludeSet, selectedPacks, rounds = TOTAL_ROUNDS) {
   // ever repeating a category; only a fully-played pool repeats.
   let pool = fresh(base);
   if (!pool.length && base !== CATEGORIES) pool = fresh(CATEGORIES);
+  if (excludeSet && excludeSet.size) {
+    const played = new Set([...excludeSet].map(familyOf).filter(Boolean));
+    const apart = pool.filter((c) => !played.has(familyOf(c)));
+    if (apart.length) pool = apart;
+  }
   const choices = pool.length ? pool : base;
   return pickWeightedByTier(choices) || choices[Math.floor(Math.random() * choices.length)];
 }
@@ -1201,6 +1225,7 @@ module.exports = {
   answersFor,
   listHas,
   CATEGORY_PACK: CURATED_PACK, // STEP 9: category -> pack, for the curated pool
+  familyOf,
   normalizeCategoryKey,
   PACK_IDS,
   TOTAL_ROUNDS,
