@@ -787,6 +787,10 @@ const TIER_BROAD = new Set([
   'Desserts', 'Breakfast foods', 'Things in a fridge', 'Camping gear', 'Pets', 'Jobs', 'Clothing', 'Birds', 'Things at a birthday party', 'Things that are sticky',
   'Superheroes', 'Famous robots', 'Video game characters', 'Things that are round', 'Things in space', 'Things with buttons', 'Things people are scared of', 'Flowers', 'Snack foods', 'Comic book sound effects',
   // oct15 afternoon (Andy "EASY and FUNNY ... A LOT more"): Feud-style everyday lists, describe-it lists, teen life
+  'Cartoon characters', 'Animated movies', 'Famous duos', 'Celebrities known by one name',
+  'Famous YouTubers & streamers', 'Popular video games', 'Apps on your phone', 'Famous TV shows',
+  'Things from the 2010s', 'Clothing & shoe brands', 'Famous rappers', 'Famous singers', 'Famous athletes',
+  'Movie villains', 'Movie franchises', 'Stores at the mall',
   "Things you'd see at the zoo", 'Things at a water park', 'Things at a movie theater', 'Things in a classroom',
   'Things at the mall', "Things you'd see on a road trip", 'Things at the gym', 'Things you do at the beach',
   "Things you do when you're bored", 'Things you do before bed', 'Things you do in the morning',
