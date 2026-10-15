@@ -81696,5 +81696,5253 @@
    "canon": "panzootics",
    "aliases": []
   }
+ ],
+ "Desserts": [
+  {
+   "canon": "cake",
+   "aliases": []
+  },
+  {
+   "canon": "pie",
+   "aliases": []
+  },
+  {
+   "canon": "ice cream",
+   "aliases": []
+  },
+  {
+   "canon": "brownie",
+   "aliases": []
+  },
+  {
+   "canon": "brownies",
+   "aliases": []
+  },
+  {
+   "canon": "cookie",
+   "aliases": []
+  },
+  {
+   "canon": "cookies",
+   "aliases": []
+  },
+  {
+   "canon": "cupcake",
+   "aliases": []
+  },
+  {
+   "canon": "cupcakes",
+   "aliases": []
+  },
+  {
+   "canon": "cheesecake",
+   "aliases": []
+  },
+  {
+   "canon": "pudding",
+   "aliases": []
+  },
+  {
+   "canon": "donut",
+   "aliases": []
+  },
+  {
+   "canon": "doughnut",
+   "aliases": []
+  },
+  {
+   "canon": "donuts",
+   "aliases": []
+  },
+  {
+   "canon": "muffin",
+   "aliases": []
+  },
+  {
+   "canon": "pancakes",
+   "aliases": []
+  },
+  {
+   "canon": "waffles",
+   "aliases": []
+  },
+  {
+   "canon": "tiramisu",
+   "aliases": []
+  },
+  {
+   "canon": "creme brulee",
+   "aliases": []
+  },
+  {
+   "canon": "mousse",
+   "aliases": []
+  },
+  {
+   "canon": "chocolate mousse",
+   "aliases": []
+  },
+  {
+   "canon": "flan",
+   "aliases": []
+  },
+  {
+   "canon": "custard",
+   "aliases": []
+  },
+  {
+   "canon": "jello",
+   "aliases": []
+  },
+  {
+   "canon": "jelly",
+   "aliases": []
+  },
+  {
+   "canon": "gelato",
+   "aliases": []
+  },
+  {
+   "canon": "sorbet",
+   "aliases": []
+  },
+  {
+   "canon": "sundae",
+   "aliases": []
+  },
+  {
+   "canon": "banana split",
+   "aliases": []
+  },
+  {
+   "canon": "milkshake",
+   "aliases": []
+  },
+  {
+   "canon": "apple pie",
+   "aliases": []
+  },
+  {
+   "canon": "pumpkin pie",
+   "aliases": []
+  },
+  {
+   "canon": "pecan pie",
+   "aliases": []
+  },
+  {
+   "canon": "cherry pie",
+   "aliases": []
+  },
+  {
+   "canon": "key lime pie",
+   "aliases": []
+  },
+  {
+   "canon": "lemon meringue pie",
+   "aliases": []
+  },
+  {
+   "canon": "cobbler",
+   "aliases": []
+  },
+  {
+   "canon": "peach cobbler",
+   "aliases": []
+  },
+  {
+   "canon": "crumble",
+   "aliases": []
+  },
+  {
+   "canon": "apple crumble",
+   "aliases": []
+  },
+  {
+   "canon": "churros",
+   "aliases": []
+  },
+  {
+   "canon": "churro",
+   "aliases": []
+  },
+  {
+   "canon": "eclair",
+   "aliases": []
+  },
+  {
+   "canon": "cannoli",
+   "aliases": []
+  },
+  {
+   "canon": "macaron",
+   "aliases": []
+  },
+  {
+   "canon": "macarons",
+   "aliases": []
+  },
+  {
+   "canon": "macaroon",
+   "aliases": []
+  },
+  {
+   "canon": "baklava",
+   "aliases": []
+  },
+  {
+   "canon": "fudge",
+   "aliases": []
+  },
+  {
+   "canon": "candy",
+   "aliases": []
+  },
+  {
+   "canon": "chocolate",
+   "aliases": []
+  },
+  {
+   "canon": "truffle",
+   "aliases": []
+  },
+  {
+   "canon": "truffles",
+   "aliases": []
+  },
+  {
+   "canon": "s'mores",
+   "aliases": []
+  },
+  {
+   "canon": "smores",
+   "aliases": []
+  },
+  {
+   "canon": "popsicle",
+   "aliases": []
+  },
+  {
+   "canon": "frozen yogurt",
+   "aliases": []
+  },
+  {
+   "canon": "froyo",
+   "aliases": []
+  },
+  {
+   "canon": "shortcake",
+   "aliases": []
+  },
+  {
+   "canon": "strawberry shortcake",
+   "aliases": []
+  },
+  {
+   "canon": "carrot cake",
+   "aliases": []
+  },
+  {
+   "canon": "red velvet cake",
+   "aliases": []
+  },
+  {
+   "canon": "chocolate cake",
+   "aliases": []
+  },
+  {
+   "canon": "lava cake",
+   "aliases": []
+  },
+  {
+   "canon": "pound cake",
+   "aliases": []
+  },
+  {
+   "canon": "angel food cake",
+   "aliases": []
+  },
+  {
+   "canon": "funnel cake",
+   "aliases": []
+  },
+  {
+   "canon": "cinnamon roll",
+   "aliases": []
+  },
+  {
+   "canon": "cinnamon rolls",
+   "aliases": []
+  },
+  {
+   "canon": "croissant",
+   "aliases": []
+  },
+  {
+   "canon": "danish",
+   "aliases": []
+  },
+  {
+   "canon": "scone",
+   "aliases": []
+  },
+  {
+   "canon": "trifle",
+   "aliases": []
+  },
+  {
+   "canon": "parfait",
+   "aliases": []
+  },
+  {
+   "canon": "souffle",
+   "aliases": []
+  },
+  {
+   "canon": "meringue",
+   "aliases": []
+  },
+  {
+   "canon": "pavlova",
+   "aliases": []
+  },
+  {
+   "canon": "panna cotta",
+   "aliases": []
+  },
+  {
+   "canon": "rice pudding",
+   "aliases": []
+  },
+  {
+   "canon": "bread pudding",
+   "aliases": []
+  },
+  {
+   "canon": "mochi",
+   "aliases": []
+  },
+  {
+   "canon": "ice cream cake",
+   "aliases": []
+  },
+  {
+   "canon": "ice cream sandwich",
+   "aliases": []
+  },
+  {
+   "canon": "cake pop",
+   "aliases": []
+  },
+  {
+   "canon": "cake pops",
+   "aliases": []
+  },
+  {
+   "canon": "rice krispie treats",
+   "aliases": []
+  },
+  {
+   "canon": "rice krispies treat",
+   "aliases": []
+  },
+  {
+   "canon": "blondie",
+   "aliases": []
+  },
+  {
+   "canon": "blondies",
+   "aliases": []
+  },
+  {
+   "canon": "tart",
+   "aliases": []
+  },
+  {
+   "canon": "fruit tart",
+   "aliases": []
+  },
+  {
+   "canon": "galette",
+   "aliases": []
+  },
+  {
+   "canon": "strudel",
+   "aliases": []
+  },
+  {
+   "canon": "apple strudel",
+   "aliases": []
+  },
+  {
+   "canon": "beignet",
+   "aliases": []
+  },
+  {
+   "canon": "beignets",
+   "aliases": []
+  },
+  {
+   "canon": "baked alaska",
+   "aliases": []
+  },
+  {
+   "canon": "sticky toffee pudding",
+   "aliases": []
+  },
+  {
+   "canon": "gulab jamun",
+   "aliases": []
+  },
+  {
+   "canon": "brigadeiro",
+   "aliases": []
+  },
+  {
+   "canon": "tres leches",
+   "aliases": []
+  },
+  {
+   "canon": "tres leches cake",
+   "aliases": []
+  },
+  {
+   "canon": "cotton candy",
+   "aliases": []
+  },
+  {
+   "canon": "caramel apple",
+   "aliases": []
+  },
+  {
+   "canon": "candy apple",
+   "aliases": []
+  },
+  {
+   "canon": "snow cone",
+   "aliases": []
+  },
+  {
+   "canon": "shaved ice",
+   "aliases": []
+  },
+  {
+   "canon": "affogato",
+   "aliases": []
+  },
+  {
+   "canon": "banoffee pie",
+   "aliases": []
+  },
+  {
+   "canon": "black forest cake",
+   "aliases": []
+  },
+  {
+   "canon": "boston cream pie",
+   "aliases": []
+  },
+  {
+   "canon": "whoopie pie",
+   "aliases": []
+  },
+  {
+   "canon": "mud pie",
+   "aliases": []
+  },
+  {
+   "canon": "jelly roll",
+   "aliases": []
+  },
+  {
+   "canon": "swiss roll",
+   "aliases": []
+  }
+ ],
+ "Breakfast foods": [
+  {
+   "canon": "pancakes",
+   "aliases": []
+  },
+  {
+   "canon": "pancake",
+   "aliases": []
+  },
+  {
+   "canon": "waffles",
+   "aliases": []
+  },
+  {
+   "canon": "waffle",
+   "aliases": []
+  },
+  {
+   "canon": "eggs",
+   "aliases": []
+  },
+  {
+   "canon": "egg",
+   "aliases": []
+  },
+  {
+   "canon": "scrambled eggs",
+   "aliases": []
+  },
+  {
+   "canon": "fried eggs",
+   "aliases": []
+  },
+  {
+   "canon": "omelette",
+   "aliases": []
+  },
+  {
+   "canon": "omelet",
+   "aliases": []
+  },
+  {
+   "canon": "bacon",
+   "aliases": []
+  },
+  {
+   "canon": "sausage",
+   "aliases": []
+  },
+  {
+   "canon": "sausages",
+   "aliases": []
+  },
+  {
+   "canon": "toast",
+   "aliases": []
+  },
+  {
+   "canon": "french toast",
+   "aliases": []
+  },
+  {
+   "canon": "cereal",
+   "aliases": []
+  },
+  {
+   "canon": "oatmeal",
+   "aliases": []
+  },
+  {
+   "canon": "porridge",
+   "aliases": []
+  },
+  {
+   "canon": "bagel",
+   "aliases": []
+  },
+  {
+   "canon": "bagels",
+   "aliases": []
+  },
+  {
+   "canon": "muffin",
+   "aliases": []
+  },
+  {
+   "canon": "croissant",
+   "aliases": []
+  },
+  {
+   "canon": "hash browns",
+   "aliases": []
+  },
+  {
+   "canon": "hash brown",
+   "aliases": []
+  },
+  {
+   "canon": "yogurt",
+   "aliases": []
+  },
+  {
+   "canon": "granola",
+   "aliases": []
+  },
+  {
+   "canon": "fruit",
+   "aliases": []
+  },
+  {
+   "canon": "banana",
+   "aliases": []
+  },
+  {
+   "canon": "smoothie",
+   "aliases": []
+  },
+  {
+   "canon": "orange juice",
+   "aliases": []
+  },
+  {
+   "canon": "coffee",
+   "aliases": []
+  },
+  {
+   "canon": "milk",
+   "aliases": []
+  },
+  {
+   "canon": "biscuits",
+   "aliases": []
+  },
+  {
+   "canon": "biscuits and gravy",
+   "aliases": []
+  },
+  {
+   "canon": "grits",
+   "aliases": []
+  },
+  {
+   "canon": "breakfast burrito",
+   "aliases": []
+  },
+  {
+   "canon": "breakfast sandwich",
+   "aliases": []
+  },
+  {
+   "canon": "egg mcmuffin",
+   "aliases": []
+  },
+  {
+   "canon": "eggs benedict",
+   "aliases": []
+  },
+  {
+   "canon": "avocado toast",
+   "aliases": []
+  },
+  {
+   "canon": "crepes",
+   "aliases": []
+  },
+  {
+   "canon": "crepe",
+   "aliases": []
+  },
+  {
+   "canon": "poached eggs",
+   "aliases": []
+  },
+  {
+   "canon": "boiled egg",
+   "aliases": []
+  },
+  {
+   "canon": "hard boiled egg",
+   "aliases": []
+  },
+  {
+   "canon": "soft boiled egg",
+   "aliases": []
+  },
+  {
+   "canon": "ham",
+   "aliases": []
+  },
+  {
+   "canon": "home fries",
+   "aliases": []
+  },
+  {
+   "canon": "cinnamon roll",
+   "aliases": []
+  },
+  {
+   "canon": "danish",
+   "aliases": []
+  },
+  {
+   "canon": "donut",
+   "aliases": []
+  },
+  {
+   "canon": "doughnut",
+   "aliases": []
+  },
+  {
+   "canon": "pop tarts",
+   "aliases": []
+  },
+  {
+   "canon": "pop tart",
+   "aliases": []
+  },
+  {
+   "canon": "toaster strudel",
+   "aliases": []
+  },
+  {
+   "canon": "eggo",
+   "aliases": []
+  },
+  {
+   "canon": "frosted flakes",
+   "aliases": []
+  },
+  {
+   "canon": "cheerios",
+   "aliases": []
+  },
+  {
+   "canon": "fruit loops",
+   "aliases": []
+  },
+  {
+   "canon": "froot loops",
+   "aliases": []
+  },
+  {
+   "canon": "corn flakes",
+   "aliases": []
+  },
+  {
+   "canon": "lucky charms",
+   "aliases": []
+  },
+  {
+   "canon": "granola bar",
+   "aliases": []
+  },
+  {
+   "canon": "english muffin",
+   "aliases": []
+  },
+  {
+   "canon": "scone",
+   "aliases": []
+  },
+  {
+   "canon": "quiche",
+   "aliases": []
+  },
+  {
+   "canon": "frittata",
+   "aliases": []
+  },
+  {
+   "canon": "shakshuka",
+   "aliases": []
+  },
+  {
+   "canon": "huevos rancheros",
+   "aliases": []
+  },
+  {
+   "canon": "chilaquiles",
+   "aliases": []
+  },
+  {
+   "canon": "congee",
+   "aliases": []
+  },
+  {
+   "canon": "full english",
+   "aliases": []
+  },
+  {
+   "canon": "black pudding",
+   "aliases": []
+  },
+  {
+   "canon": "baked beans",
+   "aliases": []
+  },
+  {
+   "canon": "beans on toast",
+   "aliases": []
+  },
+  {
+   "canon": "kippers",
+   "aliases": []
+  },
+  {
+   "canon": "porridge oats",
+   "aliases": []
+  },
+  {
+   "canon": "overnight oats",
+   "aliases": []
+  },
+  {
+   "canon": "chia pudding",
+   "aliases": []
+  },
+  {
+   "canon": "acai bowl",
+   "aliases": []
+  },
+  {
+   "canon": "breakfast tacos",
+   "aliases": []
+  },
+  {
+   "canon": "breakfast pizza",
+   "aliases": []
+  },
+  {
+   "canon": "toad in the hole",
+   "aliases": []
+  },
+  {
+   "canon": "eggs and bacon",
+   "aliases": []
+  },
+  {
+   "canon": "bacon and eggs",
+   "aliases": []
+  },
+  {
+   "canon": "steak and eggs",
+   "aliases": []
+  },
+  {
+   "canon": "corned beef hash",
+   "aliases": []
+  },
+  {
+   "canon": "hash",
+   "aliases": []
+  },
+  {
+   "canon": "chicken and waffles",
+   "aliases": []
+  },
+  {
+   "canon": "dutch baby",
+   "aliases": []
+  },
+  {
+   "canon": "jam",
+   "aliases": []
+  },
+  {
+   "canon": "butter",
+   "aliases": []
+  },
+  {
+   "canon": "maple syrup",
+   "aliases": []
+  },
+  {
+   "canon": "syrup",
+   "aliases": []
+  },
+  {
+   "canon": "peanut butter toast",
+   "aliases": []
+  },
+  {
+   "canon": "cream cheese",
+   "aliases": []
+  },
+  {
+   "canon": "lox",
+   "aliases": []
+  },
+  {
+   "canon": "bagel and lox",
+   "aliases": []
+  },
+  {
+   "canon": "tea",
+   "aliases": []
+  },
+  {
+   "canon": "hot chocolate",
+   "aliases": []
+  },
+  {
+   "canon": "sunny side up",
+   "aliases": []
+  },
+  {
+   "canon": "over easy",
+   "aliases": []
+  },
+  {
+   "canon": "hard boiled eggs",
+   "aliases": []
+  },
+  {
+   "canon": "sausage links",
+   "aliases": []
+  },
+  {
+   "canon": "breakfast sausage",
+   "aliases": []
+  },
+  {
+   "canon": "sausage patty",
+   "aliases": []
+  },
+  {
+   "canon": "buttered toast",
+   "aliases": []
+  },
+  {
+   "canon": "gravy",
+   "aliases": []
+  },
+  {
+   "canon": "tater tots",
+   "aliases": []
+  },
+  {
+   "canon": "cream of wheat",
+   "aliases": []
+  },
+  {
+   "canon": "greek yogurt",
+   "aliases": []
+  },
+  {
+   "canon": "parfait",
+   "aliases": []
+  },
+  {
+   "canon": "yogurt parfait",
+   "aliases": []
+  },
+  {
+   "canon": "strawberries",
+   "aliases": []
+  },
+  {
+   "canon": "blueberries",
+   "aliases": []
+  },
+  {
+   "canon": "oj",
+   "aliases": []
+  },
+  {
+   "canon": "donuts",
+   "aliases": []
+  },
+  {
+   "canon": "blueberry muffin",
+   "aliases": []
+  },
+  {
+   "canon": "chocolate chip muffin",
+   "aliases": []
+  },
+  {
+   "canon": "cinnamon bun",
+   "aliases": []
+  },
+  {
+   "canon": "sticky bun",
+   "aliases": []
+  },
+  {
+   "canon": "egg sandwich",
+   "aliases": []
+  },
+  {
+   "canon": "bacon egg and cheese",
+   "aliases": []
+  },
+  {
+   "canon": "sausage egg and cheese",
+   "aliases": []
+  },
+  {
+   "canon": "mcmuffin",
+   "aliases": []
+  },
+  {
+   "canon": "scones",
+   "aliases": []
+  },
+  {
+   "canon": "coffee cake",
+   "aliases": []
+  },
+  {
+   "canon": "blueberry pancakes",
+   "aliases": []
+  },
+  {
+   "canon": "chocolate chip pancakes",
+   "aliases": []
+  },
+  {
+   "canon": "banana pancakes",
+   "aliases": []
+  },
+  {
+   "canon": "jelly",
+   "aliases": []
+  },
+  {
+   "canon": "peanut butter",
+   "aliases": []
+  },
+  {
+   "canon": "nutella",
+   "aliases": []
+  },
+  {
+   "canon": "fruit smoothie",
+   "aliases": []
+  },
+  {
+   "canon": "protein shake",
+   "aliases": []
+  },
+  {
+   "canon": "benedict",
+   "aliases": []
+  },
+  {
+   "canon": "hollandaise",
+   "aliases": []
+  },
+  {
+   "canon": "smoked salmon",
+   "aliases": []
+  },
+  {
+   "canon": "sausage gravy",
+   "aliases": []
+  },
+  {
+   "canon": "cinnamon toast",
+   "aliases": []
+  },
+  {
+   "canon": "turkey bacon",
+   "aliases": []
+  },
+  {
+   "canon": "canadian bacon",
+   "aliases": []
+  },
+  {
+   "canon": "link sausage",
+   "aliases": []
+  },
+  {
+   "canon": "kolache",
+   "aliases": []
+  },
+  {
+   "canon": "churros",
+   "aliases": []
+  },
+  {
+   "canon": "beignets",
+   "aliases": []
+  },
+  {
+   "canon": "monkey bread",
+   "aliases": []
+  },
+  {
+   "canon": "belgian waffle",
+   "aliases": []
+  },
+  {
+   "canon": "eggos",
+   "aliases": []
+  },
+  {
+   "canon": "frozen waffles",
+   "aliases": []
+  },
+  {
+   "canon": "muesli",
+   "aliases": []
+  },
+  {
+   "canon": "smoothie bowl",
+   "aliases": []
+  },
+  {
+   "canon": "fruit salad",
+   "aliases": []
+  },
+  {
+   "canon": "melon",
+   "aliases": []
+  },
+  {
+   "canon": "cantaloupe",
+   "aliases": []
+  },
+  {
+   "canon": "grapefruit",
+   "aliases": []
+  },
+  {
+   "canon": "apple",
+   "aliases": []
+  },
+  {
+   "canon": "raisin bran",
+   "aliases": []
+  },
+  {
+   "canon": "bran muffin",
+   "aliases": []
+  },
+  {
+   "canon": "banana bread",
+   "aliases": []
+  },
+  {
+   "canon": "pumpkin bread",
+   "aliases": []
+  },
+  {
+   "canon": "espresso",
+   "aliases": []
+  },
+  {
+   "canon": "latte",
+   "aliases": []
+  },
+  {
+   "canon": "cappuccino",
+   "aliases": []
+  },
+  {
+   "canon": "breakfast casserole",
+   "aliases": []
+  },
+  {
+   "canon": "egg white omelet",
+   "aliases": []
+  },
+  {
+   "canon": "veggie omelet",
+   "aliases": []
+  },
+  {
+   "canon": "western omelet",
+   "aliases": []
+  },
+  {
+   "canon": "denver omelet",
+   "aliases": []
+  },
+  {
+   "canon": "cheese omelet",
+   "aliases": []
+  },
+  {
+   "canon": "ham and cheese omelet",
+   "aliases": []
+  },
+  {
+   "canon": "deviled eggs",
+   "aliases": []
+  },
+  {
+   "canon": "breakfast potatoes",
+   "aliases": []
+  },
+  {
+   "canon": "egg in a hole",
+   "aliases": []
+  },
+  {
+   "canon": "toad in a hole",
+   "aliases": []
+  },
+  {
+   "canon": "biscuit sandwich",
+   "aliases": []
+  },
+  {
+   "canon": "sausage biscuit",
+   "aliases": []
+  },
+  {
+   "canon": "chicken biscuit",
+   "aliases": []
+  },
+  {
+   "canon": "breakfast bowl",
+   "aliases": []
+  },
+  {
+   "canon": "acai",
+   "aliases": []
+  },
+  {
+   "canon": "breakfast quesadilla",
+   "aliases": []
+  },
+  {
+   "canon": "migas",
+   "aliases": []
+  },
+  {
+   "canon": "breakfast hash",
+   "aliases": []
+  },
+  {
+   "canon": "sausage roll",
+   "aliases": []
+  },
+  {
+   "canon": "kolaches",
+   "aliases": []
+  },
+  {
+   "canon": "cinnamon raisin bagel",
+   "aliases": []
+  },
+  {
+   "canon": "everything bagel",
+   "aliases": []
+  },
+  {
+   "canon": "plain bagel",
+   "aliases": []
+  },
+  {
+   "canon": "lox bagel",
+   "aliases": []
+  },
+  {
+   "canon": "breakfast wrap",
+   "aliases": []
+  },
+  {
+   "canon": "protein bar",
+   "aliases": []
+  },
+  {
+   "canon": "cereal bar",
+   "aliases": []
+  },
+  {
+   "canon": "banana muffin",
+   "aliases": []
+  },
+  {
+   "canon": "bran flakes",
+   "aliases": []
+  },
+  {
+   "canon": "shredded wheat",
+   "aliases": []
+  },
+  {
+   "canon": "rice krispies",
+   "aliases": []
+  },
+  {
+   "canon": "fruity pebbles",
+   "aliases": []
+  },
+  {
+   "canon": "cocoa puffs",
+   "aliases": []
+  },
+  {
+   "canon": "pop tart frosted",
+   "aliases": []
+  },
+  {
+   "canon": "strawberry pop tart",
+   "aliases": []
+  },
+  {
+   "canon": "brown sugar pop tart",
+   "aliases": []
+  },
+  {
+   "canon": "french toast sticks",
+   "aliases": []
+  },
+  {
+   "canon": "mini pancakes",
+   "aliases": []
+  },
+  {
+   "canon": "silver dollar pancakes",
+   "aliases": []
+  },
+  {
+   "canon": "buttermilk pancakes",
+   "aliases": []
+  },
+  {
+   "canon": "protein pancakes",
+   "aliases": []
+  },
+  {
+   "canon": "gluten free pancakes",
+   "aliases": []
+  },
+  {
+   "canon": "waffle fries",
+   "aliases": []
+  },
+  {
+   "canon": "belgian waffles",
+   "aliases": []
+  },
+  {
+   "canon": "breakfast sliders",
+   "aliases": []
+  },
+  {
+   "canon": "egg bites",
+   "aliases": []
+  },
+  {
+   "canon": "sous vide egg bites",
+   "aliases": []
+  },
+  {
+   "canon": "tofu scramble",
+   "aliases": []
+  },
+  {
+   "canon": "breakfast ramen",
+   "aliases": []
+  },
+  {
+   "canon": "fried tomato",
+   "aliases": []
+  },
+  {
+   "canon": "english breakfast",
+   "aliases": []
+  },
+  {
+   "canon": "continental breakfast",
+   "aliases": []
+  },
+  {
+   "canon": "bacon sandwich",
+   "aliases": []
+  },
+  {
+   "canon": "sausage sandwich",
+   "aliases": []
+  },
+  {
+   "canon": "egg roll up",
+   "aliases": []
+  }
+ ],
+ "Things in a fridge": [
+  {
+   "canon": "milk",
+   "aliases": []
+  },
+  {
+   "canon": "eggs",
+   "aliases": []
+  },
+  {
+   "canon": "butter",
+   "aliases": []
+  },
+  {
+   "canon": "cheese",
+   "aliases": []
+  },
+  {
+   "canon": "yogurt",
+   "aliases": []
+  },
+  {
+   "canon": "juice",
+   "aliases": []
+  },
+  {
+   "canon": "orange juice",
+   "aliases": []
+  },
+  {
+   "canon": "apple juice",
+   "aliases": []
+  },
+  {
+   "canon": "water",
+   "aliases": []
+  },
+  {
+   "canon": "soda",
+   "aliases": []
+  },
+  {
+   "canon": "ketchup",
+   "aliases": []
+  },
+  {
+   "canon": "mustard",
+   "aliases": []
+  },
+  {
+   "canon": "mayo",
+   "aliases": []
+  },
+  {
+   "canon": "mayonnaise",
+   "aliases": []
+  },
+  {
+   "canon": "ranch",
+   "aliases": []
+  },
+  {
+   "canon": "salad dressing",
+   "aliases": []
+  },
+  {
+   "canon": "pickles",
+   "aliases": []
+  },
+  {
+   "canon": "jam",
+   "aliases": []
+  },
+  {
+   "canon": "jelly",
+   "aliases": []
+  },
+  {
+   "canon": "lettuce",
+   "aliases": []
+  },
+  {
+   "canon": "carrots",
+   "aliases": []
+  },
+  {
+   "canon": "celery",
+   "aliases": []
+  },
+  {
+   "canon": "broccoli",
+   "aliases": []
+  },
+  {
+   "canon": "tomatoes",
+   "aliases": []
+  },
+  {
+   "canon": "cucumber",
+   "aliases": []
+  },
+  {
+   "canon": "peppers",
+   "aliases": []
+  },
+  {
+   "canon": "apples",
+   "aliases": []
+  },
+  {
+   "canon": "grapes",
+   "aliases": []
+  },
+  {
+   "canon": "strawberries",
+   "aliases": []
+  },
+  {
+   "canon": "berries",
+   "aliases": []
+  },
+  {
+   "canon": "blueberries",
+   "aliases": []
+  },
+  {
+   "canon": "lemons",
+   "aliases": []
+  },
+  {
+   "canon": "limes",
+   "aliases": []
+  },
+  {
+   "canon": "leftovers",
+   "aliases": []
+  },
+  {
+   "canon": "pizza",
+   "aliases": []
+  },
+  {
+   "canon": "leftover pizza",
+   "aliases": []
+  },
+  {
+   "canon": "chicken",
+   "aliases": []
+  },
+  {
+   "canon": "ham",
+   "aliases": []
+  },
+  {
+   "canon": "turkey",
+   "aliases": []
+  },
+  {
+   "canon": "deli meat",
+   "aliases": []
+  },
+  {
+   "canon": "lunch meat",
+   "aliases": []
+  },
+  {
+   "canon": "bacon",
+   "aliases": []
+  },
+  {
+   "canon": "hot dogs",
+   "aliases": []
+  },
+  {
+   "canon": "sausage",
+   "aliases": []
+  },
+  {
+   "canon": "ground beef",
+   "aliases": []
+  },
+  {
+   "canon": "steak",
+   "aliases": []
+  },
+  {
+   "canon": "fish",
+   "aliases": []
+  },
+  {
+   "canon": "salmon",
+   "aliases": []
+  },
+  {
+   "canon": "tofu",
+   "aliases": []
+  },
+  {
+   "canon": "hummus",
+   "aliases": []
+  },
+  {
+   "canon": "salsa",
+   "aliases": []
+  },
+  {
+   "canon": "guacamole",
+   "aliases": []
+  },
+  {
+   "canon": "sour cream",
+   "aliases": []
+  },
+  {
+   "canon": "cream cheese",
+   "aliases": []
+  },
+  {
+   "canon": "whipped cream",
+   "aliases": []
+  },
+  {
+   "canon": "cream",
+   "aliases": []
+  },
+  {
+   "canon": "heavy cream",
+   "aliases": []
+  },
+  {
+   "canon": "coffee creamer",
+   "aliases": []
+  },
+  {
+   "canon": "creamer",
+   "aliases": []
+  },
+  {
+   "canon": "beer",
+   "aliases": []
+  },
+  {
+   "canon": "wine",
+   "aliases": []
+  },
+  {
+   "canon": "kombucha",
+   "aliases": []
+  },
+  {
+   "canon": "iced tea",
+   "aliases": []
+  },
+  {
+   "canon": "lemonade",
+   "aliases": []
+  },
+  {
+   "canon": "pudding",
+   "aliases": []
+  },
+  {
+   "canon": "jello",
+   "aliases": []
+  },
+  {
+   "canon": "cake",
+   "aliases": []
+  },
+  {
+   "canon": "pie",
+   "aliases": []
+  },
+  {
+   "canon": "cookie dough",
+   "aliases": []
+  },
+  {
+   "canon": "dough",
+   "aliases": []
+  },
+  {
+   "canon": "tortillas",
+   "aliases": []
+  },
+  {
+   "canon": "bread",
+   "aliases": []
+  },
+  {
+   "canon": "hot sauce",
+   "aliases": []
+  },
+  {
+   "canon": "soy sauce",
+   "aliases": []
+  },
+  {
+   "canon": "bbq sauce",
+   "aliases": []
+  },
+  {
+   "canon": "barbecue sauce",
+   "aliases": []
+  },
+  {
+   "canon": "relish",
+   "aliases": []
+  },
+  {
+   "canon": "olives",
+   "aliases": []
+  },
+  {
+   "canon": "maple syrup",
+   "aliases": []
+  },
+  {
+   "canon": "chocolate syrup",
+   "aliases": []
+  },
+  {
+   "canon": "string cheese",
+   "aliases": []
+  },
+  {
+   "canon": "cottage cheese",
+   "aliases": []
+  },
+  {
+   "canon": "eggnog",
+   "aliases": []
+  },
+  {
+   "canon": "almond milk",
+   "aliases": []
+  },
+  {
+   "canon": "oat milk",
+   "aliases": []
+  },
+  {
+   "canon": "takeout",
+   "aliases": []
+  },
+  {
+   "canon": "chinese food",
+   "aliases": []
+  },
+  {
+   "canon": "rice",
+   "aliases": []
+  },
+  {
+   "canon": "pasta",
+   "aliases": []
+  },
+  {
+   "canon": "soup",
+   "aliases": []
+  },
+  {
+   "canon": "baking soda",
+   "aliases": []
+  },
+  {
+   "canon": "ice",
+   "aliases": []
+  },
+  {
+   "canon": "ice cubes",
+   "aliases": []
+  },
+  {
+   "canon": "ice cream",
+   "aliases": []
+  },
+  {
+   "canon": "popsicles",
+   "aliases": []
+  },
+  {
+   "canon": "frozen peas",
+   "aliases": []
+  },
+  {
+   "canon": "watermelon",
+   "aliases": []
+  },
+  {
+   "canon": "melon",
+   "aliases": []
+  },
+  {
+   "canon": "oranges",
+   "aliases": []
+  },
+  {
+   "canon": "spinach",
+   "aliases": []
+  },
+  {
+   "canon": "kale",
+   "aliases": []
+  },
+  {
+   "canon": "mushrooms",
+   "aliases": []
+  },
+  {
+   "canon": "onions",
+   "aliases": []
+  },
+  {
+   "canon": "garlic",
+   "aliases": []
+  },
+  {
+   "canon": "herbs",
+   "aliases": []
+  },
+  {
+   "canon": "cilantro",
+   "aliases": []
+  },
+  {
+   "canon": "parsley",
+   "aliases": []
+  },
+  {
+   "canon": "batteries",
+   "aliases": []
+  },
+  {
+   "canon": "film",
+   "aliases": []
+  },
+  {
+   "canon": "medicine",
+   "aliases": []
+  },
+  {
+   "canon": "insulin",
+   "aliases": []
+  },
+  {
+   "canon": "nail polish",
+   "aliases": []
+  },
+  {
+   "canon": "fridge magnet",
+   "aliases": []
+  },
+  {
+   "canon": "magnets",
+   "aliases": []
+  },
+  {
+   "canon": "light",
+   "aliases": []
+  },
+  {
+   "canon": "lightbulb",
+   "aliases": []
+  }
+ ],
+ "Camping gear": [
+  {
+   "canon": "tent",
+   "aliases": []
+  },
+  {
+   "canon": "sleeping bag",
+   "aliases": []
+  },
+  {
+   "canon": "sleeping pad",
+   "aliases": []
+  },
+  {
+   "canon": "air mattress",
+   "aliases": []
+  },
+  {
+   "canon": "pillow",
+   "aliases": []
+  },
+  {
+   "canon": "flashlight",
+   "aliases": []
+  },
+  {
+   "canon": "torch",
+   "aliases": []
+  },
+  {
+   "canon": "headlamp",
+   "aliases": []
+  },
+  {
+   "canon": "lantern",
+   "aliases": []
+  },
+  {
+   "canon": "camp stove",
+   "aliases": []
+  },
+  {
+   "canon": "stove",
+   "aliases": []
+  },
+  {
+   "canon": "cooler",
+   "aliases": []
+  },
+  {
+   "canon": "ice chest",
+   "aliases": []
+  },
+  {
+   "canon": "backpack",
+   "aliases": []
+  },
+  {
+   "canon": "rucksack",
+   "aliases": []
+  },
+  {
+   "canon": "water bottle",
+   "aliases": []
+  },
+  {
+   "canon": "canteen",
+   "aliases": []
+  },
+  {
+   "canon": "first aid kit",
+   "aliases": []
+  },
+  {
+   "canon": "map",
+   "aliases": []
+  },
+  {
+   "canon": "compass",
+   "aliases": []
+  },
+  {
+   "canon": "gps",
+   "aliases": []
+  },
+  {
+   "canon": "matches",
+   "aliases": []
+  },
+  {
+   "canon": "lighter",
+   "aliases": []
+  },
+  {
+   "canon": "firestarter",
+   "aliases": []
+  },
+  {
+   "canon": "fire starter",
+   "aliases": []
+  },
+  {
+   "canon": "firewood",
+   "aliases": []
+  },
+  {
+   "canon": "kindling",
+   "aliases": []
+  },
+  {
+   "canon": "axe",
+   "aliases": []
+  },
+  {
+   "canon": "hatchet",
+   "aliases": []
+  },
+  {
+   "canon": "pocket knife",
+   "aliases": []
+  },
+  {
+   "canon": "knife",
+   "aliases": []
+  },
+  {
+   "canon": "swiss army knife",
+   "aliases": []
+  },
+  {
+   "canon": "multitool",
+   "aliases": []
+  },
+  {
+   "canon": "multi tool",
+   "aliases": []
+  },
+  {
+   "canon": "rope",
+   "aliases": []
+  },
+  {
+   "canon": "paracord",
+   "aliases": []
+  },
+  {
+   "canon": "tarp",
+   "aliases": []
+  },
+  {
+   "canon": "bug spray",
+   "aliases": []
+  },
+  {
+   "canon": "insect repellent",
+   "aliases": []
+  },
+  {
+   "canon": "sunscreen",
+   "aliases": []
+  },
+  {
+   "canon": "hammock",
+   "aliases": []
+  },
+  {
+   "canon": "camp chair",
+   "aliases": []
+  },
+  {
+   "canon": "folding chair",
+   "aliases": []
+  },
+  {
+   "canon": "marshmallows",
+   "aliases": []
+  },
+  {
+   "canon": "s'mores",
+   "aliases": []
+  },
+  {
+   "canon": "smores",
+   "aliases": []
+  },
+  {
+   "canon": "roasting stick",
+   "aliases": []
+  },
+  {
+   "canon": "hot dog stick",
+   "aliases": []
+  },
+  {
+   "canon": "pots",
+   "aliases": []
+  },
+  {
+   "canon": "pot",
+   "aliases": []
+  },
+  {
+   "canon": "pan",
+   "aliases": []
+  },
+  {
+   "canon": "skillet",
+   "aliases": []
+  },
+  {
+   "canon": "cast iron",
+   "aliases": []
+  },
+  {
+   "canon": "kettle",
+   "aliases": []
+  },
+  {
+   "canon": "mug",
+   "aliases": []
+  },
+  {
+   "canon": "plates",
+   "aliases": []
+  },
+  {
+   "canon": "utensils",
+   "aliases": []
+  },
+  {
+   "canon": "spork",
+   "aliases": []
+  },
+  {
+   "canon": "can opener",
+   "aliases": []
+  },
+  {
+   "canon": "water filter",
+   "aliases": []
+  },
+  {
+   "canon": "water purifier",
+   "aliases": []
+  },
+  {
+   "canon": "batteries",
+   "aliases": []
+  },
+  {
+   "canon": "walkie talkie",
+   "aliases": []
+  },
+  {
+   "canon": "walkie talkies",
+   "aliases": []
+  },
+  {
+   "canon": "radio",
+   "aliases": []
+  },
+  {
+   "canon": "whistle",
+   "aliases": []
+  },
+  {
+   "canon": "binoculars",
+   "aliases": []
+  },
+  {
+   "canon": "fishing rod",
+   "aliases": []
+  },
+  {
+   "canon": "fishing pole",
+   "aliases": []
+  },
+  {
+   "canon": "hiking boots",
+   "aliases": []
+  },
+  {
+   "canon": "boots",
+   "aliases": []
+  },
+  {
+   "canon": "rain jacket",
+   "aliases": []
+  },
+  {
+   "canon": "raincoat",
+   "aliases": []
+  },
+  {
+   "canon": "poncho",
+   "aliases": []
+  },
+  {
+   "canon": "hat",
+   "aliases": []
+  },
+  {
+   "canon": "beanie",
+   "aliases": []
+  },
+  {
+   "canon": "gloves",
+   "aliases": []
+  },
+  {
+   "canon": "socks",
+   "aliases": []
+  },
+  {
+   "canon": "wool socks",
+   "aliases": []
+  },
+  {
+   "canon": "toilet paper",
+   "aliases": []
+  },
+  {
+   "canon": "trowel",
+   "aliases": []
+  },
+  {
+   "canon": "shovel",
+   "aliases": []
+  },
+  {
+   "canon": "tent stakes",
+   "aliases": []
+  },
+  {
+   "canon": "stakes",
+   "aliases": []
+  },
+  {
+   "canon": "mallet",
+   "aliases": []
+  },
+  {
+   "canon": "trekking poles",
+   "aliases": []
+  },
+  {
+   "canon": "hiking poles",
+   "aliases": []
+  },
+  {
+   "canon": "duct tape",
+   "aliases": []
+  },
+  {
+   "canon": "bear spray",
+   "aliases": []
+  },
+  {
+   "canon": "bear canister",
+   "aliases": []
+  },
+  {
+   "canon": "trail mix",
+   "aliases": []
+  },
+  {
+   "canon": "granola bars",
+   "aliases": []
+  },
+  {
+   "canon": "camera",
+   "aliases": []
+  },
+  {
+   "canon": "cards",
+   "aliases": []
+  },
+  {
+   "canon": "deck of cards",
+   "aliases": []
+  },
+  {
+   "canon": "guitar",
+   "aliases": []
+  },
+  {
+   "canon": "ukulele",
+   "aliases": []
+  },
+  {
+   "canon": "sunglasses",
+   "aliases": []
+  },
+  {
+   "canon": "towel",
+   "aliases": []
+  },
+  {
+   "canon": "camp table",
+   "aliases": []
+  },
+  {
+   "canon": "dutch oven",
+   "aliases": []
+  },
+  {
+   "canon": "grill",
+   "aliases": []
+  },
+  {
+   "canon": "charcoal",
+   "aliases": []
+  },
+  {
+   "canon": "propane",
+   "aliases": []
+  },
+  {
+   "canon": "bandana",
+   "aliases": []
+  },
+  {
+   "canon": "mosquito net",
+   "aliases": []
+  },
+  {
+   "canon": "solar charger",
+   "aliases": []
+  },
+  {
+   "canon": "camping stove",
+   "aliases": []
+  },
+  {
+   "canon": "camping chair",
+   "aliases": []
+  },
+  {
+   "canon": "thermos",
+   "aliases": []
+  },
+  {
+   "canon": "cook set",
+   "aliases": []
+  },
+  {
+   "canon": "sleeping mat",
+   "aliases": []
+  },
+  {
+   "canon": "ground cloth",
+   "aliases": []
+  },
+  {
+   "canon": "camp pillow",
+   "aliases": []
+  },
+  {
+   "canon": "carabiner",
+   "aliases": []
+  },
+  {
+   "canon": "cooler bag",
+   "aliases": []
+  },
+  {
+   "canon": "guy lines",
+   "aliases": []
+  },
+  {
+   "canon": "rain fly",
+   "aliases": []
+  }
+ ],
+ "Pets": [
+  {
+   "canon": "dog",
+   "aliases": []
+  },
+  {
+   "canon": "cat",
+   "aliases": []
+  },
+  {
+   "canon": "puppy",
+   "aliases": []
+  },
+  {
+   "canon": "kitten",
+   "aliases": []
+  },
+  {
+   "canon": "fish",
+   "aliases": []
+  },
+  {
+   "canon": "goldfish",
+   "aliases": []
+  },
+  {
+   "canon": "betta",
+   "aliases": []
+  },
+  {
+   "canon": "betta fish",
+   "aliases": []
+  },
+  {
+   "canon": "hamster",
+   "aliases": []
+  },
+  {
+   "canon": "guinea pig",
+   "aliases": []
+  },
+  {
+   "canon": "rabbit",
+   "aliases": []
+  },
+  {
+   "canon": "bunny",
+   "aliases": []
+  },
+  {
+   "canon": "mouse",
+   "aliases": []
+  },
+  {
+   "canon": "rat",
+   "aliases": []
+  },
+  {
+   "canon": "gerbil",
+   "aliases": []
+  },
+  {
+   "canon": "chinchilla",
+   "aliases": []
+  },
+  {
+   "canon": "ferret",
+   "aliases": []
+  },
+  {
+   "canon": "hedgehog",
+   "aliases": []
+  },
+  {
+   "canon": "parrot",
+   "aliases": []
+  },
+  {
+   "canon": "parakeet",
+   "aliases": []
+  },
+  {
+   "canon": "budgie",
+   "aliases": []
+  },
+  {
+   "canon": "cockatiel",
+   "aliases": []
+  },
+  {
+   "canon": "canary",
+   "aliases": []
+  },
+  {
+   "canon": "finch",
+   "aliases": []
+  },
+  {
+   "canon": "lovebird",
+   "aliases": []
+  },
+  {
+   "canon": "cockatoo",
+   "aliases": []
+  },
+  {
+   "canon": "macaw",
+   "aliases": []
+  },
+  {
+   "canon": "turtle",
+   "aliases": []
+  },
+  {
+   "canon": "tortoise",
+   "aliases": []
+  },
+  {
+   "canon": "snake",
+   "aliases": []
+  },
+  {
+   "canon": "python",
+   "aliases": []
+  },
+  {
+   "canon": "corn snake",
+   "aliases": []
+  },
+  {
+   "canon": "ball python",
+   "aliases": []
+  },
+  {
+   "canon": "lizard",
+   "aliases": []
+  },
+  {
+   "canon": "gecko",
+   "aliases": []
+  },
+  {
+   "canon": "leopard gecko",
+   "aliases": []
+  },
+  {
+   "canon": "bearded dragon",
+   "aliases": []
+  },
+  {
+   "canon": "iguana",
+   "aliases": []
+  },
+  {
+   "canon": "chameleon",
+   "aliases": []
+  },
+  {
+   "canon": "frog",
+   "aliases": []
+  },
+  {
+   "canon": "toad",
+   "aliases": []
+  },
+  {
+   "canon": "axolotl",
+   "aliases": []
+  },
+  {
+   "canon": "newt",
+   "aliases": []
+  },
+  {
+   "canon": "salamander",
+   "aliases": []
+  },
+  {
+   "canon": "hermit crab",
+   "aliases": []
+  },
+  {
+   "canon": "tarantula",
+   "aliases": []
+  },
+  {
+   "canon": "spider",
+   "aliases": []
+  },
+  {
+   "canon": "scorpion",
+   "aliases": []
+  },
+  {
+   "canon": "ant farm",
+   "aliases": []
+  },
+  {
+   "canon": "ants",
+   "aliases": []
+  },
+  {
+   "canon": "stick insect",
+   "aliases": []
+  },
+  {
+   "canon": "sea monkeys",
+   "aliases": []
+  },
+  {
+   "canon": "snail",
+   "aliases": []
+  },
+  {
+   "canon": "pig",
+   "aliases": []
+  },
+  {
+   "canon": "mini pig",
+   "aliases": []
+  },
+  {
+   "canon": "pot bellied pig",
+   "aliases": []
+  },
+  {
+   "canon": "chicken",
+   "aliases": []
+  },
+  {
+   "canon": "chickens",
+   "aliases": []
+  },
+  {
+   "canon": "duck",
+   "aliases": []
+  },
+  {
+   "canon": "goat",
+   "aliases": []
+  },
+  {
+   "canon": "pony",
+   "aliases": []
+  },
+  {
+   "canon": "horse",
+   "aliases": []
+  },
+  {
+   "canon": "donkey",
+   "aliases": []
+  },
+  {
+   "canon": "sugar glider",
+   "aliases": []
+  },
+  {
+   "canon": "degu",
+   "aliases": []
+  },
+  {
+   "canon": "pet rock",
+   "aliases": []
+  },
+  {
+   "canon": "tamagotchi",
+   "aliases": []
+  },
+  {
+   "canon": "koi",
+   "aliases": []
+  },
+  {
+   "canon": "guppy",
+   "aliases": []
+  },
+  {
+   "canon": "tetra",
+   "aliases": []
+  },
+  {
+   "canon": "angelfish",
+   "aliases": []
+  },
+  {
+   "canon": "shrimp",
+   "aliases": []
+  },
+  {
+   "canon": "crab",
+   "aliases": []
+  },
+  {
+   "canon": "chick",
+   "aliases": []
+  },
+  {
+   "canon": "dove",
+   "aliases": []
+  },
+  {
+   "canon": "pigeon",
+   "aliases": []
+  },
+  {
+   "canon": "cockroach",
+   "aliases": []
+  },
+  {
+   "canon": "beetle",
+   "aliases": []
+  },
+  {
+   "canon": "millipede",
+   "aliases": []
+  },
+  {
+   "canon": "monitor lizard",
+   "aliases": []
+  },
+  {
+   "canon": "skink",
+   "aliases": []
+  },
+  {
+   "canon": "tree frog",
+   "aliases": []
+  },
+  {
+   "canon": "fox",
+   "aliases": []
+  },
+  {
+   "canon": "raccoon",
+   "aliases": []
+  },
+  {
+   "canon": "skunk",
+   "aliases": []
+  },
+  {
+   "canon": "llama",
+   "aliases": []
+  },
+  {
+   "canon": "alpaca",
+   "aliases": []
+  }
+ ],
+ "Jobs": [
+  {
+   "canon": "teacher",
+   "aliases": []
+  },
+  {
+   "canon": "doctor",
+   "aliases": []
+  },
+  {
+   "canon": "nurse",
+   "aliases": []
+  },
+  {
+   "canon": "firefighter",
+   "aliases": []
+  },
+  {
+   "canon": "fireman",
+   "aliases": []
+  },
+  {
+   "canon": "police officer",
+   "aliases": []
+  },
+  {
+   "canon": "cop",
+   "aliases": []
+  },
+  {
+   "canon": "chef",
+   "aliases": []
+  },
+  {
+   "canon": "cook",
+   "aliases": []
+  },
+  {
+   "canon": "pilot",
+   "aliases": []
+  },
+  {
+   "canon": "astronaut",
+   "aliases": []
+  },
+  {
+   "canon": "dentist",
+   "aliases": []
+  },
+  {
+   "canon": "vet",
+   "aliases": []
+  },
+  {
+   "canon": "veterinarian",
+   "aliases": []
+  },
+  {
+   "canon": "farmer",
+   "aliases": []
+  },
+  {
+   "canon": "lawyer",
+   "aliases": []
+  },
+  {
+   "canon": "judge",
+   "aliases": []
+  },
+  {
+   "canon": "engineer",
+   "aliases": []
+  },
+  {
+   "canon": "scientist",
+   "aliases": []
+  },
+  {
+   "canon": "artist",
+   "aliases": []
+  },
+  {
+   "canon": "painter",
+   "aliases": []
+  },
+  {
+   "canon": "musician",
+   "aliases": []
+  },
+  {
+   "canon": "singer",
+   "aliases": []
+  },
+  {
+   "canon": "actor",
+   "aliases": []
+  },
+  {
+   "canon": "actress",
+   "aliases": []
+  },
+  {
+   "canon": "dancer",
+   "aliases": []
+  },
+  {
+   "canon": "athlete",
+   "aliases": []
+  },
+  {
+   "canon": "coach",
+   "aliases": []
+  },
+  {
+   "canon": "mechanic",
+   "aliases": []
+  },
+  {
+   "canon": "plumber",
+   "aliases": []
+  },
+  {
+   "canon": "electrician",
+   "aliases": []
+  },
+  {
+   "canon": "carpenter",
+   "aliases": []
+  },
+  {
+   "canon": "builder",
+   "aliases": []
+  },
+  {
+   "canon": "construction worker",
+   "aliases": []
+  },
+  {
+   "canon": "architect",
+   "aliases": []
+  },
+  {
+   "canon": "accountant",
+   "aliases": []
+  },
+  {
+   "canon": "banker",
+   "aliases": []
+  },
+  {
+   "canon": "cashier",
+   "aliases": []
+  },
+  {
+   "canon": "waiter",
+   "aliases": []
+  },
+  {
+   "canon": "waitress",
+   "aliases": []
+  },
+  {
+   "canon": "server",
+   "aliases": []
+  },
+  {
+   "canon": "bartender",
+   "aliases": []
+  },
+  {
+   "canon": "barista",
+   "aliases": []
+  },
+  {
+   "canon": "baker",
+   "aliases": []
+  },
+  {
+   "canon": "butcher",
+   "aliases": []
+  },
+  {
+   "canon": "janitor",
+   "aliases": []
+  },
+  {
+   "canon": "custodian",
+   "aliases": []
+  },
+  {
+   "canon": "mail carrier",
+   "aliases": []
+  },
+  {
+   "canon": "mailman",
+   "aliases": []
+  },
+  {
+   "canon": "postman",
+   "aliases": []
+  },
+  {
+   "canon": "delivery driver",
+   "aliases": []
+  },
+  {
+   "canon": "truck driver",
+   "aliases": []
+  },
+  {
+   "canon": "bus driver",
+   "aliases": []
+  },
+  {
+   "canon": "taxi driver",
+   "aliases": []
+  },
+  {
+   "canon": "uber driver",
+   "aliases": []
+  },
+  {
+   "canon": "lifeguard",
+   "aliases": []
+  },
+  {
+   "canon": "librarian",
+   "aliases": []
+  },
+  {
+   "canon": "principal",
+   "aliases": []
+  },
+  {
+   "canon": "programmer",
+   "aliases": []
+  },
+  {
+   "canon": "software engineer",
+   "aliases": []
+  },
+  {
+   "canon": "coder",
+   "aliases": []
+  },
+  {
+   "canon": "developer",
+   "aliases": []
+  },
+  {
+   "canon": "youtuber",
+   "aliases": []
+  },
+  {
+   "canon": "streamer",
+   "aliases": []
+  },
+  {
+   "canon": "influencer",
+   "aliases": []
+  },
+  {
+   "canon": "photographer",
+   "aliases": []
+  },
+  {
+   "canon": "journalist",
+   "aliases": []
+  },
+  {
+   "canon": "reporter",
+   "aliases": []
+  },
+  {
+   "canon": "news anchor",
+   "aliases": []
+  },
+  {
+   "canon": "writer",
+   "aliases": []
+  },
+  {
+   "canon": "author",
+   "aliases": []
+  },
+  {
+   "canon": "editor",
+   "aliases": []
+  },
+  {
+   "canon": "designer",
+   "aliases": []
+  },
+  {
+   "canon": "fashion designer",
+   "aliases": []
+  },
+  {
+   "canon": "hairdresser",
+   "aliases": []
+  },
+  {
+   "canon": "barber",
+   "aliases": []
+  },
+  {
+   "canon": "stylist",
+   "aliases": []
+  },
+  {
+   "canon": "makeup artist",
+   "aliases": []
+  },
+  {
+   "canon": "tailor",
+   "aliases": []
+  },
+  {
+   "canon": "soldier",
+   "aliases": []
+  },
+  {
+   "canon": "sailor",
+   "aliases": []
+  },
+  {
+   "canon": "marine",
+   "aliases": []
+  },
+  {
+   "canon": "spy",
+   "aliases": []
+  },
+  {
+   "canon": "detective",
+   "aliases": []
+  },
+  {
+   "canon": "security guard",
+   "aliases": []
+  },
+  {
+   "canon": "zookeeper",
+   "aliases": []
+  },
+  {
+   "canon": "gardener",
+   "aliases": []
+  },
+  {
+   "canon": "landscaper",
+   "aliases": []
+  },
+  {
+   "canon": "pharmacist",
+   "aliases": []
+  },
+  {
+   "canon": "surgeon",
+   "aliases": []
+  },
+  {
+   "canon": "therapist",
+   "aliases": []
+  },
+  {
+   "canon": "psychologist",
+   "aliases": []
+  },
+  {
+   "canon": "paramedic",
+   "aliases": []
+  },
+  {
+   "canon": "emt",
+   "aliases": []
+  },
+  {
+   "canon": "receptionist",
+   "aliases": []
+  },
+  {
+   "canon": "secretary",
+   "aliases": []
+  },
+  {
+   "canon": "manager",
+   "aliases": []
+  },
+  {
+   "canon": "ceo",
+   "aliases": []
+  },
+  {
+   "canon": "president",
+   "aliases": []
+  },
+  {
+   "canon": "politician",
+   "aliases": []
+  },
+  {
+   "canon": "mayor",
+   "aliases": []
+  },
+  {
+   "canon": "senator",
+   "aliases": []
+  },
+  {
+   "canon": "clown",
+   "aliases": []
+  },
+  {
+   "canon": "magician",
+   "aliases": []
+  },
+  {
+   "canon": "comedian",
+   "aliases": []
+  },
+  {
+   "canon": "dj",
+   "aliases": []
+  },
+  {
+   "canon": "referee",
+   "aliases": []
+  },
+  {
+   "canon": "umpire",
+   "aliases": []
+  },
+  {
+   "canon": "fisherman",
+   "aliases": []
+  },
+  {
+   "canon": "miner",
+   "aliases": []
+  },
+  {
+   "canon": "lumberjack",
+   "aliases": []
+  },
+  {
+   "canon": "nanny",
+   "aliases": []
+  },
+  {
+   "canon": "babysitter",
+   "aliases": []
+  },
+  {
+   "canon": "tutor",
+   "aliases": []
+  },
+  {
+   "canon": "professor",
+   "aliases": []
+  },
+  {
+   "canon": "astronomer",
+   "aliases": []
+  },
+  {
+   "canon": "geologist",
+   "aliases": []
+  },
+  {
+   "canon": "biologist",
+   "aliases": []
+  },
+  {
+   "canon": "chemist",
+   "aliases": []
+  },
+  {
+   "canon": "physicist",
+   "aliases": []
+  },
+  {
+   "canon": "economist",
+   "aliases": []
+  },
+  {
+   "canon": "real estate agent",
+   "aliases": []
+  },
+  {
+   "canon": "realtor",
+   "aliases": []
+  },
+  {
+   "canon": "salesman",
+   "aliases": []
+  },
+  {
+   "canon": "salesperson",
+   "aliases": []
+  },
+  {
+   "canon": "flight attendant",
+   "aliases": []
+  },
+  {
+   "canon": "air traffic controller",
+   "aliases": []
+  },
+  {
+   "canon": "pizza delivery",
+   "aliases": []
+  },
+  {
+   "canon": "game developer",
+   "aliases": []
+  },
+  {
+   "canon": "video game tester",
+   "aliases": []
+  },
+  {
+   "canon": "animator",
+   "aliases": []
+  },
+  {
+   "canon": "cartoonist",
+   "aliases": []
+  },
+  {
+   "canon": "illustrator",
+   "aliases": []
+  },
+  {
+   "canon": "sculptor",
+   "aliases": []
+  },
+  {
+   "canon": "florist",
+   "aliases": []
+  },
+  {
+   "canon": "jeweler",
+   "aliases": []
+  },
+  {
+   "canon": "locksmith",
+   "aliases": []
+  }
+ ],
+ "Clothing": [
+  {
+   "canon": "shirt",
+   "aliases": []
+  },
+  {
+   "canon": "t-shirt",
+   "aliases": []
+  },
+  {
+   "canon": "t shirt",
+   "aliases": []
+  },
+  {
+   "canon": "tshirt",
+   "aliases": []
+  },
+  {
+   "canon": "pants",
+   "aliases": []
+  },
+  {
+   "canon": "jeans",
+   "aliases": []
+  },
+  {
+   "canon": "shorts",
+   "aliases": []
+  },
+  {
+   "canon": "skirt",
+   "aliases": []
+  },
+  {
+   "canon": "dress",
+   "aliases": []
+  },
+  {
+   "canon": "jacket",
+   "aliases": []
+  },
+  {
+   "canon": "coat",
+   "aliases": []
+  },
+  {
+   "canon": "hoodie",
+   "aliases": []
+  },
+  {
+   "canon": "sweater",
+   "aliases": []
+  },
+  {
+   "canon": "sweatshirt",
+   "aliases": []
+  },
+  {
+   "canon": "socks",
+   "aliases": []
+  },
+  {
+   "canon": "shoes",
+   "aliases": []
+  },
+  {
+   "canon": "sneakers",
+   "aliases": []
+  },
+  {
+   "canon": "boots",
+   "aliases": []
+  },
+  {
+   "canon": "sandals",
+   "aliases": []
+  },
+  {
+   "canon": "flip flops",
+   "aliases": []
+  },
+  {
+   "canon": "hat",
+   "aliases": []
+  },
+  {
+   "canon": "cap",
+   "aliases": []
+  },
+  {
+   "canon": "baseball cap",
+   "aliases": []
+  },
+  {
+   "canon": "beanie",
+   "aliases": []
+  },
+  {
+   "canon": "scarf",
+   "aliases": []
+  },
+  {
+   "canon": "gloves",
+   "aliases": []
+  },
+  {
+   "canon": "mittens",
+   "aliases": []
+  },
+  {
+   "canon": "belt",
+   "aliases": []
+  },
+  {
+   "canon": "tie",
+   "aliases": []
+  },
+  {
+   "canon": "bow tie",
+   "aliases": []
+  },
+  {
+   "canon": "suit",
+   "aliases": []
+  },
+  {
+   "canon": "blazer",
+   "aliases": []
+  },
+  {
+   "canon": "vest",
+   "aliases": []
+  },
+  {
+   "canon": "tank top",
+   "aliases": []
+  },
+  {
+   "canon": "crop top",
+   "aliases": []
+  },
+  {
+   "canon": "blouse",
+   "aliases": []
+  },
+  {
+   "canon": "polo",
+   "aliases": []
+  },
+  {
+   "canon": "polo shirt",
+   "aliases": []
+  },
+  {
+   "canon": "cardigan",
+   "aliases": []
+  },
+  {
+   "canon": "leggings",
+   "aliases": []
+  },
+  {
+   "canon": "sweatpants",
+   "aliases": []
+  },
+  {
+   "canon": "joggers",
+   "aliases": []
+  },
+  {
+   "canon": "overalls",
+   "aliases": []
+  },
+  {
+   "canon": "jumpsuit",
+   "aliases": []
+  },
+  {
+   "canon": "romper",
+   "aliases": []
+  },
+  {
+   "canon": "pajamas",
+   "aliases": []
+  },
+  {
+   "canon": "pjs",
+   "aliases": []
+  },
+  {
+   "canon": "onesie",
+   "aliases": []
+  },
+  {
+   "canon": "robe",
+   "aliases": []
+  },
+  {
+   "canon": "bathrobe",
+   "aliases": []
+  },
+  {
+   "canon": "swimsuit",
+   "aliases": []
+  },
+  {
+   "canon": "bikini",
+   "aliases": []
+  },
+  {
+   "canon": "swim trunks",
+   "aliases": []
+  },
+  {
+   "canon": "underwear",
+   "aliases": []
+  },
+  {
+   "canon": "boxers",
+   "aliases": []
+  },
+  {
+   "canon": "briefs",
+   "aliases": []
+  },
+  {
+   "canon": "bra",
+   "aliases": []
+  },
+  {
+   "canon": "tights",
+   "aliases": []
+  },
+  {
+   "canon": "stockings",
+   "aliases": []
+  },
+  {
+   "canon": "uniform",
+   "aliases": []
+  },
+  {
+   "canon": "tuxedo",
+   "aliases": []
+  },
+  {
+   "canon": "gown",
+   "aliases": []
+  },
+  {
+   "canon": "kimono",
+   "aliases": []
+  },
+  {
+   "canon": "sari",
+   "aliases": []
+  },
+  {
+   "canon": "kilt",
+   "aliases": []
+  },
+  {
+   "canon": "poncho",
+   "aliases": []
+  },
+  {
+   "canon": "raincoat",
+   "aliases": []
+  },
+  {
+   "canon": "parka",
+   "aliases": []
+  },
+  {
+   "canon": "windbreaker",
+   "aliases": []
+  },
+  {
+   "canon": "trench coat",
+   "aliases": []
+  },
+  {
+   "canon": "fleece",
+   "aliases": []
+  },
+  {
+   "canon": "turtleneck",
+   "aliases": []
+  },
+  {
+   "canon": "flannel",
+   "aliases": []
+  },
+  {
+   "canon": "button up",
+   "aliases": []
+  },
+  {
+   "canon": "button down",
+   "aliases": []
+  },
+  {
+   "canon": "dress shirt",
+   "aliases": []
+  },
+  {
+   "canon": "khakis",
+   "aliases": []
+  },
+  {
+   "canon": "chinos",
+   "aliases": []
+  },
+  {
+   "canon": "cargo pants",
+   "aliases": []
+  },
+  {
+   "canon": "capris",
+   "aliases": []
+  },
+  {
+   "canon": "slippers",
+   "aliases": []
+  },
+  {
+   "canon": "heels",
+   "aliases": []
+  },
+  {
+   "canon": "high heels",
+   "aliases": []
+  },
+  {
+   "canon": "loafers",
+   "aliases": []
+  },
+  {
+   "canon": "crocs",
+   "aliases": []
+  },
+  {
+   "canon": "earmuffs",
+   "aliases": []
+  },
+  {
+   "canon": "headband",
+   "aliases": []
+  },
+  {
+   "canon": "bandana",
+   "aliases": []
+  },
+  {
+   "canon": "apron",
+   "aliases": []
+  },
+  {
+   "canon": "lab coat",
+   "aliases": []
+  },
+  {
+   "canon": "cape",
+   "aliases": []
+  },
+  {
+   "canon": "costume",
+   "aliases": []
+  },
+  {
+   "canon": "jersey",
+   "aliases": []
+  },
+  {
+   "canon": "sweatband",
+   "aliases": []
+  },
+  {
+   "canon": "snapback",
+   "aliases": []
+  },
+  {
+   "canon": "fedora",
+   "aliases": []
+  },
+  {
+   "canon": "beret",
+   "aliases": []
+  },
+  {
+   "canon": "visor",
+   "aliases": []
+  },
+  {
+   "canon": "trousers",
+   "aliases": []
+  },
+  {
+   "canon": "jumper",
+   "aliases": []
+  },
+  {
+   "canon": "waistcoat",
+   "aliases": []
+  },
+  {
+   "canon": "trainers",
+   "aliases": []
+  },
+  {
+   "canon": "wellies",
+   "aliases": []
+  },
+  {
+   "canon": "galoshes",
+   "aliases": []
+  }
+ ],
+ "Birds": [
+  {
+   "canon": "eagle",
+   "aliases": []
+  },
+  {
+   "canon": "bald eagle",
+   "aliases": []
+  },
+  {
+   "canon": "hawk",
+   "aliases": []
+  },
+  {
+   "canon": "falcon",
+   "aliases": []
+  },
+  {
+   "canon": "owl",
+   "aliases": []
+  },
+  {
+   "canon": "parrot",
+   "aliases": []
+  },
+  {
+   "canon": "penguin",
+   "aliases": []
+  },
+  {
+   "canon": "flamingo",
+   "aliases": []
+  },
+  {
+   "canon": "pigeon",
+   "aliases": []
+  },
+  {
+   "canon": "dove",
+   "aliases": []
+  },
+  {
+   "canon": "crow",
+   "aliases": []
+  },
+  {
+   "canon": "raven",
+   "aliases": []
+  },
+  {
+   "canon": "robin",
+   "aliases": []
+  },
+  {
+   "canon": "blue jay",
+   "aliases": []
+  },
+  {
+   "canon": "cardinal",
+   "aliases": []
+  },
+  {
+   "canon": "sparrow",
+   "aliases": []
+  },
+  {
+   "canon": "hummingbird",
+   "aliases": []
+  },
+  {
+   "canon": "woodpecker",
+   "aliases": []
+  },
+  {
+   "canon": "duck",
+   "aliases": []
+  },
+  {
+   "canon": "goose",
+   "aliases": []
+  },
+  {
+   "canon": "swan",
+   "aliases": []
+  },
+  {
+   "canon": "chicken",
+   "aliases": []
+  },
+  {
+   "canon": "turkey",
+   "aliases": []
+  },
+  {
+   "canon": "ostrich",
+   "aliases": []
+  },
+  {
+   "canon": "emu",
+   "aliases": []
+  },
+  {
+   "canon": "peacock",
+   "aliases": []
+  },
+  {
+   "canon": "seagull",
+   "aliases": []
+  },
+  {
+   "canon": "gull",
+   "aliases": []
+  },
+  {
+   "canon": "pelican",
+   "aliases": []
+  },
+  {
+   "canon": "toucan",
+   "aliases": []
+  },
+  {
+   "canon": "macaw",
+   "aliases": []
+  },
+  {
+   "canon": "cockatoo",
+   "aliases": []
+  },
+  {
+   "canon": "parakeet",
+   "aliases": []
+  },
+  {
+   "canon": "budgie",
+   "aliases": []
+  },
+  {
+   "canon": "canary",
+   "aliases": []
+  },
+  {
+   "canon": "finch",
+   "aliases": []
+  },
+  {
+   "canon": "kiwi",
+   "aliases": []
+  },
+  {
+   "canon": "vulture",
+   "aliases": []
+  },
+  {
+   "canon": "condor",
+   "aliases": []
+  },
+  {
+   "canon": "stork",
+   "aliases": []
+  },
+  {
+   "canon": "crane",
+   "aliases": []
+  },
+  {
+   "canon": "heron",
+   "aliases": []
+  },
+  {
+   "canon": "egret",
+   "aliases": []
+  },
+  {
+   "canon": "kingfisher",
+   "aliases": []
+  },
+  {
+   "canon": "magpie",
+   "aliases": []
+  },
+  {
+   "canon": "starling",
+   "aliases": []
+  },
+  {
+   "canon": "swallow",
+   "aliases": []
+  },
+  {
+   "canon": "mockingbird",
+   "aliases": []
+  },
+  {
+   "canon": "bluebird",
+   "aliases": []
+  },
+  {
+   "canon": "oriole",
+   "aliases": []
+  },
+  {
+   "canon": "puffin",
+   "aliases": []
+  },
+  {
+   "canon": "albatross",
+   "aliases": []
+  },
+  {
+   "canon": "cormorant",
+   "aliases": []
+  },
+  {
+   "canon": "loon",
+   "aliases": []
+  },
+  {
+   "canon": "quail",
+   "aliases": []
+  },
+  {
+   "canon": "pheasant",
+   "aliases": []
+  },
+  {
+   "canon": "partridge",
+   "aliases": []
+  },
+  {
+   "canon": "grouse",
+   "aliases": []
+  },
+  {
+   "canon": "roadrunner",
+   "aliases": []
+  },
+  {
+   "canon": "dodo",
+   "aliases": []
+  },
+  {
+   "canon": "osprey",
+   "aliases": []
+  },
+  {
+   "canon": "kestrel",
+   "aliases": []
+  },
+  {
+   "canon": "kookaburra",
+   "aliases": []
+  },
+  {
+   "canon": "lyrebird",
+   "aliases": []
+  },
+  {
+   "canon": "cassowary",
+   "aliases": []
+  },
+  {
+   "canon": "rhea",
+   "aliases": []
+  },
+  {
+   "canon": "ibis",
+   "aliases": []
+  },
+  {
+   "canon": "spoonbill",
+   "aliases": []
+  },
+  {
+   "canon": "nightingale",
+   "aliases": []
+  },
+  {
+   "canon": "lark",
+   "aliases": []
+  },
+  {
+   "canon": "wren",
+   "aliases": []
+  },
+  {
+   "canon": "chickadee",
+   "aliases": []
+  },
+  {
+   "canon": "titmouse",
+   "aliases": []
+  },
+  {
+   "canon": "nuthatch",
+   "aliases": []
+  },
+  {
+   "canon": "warbler",
+   "aliases": []
+  },
+  {
+   "canon": "goldfinch",
+   "aliases": []
+  },
+  {
+   "canon": "jay",
+   "aliases": []
+  },
+  {
+   "canon": "mallard",
+   "aliases": []
+  },
+  {
+   "canon": "hen",
+   "aliases": []
+  },
+  {
+   "canon": "rooster",
+   "aliases": []
+  },
+  {
+   "canon": "cockatiel",
+   "aliases": []
+  },
+  {
+   "canon": "lovebird",
+   "aliases": []
+  },
+  {
+   "canon": "barn owl",
+   "aliases": []
+  },
+  {
+   "canon": "snowy owl",
+   "aliases": []
+  },
+  {
+   "canon": "great horned owl",
+   "aliases": []
+  },
+  {
+   "canon": "golden eagle",
+   "aliases": []
+  },
+  {
+   "canon": "harpy eagle",
+   "aliases": []
+  },
+  {
+   "canon": "red tailed hawk",
+   "aliases": []
+  },
+  {
+   "canon": "peregrine falcon",
+   "aliases": []
+  },
+  {
+   "canon": "sandpiper",
+   "aliases": []
+  },
+  {
+   "canon": "plover",
+   "aliases": []
+  },
+  {
+   "canon": "tern",
+   "aliases": []
+  },
+  {
+   "canon": "booby",
+   "aliases": []
+  },
+  {
+   "canon": "blue footed booby",
+   "aliases": []
+  },
+  {
+   "canon": "frigatebird",
+   "aliases": []
+  },
+  {
+   "canon": "hornbill",
+   "aliases": []
+  },
+  {
+   "canon": "bird of paradise",
+   "aliases": []
+  },
+  {
+   "canon": "secretary bird",
+   "aliases": []
+  },
+  {
+   "canon": "thrush",
+   "aliases": []
+  },
+  {
+   "canon": "mourning dove",
+   "aliases": []
+  },
+  {
+   "canon": "great blue heron",
+   "aliases": []
+  },
+  {
+   "canon": "canada goose",
+   "aliases": []
+  },
+  {
+   "canon": "mute swan",
+   "aliases": []
+  },
+  {
+   "canon": "grebe",
+   "aliases": []
+  },
+  {
+   "canon": "coot",
+   "aliases": []
+  },
+  {
+   "canon": "moorhen",
+   "aliases": []
+  },
+  {
+   "canon": "turkey vulture",
+   "aliases": []
+  },
+  {
+   "canon": "screech owl",
+   "aliases": []
+  },
+  {
+   "canon": "kite",
+   "aliases": []
+  },
+  {
+   "canon": "harrier",
+   "aliases": []
+  },
+  {
+   "canon": "buzzard",
+   "aliases": []
+  },
+  {
+   "canon": "peahen",
+   "aliases": []
+  },
+  {
+   "canon": "guinea fowl",
+   "aliases": []
+  },
+  {
+   "canon": "emperor penguin",
+   "aliases": []
+  },
+  {
+   "canon": "petrel",
+   "aliases": []
+  },
+  {
+   "canon": "gannet",
+   "aliases": []
+  },
+  {
+   "canon": "budgerigar",
+   "aliases": []
+  },
+  {
+   "canon": "conure",
+   "aliases": []
+  },
+  {
+   "canon": "lorikeet",
+   "aliases": []
+  },
+  {
+   "canon": "cuckoo",
+   "aliases": []
+  },
+  {
+   "canon": "skylark",
+   "aliases": []
+  },
+  {
+   "canon": "meadowlark",
+   "aliases": []
+  },
+  {
+   "canon": "pipit",
+   "aliases": []
+  },
+  {
+   "canon": "wagtail",
+   "aliases": []
+  },
+  {
+   "canon": "swift",
+   "aliases": []
+  },
+  {
+   "canon": "martin",
+   "aliases": []
+  },
+  {
+   "canon": "purple martin",
+   "aliases": []
+  },
+  {
+   "canon": "phoebe",
+   "aliases": []
+  },
+  {
+   "canon": "flycatcher",
+   "aliases": []
+  },
+  {
+   "canon": "kingbird",
+   "aliases": []
+  },
+  {
+   "canon": "shrike",
+   "aliases": []
+  },
+  {
+   "canon": "vireo",
+   "aliases": []
+  },
+  {
+   "canon": "tanager",
+   "aliases": []
+  },
+  {
+   "canon": "grosbeak",
+   "aliases": []
+  },
+  {
+   "canon": "bunting",
+   "aliases": []
+  },
+  {
+   "canon": "towhee",
+   "aliases": []
+  },
+  {
+   "canon": "junco",
+   "aliases": []
+  },
+  {
+   "canon": "chaffinch",
+   "aliases": []
+  },
+  {
+   "canon": "siskin",
+   "aliases": []
+  },
+  {
+   "canon": "redpoll",
+   "aliases": []
+  },
+  {
+   "canon": "crossbill",
+   "aliases": []
+  },
+  {
+   "canon": "waxwing",
+   "aliases": []
+  },
+  {
+   "canon": "cedar waxwing",
+   "aliases": []
+  },
+  {
+   "canon": "catbird",
+   "aliases": []
+  },
+  {
+   "canon": "brown thrasher",
+   "aliases": []
+  },
+  {
+   "canon": "grackle",
+   "aliases": []
+  },
+  {
+   "canon": "cowbird",
+   "aliases": []
+  },
+  {
+   "canon": "blackbird",
+   "aliases": []
+  },
+  {
+   "canon": "red-winged blackbird",
+   "aliases": []
+  },
+  {
+   "canon": "jackdaw",
+   "aliases": []
+  },
+  {
+   "canon": "rook",
+   "aliases": []
+  },
+  {
+   "canon": "stellers jay",
+   "aliases": []
+  },
+  {
+   "canon": "scrub jay",
+   "aliases": []
+  },
+  {
+   "canon": "nutcracker",
+   "aliases": []
+  },
+  {
+   "canon": "chough",
+   "aliases": []
+  },
+  {
+   "canon": "killdeer",
+   "aliases": []
+  },
+  {
+   "canon": "oystercatcher",
+   "aliases": []
+  },
+  {
+   "canon": "avocet",
+   "aliases": []
+  },
+  {
+   "canon": "stilt",
+   "aliases": []
+  },
+  {
+   "canon": "curlew",
+   "aliases": []
+  },
+  {
+   "canon": "godwit",
+   "aliases": []
+  },
+  {
+   "canon": "snipe",
+   "aliases": []
+  },
+  {
+   "canon": "woodcock",
+   "aliases": []
+  },
+  {
+   "canon": "lapwing",
+   "aliases": []
+  },
+  {
+   "canon": "turnstone",
+   "aliases": []
+  },
+  {
+   "canon": "dunlin",
+   "aliases": []
+  },
+  {
+   "canon": "sanderling",
+   "aliases": []
+  },
+  {
+   "canon": "phalarope",
+   "aliases": []
+  },
+  {
+   "canon": "rail",
+   "aliases": []
+  },
+  {
+   "canon": "bittern",
+   "aliases": []
+  },
+  {
+   "canon": "anhinga",
+   "aliases": []
+  },
+  {
+   "canon": "merganser",
+   "aliases": []
+  },
+  {
+   "canon": "teal",
+   "aliases": []
+  },
+  {
+   "canon": "wigeon",
+   "aliases": []
+  },
+  {
+   "canon": "pintail",
+   "aliases": []
+  },
+  {
+   "canon": "shoveler",
+   "aliases": []
+  },
+  {
+   "canon": "canvasback",
+   "aliases": []
+  },
+  {
+   "canon": "redhead",
+   "aliases": []
+  },
+  {
+   "canon": "bufflehead",
+   "aliases": []
+  },
+  {
+   "canon": "goldeneye",
+   "aliases": []
+  },
+  {
+   "canon": "eider",
+   "aliases": []
+  },
+  {
+   "canon": "scoter",
+   "aliases": []
+  },
+  {
+   "canon": "ptarmigan",
+   "aliases": []
+  },
+  {
+   "canon": "prairie chicken",
+   "aliases": []
+  },
+  {
+   "canon": "sage grouse",
+   "aliases": []
+  },
+  {
+   "canon": "bobwhite",
+   "aliases": []
+  },
+  {
+   "canon": "chukar",
+   "aliases": []
+  },
+  {
+   "canon": "sunbird",
+   "aliases": []
+  },
+  {
+   "canon": "weaver",
+   "aliases": []
+  },
+  {
+   "canon": "bulbul",
+   "aliases": []
+  },
+  {
+   "canon": "myna",
+   "aliases": []
+  },
+  {
+   "canon": "drongo",
+   "aliases": []
+  },
+  {
+   "canon": "bee-eater",
+   "aliases": []
+  },
+  {
+   "canon": "roller",
+   "aliases": []
+  },
+  {
+   "canon": "hoopoe",
+   "aliases": []
+  },
+  {
+   "canon": "nightjar",
+   "aliases": []
+  },
+  {
+   "canon": "whip-poor-will",
+   "aliases": []
+  },
+  {
+   "canon": "shoebill",
+   "aliases": []
+  },
+  {
+   "canon": "jacana",
+   "aliases": []
+  },
+  {
+   "canon": "quetzal",
+   "aliases": []
+  }
+ ],
+ "Things at a birthday party": [
+  {
+   "canon": "cake",
+   "aliases": []
+  },
+  {
+   "canon": "birthday cake",
+   "aliases": []
+  },
+  {
+   "canon": "candles",
+   "aliases": []
+  },
+  {
+   "canon": "balloons",
+   "aliases": []
+  },
+  {
+   "canon": "balloon",
+   "aliases": []
+  },
+  {
+   "canon": "presents",
+   "aliases": []
+  },
+  {
+   "canon": "present",
+   "aliases": []
+  },
+  {
+   "canon": "gifts",
+   "aliases": []
+  },
+  {
+   "canon": "gift",
+   "aliases": []
+  },
+  {
+   "canon": "cards",
+   "aliases": []
+  },
+  {
+   "canon": "card",
+   "aliases": []
+  },
+  {
+   "canon": "birthday card",
+   "aliases": []
+  },
+  {
+   "canon": "party hats",
+   "aliases": []
+  },
+  {
+   "canon": "party hat",
+   "aliases": []
+  },
+  {
+   "canon": "streamers",
+   "aliases": []
+  },
+  {
+   "canon": "confetti",
+   "aliases": []
+  },
+  {
+   "canon": "banner",
+   "aliases": []
+  },
+  {
+   "canon": "decorations",
+   "aliases": []
+  },
+  {
+   "canon": "ice cream",
+   "aliases": []
+  },
+  {
+   "canon": "cupcakes",
+   "aliases": []
+  },
+  {
+   "canon": "pizza",
+   "aliases": []
+  },
+  {
+   "canon": "chips",
+   "aliases": []
+  },
+  {
+   "canon": "candy",
+   "aliases": []
+  },
+  {
+   "canon": "pinata",
+   "aliases": []
+  },
+  {
+   "canon": "goodie bags",
+   "aliases": []
+  },
+  {
+   "canon": "party favors",
+   "aliases": []
+  },
+  {
+   "canon": "wrapping paper",
+   "aliases": []
+  },
+  {
+   "canon": "bows",
+   "aliases": []
+  },
+  {
+   "canon": "ribbon",
+   "aliases": []
+  },
+  {
+   "canon": "games",
+   "aliases": []
+  },
+  {
+   "canon": "music",
+   "aliases": []
+  },
+  {
+   "canon": "dj",
+   "aliases": []
+  },
+  {
+   "canon": "friends",
+   "aliases": []
+  },
+  {
+   "canon": "family",
+   "aliases": []
+  },
+  {
+   "canon": "guests",
+   "aliases": []
+  },
+  {
+   "canon": "singing",
+   "aliases": []
+  },
+  {
+   "canon": "happy birthday",
+   "aliases": []
+  },
+  {
+   "canon": "the birthday song",
+   "aliases": []
+  },
+  {
+   "canon": "party blowers",
+   "aliases": []
+  },
+  {
+   "canon": "noisemakers",
+   "aliases": []
+  },
+  {
+   "canon": "noise makers",
+   "aliases": []
+  },
+  {
+   "canon": "kazoo",
+   "aliases": []
+  },
+  {
+   "canon": "clown",
+   "aliases": []
+  },
+  {
+   "canon": "magician",
+   "aliases": []
+  },
+  {
+   "canon": "face paint",
+   "aliases": []
+  },
+  {
+   "canon": "face painting",
+   "aliases": []
+  },
+  {
+   "canon": "bounce house",
+   "aliases": []
+  },
+  {
+   "canon": "bouncy castle",
+   "aliases": []
+  },
+  {
+   "canon": "musical chairs",
+   "aliases": []
+  },
+  {
+   "canon": "pin the tail on the donkey",
+   "aliases": []
+  },
+  {
+   "canon": "photos",
+   "aliases": []
+  },
+  {
+   "canon": "camera",
+   "aliases": []
+  },
+  {
+   "canon": "photo booth",
+   "aliases": []
+  },
+  {
+   "canon": "plates",
+   "aliases": []
+  },
+  {
+   "canon": "paper plates",
+   "aliases": []
+  },
+  {
+   "canon": "cups",
+   "aliases": []
+  },
+  {
+   "canon": "napkins",
+   "aliases": []
+  },
+  {
+   "canon": "forks",
+   "aliases": []
+  },
+  {
+   "canon": "juice",
+   "aliases": []
+  },
+  {
+   "canon": "soda",
+   "aliases": []
+  },
+  {
+   "canon": "punch",
+   "aliases": []
+  },
+  {
+   "canon": "lemonade",
+   "aliases": []
+  },
+  {
+   "canon": "snacks",
+   "aliases": []
+  },
+  {
+   "canon": "cookies",
+   "aliases": []
+  },
+  {
+   "canon": "popcorn",
+   "aliases": []
+  },
+  {
+   "canon": "hot dogs",
+   "aliases": []
+  },
+  {
+   "canon": "sandwiches",
+   "aliases": []
+  },
+  {
+   "canon": "fruit",
+   "aliases": []
+  },
+  {
+   "canon": "dancing",
+   "aliases": []
+  },
+  {
+   "canon": "dance",
+   "aliases": []
+  },
+  {
+   "canon": "karaoke",
+   "aliases": []
+  },
+  {
+   "canon": "sleepover",
+   "aliases": []
+  },
+  {
+   "canon": "invitations",
+   "aliases": []
+  },
+  {
+   "canon": "invites",
+   "aliases": []
+  },
+  {
+   "canon": "number candle",
+   "aliases": []
+  },
+  {
+   "canon": "sparklers",
+   "aliases": []
+  },
+  {
+   "canon": "birthday crown",
+   "aliases": []
+  },
+  {
+   "canon": "crown",
+   "aliases": []
+  },
+  {
+   "canon": "tiara",
+   "aliases": []
+  },
+  {
+   "canon": "sash",
+   "aliases": []
+  },
+  {
+   "canon": "piñata",
+   "aliases": []
+  },
+  {
+   "canon": "wish",
+   "aliases": []
+  },
+  {
+   "canon": "making a wish",
+   "aliases": []
+  },
+  {
+   "canon": "blowing out candles",
+   "aliases": []
+  },
+  {
+   "canon": "cake knife",
+   "aliases": []
+  },
+  {
+   "canon": "tablecloth",
+   "aliases": []
+  },
+  {
+   "canon": "centerpiece",
+   "aliases": []
+  },
+  {
+   "canon": "glow sticks",
+   "aliases": []
+  },
+  {
+   "canon": "bubbles",
+   "aliases": []
+  },
+  {
+   "canon": "party poppers",
+   "aliases": []
+  },
+  {
+   "canon": "cake topper",
+   "aliases": []
+  },
+  {
+   "canon": "frosting",
+   "aliases": []
+  },
+  {
+   "canon": "icing",
+   "aliases": []
+  },
+  {
+   "canon": "sprinkles",
+   "aliases": []
+  },
+  {
+   "canon": "birthday boy",
+   "aliases": []
+  },
+  {
+   "canon": "birthday girl",
+   "aliases": []
+  },
+  {
+   "canon": "gift bags",
+   "aliases": []
+  },
+  {
+   "canon": "thank you cards",
+   "aliases": []
+  },
+  {
+   "canon": "tears",
+   "aliases": []
+  }
+ ],
+ "Things that are sticky": [
+  {
+   "canon": "glue",
+   "aliases": []
+  },
+  {
+   "canon": "glue stick",
+   "aliases": []
+  },
+  {
+   "canon": "super glue",
+   "aliases": []
+  },
+  {
+   "canon": "tape",
+   "aliases": []
+  },
+  {
+   "canon": "duct tape",
+   "aliases": []
+  },
+  {
+   "canon": "scotch tape",
+   "aliases": []
+  },
+  {
+   "canon": "masking tape",
+   "aliases": []
+  },
+  {
+   "canon": "honey",
+   "aliases": []
+  },
+  {
+   "canon": "syrup",
+   "aliases": []
+  },
+  {
+   "canon": "maple syrup",
+   "aliases": []
+  },
+  {
+   "canon": "gum",
+   "aliases": []
+  },
+  {
+   "canon": "chewing gum",
+   "aliases": []
+  },
+  {
+   "canon": "bubble gum",
+   "aliases": []
+  },
+  {
+   "canon": "jam",
+   "aliases": []
+  },
+  {
+   "canon": "jelly",
+   "aliases": []
+  },
+  {
+   "canon": "peanut butter",
+   "aliases": []
+  },
+  {
+   "canon": "caramel",
+   "aliases": []
+  },
+  {
+   "canon": "toffee",
+   "aliases": []
+  },
+  {
+   "canon": "taffy",
+   "aliases": []
+  },
+  {
+   "canon": "cotton candy",
+   "aliases": []
+  },
+  {
+   "canon": "marshmallow",
+   "aliases": []
+  },
+  {
+   "canon": "marshmallows",
+   "aliases": []
+  },
+  {
+   "canon": "melted chocolate",
+   "aliases": []
+  },
+  {
+   "canon": "frosting",
+   "aliases": []
+  },
+  {
+   "canon": "icing",
+   "aliases": []
+  },
+  {
+   "canon": "molasses",
+   "aliases": []
+  },
+  {
+   "canon": "sap",
+   "aliases": []
+  },
+  {
+   "canon": "tree sap",
+   "aliases": []
+  },
+  {
+   "canon": "resin",
+   "aliases": []
+  },
+  {
+   "canon": "slime",
+   "aliases": []
+  },
+  {
+   "canon": "putty",
+   "aliases": []
+  },
+  {
+   "canon": "silly putty",
+   "aliases": []
+  },
+  {
+   "canon": "play doh",
+   "aliases": []
+  },
+  {
+   "canon": "playdough",
+   "aliases": []
+  },
+  {
+   "canon": "blu tack",
+   "aliases": []
+  },
+  {
+   "canon": "blu-tack",
+   "aliases": []
+  },
+  {
+   "canon": "sticky notes",
+   "aliases": []
+  },
+  {
+   "canon": "post it notes",
+   "aliases": []
+  },
+  {
+   "canon": "post-its",
+   "aliases": []
+  },
+  {
+   "canon": "stickers",
+   "aliases": []
+  },
+  {
+   "canon": "sticker",
+   "aliases": []
+  },
+  {
+   "canon": "velcro",
+   "aliases": []
+  },
+  {
+   "canon": "band aid",
+   "aliases": []
+  },
+  {
+   "canon": "band-aid",
+   "aliases": []
+  },
+  {
+   "canon": "bandaid",
+   "aliases": []
+  },
+  {
+   "canon": "fly paper",
+   "aliases": []
+  },
+  {
+   "canon": "flypaper",
+   "aliases": []
+  },
+  {
+   "canon": "spider web",
+   "aliases": []
+  },
+  {
+   "canon": "cobweb",
+   "aliases": []
+  },
+  {
+   "canon": "glue trap",
+   "aliases": []
+  },
+  {
+   "canon": "lollipop",
+   "aliases": []
+  },
+  {
+   "canon": "candy cane",
+   "aliases": []
+  },
+  {
+   "canon": "soda spill",
+   "aliases": []
+  },
+  {
+   "canon": "spilled soda",
+   "aliases": []
+  },
+  {
+   "canon": "juice",
+   "aliases": []
+  },
+  {
+   "canon": "popsicle",
+   "aliases": []
+  },
+  {
+   "canon": "ice cream",
+   "aliases": []
+  },
+  {
+   "canon": "sweat",
+   "aliases": []
+  },
+  {
+   "canon": "mud",
+   "aliases": []
+  },
+  {
+   "canon": "glitter glue",
+   "aliases": []
+  },
+  {
+   "canon": "hot glue",
+   "aliases": []
+  },
+  {
+   "canon": "rubber cement",
+   "aliases": []
+  },
+  {
+   "canon": "wax",
+   "aliases": []
+  },
+  {
+   "canon": "candle wax",
+   "aliases": []
+  },
+  {
+   "canon": "lip gloss",
+   "aliases": []
+  },
+  {
+   "canon": "chapstick",
+   "aliases": []
+  },
+  {
+   "canon": "hair gel",
+   "aliases": []
+  },
+  {
+   "canon": "gel",
+   "aliases": []
+  },
+  {
+   "canon": "sunscreen",
+   "aliases": []
+  },
+  {
+   "canon": "rice",
+   "aliases": []
+  },
+  {
+   "canon": "sticky rice",
+   "aliases": []
+  },
+  {
+   "canon": "dough",
+   "aliases": []
+  },
+  {
+   "canon": "bread dough",
+   "aliases": []
+  },
+  {
+   "canon": "cinnamon roll",
+   "aliases": []
+  },
+  {
+   "canon": "baklava",
+   "aliases": []
+  },
+  {
+   "canon": "sticky toffee pudding",
+   "aliases": []
+  },
+  {
+   "canon": "barbecue sauce",
+   "aliases": []
+  },
+  {
+   "canon": "bbq sauce",
+   "aliases": []
+  },
+  {
+   "canon": "ketchup",
+   "aliases": []
+  },
+  {
+   "canon": "sticky hands",
+   "aliases": []
+  },
+  {
+   "canon": "sticky hand toy",
+   "aliases": []
+  },
+  {
+   "canon": "tar",
+   "aliases": []
+  },
+  {
+   "canon": "gecko feet",
+   "aliases": []
+  },
+  {
+   "canon": "gecko",
+   "aliases": []
+  },
+  {
+   "canon": "snail slime",
+   "aliases": []
+  },
+  {
+   "canon": "slug",
+   "aliases": []
+  },
+  {
+   "canon": "snail",
+   "aliases": []
+  },
+  {
+   "canon": "chameleon tongue",
+   "aliases": []
+  },
+  {
+   "canon": "frog tongue",
+   "aliases": []
+  },
+  {
+   "canon": "spider silk",
+   "aliases": []
+  },
+  {
+   "canon": "bubblegum",
+   "aliases": []
+  },
+  {
+   "canon": "gummy bears",
+   "aliases": []
+  },
+  {
+   "canon": "gummies",
+   "aliases": []
+  },
+  {
+   "canon": "fruit snacks",
+   "aliases": []
+  },
+  {
+   "canon": "dried mango",
+   "aliases": []
+  },
+  {
+   "canon": "dates",
+   "aliases": []
+  },
+  {
+   "canon": "fig",
+   "aliases": []
+  },
+  {
+   "canon": "mochi",
+   "aliases": []
+  },
+  {
+   "canon": "nutella",
+   "aliases": []
+  },
+  {
+   "canon": "agave",
+   "aliases": []
+  },
+  {
+   "canon": "corn syrup",
+   "aliases": []
+  },
+  {
+   "canon": "glue gun",
+   "aliases": []
+  },
+  {
+   "canon": "paste",
+   "aliases": []
+  },
+  {
+   "canon": "wallpaper paste",
+   "aliases": []
+  },
+  {
+   "canon": "contact paper",
+   "aliases": []
+  },
+  {
+   "canon": "packing tape",
+   "aliases": []
+  },
+  {
+   "canon": "stamp",
+   "aliases": []
+  },
+  {
+   "canon": "stamps",
+   "aliases": []
+  },
+  {
+   "canon": "envelope",
+   "aliases": []
+  },
+  {
+   "canon": "price tag",
+   "aliases": []
+  },
+  {
+   "canon": "leech",
+   "aliases": []
+  }
  ]
 }
