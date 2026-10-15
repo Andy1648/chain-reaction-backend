@@ -62,3 +62,16 @@ test('no head-word leniency: "zzzz cowboys" is not an NFL team', async () => {
 test('BA1: tier 1 holds enough broad lists that no category dominates (was 2 → ~69% of games each)', () => {
   assert.ok(L.TIER_POOLS[1].length >= 10, `${L.TIER_POOLS[1].length} tier-1 categories`);
 });
+
+// PLURAL FOLD (proposal oct15)
+test('plural fold: a plural scores on a singular list, once, and never on wordplay or model names', () => {
+  const B = require('./blitzLists');
+  assert.ok(B.onList('Farm animals', 'horses'));
+  assert.ok(B.onList('Flowers', 'daisies'));
+  assert.equal(B.sameAnswerKey('Farm animals', 'cow'), B.sameAnswerKey('Farm animals', 'cows'));
+  assert.ok(!B.onList('Rhymes with CAT (-AT)', 'cats'));
+  assert.notEqual(B.sameAnswerKey('iPhone models', 'iphone 4'), B.sameAnswerKey('iPhone models', 'iphone 4s'));
+  assert.notEqual(B.sameAnswerKey('Sonic characters', 'chao'), B.sameAnswerKey('Sonic characters', 'chaos'));
+  assert.notEqual(B.sameAnswerKey('Nintendo, PlayStation, Xbox & Sega consoles', 'xbox one'),
+    B.sameAnswerKey('Nintendo, PlayStation, Xbox & Sega consoles', 'xbox one s'));
+});

@@ -126,14 +126,14 @@ const CANON_SHARE = { easy: 0.4, medium: 0.6, hard: 1 };
 function pickAnswer(category, alreadyGiven, difficultyKey = 'medium') {
   const members = CANON[category];
   if (Array.isArray(members) && members.length) {
-    const givenKeys = new Set((alreadyGiven || []).map((a) => BLITZ_LISTS.answerKey(String(a))));
+    const givenKeys = new Set((alreadyGiven || []).map((a) => BLITZ_LISTS.sameAnswerKey(category, String(a))));
     const share = CANON_SHARE[difficultyKey] || CANON_SHARE.medium;
     // botKnown (oct15 night): a dictionary PATTERN list (rhymes, -oo, zz …) accepts every real word, but the bot only
     // knows its common head (the canon lists those first) — it never plays "bedight" or anything off the street.
     const cap = (BLITZ_LISTS.listFor(category) || {}).botKnown || Infinity;
     const known = members.slice(0, Math.max(1, Math.min(cap, Math.ceil(members.length * share))));
     const open = known.filter((m) => m.canon.length >= 2
-      && ![m.canon, ...(m.aliases || [])].some((f) => givenKeys.has(BLITZ_LISTS.answerKey(f))));
+      && ![m.canon, ...(m.aliases || [])].some((f) => givenKeys.has(BLITZ_LISTS.sameAnswerKey(category, f))));
     if (open.length === 0) return null;
     // Skewed toward the famous end (index ∝ u²: half the picks from the best-known quarter) — a
     // uniform draw over 60% of a 42-cookie list played "toast-yay" and "cinna-spins" on prod.

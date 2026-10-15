@@ -63,10 +63,30 @@ function answerKey(s) {
   return out.join('');
 }
 
-const LISTS = new Map(); // category name -> { name, pack, answers: string[], keys: Set, good, junk }
+// PLURAL FOLD (proposal, oct15 night — Andy to decide): "cows"/"cow", "daisies"/"daisy", "foxes"/"fox"
+// share one key, so a plural scores on a singular list and saying both forms scores ONCE. Measured on
+// the 334 lists in play: 97% of single-word answers rejected their plural, and 79 lists counted both
+// forms as two separate points. NOT folded: wordplay lists (every spelling is its own word there), any
+// list whose own junk would fold onto an answer, model suffixes after a digit (iPhone 4 vs 4S), and
+// NO_FOLD — real names that only look plural (Chaos, Xbox One S, GTA VCS).
+const NO_FOLD = new Set(['chaos', 'xboxones', 'gtavcs']);
+function foldKey(k) {
+  if (NO_FOLD.has(k) || /\ds$/.test(k)) return k;
+  if (k.length > 4 && k.endsWith('ies')) return k.slice(0, -3) + 'y';
+  if (k.length > 4 && /(sses|xes|zes|ches|shes|oes)$/.test(k)) return k.slice(0, -2);
+  if (k.length > 3 && k.endsWith('s') && !k.endsWith('ss')) return k.slice(0, -1);
+  return k;
+}
+
+const LISTS = new Map(); // category name -> { name, pack, answers: string[], keys: Set, folded: Set|null, good, junk }
 for (const c of RAW) {
   const keys = new Set(c.answers.map(answerKey).filter(Boolean));
-  LISTS.set(c.name, { ...c, keys });
+  let folded = null;
+  if (c.pack !== 'wordplay') {
+    folded = new Set([...keys].map(foldKey));
+    if ((c.junk || []).some((j) => folded.has(foldKey(answerKey(j))))) folded = null;
+  }
+  LISTS.set(c.name, { ...c, keys, folded });
 }
 
 const NAMES = [...LISTS.keys()].sort();
@@ -81,7 +101,15 @@ function onList(category, answer) {
   const l = LISTS.get(category);
   if (!l) return false;
   const k = answerKey(answer);
-  return k.length > 0 && l.keys.has(k);
+  if (k.length === 0) return false;
+  return l.keys.has(k) || (l.folded != null && l.folded.has(foldKey(k)));
 }
 
-module.exports = { answerKey, listFor, onList, NAMES, LISTS };
+/** The key two answers must share to count as the SAME answer on `category` (the dedupe key). */
+function sameAnswerKey(category, answer) {
+  const k = answerKey(answer);
+  const l = LISTS.get(category);
+  return l && l.folded ? foldKey(k) : k;
+}
+
+module.exports = { answerKey, foldKey, sameAnswerKey, listFor, onList, NAMES, LISTS };

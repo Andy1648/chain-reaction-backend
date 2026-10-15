@@ -38,6 +38,7 @@ const gameLogic = require('../gameLogic');
 const { getCurrentPlayerId } = gameLogic;
 const wordBombBot = require('../wordBombBot');
 const CATEGORY_ANSWERS = require('../categoryAnswers');
+const BLITZ_LISTS = require('../blitzLists');
 
 gameLogic._setDictionaryForTesting({
   isValidWord: async (w) => /^[a-z]{3,}$/.test(w.trim().toLowerCase()),
@@ -186,7 +187,12 @@ test('Category Blitz: two players race through all 3 rounds to the final scorebo
   const submitRound = async () => {
     const category = room.game.currentCategory;
     categoriesPlayed.push(category);
-    const list = [...CATEGORY_ANSWERS[category]];
+    // three DIFFERENT answers: a plural of one already said ("pepperonis") is the same answer now
+    const seen = new Set();
+    const list = [...CATEGORY_ANSWERS[category]].filter((a) => {
+      const k = BLITZ_LISTS.sameAnswerKey(category, a);
+      return seen.has(k) ? false : (seen.add(k), true);
+    });
     await handleWordSubmission(room, alice.id, list[0]);
     await handleWordSubmission(room, alice.id, list[1]);
     await handleWordSubmission(room, bob.id, list[2]);

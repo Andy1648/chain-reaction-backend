@@ -1051,8 +1051,9 @@ async function submitAnswer(game, playerId, rawAnswer, opts = {}) {
   // different players naming the same thing both score (they're racing
   // independently), and the same word is fair game again next round. Compared by
   // the list's matching key, so "Spider-Man" then "spiderman" is the same answer.
-  const key = BLITZ_LISTS.answerKey(answer);
-  if (player.answers.some((a) => BLITZ_LISTS.answerKey(a) === key)) {
+  const dedupeCat = opts.expectedCategory != null ? opts.expectedCategory : game.currentCategory;
+  const key = BLITZ_LISTS.sameAnswerKey(dedupeCat, answer);
+  if (player.answers.some((a) => BLITZ_LISTS.sameAnswerKey(dedupeCat, a) === key)) {
     return { accepted: false, reason: 'already_said', playerId };
   }
 
