@@ -193,3 +193,25 @@ test('a non-host still CANNOT rematch mid-game (anti-grief preserved)', async ()
   const err = await c2.waitFor('error');
   assert.equal(err.payload.context, 'rematch');
 });
+
+test('set_name renames you in the lobby and everyone sees it; refused mid-game', async () => {
+  const c1 = await client();
+  const c2 = await client();
+  c1.send('create_room', { name: 'Host' });
+  const created = await c1.waitFor('room_created');
+  c2.send('join_room', { code: created.payload.code, name: 'P2' });
+  await c2.waitFor('room_joined');
+  await c1.waitFor('room_update');
+  await c1.waitFor('room_update');
+  c2.send('set_name', { name: 'Renamed' });
+  const upd = await c1.waitFor('room_update');
+  assert.ok(upd.payload.players.some((p) => p.id === c2.id && p.name === 'Renamed'), 'host sees the new name');
+  assert.equal(getRoom(created.payload.code).players.find((p) => p.id === c2.id).name, 'Renamed');
+
+  c1.send('start_game', {});
+  await c1.waitFor('game_started');
+  c2.send('set_name', { name: 'MidGame' });
+  const err = await c2.waitFor('error');
+  assert.equal(err.payload.context, 'set_name');
+  assert.equal(getRoom(created.payload.code).players.find((p) => p.id === c2.id).name, 'Renamed');
+});

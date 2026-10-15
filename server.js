@@ -701,6 +701,29 @@ wss.on('connection', (ws) => {
           break;
         }
 
+        // Andy oct15 "make it so you can change your name even after you join a multiplayer lobby": rename
+        // yourself while the room is in its LOBBY (no game, or the last one finished). Mid-game names stay put —
+        // the game's own player list was copied at start. Same sanitizer as join; throttled like joins.
+        case 'set_name': {
+          const room = getRoomForConnection(ws);
+          if (!room) return;
+          if (!allowJoin(ws)) {
+            sendError(ws, humanizeError('rate_limited'), 'set_name');
+            return;
+          }
+          if (room.game && room.game.status !== 'finished') {
+            sendError(ws, 'You can change your name between games.', 'set_name');
+            return;
+          }
+          const me = room.players.find((p) => p.id === ws.id);
+          if (!me) return;
+          const name = sanitizeName(payload?.name);
+          if (!name || name === me.name) return;
+          me.name = name;
+          broadcastToRoom(room, buildRoomUpdatePayload(room));
+          break;
+        }
+
         case 'leave_room': {
           const room = getRoomForConnection(ws);
           if (!room) return;
