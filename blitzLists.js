@@ -89,7 +89,11 @@ const STOP = new Set(['the', 'a', 'an', 'your', 'my', 'his', 'her', 'their', 'ou
 // "ice" ↔ "icee" never do.
 function wordForms(w) {
   if (NO_FOLD.has(w)) return [w];
-  if (w.length > 4 && w.endsWith('ies')) return [w.slice(0, -3) + 'y'];
+  // -ies / -oes / -ves offer every singular they can come from: cookies → cooky | cookie, shoes → sho | shoe,
+  // wolves → wolf | wolfe | wolve (knives → knif | knife)
+  if (w.length > 4 && w.endsWith('ies')) return [w.slice(0, -3) + 'y', w.slice(0, -1)];
+  if (w.length > 4 && w.endsWith('oes')) return [w.slice(0, -2), w.slice(0, -1)];
+  if (w.length > 4 && w.endsWith('ves')) return [w.slice(0, -3) + 'f', w.slice(0, -3) + 'fe', w.slice(0, -1)];
   const m = (w.length > 5 && /ing$/.test(w)) ? w.slice(0, -3) : (w.length > 4 && /ed$/.test(w)) ? w.slice(0, -2) : null;
   if (m) {
     const out = [m, m + 'e'];

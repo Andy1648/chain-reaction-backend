@@ -89,6 +89,10 @@ test('phrase match: little words and verb forms do not matter, and one meaning s
   assert.ok(!B.phraseKeys('cape').includes('cap'));
   assert.ok(!B.phraseKeys('icee').includes('ice'));
   assert.deepEqual(B.phraseKeys('chaos'), ['chaos']);
+  // -ies / -oes / -ves come back to their singular (cookies → cookie, shoes → shoe, knives → knife)
+  assert.ok(B.phraseKeys('cookies').includes('cookie'));
+  assert.ok(B.phraseKeys('shoes').includes('shoe'));
+  assert.ok(B.phraseKeys('knives').includes('knife'));
   // and never touches wordplay lists (every spelling is its own word there)
   for (const [, l] of B.LISTS) if (l.pack === 'wordplay') assert.equal(l.phrased, null);
 });
