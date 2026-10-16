@@ -697,6 +697,18 @@ const BENCHED = new Set([
   'Rhymes with BOOK (-OOK)', 'Rhymes with CAKE (-AKE)', 'Rhymes with BEE (-EE)', 'Rhymes with BUG (-UG)',
   'Rhymes with DOG (-OG)', 'Rhymes with SNACK (-ACK)', 'Rhymes with CLOCK (-OCK)', 'Rhymes with HOUSE (-OUSE)',
   'Rhymes with CAT (-AT)', 'Rhymes with FUN (-UN)',
+  // Andy oct16 "go for funnier ... nothing TOO brain dead (if its brain dead, then it especially has to be like HELLA EASY
+  // to get a bunch of answers, else delete)": the UNHINGED pack comes in; out go the bland object/inventory lists nobody
+  // laughs at and that aren't instant to fill (the hella-easy everyday ones — Fruits, Pets, Pizza toppings — stay).
+  'English & British monarchs', 'Names for grandparents', 'Berries', 'Tropical fruits', 'Things with horns or antlers',
+  'Things with a shell', 'Things with scales', 'Things in a pond', 'Things that spin', 'Things with strings',
+  'Things you plug in', 'Things that run on batteries', 'Things with a screen', 'Things with buttons',
+  'Things you can fold', 'Things you can inflate', 'Things you can climb', 'Things that come in pairs',
+  'Things in a basement', 'Things in a garage', 'Things on a fridge door', 'Things on a kitchen counter',
+  'Things that come in a can', 'Foods that come in a box', "Things you'd find in a soup", 'Car parts',
+  'Kitchen appliances', 'Things at a hotel', 'Things at the vet', 'Things a cowboy would have', 'Things at a circus',
+  'Things in a castle', 'Summer Olympic sports', 'Types of hats', 'Things you need to move house', 'Card games',
+  'Animals that live in trees',
 ]);
 const CATEGORIES = BLITZ_LISTS.NAMES.filter((c) => !BENCHED.has(c));
 const PACK_IDS = (() => {
