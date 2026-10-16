@@ -1487,7 +1487,8 @@
    "james iii",
    "edward the confessor",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 46
  },
  {
   "name": "European national capitals",
@@ -7698,7 +7699,8 @@
    "polo",
    "tug of war",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 57
  },
  {
   "name": "Super Smash Bros. fighters",
@@ -8607,7 +8609,8 @@
    "new england",
    "columbia",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 50
  },
  {
   "name": "US states bordering Canada",
@@ -9946,7 +9949,8 @@
    "israel",
    "europe",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 55
  },
  {
   "name": "Countries starting with S",
@@ -17834,7 +17838,8 @@
    "zzzzzzzz",
    "zzzzzzzz",
    "zzzzzzzzq"
-  ]
+  ],
+  "botKnown": 190
  },
  {
   "name": "Coffee drinks",
@@ -18176,7 +18181,8 @@
    "lemonade",
    "coffee bean",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 55
  },
  {
   "name": "Sports played with a racket",
@@ -18647,7 +18653,8 @@
    "sudoku",
    "tetris",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 77
  },
  {
   "name": "Card games",
@@ -18950,7 +18957,8 @@
    "bingo",
    "mahjong",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 73
  },
  {
   "name": "Big cats",
@@ -19345,7 +19353,8 @@
    "uber",
    "hot wheels",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 224
  },
  {
   "name": "Fast food chains",
@@ -19740,7 +19749,8 @@
    "zzzzzzzzq",
    "zzzzzzzzqq",
    "zzzzzzzzqqq"
-  ]
+  ],
+  "botKnown": 197
  },
  {
   "name": "Soda brands",
@@ -20128,7 +20138,8 @@
    "zzzzzzzzqq",
    "zzzzzzzzqqq",
    "zzzzzzzzqqqq"
-  ]
+  ],
+  "botKnown": 176
  },
  {
   "name": "Candy brands",
@@ -20444,7 +20455,8 @@
    "cake",
    "cookie",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 95
  },
  {
   "name": "Breakfast cereals",
@@ -20713,7 +20725,8 @@
    "eggs",
    "bacon",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 74
  },
  {
   "name": "Social media apps",
@@ -20960,7 +20973,8 @@
    "google",
    "roblox",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 38
  },
  {
   "name": "Rooms in a house",
@@ -21159,7 +21173,8 @@
    "fridge",
    "garden",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 73
  },
  {
   "name": "Types of weather",
@@ -21488,7 +21503,8 @@
    "umbrella",
    "temperature",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 71
  },
  {
   "name": "Kitchen appliances",
@@ -21731,7 +21747,8 @@
    "sink",
    "chef",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 66
  },
  {
   "name": "Disney villains",
@@ -22055,7 +22072,8 @@
    "bowser",
    "freddy krueger",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 206
  },
  {
   "name": "Justice League members",
@@ -26509,7 +26527,8 @@
    "clifford",
    "garfield",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 156
  },
  {
   "name": "Sharks",
@@ -26796,7 +26815,8 @@
    "kiwi",
    "berry",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 40
  },
  {
   "name": "Citrus fruits",
@@ -27470,7 +27490,8 @@
    "luigi",
    "gelato",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 30
  },
  {
   "name": "Words ending in -BALL",
@@ -28655,7 +28676,8 @@
    "sleep",
    "running",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 70
  },
  {
   "name": "Mythical creatures",
@@ -29139,7 +29161,8 @@
    "eagle",
    "wizard",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 173
  },
  {
   "name": "Pizza toppings",
@@ -29583,7 +29606,8 @@
    "box",
    "slice",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 161
  },
  {
   "name": "Ice cream flavors",
@@ -29988,7 +30012,8 @@
    "sundae",
    "milkshake",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 157
  },
  {
   "name": "Sandwiches",
@@ -30237,7 +30262,8 @@
    "sushi",
    "bread",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 60
  },
  {
   "name": "Insects",
@@ -30624,7 +30650,8 @@
    "tick",
    "crab",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 71
  },
  {
   "name": "Music genres",
@@ -31075,7 +31102,8 @@
    "song",
    "loud",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 74
  },
  {
   "name": "Thanksgiving dinner foods",
@@ -31343,7 +31371,8 @@
    "sushi",
    "candy",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 38
  },
  {
   "name": "Christmas decorations",
@@ -31713,7 +31742,8 @@
    "costume",
    "snowman",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 43
  },
  {
   "name": "Easter things",
@@ -33456,7 +33486,8 @@
    "friends",
    "the office",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 66
  },
  {
   "name": "Nickelodeon shows",
@@ -33699,7 +33730,8 @@
    "peppa pig",
    "family guy",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 70
  },
  {
   "name": "Cartoon Network shows",
@@ -33890,7 +33922,8 @@
    "family guy",
    "the simpsons",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 53
  },
  {
   "name": "Playground equipment",
@@ -34108,7 +34141,8 @@
    "bike",
    "scooter",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 40
  },
  {
   "name": "Amusement park rides",
@@ -34580,7 +34614,8 @@
    "ice cream",
    "funnel cake",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 56
  },
  {
   "name": "Classic toys",
@@ -35041,7 +35076,8 @@
    "homework",
    "bicycle",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 79
  },
  {
   "name": "Types of hats",
@@ -35383,7 +35419,8 @@
    "hoodie",
    "shoe",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 65
  },
  {
   "name": "Types of shoes",
@@ -35790,7 +35827,8 @@
    "gloves",
    "hat",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 64
  },
  {
   "name": "Shades of blue",
@@ -36760,7 +36798,8 @@
    "ursula",
    "scar",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 66
  },
  {
   "name": "McDonald's menu items",
@@ -37437,7 +37476,8 @@
    "boxing",
    "swimming",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 79
  },
  {
   "name": "School supplies",
@@ -37881,7 +37921,8 @@
    "test",
    "recess",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 63
  },
  {
   "name": "Things in a bathroom",
@@ -38218,7 +38259,8 @@
    "couch",
    "lamp",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 66
  },
  {
   "name": "Car parts",
@@ -38617,7 +38659,8 @@
    "traffic light",
    "parking",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 80
  },
  {
   "name": "Kitchen utensils",
@@ -38914,7 +38957,8 @@
    "recipe",
    "table",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 79
  },
  {
   "name": "Types of bread",
@@ -39228,7 +39272,8 @@
    "cracker",
    "cereal",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 79
  },
  {
   "name": "Types of cheese",
@@ -39657,7 +39702,8 @@
    "cheesecake",
    "pizza",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 76
  },
  {
   "name": "Famous cartoon dogs",
@@ -39909,7 +39955,8 @@
    "dumbo",
    "bambi",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 90
  },
  {
   "name": "Famous cartoon cats",
@@ -40118,7 +40165,8 @@
    "nala",
    "odie",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 84
  },
  {
   "name": "Famous bears",
@@ -40615,7 +40663,8 @@
    "penguin",
    "zebra",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 87
  },
  {
   "name": "Sea creatures",
@@ -41082,7 +41131,8 @@
    "goldfish bowl",
    "lake",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 109
  },
  {
   "name": "Vegetables",
@@ -41425,7 +41475,8 @@
    "bread",
    "rice",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 148
  },
  {
   "name": "Tropical fruits",
@@ -41614,7 +41665,8 @@
    "plum",
    "peach",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 75
  },
  {
   "name": "Things you find at the beach",
@@ -42375,7 +42427,8 @@
    "mittens",
    "snowman",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 115
  },
  {
   "name": "Things with wheels",
@@ -42921,7 +42974,8 @@
    "surfboard",
    "skis",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 103
  },
  {
   "name": "Words starting with RAIN",
@@ -43933,7 +43987,8 @@
    "steak",
    "pasta",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 113
  },
  {
   "name": "Breakfast foods",
@@ -44632,7 +44687,8 @@
    "burger",
    "spaghetti",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 220
  },
  {
   "name": "Things in a fridge",
@@ -45278,7 +45334,8 @@
    "bread crumbs",
    "chips",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 116
  },
  {
   "name": "Camping gear",
@@ -46002,7 +46059,8 @@
    "fridge",
    "xbox",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 118
  },
  {
   "name": "Pets",
@@ -46456,7 +46514,8 @@
    "bear",
    "gorilla",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 87
  },
  {
   "name": "Jobs",
@@ -47225,7 +47284,8 @@
    "hobby",
    "vacation",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 137
  },
  {
   "name": "Clothing",
@@ -47663,7 +47723,8 @@
    "purse",
    "umbrella",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 104
  },
  {
   "name": "Birds",
@@ -48299,7 +48360,8 @@
    "pterodactyl",
    "plane",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 200
  },
  {
   "name": "Things at a birthday party",
@@ -48804,7 +48866,8 @@
    "fireplace",
    "homework",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 99
  },
  {
   "name": "Things that are sticky",
@@ -49174,7 +49237,8 @@
    "air",
    "glass",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 111
  },
  {
   "name": "Superheroes",
@@ -49714,7 +49778,8 @@
    "darth vader",
    "voldemort",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 169
  },
  {
   "name": "Famous robots",
@@ -50065,7 +50130,8 @@
    "alien",
    "yoda",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 123
  },
  {
   "name": "Video game characters",
@@ -50703,7 +50769,8 @@
    "harry potter",
    "goku dragon",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 163
  },
  {
   "name": "Things that are round",
@@ -51046,7 +51113,8 @@
    "triangle",
    "square",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 124
  },
  {
   "name": "Things in space",
@@ -51513,7 +51581,8 @@
    "mountain",
    "kite",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 118
  },
  {
   "name": "Things with buttons",
@@ -52077,7 +52146,8 @@
    "sock",
    "rug",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 121
  },
  {
   "name": "Things people are scared of",
@@ -53018,7 +53088,8 @@
    "kittens",
    "pizza",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 147
  },
  {
   "name": "Flowers",
@@ -53361,7 +53432,8 @@
    "moss",
    "bamboo",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 119
  },
  {
   "name": "Snack foods",
@@ -53728,7 +53800,8 @@
    "spaghetti",
    "roast",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 117
  },
  {
   "name": "Comic book sound effects",
@@ -54478,7 +54551,8 @@
    "horse",
    "ocean",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 141
  },
  {
   "name": "Things in grandma's purse",
@@ -54914,7 +54988,8 @@
    "surfboard",
    "tuba",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 136
  },
  {
   "name": "Things in a teacher's desk",
@@ -55472,7 +55547,8 @@
    "lawn mower",
    "toaster oven",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 147
  },
  {
   "name": "Things you'd find at a gas station",
@@ -55920,7 +55996,8 @@
    "wedding cake",
    "hot tub",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 150
  },
  {
   "name": "Things you'd find at a carnival",
@@ -56539,7 +56616,8 @@
    "tax return",
    "fishing rod",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 150
  },
  {
   "name": "Things you'd find at an airport",
@@ -57334,7 +57412,8 @@
    "barbecue pit",
    "tree house",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 150
  },
  {
   "name": "Things you'd find at Walmart",
@@ -57965,7 +58044,8 @@
    "moon rock",
    "glacier",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 150
  },
  {
   "name": "Things you'd find at a sleepover",
@@ -58617,7 +58697,8 @@
    "ocean",
    "piano",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 147
  },
  {
   "name": "Things that beep",
@@ -59403,7 +59484,8 @@
    "unicycle",
    "trio",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 150
  },
  {
   "name": "Things you plug in",
@@ -59800,7 +59882,8 @@
    "sandwich",
    "umbrella",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 150
  },
  {
   "name": "Things that have a remote",
@@ -60605,7 +60688,8 @@
    "applesauce",
    "oatmeal",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 139
  },
  {
   "name": "Foods that are orange",
@@ -61040,7 +61124,8 @@
    "spinach",
    "eggplant",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 121
  },
  {
   "name": "Foods that are green",
@@ -61307,7 +61392,8 @@
    "corn",
    "tomatoes",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 135
  },
  {
   "name": "Foods that are spicy",
@@ -61781,7 +61867,8 @@
    "bananas",
    "oatmeal",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 136
  },
  {
   "name": "Foods you eat with your hands",
@@ -62318,7 +62405,8 @@
    "oatmeal",
    "steak",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 138
  },
  {
   "name": "Things that are cold",
@@ -62786,7 +62874,8 @@
    "soup",
    "desert",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 147
  },
  {
   "name": "Things that are loud",
@@ -63324,7 +63413,8 @@
    "a mouse",
    "cotton",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 148
  },
  {
   "name": "Things that are squishy",
@@ -63731,7 +63821,8 @@
    "bones",
    "teeth",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 146
  },
  {
   "name": "Things that are fluffy",
@@ -64179,7 +64270,8 @@
    "a nail",
    "steel",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 148
  },
  {
   "name": "Things you can pop",
@@ -64519,7 +64611,8 @@
    "spoons",
    "carpet",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 133
  },
  {
   "name": "Things that melt",
@@ -64954,7 +65047,8 @@
    "feathers",
    "bread",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 142
  },
  {
   "name": "Things that bounce",
@@ -65431,7 +65525,8 @@
    "sand",
    "mud",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 139
  },
  {
   "name": "Things that smell bad",
@@ -65926,7 +66021,8 @@
    "vanilla",
    "rain",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 145
  },
  {
   "name": "Things that come in a can",
@@ -66601,7 +66697,8 @@
    "bananas",
    "cereal box",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 148
  },
  {
   "name": "Things you'd bring to a desert island",
@@ -67136,7 +67233,8 @@
    "sunburn",
    "crab",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 130
  },
  {
   "name": "Things you'd need in a zombie apocalypse",
@@ -67667,7 +67765,8 @@
    "wifi password",
    "glitter",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 120
  },
  {
   "name": "Things kids get grounded for",
@@ -68167,7 +68266,8 @@
    "allowance",
    "dentist",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 110
  },
  {
   "name": "Things in a teenager's bedroom",
@@ -68729,7 +68829,8 @@
    "toilet",
    "washing machine",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 120
  },
  {
   "name": "Things you do on your phone",
@@ -69724,7 +69825,8 @@
    "brush teeth",
    "paint",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 120
  },
  {
   "name": "Things you send in a group chat",
@@ -70234,7 +70336,8 @@
    "gifts",
    "money orders",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 110
  },
  {
   "name": "Things that make you sneeze",
@@ -70751,7 +70854,8 @@
    "milk",
    "rocks",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 110
  },
  {
   "name": "Hot dog toppings",
@@ -71159,7 +71263,8 @@
    "cotton candy",
    "milk",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 100
  },
  {
   "name": "Things you dip fries in",
@@ -71466,7 +71571,8 @@
    "water",
    "lemonade",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 100
  },
  {
   "name": "Animals that would be terrifying if huge",
@@ -72070,7 +72176,8 @@
    "giraffe",
    "king kong",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 130
  },
  {
   "name": "Fair & carnival foods",
@@ -72340,7 +72447,8 @@
    "lobster bisque",
    "tofu",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 110
  },
  {
   "name": "School cafeteria foods",
@@ -72768,7 +72876,8 @@
    "truffles",
    "oysters",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 120
  },
  {
   "name": "Halloween costumes",
@@ -74226,7 +74335,8 @@
    "cupid",
    "tuxedo",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 120
  },
  {
   "name": "Sleepover activities",
@@ -74813,7 +74923,8 @@
    "go to school",
    "commute",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 108
  },
  {
   "name": "Reasons to go to the nurse's office",
@@ -75425,7 +75536,8 @@
    "fire drill",
    "math test",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 110
  },
  {
   "name": "Household chores",
@@ -75731,7 +75843,8 @@
    "eat dessert",
    "texting",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 110
  },
  {
   "name": "Things you'd see at the zoo",
@@ -76596,7 +76709,8 @@
    "dinosaurs",
    "mermaids",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 130
  },
  {
   "name": "Things at a water park",
@@ -77005,7 +77119,8 @@
    "seashells",
    "fireplace",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 110
  },
  {
   "name": "Things at a movie theater",
@@ -77699,7 +77814,8 @@
    "lawn mower",
    "toilet",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 120
  },
  {
   "name": "Things at the mall",
@@ -78368,7 +78484,8 @@
    "penguins",
    "igloos",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 120
  },
  {
   "name": "Things at the gym",
@@ -78833,7 +78950,8 @@
    "cotton candy",
    "pillows",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 110
  },
  {
   "name": "Things you do at the beach",
@@ -79313,7 +79431,8 @@
    "mow the lawn",
    "build a snowman",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 110
  },
  {
   "name": "Things you do when you're bored",
@@ -79914,7 +80033,8 @@
    "graduate",
    "climb everest",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 120
  },
  {
   "name": "Things you do before bed",
@@ -80422,7 +80542,8 @@
    "go to work",
    "wake up",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 110
  },
  {
   "name": "Things you do in the morning",
@@ -80849,7 +80970,8 @@
    "trick or treat",
    "midnight snack",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 110
  },
  {
   "name": "Things at the dentist's office",
@@ -81468,7 +81590,8 @@
    "fireplace",
    "piano bench",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 110
  },
  {
   "name": "Things at a hotel",
@@ -81950,7 +82073,8 @@
    "school bus",
    "sleeping bag",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 110
  },
  {
   "name": "Things at a restaurant",
@@ -82672,7 +82796,8 @@
    "x-ray machine",
    "tent",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 110
  },
  {
   "name": "Things at a football game",
@@ -83511,7 +83636,8 @@
    "dugout",
    "pitcher's mound",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 110
  },
  {
   "name": "Ice cream toppings",
@@ -83947,7 +84073,8 @@
    "rice",
    "gravy",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 105
  },
  {
   "name": "Things you put on toast",
@@ -84233,7 +84360,8 @@
    "water",
    "rice",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 98
  },
  {
   "name": "Things you shouldn't microwave",
@@ -84790,7 +84918,8 @@
    "oatmeal",
    "burrito",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 112
  },
  {
   "name": "Things you can put ketchup on",
@@ -85215,7 +85344,8 @@
    "juice",
    "orange juice",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 101
  },
  {
   "name": "Foods you eat with a spoon",
@@ -85543,7 +85673,8 @@
    "sandwich",
    "corn dog",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 116
  },
  {
   "name": "Foods that come on a stick",
@@ -85898,7 +86029,8 @@
    "pudding",
    "milk",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 103
  },
  {
   "name": "Things you'd find in a soup",
@@ -86322,7 +86454,8 @@
    "soda",
    "sprinkles",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 115
  },
  {
   "name": "Things a dog would eat",
@@ -86947,7 +87080,8 @@
    "house",
    "piano",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 129
  },
  {
   "name": "Things you'd put in a time capsule",
@@ -87440,7 +87574,8 @@
    "puppy",
    "soup",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 131
  },
  {
   "name": "Things you'd buy with a million dollars",
@@ -88531,7 +88666,8 @@
    "the moon",
    "a planet",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 137
  },
  {
   "name": "Things you'd take to space",
@@ -89164,7 +89300,8 @@
    "boat",
    "surfboard",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 131
  },
  {
   "name": "Things that would ruin a picnic",
@@ -89931,7 +90068,8 @@
    "watermelon",
    "friends",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 121
  },
  {
   "name": "Movie theater snacks",
@@ -90323,7 +90461,8 @@
    "sushi",
    "cereal",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 112
  },
  {
   "name": "Things you can make with eggs",
@@ -90698,7 +90837,8 @@
    "jello",
    "coffee",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 110
  },
  {
   "name": "Things you put in a smoothie",
@@ -90990,7 +91130,8 @@
    "ketchup",
    "mustard",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 126
  },
  {
   "name": "Things you'd hide from your parents",
@@ -91519,7 +91660,8 @@
    "the mailbox",
    "the weather",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 124
  },
  {
   "name": "Cartoon characters",
@@ -93094,7 +93236,8 @@
    "gandalf",
    "chucky",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 187
  },
  {
   "name": "Animated movies",
@@ -93518,7 +93661,8 @@
    "the sandlot",
    "harry potter",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 153
  },
  {
   "name": "Famous duos",
@@ -94044,7 +94188,8 @@
    "milk and cookies",
    "fish and chips",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 135
  },
  {
   "name": "Celebrities known by one name",
@@ -94732,7 +94877,8 @@
    "ariana grande",
    "post malone",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 115
  },
  {
   "name": "Famous YouTubers & streamers",
@@ -95257,7 +95403,8 @@
    "billie eilish",
    "joe biden",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 139
  },
  {
   "name": "Popular video games",
@@ -96215,7 +96362,8 @@
    "twister",
    "scrabble",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 161
  },
  {
   "name": "Apps on your phone",
@@ -97108,7 +97256,8 @@
    "netscape",
    "musically",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 176
  },
  {
   "name": "Famous TV shows",
@@ -98004,7 +98153,8 @@
    "toy story",
    "the matrix",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 167
  },
  {
   "name": "Things from the 2010s",
@@ -98806,7 +98956,8 @@
    "pogs",
    "rubiks cube",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 152
  },
  {
   "name": "Clothing & shoe brands",
@@ -99260,7 +99411,8 @@
    "pepsi",
    "starbucks",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 157
  },
  {
   "name": "Famous rappers",
@@ -99746,7 +99898,8 @@
    "michael jackson",
    "elvis presley",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 158
  },
  {
   "name": "Famous singers",
@@ -100350,7 +100503,8 @@
    "elon musk",
    "tom brady",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 163
  },
  {
   "name": "Famous athletes",
@@ -101083,7 +101237,8 @@
    "bill gates",
    "oprah winfrey",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 186
  },
  {
   "name": "Movie villains",
@@ -101612,7 +101767,8 @@
    "shrek",
    "indiana jones",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 168
  },
  {
   "name": "Movie franchises",
@@ -101985,7 +102141,8 @@
    "the shawshank redemption",
    "interstellar",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 189
  },
  {
   "name": "Stores at the mall",
@@ -102426,7 +102583,8 @@
    "7-eleven",
    "ikea",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 153
  },
  {
   "name": "Sports with a ball",
@@ -102648,7 +102806,8 @@
    "archery",
    "frisbee",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 105
  },
  {
   "name": "Things you can ride",
@@ -103153,7 +103312,8 @@
    "ticket",
    "seatbelt",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 118
  },
  {
   "name": "Things you can kick",
@@ -103525,7 +103685,8 @@
    "thought",
    "sound",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 99
  },
  {
   "name": "Things you can throw",
@@ -103835,7 +103996,8 @@
    "house",
    "tree",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 119
  },
  {
   "name": "Games you play at recess",
@@ -104085,7 +104247,8 @@
    "golf",
    "bingo",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 108
  },
  {
   "name": "Hobbies",
@@ -104737,7 +104900,8 @@
    "chores",
    "commuting",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 150
  },
  {
   "name": "Things people collect",
@@ -105454,7 +105618,8 @@
    "weather",
    "sleep",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 150
  },
  {
   "name": "Sports equipment",
@@ -106131,7 +106296,8 @@
    "popcorn",
    "foam finger",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 150
  },
  {
   "name": "Things with strings",
@@ -106753,7 +106919,8 @@
    "tuba",
    "triangle",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 147
  },
  {
   "name": "Things with a screen",
@@ -107178,7 +107345,8 @@
    "chair",
    "mirror",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 148
  },
  {
   "name": "Things that run on batteries",
@@ -107709,7 +107877,8 @@
    "bicycle",
    "windmill",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 150
  },
  {
   "name": "Musical instruments",
@@ -108226,7 +108395,8 @@
    "metronome",
    "stereo",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 149
  },
  {
   "name": "Things that spin",
@@ -108624,7 +108794,8 @@
    "carpet",
    "sidewalk",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 150
  },
  {
   "name": "Things you can fold",
@@ -109193,7 +109364,8 @@
    "tree",
    "egg yolk",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 150
  },
  {
   "name": "Things you can inflate",
@@ -109549,7 +109721,8 @@
    "book",
    "phone",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 139
  },
  {
   "name": "Things you can climb",
@@ -109969,7 +110142,8 @@
    "rainbow",
    "floor",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 150
  },
  {
   "name": "Foods you can deep fry",
@@ -110503,7 +110677,8 @@
    "lettuce",
    "juice",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 135
  },
  {
   "name": "Foods that come in a box",
@@ -110943,7 +111118,8 @@
    "lettuce",
    "bread loaf",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 130
  },
  {
   "name": "Things you put on a burger",
@@ -111373,7 +111549,8 @@
    "whipped cream",
    "cotton candy",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 116
  },
  {
   "name": "Things you can put in a taco",
@@ -111969,7 +112146,8 @@
    "pancake syrup",
    "jello",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 125
  },
  {
   "name": "Fruits",
@@ -112277,7 +112455,8 @@
    "peanut",
    "mushroom",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 127
  },
  {
   "name": "Drinks (no alcohol)",
@@ -112709,7 +112888,8 @@
    "rum",
    "champagne",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 140
  },
  {
   "name": "Things that taste sour",
@@ -112945,7 +113125,8 @@
    "banana",
    "marshmallow",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 118
  },
  {
   "name": "Things that taste sweet",
@@ -113503,7 +113684,8 @@
    "broccoli",
    "mustard green",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 140
  },
  {
   "name": "Things at a Christmas party",
@@ -114173,7 +114355,8 @@
    "beach ball",
    "valentine",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 143
  },
  {
   "name": "Things you see on Halloween",
@@ -114693,7 +114876,8 @@
    "valentine",
    "menorah",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 145
  },
  {
   "name": "Things you do in the summer",
@@ -115289,7 +115473,8 @@
    "carve pumpkins",
    "trick or treat",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 126
  },
  {
   "name": "Things you do in winter",
@@ -115847,7 +116032,8 @@
    "sunburn",
    "pool",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 138
  },
  {
   "name": "Fourth of July things",
@@ -116447,7 +116633,8 @@
    "snowman",
    "candy cane",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 134
  },
  {
   "name": "Things at a cookout",
@@ -117336,7 +117523,8 @@
    "wagyu",
    "souffle",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 134
  },
  {
   "name": "Animals with stripes",
@@ -117575,7 +117763,8 @@
    "flamingo",
    "panda",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 91
  },
  {
   "name": "Animals with spots",
@@ -117789,7 +117978,8 @@
    "raccoon",
    "chipmunk",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 81
  },
  {
   "name": "Animals that live in trees",
@@ -118277,7 +118467,8 @@
    "ostrich",
    "mole",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 112
  },
  {
   "name": "Animals you'd find in Australia",
@@ -118907,7 +119098,8 @@
    "polar bear",
    "moose",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 114
  },
  {
   "name": "Slimy things",
@@ -119121,7 +119313,8 @@
    "sweater",
    "cactus",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 62
  },
  {
   "name": "Things with horns or antlers",
@@ -119376,7 +119569,8 @@
    "pig",
    "zebra",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 101
  },
  {
   "name": "Animals that would make terrible pets",
@@ -119766,7 +119960,8 @@
    "guinea pig",
    "parakeet",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 121
  },
  {
   "name": "Things with a shell",
@@ -120022,7 +120217,8 @@
    "banana",
    "orange",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 82
  },
  {
   "name": "Things that sting",
@@ -120325,7 +120521,8 @@
    "shark",
    "moth",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 88
  },
  {
   "name": "Things that glow",
@@ -120685,7 +120882,8 @@
    "sock",
    "spoon",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 107
  },
  {
   "name": "Things in a pond",
@@ -121173,7 +121371,8 @@
    "octopus",
    "camel",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 111
  },
  {
   "name": "Things with wings",
@@ -121477,7 +121676,8 @@
    "worm",
    "rocket",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 114
  },
  {
   "name": "Things that grow back",
@@ -122001,7 +122201,8 @@
    "bat",
    "kangaroo",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 109
  },
  {
   "name": "Things with a tail",
@@ -122435,7 +122636,8 @@
    "jellyfish",
    "octopus",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 107
  },
  {
   "name": "Things with scales",
@@ -122937,7 +123139,8 @@
    "salamander",
    "worm",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 89
  },
  {
   "name": "Internet slang",
@@ -124021,7 +124224,8 @@
    "principal's office",
    "detention",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 135
  },
  {
   "name": "Things you do in class instead of listening",
@@ -124509,7 +124713,8 @@
    "run a marathon",
    "skydive",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 113
  },
  {
   "name": "Things you'd find under your bed",
@@ -125180,7 +125385,8 @@
    "window",
    "chandelier",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 132
  },
  {
   "name": "Things in your pocket",
@@ -125835,7 +126041,8 @@
    "watermelon",
    "ladder",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 125
  },
  {
   "name": "Ways to say goodbye",
@@ -126353,7 +126560,8 @@
    "howdy",
    "welcome",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 113
  },
  {
   "name": "Things that are free",
@@ -127272,7 +127480,8 @@
    "laundry",
    "traffic",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 132
  },
  {
   "name": "Things that are expensive",
@@ -127905,7 +128114,8 @@
    "sticks",
    "ketchup packet",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 148
  },
  {
   "name": "Things you wait in line for",
@@ -128826,7 +129036,8 @@
    "breathing",
    "your bedroom",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 149
  },
  {
   "name": "Things that make noise at night",
@@ -129244,7 +129455,8 @@
    "mime",
    "snail",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 140
  },
  {
   "name": "Things on a school bus",
@@ -129884,7 +130096,8 @@
    "hot tub",
    "elevator",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 138
  },
  {
   "name": "Things that need a password",
@@ -130416,7 +130629,8 @@
    "chair",
    "toothbrush",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 138
  },
  {
   "name": "Things at a school dance",
@@ -131066,7 +131280,8 @@
    "report card",
    "chalkboard",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 137
  },
  {
   "name": "Things in a lost and found",
@@ -131580,7 +131795,8 @@
    "tree",
    "ocean",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 139
  },
  {
   "name": "Popular dog & cat names",
@@ -132007,7 +132223,8 @@
    "tabby",
    "poodle",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 127
  },
  {
   "name": "Popular baby names",
@@ -132487,7 +132704,8 @@
    "cousin",
    "elder",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 97
  },
  {
   "name": "Things you call your friends",
@@ -134661,7 +134879,8 @@
    "scissors and glue",
    "ladle",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 119
  },
  {
   "name": "Things at a family reunion",
@@ -135136,7 +135355,8 @@
    "homework",
    "lawyer",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 130
  },
  {
   "name": "Things in a medicine cabinet",
@@ -135574,7 +135794,8 @@
    "plunger",
    "toaster",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 120
  },
  {
   "name": "Things in a laundry room",
@@ -136061,7 +136282,8 @@
    "blanket",
    "sock",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 137
  },
  {
   "name": "Things in a car's cup holder",
@@ -136807,7 +137029,8 @@
    "roof",
    "doorbell",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 125
  },
  {
   "name": "Things you get for your birthday",
@@ -137199,7 +137422,8 @@
    "parking ticket",
    "dentist",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 129
  },
  {
   "name": "Things you need to move house",
@@ -137691,7 +137915,8 @@
    "fishing rod",
    "telescope",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 108
  },
  {
   "name": "Things at the vet",
@@ -138049,7 +138274,8 @@
    "giraffe",
    "dentist",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 126
  },
  {
   "name": "Things you'd see at a yard sale",
@@ -138566,7 +138792,8 @@
    "cash register",
    "stock market",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 133
  },
  {
   "name": "Things on a fridge door",
@@ -138861,7 +139088,8 @@
    "ketchup",
    "orange juice",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 119
  },
  {
   "name": "Things on a kitchen counter",
@@ -139252,7 +139480,8 @@
    "car",
    "bookshelf",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 129
  },
  {
   "name": "Things at grandma's house",
@@ -140140,7 +140369,8 @@
    "vape",
    "drum set",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 147
  },
  {
   "name": "Things a baby needs",
@@ -140581,7 +140811,8 @@
    "razor",
    "steak",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 121
  },
  {
   "name": "Things a pirate would have",
@@ -140949,7 +141180,8 @@
    "tiara",
    "skateboard",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 109
  },
  {
   "name": "Things a wizard would carry",
@@ -141370,7 +141602,8 @@
    "chainsaw",
    "tennis racket",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 100
  },
  {
   "name": "Things in a haunted house",
@@ -142202,7 +142435,8 @@
    "laptop",
    "vending machine",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 109
  },
  {
   "name": "Things a superhero needs",
@@ -142603,7 +142837,8 @@
    "recliner",
    "golf cart",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 99
  },
  {
   "name": "Things in a spy's briefcase",
@@ -142872,7 +143107,8 @@
    "fishing rod",
    "pogo stick",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 99
  },
  {
   "name": "Things you'd see in the jungle",
@@ -143525,7 +143761,8 @@
    "skyscraper",
    "walrus",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 100
  },
  {
   "name": "Things you'd see in a desert",
@@ -144085,7 +144322,8 @@
    "rainforest",
    "puffin",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 100
  },
  {
   "name": "Things at a magic show",
@@ -144453,7 +144691,8 @@
    "steering wheel",
    "tractor",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 99
  },
  {
   "name": "Things in a video game",
@@ -145350,7 +145589,8 @@
    "lawnmower",
    "sunscreen",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 110
  },
  {
   "name": "Things in a fairy tale",
@@ -145711,7 +145951,8 @@
    "traffic jam",
    "spaceship",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 100
  },
  {
   "name": "Things a villain would have",
@@ -146061,7 +146302,8 @@
    "lemonade stand",
    "kindness",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 100
  },
  {
   "name": "Things at a circus",
@@ -146425,7 +146667,8 @@
    "parking meter",
    "voting booth",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 100
  },
  {
   "name": "Things in an arcade",
@@ -146941,7 +147184,8 @@
    "lawn mower",
    "chalkboard",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 100
  },
  {
   "name": "Things a cowboy would have",
@@ -147375,7 +147619,8 @@
    "snowmobile",
    "scuba tank",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 99
  },
  {
   "name": "Things you'd find in a treasure chest",
@@ -147855,7 +148100,8 @@
    "grape",
    "blueberry",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 100
  },
  {
   "name": "Sit-down restaurant chains",
@@ -148306,7 +148552,8 @@
    "teddy bear",
    "video games",
    "zzzzzzzz"
-  ]
+  ],
+  "botKnown": 90
  },
  {
   "name": "Grocery store chains",

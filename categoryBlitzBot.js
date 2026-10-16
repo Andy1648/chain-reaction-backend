@@ -131,7 +131,9 @@ function pickAnswer(category, alreadyGiven, difficultyKey = 'medium') {
     // botKnown (oct15 night): a dictionary PATTERN list (rhymes, -oo, zz …) accepts every real word, but the bot only
     // knows its common head (the canon lists those first) — it never plays "bedight" or anything off the street.
     const cap = (BLITZ_LISTS.listFor(category) || {}).botKnown || Infinity;
-    const known = members.slice(0, Math.max(1, Math.min(cap, Math.ceil(members.length * share))));
+    // the difficulty SHARE is of what the bot can know (oct16: lists grew ~5× for players; a bot's knowledge did not)
+    const knowable = Math.min(cap, members.length);
+    const known = members.slice(0, Math.max(1, Math.ceil(knowable * share)));
     const open = known.filter((m) => m.canon.length >= 2
       && ![m.canon, ...(m.aliases || [])].some((f) => givenKeys.has(BLITZ_LISTS.sameAnswerKey(category, f))));
     if (open.length === 0) return null;
