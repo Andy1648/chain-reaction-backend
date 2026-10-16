@@ -75,3 +75,20 @@ test('plural fold: a plural scores on a singular list, once, and never on wordpl
   assert.notEqual(B.sameAnswerKey('Nintendo, PlayStation, Xbox & Sega consoles', 'xbox one'),
     B.sameAnswerKey('Nintendo, PlayStation, Xbox & Sega consoles', 'xbox one s'));
 });
+
+test('phrase match: little words and verb forms do not matter, and one meaning scores once', () => {
+  const B = require('./blitzLists');
+  const C = 'Household chores';
+  assert.ok(B.onList(C, 'making the bed'));
+  assert.ok(B.onList(C, 'mowing the lawn'));
+  assert.ok(B.onList(C, 'vacuuming'));
+  assert.equal(B.sameAnswerKey(C, 'make bed'), B.sameAnswerKey(C, 'making the bed'));
+  assert.equal(B.sameAnswerKey(C, 'vacuum'), B.sameAnswerKey(C, 'vacuuming'));
+  // the stemmer never glues different words together
+  assert.deepEqual(B.phraseKeys('cap'), ['cap']);
+  assert.ok(!B.phraseKeys('cape').includes('cap'));
+  assert.ok(!B.phraseKeys('icee').includes('ice'));
+  assert.deepEqual(B.phraseKeys('chaos'), ['chaos']);
+  // and never touches wordplay lists (every spelling is its own word there)
+  for (const [, l] of B.LISTS) if (l.pack === 'wordplay') assert.equal(l.phrased, null);
+});

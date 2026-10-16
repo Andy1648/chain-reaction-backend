@@ -78,6 +78,51 @@ function foldKey(k) {
   return k;
 }
 
+// PHRASE KEY (oct16, measured: blind "typical player" answers on the phrase lists — Household chores 40% accepted,
+// "making the bed" vs "make bed"): little words dropped (the, a, your, my …) and each word stemmed the same crude way
+// on both sides (making/make → mak, cleaning → clean, chores → chor), so a phrase scores however it is worded. Only an
+// extra ACCEPT path on non-wordplay lists, never on a list whose own junk would match; dedupe uses it on those lists so
+// "make bed" + "making the bed" score once.
+const STOP = new Set(['the', 'a', 'an', 'your', 'my', 'his', 'her', 'their', 'our', 'some', 'someone', 'someones', 'ur', 'yo']);
+// each word → its candidate stems. A plain word is only plural-folded; an -ing / -ed word also offers its "+e" and
+// un-doubled forms (making → mak | make, running → runn | run), so "make" ↔ "making" match but "cap" ↔ "cape" and
+// "ice" ↔ "icee" never do.
+function wordForms(w) {
+  if (NO_FOLD.has(w)) return [w];
+  if (w.length > 4 && w.endsWith('ies')) return [w.slice(0, -3) + 'y'];
+  const m = (w.length > 5 && /ing$/.test(w)) ? w.slice(0, -3) : (w.length > 4 && /ed$/.test(w)) ? w.slice(0, -2) : null;
+  if (m) {
+    const out = [m, m + 'e'];
+    if (/([b-df-hj-np-tv-z])\1$/.test(m)) out.push(m.slice(0, -1));
+    return out;
+  }
+  if (w.length > 4 && /(sses|xes|zes|ches|shes|oes)$/.test(w)) return [w.slice(0, -2)];
+  if (w.length > 3 && w.endsWith('s') && !w.endsWith('ss')) return [w.slice(0, -1)];
+  return [w];
+}
+/** Every phrase key an answer can match on (≤ 9: at most two -ing/-ed words branch). */
+function phraseKeys(s) {
+  const words = String(s == null ? '' : s)
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/&/g, ' and ')
+    .replace(/'/g, '')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim()
+    .split(' ')
+    .filter((w) => w && !STOP.has(w));
+  let keys = [''];
+  let branched = 0;
+  for (const w of words) {
+    let f = wordForms(w);
+    if (f.length > 1 && ++branched > 2) f = f.slice(0, 1);
+    keys = keys.flatMap((k) => f.map((x) => k + x));
+  }
+  return keys.filter(Boolean);
+}
+const phraseKey = (s) => phraseKeys(s)[0] || '';
+
 const LISTS = new Map(); // category name -> { name, pack, answers: string[], keys: Set, folded: Set|null, good, junk }
 for (const c of RAW) {
   const keys = new Set(c.answers.map(answerKey).filter(Boolean));
@@ -86,7 +131,17 @@ for (const c of RAW) {
     folded = new Set([...keys].map(foldKey));
     if ((c.junk || []).some((j) => folded.has(foldKey(answerKey(j))))) folded = null;
   }
-  LISTS.set(c.name, { ...c, keys, folded });
+  let phrased = null; // phrase key → the dedupe id of the answer it belongs to
+  if (c.pack !== 'wordplay') {
+    phrased = new Map();
+    for (const a of c.answers) {
+      const ks = phraseKeys(a);
+      const id = ks.map((k) => phrased.get(k)).find(Boolean) || ks[0];
+      for (const k of ks) if (!phrased.has(k)) phrased.set(k, id);
+    }
+    if ((c.junk || []).some((j) => phraseKeys(j).some((k) => phrased.has(k)))) phrased = null;
+  }
+  LISTS.set(c.name, { ...c, keys, folded, phrased });
 }
 
 const NAMES = [...LISTS.keys()].sort();
@@ -102,14 +157,18 @@ function onList(category, answer) {
   if (!l) return false;
   const k = answerKey(answer);
   if (k.length === 0) return false;
-  return l.keys.has(k) || (l.folded != null && l.folded.has(foldKey(k)));
+  return l.keys.has(k) || (l.folded != null && l.folded.has(foldKey(k))) || (l.phrased != null && phraseKeys(answer).some((pk) => l.phrased.has(pk)));
 }
 
 /** The key two answers must share to count as the SAME answer on `category` (the dedupe key). */
 function sameAnswerKey(category, answer) {
   const k = answerKey(answer);
   const l = LISTS.get(category);
+  if (l && l.phrased) {
+    const ks = phraseKeys(answer);
+    return 'p:' + (ks.map((pk) => l.phrased.get(pk)).find(Boolean) || ks[0] || k);
+  }
   return l && l.folded ? foldKey(k) : k;
 }
 
-module.exports = { answerKey, foldKey, sameAnswerKey, listFor, onList, NAMES, LISTS };
+module.exports = { answerKey, foldKey, phraseKey, phraseKeys, sameAnswerKey, listFor, onList, NAMES, LISTS };
