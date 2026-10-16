@@ -64303,7 +64303,9 @@
   {
    "canon": "girafa celestre",
    "aliases": [
-    "girafa celeste"
+    "girafa celeste",
+    "giraffa celeste",
+    "giraffa celestre"
    ]
   },
   {
@@ -76593,7 +76595,9 @@
   },
   {
    "canon": "mac and cheese",
-   "aliases": []
+   "aliases": [
+    "mac n cheese"
+   ]
   },
   {
    "canon": "ham",
@@ -78472,7 +78476,9 @@
   {
    "canon": "candy grams",
    "aliases": [
-    "carnation sale"
+    "carnation sale",
+    "teddy grams",
+    "teddy bear grams"
    ]
   },
   {
@@ -86355,7 +86361,9 @@
   },
   {
    "canon": "splash pad",
-   "aliases": []
+   "aliases": [
+    "sprinkler pad"
+   ]
   },
   {
    "canon": "rope ladder",
@@ -86518,7 +86526,9 @@
    "aliases": [
     "rings",
     "gymnastic rings",
-    "hanging rings"
+    "hanging rings",
+    "overhead rings",
+    "ring climber"
    ]
   },
   {
@@ -86810,6 +86820,10 @@
   },
   {
    "canon": "water cannon",
+   "aliases": []
+  },
+  {
+   "canon": "fireman pole",
    "aliases": []
   }
  ],
@@ -91187,7 +91201,8 @@
     "af1",
     "air forces",
     "forces",
-    "air force 1"
+    "air force 1",
+    "air force 1s"
    ]
   },
   {
@@ -96683,7 +96698,9 @@
   },
   {
    "canon": "kpop dance",
-   "aliases": []
+   "aliases": [
+    "k pop"
+   ]
   },
   {
    "canon": "jive",
@@ -97712,6 +97729,10 @@
   },
   {
    "canon": "cuban salsa",
+   "aliases": []
+  },
+  {
+   "canon": "tiktok dances",
    "aliases": []
   }
  ],
@@ -106124,10 +106145,6 @@
    "aliases": []
   },
   {
-   "canon": "persian",
-   "aliases": []
-  },
-  {
    "canon": "gideon",
    "aliases": []
   },
@@ -111629,7 +111646,9 @@
   },
   {
    "canon": "message in a bottle",
-   "aliases": []
+   "aliases": [
+    "bottle with a message"
+   ]
   },
   {
    "canon": "bottle",
@@ -121853,7 +121872,10 @@
   },
   {
    "canon": "leftovers",
-   "aliases": []
+   "aliases": [
+    "tupperware nobody opens",
+    "old tupperware"
+   ]
   },
   {
    "canon": "pizza",
@@ -121926,7 +121948,9 @@
   {
    "canon": "salsa",
    "aliases": [
-    "pico de gallo"
+    "pico de gallo",
+    "expired salsa",
+    "expired condiments"
    ]
   },
   {
@@ -124092,7 +124116,8 @@
    "canon": "roasting stick",
    "aliases": [
     "marshmallow sticks",
-    "skewers"
+    "skewers",
+    "s'mores sticks"
    ]
   },
   {
@@ -142290,6 +142315,10 @@
   {
    "canon": "rob",
    "aliases": []
+  },
+  {
+   "canon": "isaac clarke",
+   "aliases": []
   }
  ],
  "Things that are round": [
@@ -146885,7 +146914,8 @@
    "canon": "crosswalk button",
    "aliases": [
     "walk button",
-    "pedestrian button"
+    "pedestrian button",
+    "crosswalk pole"
    ]
   }
  ],
@@ -147640,7 +147670,8 @@
   {
    "canon": "being left on read",
    "aliases": [
-    "left on read"
+    "left on read",
+    "getting left on read"
    ]
   },
   {
@@ -151325,7 +151356,9 @@
   },
   {
    "canon": "hummus",
-   "aliases": []
+   "aliases": [
+    "hummus and pita"
+   ]
   },
   {
    "canon": "pita chips",
@@ -152990,7 +153023,9 @@
   },
   {
    "canon": "charger",
-   "aliases": []
+   "aliases": [
+    "old phone charger"
+   ]
   },
   {
    "canon": "cables",
@@ -153172,7 +153207,9 @@
   },
   {
    "canon": "instruction manuals",
-   "aliases": []
+   "aliases": [
+    "warranty papers"
+   ]
   },
   {
    "canon": "manuals",
@@ -157093,7 +157130,9 @@
   },
   {
    "canon": "granola bar",
-   "aliases": []
+   "aliases": [
+    "old granola bar wrapper"
+   ]
   },
   {
    "canon": "apple",
@@ -157117,7 +157156,9 @@
   },
   {
    "canon": "permission slip",
-   "aliases": []
+   "aliases": [
+    "crumpled permission slip"
+   ]
   },
   {
    "canon": "report card",
@@ -158261,7 +158302,9 @@
   },
   {
    "canon": "taquitos",
-   "aliases": []
+   "aliases": [
+    "roller grill taquitos"
+   ]
   },
   {
    "canon": "beef jerky",
@@ -158353,7 +158396,9 @@
   },
   {
    "canon": "squeegee",
-   "aliases": []
+   "aliases": [
+    "windshield squeegee"
+   ]
   },
   {
    "canon": "windshield washer",
@@ -159766,6 +159811,16 @@
   {
    "canon": "lighter fluid",
    "aliases": []
+  },
+  {
+   "canon": "gas station sushi",
+   "aliases": []
+  },
+  {
+   "canon": "sunglasses rack",
+   "aliases": [
+    "cheap sunglasses"
+   ]
   }
  ],
  "Things you'd find at a carnival": [
@@ -160572,7 +160627,10 @@
   },
   {
    "canon": "drunk uncle",
-   "aliases": []
+   "aliases": [
+    "uncle dancing",
+    "dancing relatives"
+   ]
   },
   {
    "canon": "speeches",
@@ -162114,7 +162172,9 @@
   },
   {
    "canon": "control tower",
-   "aliases": []
+   "aliases": [
+    "air traffic control tower"
+   ]
   },
   {
    "canon": "air traffic control",
@@ -164472,7 +164532,9 @@
   },
   {
    "canon": "greeters",
-   "aliases": []
+   "aliases": [
+    "walmart greeter"
+   ]
   },
   {
    "canon": "cashiers",
@@ -164800,7 +164862,9 @@
   },
   {
    "canon": "candles",
-   "aliases": []
+   "aliases": [
+    "scented candles"
+   ]
   },
   {
    "canon": "pillows",
@@ -164949,7 +165013,8 @@
   {
    "canon": "fishing poles",
    "aliases": [
-    "fishing rods"
+    "fishing rods",
+    "fishing gear"
    ]
   },
   {
@@ -165018,7 +165083,9 @@
   },
   {
    "canon": "auto center",
-   "aliases": []
+   "aliases": [
+    "tire center"
+   ]
   },
   {
    "canon": "car seats",
@@ -165330,7 +165397,9 @@
   },
   {
    "canon": "great value",
-   "aliases": []
+   "aliases": [
+    "great value brand"
+   ]
   },
   {
    "canon": "equate",
@@ -165630,7 +165699,9 @@
   },
   {
    "canon": "mcdonalds",
-   "aliases": []
+   "aliases": [
+    "mcdonalds inside"
+   ]
   },
   {
    "canon": "subway",
@@ -166655,7 +166726,8 @@
   {
    "canon": "scooter carts",
    "aliases": [
-    "electric carts"
+    "electric carts",
+    "mobility scooters"
    ]
   },
   {
@@ -166671,7 +166743,9 @@
   },
   {
    "canon": "blue vests",
-   "aliases": []
+   "aliases": [
+    "yellow vests"
+   ]
   },
   {
    "canon": "smiley face",
@@ -166733,6 +166807,10 @@
   },
   {
    "canon": "rvs in the parking lot",
+   "aliases": []
+  },
+  {
+   "canon": "garden center",
    "aliases": []
   }
  ],
@@ -167460,7 +167538,9 @@
   },
   {
    "canon": "track of time",
-   "aliases": []
+   "aliases": [
+    "sense of time"
+   ]
   },
   {
    "canon": "time",
@@ -171800,7 +171880,10 @@
   },
   {
    "canon": "keyboard",
-   "aliases": []
+   "aliases": [
+    "electric piano",
+    "digital piano"
+   ]
   },
   {
    "canon": "mouse",
@@ -183566,7 +183649,10 @@
   },
   {
    "canon": "crying babies",
-   "aliases": []
+   "aliases": [
+    "babies crying",
+    "baby crying"
+   ]
   },
   {
    "canon": "dogs",
@@ -183717,7 +183803,8 @@
   {
    "canon": "crowds",
    "aliases": [
-    "stadium crowd"
+    "stadium crowd",
+    "fans at a stadium"
    ]
   },
   {
@@ -186620,7 +186707,9 @@
   },
   {
    "canon": "rotten fruit",
-   "aliases": []
+   "aliases": [
+    "rotten tomato"
+   ]
   },
   {
    "canon": "rotten apple",
@@ -187015,6 +187104,14 @@
   },
   {
    "canon": "snorlax",
+   "aliases": []
+  },
+  {
+   "canon": "whoopee cushion",
+   "aliases": []
+  },
+  {
+   "canon": "foam pit",
    "aliases": []
   }
  ],
@@ -189740,7 +189837,9 @@
   },
   {
    "canon": "rocks",
-   "aliases": []
+   "aliases": [
+    "lava rock"
+   ]
   },
   {
    "canon": "lava",
@@ -192251,10 +192350,6 @@
   },
   {
    "canon": "ponies",
-   "aliases": []
-  },
-  {
-   "canon": "gibbon",
    "aliases": []
   },
   {
@@ -200554,7 +200649,9 @@
   },
   {
    "canon": "buying robux",
-   "aliases": []
+   "aliases": [
+    "spending money on robux"
+   ]
   },
   {
    "canon": "in app purchases",
@@ -200682,7 +200779,9 @@
   },
   {
    "canon": "secret account",
-   "aliases": []
+   "aliases": [
+    "secret social media"
+   ]
   },
   {
    "canon": "sneaking phone",
@@ -201913,6 +202012,13 @@
   {
    "canon": "using the stove alone",
    "aliases": []
+  },
+  {
+   "canon": "being on phone too late",
+   "aliases": [
+    "phone past bedtime",
+    "staying up on phone"
+   ]
   }
  ],
  "Things in a teenager's bedroom": [
@@ -202030,7 +202136,9 @@
   },
   {
    "canon": "led lights",
-   "aliases": []
+   "aliases": [
+    "led strip lights"
+   ]
   },
   {
    "canon": "fairy lights",
@@ -202102,7 +202210,9 @@
   },
   {
    "canon": "energy drink cans",
-   "aliases": []
+   "aliases": [
+    "empty cans"
+   ]
   },
   {
    "canon": "soda cans",
@@ -202146,7 +202256,10 @@
   },
   {
    "canon": "skincare",
-   "aliases": []
+   "aliases": [
+    "skincare stuff",
+    "skincare products"
+   ]
   },
   {
    "canon": "perfume",
@@ -202182,7 +202295,10 @@
   },
   {
    "canon": "polaroids",
-   "aliases": []
+   "aliases": [
+    "polaroid pics",
+    "polaroid photos"
+   ]
   },
   {
    "canon": "stuffed animals",
@@ -202531,7 +202647,9 @@
   },
   {
    "canon": "clothes on the floor",
-   "aliases": []
+   "aliases": [
+    "dirty clothes"
+   ]
   },
   {
    "canon": "clothes on the chair",
@@ -203855,7 +203973,8 @@
   {
    "canon": "stanley cup",
    "aliases": [
-    "stanley"
+    "stanley",
+    "empty water bottles"
    ]
   },
   {
@@ -204156,7 +204275,9 @@
   },
   {
    "canon": "doordash",
-   "aliases": []
+   "aliases": [
+    "order doordash"
+   ]
   },
   {
    "canon": "uber",
@@ -204346,7 +204467,9 @@
   },
   {
    "canon": "apple pay",
-   "aliases": []
+   "aliases": [
+    "pay with apple pay"
+   ]
   },
   {
    "canon": "notes",
@@ -204452,7 +204575,9 @@
   },
   {
    "canon": "wordle",
-   "aliases": []
+   "aliases": [
+    "play wordle"
+   ]
   },
   {
    "canon": "candy crush",
@@ -206399,7 +206524,9 @@
   },
   {
    "canon": "meme",
-   "aliases": []
+   "aliases": [
+    "deep fried memes"
+   ]
   },
   {
    "canon": "gifs",
@@ -207356,7 +207483,10 @@
   },
   {
    "canon": "reaction images",
-   "aliases": []
+   "aliases": [
+    "reaction pics",
+    "reaction memes"
+   ]
   },
   {
    "canon": "reaction gifs",
@@ -207463,7 +207593,9 @@
   {
    "canon": "google docs links",
    "aliases": [
-    "google doc"
+    "google doc",
+    "a link to a google doc",
+    "google doc link"
    ]
   },
   {
@@ -208420,7 +208552,9 @@
   },
   {
    "canon": "tickle",
-   "aliases": []
+   "aliases": [
+    "tickling your nose"
+   ]
   },
   {
    "canon": "tickling",
@@ -215300,7 +215434,9 @@
   },
   {
    "canon": "hamburger",
-   "aliases": []
+   "aliases": [
+    "burger"
+   ]
   },
   {
    "canon": "cheeseburger",
@@ -222040,12 +222176,15 @@
   },
   {
    "canon": "movie marathon",
-   "aliases": []
+   "aliases": [
+    "watching movies"
+   ]
   },
   {
    "canon": "prank calls",
    "aliases": [
-    "crank calls"
+    "crank calls",
+    "prank calling"
    ]
   },
   {
@@ -222090,7 +222229,9 @@
   },
   {
    "canon": "uno",
-   "aliases": []
+   "aliases": [
+    "playing uno"
+   ]
   },
   {
    "canon": "monopoly",
@@ -222108,7 +222249,9 @@
   },
   {
    "canon": "blanket fort",
-   "aliases": []
+   "aliases": [
+    "building a fort"
+   ]
   },
   {
    "canon": "pillow fort",
@@ -222189,7 +222332,8 @@
   {
    "canon": "scary stories",
    "aliases": [
-    "spooky stories"
+    "spooky stories",
+    "telling scary stories"
    ]
   },
   {
@@ -222237,7 +222381,9 @@
   },
   {
    "canon": "all nighter",
-   "aliases": []
+   "aliases": [
+    "staying up all night"
+   ]
   },
   {
    "canon": "karaoke",
@@ -224192,6 +224338,24 @@
   {
    "canon": "fall asleep watching a movie",
    "aliases": []
+  },
+  {
+   "canon": "painting nails",
+   "aliases": [
+    "doing nails"
+   ]
+  },
+  {
+   "canon": "making slime",
+   "aliases": []
+  },
+  {
+   "canon": "baking cookies",
+   "aliases": []
+  },
+  {
+   "canon": "playing video games",
+   "aliases": []
   }
  ],
  "Reasons to go to the nurse's office": [
@@ -224357,7 +224521,9 @@
   },
   {
    "canon": "dizzy",
-   "aliases": []
+   "aliases": [
+    "feeling dizzy"
+   ]
   },
   {
    "canon": "fainting",
@@ -224527,7 +224693,9 @@
   },
   {
    "canon": "skip class",
-   "aliases": []
+   "aliases": [
+    "getting out of class"
+   ]
   },
   {
    "canon": "get out of class",
@@ -226488,6 +226656,10 @@
   },
   {
    "canon": "hoarse",
+   "aliases": []
+  },
+  {
+   "canon": "need an ice pack",
    "aliases": []
   }
  ],
@@ -230631,7 +230803,9 @@
   },
   {
    "canon": "toilet bowl",
-   "aliases": []
+   "aliases": [
+    "toilet bowl slide"
+   ]
   },
   {
    "canon": "half pipe",
@@ -230643,7 +230817,9 @@
   },
   {
    "canon": "flowrider",
-   "aliases": []
+   "aliases": [
+    "surf rider"
+   ]
   },
   {
    "canon": "tube slide",
@@ -232677,7 +232853,9 @@
   },
   {
    "canon": "periodic table",
-   "aliases": []
+   "aliases": [
+    "periodic table poster"
+   ]
   },
   {
    "canon": "word wall",
@@ -234838,7 +235016,9 @@
   },
   {
    "canon": "traffic cones",
-   "aliases": []
+   "aliases": [
+    "construction cones"
+   ]
   },
   {
    "canon": "toll booths",
@@ -234986,7 +235166,10 @@
   },
   {
    "canon": "welcome signs",
-   "aliases": []
+   "aliases": [
+    "state line signs",
+    "welcome to signs"
+   ]
   },
   {
    "canon": "state lines",
@@ -238090,7 +238273,8 @@
     "find shells",
     "pick up shells",
     "shelling",
-    "seashell hunting"
+    "seashell hunting",
+    "look for seashells"
    ]
   },
   {
@@ -238189,7 +238373,9 @@
    "canon": "get sunburned",
    "aliases": [
     "get burnt",
-    "sunburn"
+    "sunburn",
+    "get sunburnt",
+    "get a sunburn"
    ]
   },
   {
@@ -238211,7 +238397,9 @@
   },
   {
    "canon": "take pictures",
-   "aliases": []
+   "aliases": [
+    "take pics"
+   ]
   },
   {
    "canon": "take selfies",
@@ -238275,7 +238463,9 @@
   },
   {
    "canon": "bonfire",
-   "aliases": []
+   "aliases": [
+    "have a bonfire"
+   ]
   },
   {
    "canon": "roast marshmallows",
@@ -239684,6 +239874,14 @@
   {
    "canon": "shake off sand",
    "aliases": []
+  },
+  {
+   "canon": "build a sandcastle",
+   "aliases": []
+  },
+  {
+   "canon": "go for a walk",
+   "aliases": []
   }
  ],
  "Things you do when you're bored": [
@@ -241011,7 +241209,8 @@
   {
    "canon": "skincare routine",
    "aliases": [
-    "skincare"
+    "skincare",
+    "do a skincare routine"
    ]
   },
   {
@@ -241673,6 +241872,18 @@
   {
    "canon": "practice dance moves",
    "aliases": []
+  },
+  {
+   "canon": "clean your room",
+   "aliases": []
+  },
+  {
+   "canon": "rearrange room",
+   "aliases": []
+  },
+  {
+   "canon": "bake something",
+   "aliases": []
   }
  ],
  "Things you do before bed": [
@@ -241978,7 +242189,10 @@
   },
   {
    "canon": "feed the cat",
-   "aliases": []
+   "aliases": [
+    "feed the dog",
+    "feed pets"
+   ]
   },
   {
    "canon": "check the locks",
@@ -243303,6 +243517,14 @@
   {
    "canon": "open the door a crack",
    "aliases": []
+  },
+  {
+   "canon": "scroll on phone",
+   "aliases": []
+  },
+  {
+   "canon": "set alarm",
+   "aliases": []
   }
  ],
  "Things you do in the morning": [
@@ -243364,7 +243586,9 @@
   },
   {
    "canon": "hit snooze",
-   "aliases": []
+   "aliases": [
+    "snooze alarm"
+   ]
   },
   {
    "canon": "snooze",
@@ -243524,7 +243748,9 @@
   },
   {
    "canon": "feed the dog",
-   "aliases": []
+   "aliases": [
+    "feed pets"
+   ]
   },
   {
    "canon": "walk the dog",
@@ -243615,7 +243841,9 @@
   },
   {
    "canon": "go for a run",
-   "aliases": []
+   "aliases": [
+    "go on a run"
+   ]
   },
   {
    "canon": "jog",
@@ -244772,6 +245000,22 @@
   {
    "canon": "vacuum",
    "aliases": []
+  },
+  {
+   "canon": "make your bed",
+   "aliases": []
+  },
+  {
+   "canon": "check your phone",
+   "aliases": []
+  },
+  {
+   "canon": "do your hair",
+   "aliases": []
+  },
+  {
+   "canon": "wash your face",
+   "aliases": []
   }
  ],
  "Things at the dentist's office": [
@@ -245293,7 +245537,9 @@
   },
   {
    "canon": "motor oil",
-   "aliases": []
+   "aliases": [
+    "oil can"
+   ]
   },
   {
    "canon": "gas can",
@@ -245348,7 +245594,9 @@
   },
   {
    "canon": "christmas decorations",
-   "aliases": []
+   "aliases": [
+    "christmas tree box"
+   ]
   },
   {
    "canon": "halloween decorations",
@@ -246558,7 +246806,8 @@
   {
    "canon": "second fridge",
    "aliases": [
-    "garage fridge"
+    "garage fridge",
+    "old fridge"
    ]
   },
   {
@@ -250715,7 +250964,8 @@
    "canon": "cart",
    "aliases": [
     "dessert cart",
-    "serving cart"
+    "serving cart",
+    "dessert tray"
    ]
   },
   {
@@ -253551,7 +253801,9 @@
   },
   {
    "canon": "coconut",
-   "aliases": []
+   "aliases": [
+    "coconut flakes"
+   ]
   },
   {
    "canon": "shredded coconut",
@@ -254780,7 +255032,9 @@
   },
   {
    "canon": "avocado",
-   "aliases": []
+   "aliases": [
+    "mashed avocado with chili flakes"
+   ]
   },
   {
    "canon": "nutella",
@@ -254956,7 +255210,9 @@
   },
   {
    "canon": "biscoff",
-   "aliases": []
+   "aliases": [
+    "biscoff spread"
+   ]
   },
   {
    "canon": "cookie butter",
@@ -255808,7 +256064,10 @@
   },
   {
    "canon": "styrofoam",
-   "aliases": []
+   "aliases": [
+    "styrofoam cup",
+    "foam container"
+   ]
   },
   {
    "canon": "plastic",
@@ -255833,7 +256092,9 @@
   },
   {
    "canon": "travel mug",
-   "aliases": []
+   "aliases": [
+    "metal travel mug"
+   ]
   },
   {
    "canon": "thermos",
@@ -255961,7 +256222,9 @@
   },
   {
    "canon": "twist ties",
-   "aliases": []
+   "aliases": [
+    "wire twist ties"
+   ]
   },
   {
    "canon": "sponge",
@@ -256182,7 +256445,8 @@
    "canon": "empty microwave",
    "aliases": [
     "running it empty",
-    "microwave with nothing in it"
+    "microwave with nothing in it",
+    "nothing at all"
    ]
   },
   {
@@ -256246,7 +256510,9 @@
     "plate with gold rim",
     "metallic plate",
     "metal rim plate",
-    "dishes with metallic paint"
+    "dishes with metallic paint",
+    "plates with gold trim",
+    "plates with metal trim"
    ]
   },
   {
@@ -256402,7 +256668,8 @@
    "aliases": [
     "foil tray",
     "foil pan",
-    "aluminum pan"
+    "aluminum pan",
+    "tin tray"
    ]
   },
   {
@@ -256491,7 +256758,9 @@
     "sealed jar",
     "closed container",
     "jar with lid",
-    "sealed bottle"
+    "sealed bottle",
+    "glass jar with lid",
+    "mason jar with lid"
    ]
   },
   {
@@ -256522,7 +256791,9 @@
     "tumbler",
     "stainless steel tumbler",
     "metal water bottle",
-    "metal bottle"
+    "metal bottle",
+    "stainless steel bottles",
+    "stainless steel cup"
    ]
   },
   {
@@ -257293,6 +257564,27 @@
   {
    "canon": "honey",
    "aliases": []
+  },
+  {
+   "canon": "water by itself",
+   "aliases": [
+    "plain water",
+    "cup of water"
+   ]
+  },
+  {
+   "canon": "soup with lid",
+   "aliases": [
+    "soup with the lid on",
+    "covered soup"
+   ]
+  },
+  {
+   "canon": "chinese takeout box with handle",
+   "aliases": [
+    "takeout box with metal handle",
+    "chinese food container"
+   ]
   }
  ],
  "Things you can put ketchup on": [
@@ -257364,7 +257656,9 @@
   },
   {
    "canon": "mac and cheese",
-   "aliases": []
+   "aliases": [
+    "mac n cheese"
+   ]
   },
   {
    "canon": "pizza",
@@ -262873,7 +263167,9 @@
   },
   {
    "canon": "tv remote",
-   "aliases": []
+   "aliases": [
+    "remote control"
+   ]
   },
   {
    "canon": "pillow",
@@ -263331,7 +263627,9 @@
   },
   {
    "canon": "french fry",
-   "aliases": []
+   "aliases": [
+    "dropped french fries"
+   ]
   },
   {
    "canon": "mcdonalds fries",
@@ -264839,7 +265137,9 @@
   },
   {
    "canon": "cd",
-   "aliases": []
+   "aliases": [
+    "music"
+   ]
   },
   {
    "canon": "cds",
@@ -265111,7 +265411,9 @@
   },
   {
    "canon": "ipod",
-   "aliases": []
+   "aliases": [
+    "old ipod"
+   ]
   },
   {
    "canon": "headphones",
@@ -265183,7 +265485,9 @@
   },
   {
    "canon": "predictions",
-   "aliases": []
+   "aliases": [
+    "hand written prediction"
+   ]
   },
   {
    "canon": "list of goals",
@@ -265283,7 +265587,10 @@
   },
   {
    "canon": "face mask",
-   "aliases": []
+   "aliases": [
+    "mask from 2020",
+    "covid mask"
+   ]
   },
   {
    "canon": "mask",
@@ -265506,7 +265813,8 @@
   {
    "canon": "grocery receipt",
    "aliases": [
-    "gas receipt"
+    "gas receipt",
+    "receipt with prices"
    ]
   },
   {
@@ -266338,6 +266646,12 @@
   {
    "canon": "favorite snack",
    "aliases": []
+  },
+  {
+   "canon": "stanley cup",
+   "aliases": [
+    "stanley tumbler"
+   ]
   }
  ],
  "Things you'd buy with a million dollars": [
@@ -269168,10 +269482,6 @@
    "aliases": []
   },
   {
-   "canon": "morocco",
-   "aliases": []
-  },
-  {
    "canon": "miami",
    "aliases": []
   },
@@ -269939,7 +270249,9 @@
   },
   {
    "canon": "nintendo switch",
-   "aliases": []
+   "aliases": [
+    "switch"
+   ]
   },
   {
    "canon": "game boy",
@@ -272030,6 +272342,16 @@
   {
    "canon": "magnifying glass",
    "aliases": []
+  },
+  {
+   "canon": "rover",
+   "aliases": [
+    "mars rover"
+   ]
+  },
+  {
+   "canon": "satellite",
+   "aliases": []
   }
  ],
  "Things that would ruin a picnic": [
@@ -272211,7 +272533,9 @@
   },
   {
    "canon": "no food",
-   "aliases": []
+   "aliases": [
+    "forgetting the food"
+   ]
   },
   {
    "canon": "forgot food",
@@ -272251,7 +272575,9 @@
   },
   {
    "canon": "no forks",
-   "aliases": []
+   "aliases": [
+    "forgetting utensils"
+   ]
   },
   {
    "canon": "no napkins",
@@ -274862,6 +275188,14 @@
   },
   {
    "canon": "gnats in your face",
+   "aliases": []
+  },
+  {
+   "canon": "seagulls stealing food",
+   "aliases": []
+  },
+  {
+   "canon": "a bear",
    "aliases": []
   }
  ],
@@ -277759,7 +278093,9 @@
   },
   {
    "canon": "cherries",
-   "aliases": []
+   "aliases": [
+    "frozen cherries"
+   ]
   },
   {
    "canon": "watermelon",
@@ -278606,7 +278942,8 @@
    "aliases": [
     "bad test",
     "failed quiz",
-    "bad quiz grade"
+    "bad quiz grade",
+    "bad test grade"
    ]
   },
   {
@@ -278690,7 +279027,10 @@
   },
   {
    "canon": "broken vase",
-   "aliases": []
+   "aliases": [
+    "broken stuff",
+    "something you broke"
+   ]
   },
   {
    "canon": "broken plate",
@@ -278785,11 +279125,16 @@
   },
   {
    "canon": "in app purchases",
-   "aliases": []
+   "aliases": [
+    "roblox purchases",
+    "robux purchases"
+   ]
   },
   {
    "canon": "piercing",
-   "aliases": []
+   "aliases": [
+    "new piercing"
+   ]
   },
   {
    "canon": "nose ring",
@@ -278833,7 +279178,9 @@
   },
   {
    "canon": "crush",
-   "aliases": []
+   "aliases": [
+    "your crush"
+   ]
   },
   {
    "canon": "boyfriend",
@@ -278849,7 +279196,9 @@
   },
   {
    "canon": "texts",
-   "aliases": []
+   "aliases": [
+    "text messages"
+   ]
   },
   {
    "canon": "search history",
@@ -278885,7 +279234,10 @@
   },
   {
    "canon": "finsta",
-   "aliases": []
+   "aliases": [
+    "new tiktok account",
+    "secret tiktok"
+   ]
   },
   {
    "canon": "pet",
@@ -279285,7 +279637,8 @@
   {
    "canon": "phone at night",
    "aliases": [
-    "phone in bed"
+    "phone in bed",
+    "phone under the pillow"
    ]
   },
   {
@@ -279580,7 +279933,8 @@
    "aliases": [
     "secret stash",
     "snack stash",
-    "stash"
+    "stash",
+    "secret snacks"
    ]
   },
   {
@@ -279693,7 +280047,10 @@
   },
   {
    "canon": "dirty clothes",
-   "aliases": []
+   "aliases": [
+    "dirty laundry pile",
+    "pile of dirty clothes"
+   ]
   },
   {
    "canon": "clothes on the floor",
@@ -280284,6 +280641,10 @@
   {
    "canon": "screenshots",
    "aliases": []
+  },
+  {
+   "canon": "money you found",
+   "aliases": []
   }
  ],
  "Cartoon characters": [
@@ -280325,7 +280686,9 @@
   },
   {
    "canon": "tom",
-   "aliases": []
+   "aliases": [
+    "tom and jerry"
+   ]
   },
   {
    "canon": "jerry",
@@ -288051,7 +288414,9 @@
   },
   {
    "canon": "kenan and kel",
-   "aliases": []
+   "aliases": [
+    "kel and kenan"
+   ]
   },
   {
    "canon": "tia and tamera",
@@ -289591,6 +289956,14 @@
   },
   {
    "canon": "woody and jessie",
+   "aliases": []
+  },
+  {
+   "canon": "ant and dec",
+   "aliases": []
+  },
+  {
+   "canon": "mike and ike",
    "aliases": []
   }
  ],
@@ -321713,7 +322086,9 @@
   },
   {
    "canon": "door",
-   "aliases": []
+   "aliases": [
+    "door open"
+   ]
   },
   {
    "canon": "rock",
@@ -322519,7 +322894,9 @@
   },
   {
    "canon": "stump",
-   "aliases": []
+   "aliases": [
+    "tree stump"
+   ]
   },
   {
    "canon": "fence post",
@@ -322856,6 +323233,17 @@
   },
   {
    "canon": "kick in the door",
+   "aliases": []
+  },
+  {
+   "canon": "your brother",
+   "aliases": [
+    "your sibling",
+    "your sister"
+   ]
+  },
+  {
+   "canon": "sliding door",
    "aliases": []
   }
  ],
@@ -324717,6 +325105,12 @@
   {
    "canon": "staring contest",
    "aliases": []
+  },
+  {
+   "canon": "ships and sailors",
+   "aliases": [
+    "ships"
+   ]
   }
  ],
  "Hobbies": [
@@ -327011,6 +327405,12 @@
   {
    "canon": "sneaker reselling",
    "aliases": []
+  },
+  {
+   "canon": "sports",
+   "aliases": [
+    "playing sports"
+   ]
   }
  ],
  "Things people collect": [
@@ -338876,7 +339276,10 @@
   },
   {
    "canon": "teacups",
-   "aliases": []
+   "aliases": [
+    "teacups ride",
+    "tea cup ride"
+   ]
   },
   {
    "canon": "tilt a whirl",
@@ -338884,7 +339287,9 @@
   },
   {
    "canon": "record",
-   "aliases": []
+   "aliases": [
+    "record player"
+   ]
   },
   {
    "canon": "vinyl",
@@ -340113,6 +340518,12 @@
   {
    "canon": "mirror ball",
    "aliases": []
+  },
+  {
+   "canon": "basketball on finger",
+   "aliases": [
+    "spinning basketball"
+   ]
   }
  ],
  "Things you can fold": [
@@ -340329,7 +340740,10 @@
   },
   {
    "canon": "galaxy fold",
-   "aliases": []
+   "aliases": [
+    "samsung z fold",
+    "folding phone"
+   ]
   },
   {
    "canon": "wallet",
@@ -340370,7 +340784,9 @@
   {
    "canon": "poker hand",
    "aliases": [
-    "fold in poker"
+    "fold in poker",
+    "your poker hand",
+    "cards in poker"
    ]
   },
   {
@@ -341710,7 +342126,9 @@
   },
   {
    "canon": "pool float",
-   "aliases": []
+   "aliases": [
+    "pool floaty"
+   ]
   },
   {
    "canon": "floatie",
@@ -341738,7 +342156,9 @@
   },
   {
    "canon": "kiddie pool",
-   "aliases": []
+   "aliases": [
+    "blow up pool"
+   ]
   },
   {
    "canon": "air mattress",
@@ -341778,11 +342198,15 @@
   },
   {
    "canon": "bounce house",
-   "aliases": []
+   "aliases": [
+    "bouncy house"
+   ]
   },
   {
    "canon": "bouncy castle",
-   "aliases": []
+   "aliases": [
+    "bounce castle"
+   ]
   },
   {
    "canon": "moon bounce",
@@ -341826,7 +342250,9 @@
   },
   {
    "canon": "ego",
-   "aliases": []
+   "aliases": [
+    "someone's ego"
+   ]
   },
   {
    "canon": "prices",
@@ -342006,7 +342432,9 @@
   },
   {
    "canon": "tube",
-   "aliases": []
+   "aliases": [
+    "inflatable tube"
+   ]
   },
   {
    "canon": "puffer fish",
@@ -342226,7 +342654,9 @@
     "blow up costume",
     "inflatable unicorn costume",
     "inflatable alien costume",
-    "inflatable sumo costume"
+    "inflatable sumo costume",
+    "blow up doll costume",
+    "inflatable t rex costume"
    ]
   },
   {
@@ -346020,7 +346450,10 @@
   },
   {
    "canon": "mac and cheese",
-   "aliases": []
+   "aliases": [
+    "mac n cheese",
+    "boxed mac and cheese"
+   ]
   },
   {
    "canon": "cookie",
@@ -346146,7 +346579,9 @@
   },
   {
    "canon": "stuffing",
-   "aliases": []
+   "aliases": [
+    "stove top stuffing"
+   ]
   },
   {
    "canon": "mashed potato",
@@ -346166,7 +346601,10 @@
   },
   {
    "canon": "chinese food",
-   "aliases": []
+   "aliases": [
+    "chinese takeout",
+    "takeout box"
+   ]
   },
   {
    "canon": "takeout",
@@ -347578,6 +348016,13 @@
   {
    "canon": "matzah",
    "aliases": []
+  },
+  {
+   "canon": "instant mashed potatoes",
+   "aliases": [
+    "boxed mashed potatoes",
+    "potato flakes"
+   ]
   }
  ],
  "Things you put on a burger": [
@@ -353572,7 +354017,9 @@
   },
   {
    "canon": "toxic waste",
-   "aliases": []
+   "aliases": [
+    "toxic waste candy"
+   ]
   },
   {
    "canon": "cry baby",
@@ -359123,7 +359570,9 @@
   },
   {
    "canon": "inflatable",
-   "aliases": []
+   "aliases": [
+    "inflatable decorations"
+   ]
   },
   {
    "canon": "giant skeleton",
@@ -360727,7 +361176,9 @@
   },
   {
    "canon": "camp",
-   "aliases": []
+   "aliases": [
+    "camping"
+   ]
   },
   {
    "canon": "hike",
@@ -362488,6 +362939,23 @@
   },
   {
    "canon": "count down to school",
+   "aliases": []
+  },
+  {
+   "canon": "go kayaking",
+   "aliases": [
+    "kayaking",
+    "canoeing"
+   ]
+  },
+  {
+   "canon": "sit on the porch",
+   "aliases": [
+    "sit outside"
+   ]
+  },
+  {
+   "canon": "ride bikes",
    "aliases": []
   }
  ],
@@ -366915,7 +367383,9 @@
   },
   {
    "canon": "scrambled egg",
-   "aliases": []
+   "aliases": [
+    "eggs"
+   ]
   },
   {
    "canon": "pancake",
@@ -367026,7 +367496,9 @@
   },
   {
    "canon": "soft serve",
-   "aliases": []
+   "aliases": [
+    "soft serve ice cream"
+   ]
   },
   {
    "canon": "chocolate fountain",
@@ -367145,7 +367617,9 @@
   },
   {
    "canon": "carving station",
-   "aliases": []
+   "aliases": [
+    "carving station turkey"
+   ]
   },
   {
    "canon": "mystery meat",
@@ -369777,7 +370251,9 @@
   },
   {
    "canon": "harbor seal",
-   "aliases": []
+   "aliases": [
+    "seal"
+   ]
   },
   {
    "canon": "leopard gecko",
@@ -375038,7 +375514,9 @@
   },
   {
    "canon": "car",
-   "aliases": []
+   "aliases": [
+    "car horn"
+   ]
   },
   {
    "canon": "truck",
@@ -375855,7 +376333,10 @@
   },
   {
    "canon": "cobra",
-   "aliases": []
+   "aliases": [
+    "snake",
+    "venomous snake"
+   ]
   },
   {
    "canon": "piranha",
@@ -378112,7 +378593,10 @@
   },
   {
    "canon": "man o' war",
-   "aliases": []
+   "aliases": [
+    "man of war",
+    "portuguese man of war"
+   ]
   },
   {
    "canon": "portuguese man o' war",
@@ -379440,7 +379924,9 @@
   },
   {
    "canon": "black light",
-   "aliases": []
+   "aliases": [
+    "highlighters under blacklight"
+   ]
   },
   {
    "canon": "blacklight poster",
@@ -379530,7 +380016,9 @@
     "bioluminescent bay",
     "glowing waves",
     "glowing ocean",
-    "sea sparkle"
+    "sea sparkle",
+    "bioluminescent algae",
+    "glowing water"
    ]
   },
   {
@@ -379580,7 +380068,9 @@
    "aliases": [
     "cat's eyes",
     "animal eyes",
-    "eyes in the dark"
+    "eyes in the dark",
+    "eyes of a cat",
+    "animal eyes at night"
    ]
   },
   {
@@ -379922,7 +380412,9 @@
   },
   {
    "canon": "uranium",
-   "aliases": []
+   "aliases": [
+    "radioactive stuff"
+   ]
   },
   {
    "canon": "radium watch",
@@ -380669,7 +381161,9 @@
   },
   {
    "canon": "tire",
-   "aliases": []
+   "aliases": [
+    "old tire"
+   ]
   },
   {
    "canon": "algae bloom",
@@ -382129,7 +382623,8 @@
   {
    "canon": "hospital",
    "aliases": [
-    "hospital wing"
+    "hospital wing",
+    "wing of a building"
    ]
   },
   {
@@ -382836,6 +383331,10 @@
   },
   {
    "canon": "turkey wing",
+   "aliases": []
+  },
+  {
+   "canon": "helicopter",
    "aliases": []
   }
  ],
@@ -386706,7 +387205,8 @@
     "balance scale",
     "scales of justice",
     "justice",
-    "lady justice"
+    "lady justice",
+    "justice statue"
    ]
   },
   {
@@ -389124,7 +389624,9 @@
   },
   {
    "canon": "skating rink",
-   "aliases": []
+   "aliases": [
+    "ice skating rink"
+   ]
   },
   {
    "canon": "roller rink",
@@ -391219,7 +391721,9 @@
   },
   {
    "canon": "doodle",
-   "aliases": []
+   "aliases": [
+    "doodling"
+   ]
   },
   {
    "canon": "draw",
@@ -391229,7 +391733,9 @@
    "canon": "text",
    "aliases": [
     "text friends",
-    "text my friends"
+    "text my friends",
+    "texting",
+    "on your phone"
    ]
   },
   {
@@ -391242,7 +391748,9 @@
   },
   {
    "canon": "pass notes",
-   "aliases": []
+   "aliases": [
+    "passing notes"
+   ]
   },
   {
    "canon": "stare out the window",
@@ -391465,7 +391973,9 @@
   },
   {
    "canon": "paper football",
-   "aliases": []
+   "aliases": [
+    "make a paper football"
+   ]
   },
   {
    "canon": "rock paper scissors",
@@ -391603,7 +392113,8 @@
    "canon": "cool math games",
    "aliases": [
     "play cool math games",
-    "coolmath"
+    "coolmath",
+    "play games on chromebook"
    ]
   },
   {
@@ -392763,6 +393274,13 @@
     "typing test",
     "monkeytype"
    ]
+  },
+  {
+   "canon": "bracelet making",
+   "aliases": [
+    "make bracelets",
+    "friendship bracelets"
+   ]
   }
  ],
  "Things you'd find under your bed": [
@@ -393046,7 +393564,9 @@
   },
   {
    "canon": "cat",
-   "aliases": []
+   "aliases": [
+    "your pet"
+   ]
   },
   {
    "canon": "dog",
@@ -393074,7 +393594,9 @@
   },
   {
    "canon": "diary",
-   "aliases": []
+   "aliases": [
+    "old diary"
+   ]
   },
   {
    "canon": "journal",
@@ -393264,7 +393786,9 @@
   },
   {
    "canon": "cards",
-   "aliases": []
+   "aliases": [
+    "old birthday cards"
+   ]
   },
   {
    "canon": "lost homework",
@@ -395279,6 +395803,10 @@
   },
   {
    "canon": "razor",
+   "aliases": []
+  },
+  {
+   "canon": "shoes",
    "aliases": []
   }
  ],
@@ -404803,7 +405331,9 @@
   },
   {
    "canon": "lunch",
-   "aliases": []
+   "aliases": [
+    "cafeteria line"
+   ]
   },
   {
    "canon": "food",
@@ -404825,7 +405355,9 @@
    "canon": "drive thru",
    "aliases": [
     "drive through",
-    "drive through window"
+    "drive through window",
+    "taco bell drive thru",
+    "mcdonalds drive thru"
    ]
   },
   {
@@ -404849,7 +405381,8 @@
    "aliases": [
     "the register",
     "cash register",
-    "checkout line"
+    "checkout line",
+    "grocery checkout"
    ]
   },
   {
@@ -404943,7 +405476,9 @@
   },
   {
    "canon": "black friday",
-   "aliases": []
+   "aliases": [
+    "black friday sales"
+   ]
   },
   {
    "canon": "new iphone",
@@ -404981,7 +405516,9 @@
   },
   {
    "canon": "santa",
-   "aliases": []
+   "aliases": [
+    "meeting santa"
+   ]
   },
   {
    "canon": "easter bunny",
@@ -407480,6 +408017,13 @@
   {
    "canon": "irs",
    "aliases": []
+  },
+  {
+   "canon": "new sneaker drop",
+   "aliases": [
+    "sneaker release",
+    "jordan drop"
+   ]
   }
  ],
  "Things that make noise at night": [
@@ -407498,7 +408042,8 @@
   {
    "canon": "dog",
    "aliases": [
-    "barking dog"
+    "barking dog",
+    "dogs barking"
    ]
   },
   {
@@ -407628,7 +408173,10 @@
   },
   {
    "canon": "tv",
-   "aliases": []
+   "aliases": [
+    "parents watching tv",
+    "tv downstairs"
+   ]
   },
   {
    "canon": "radio",
@@ -407640,7 +408188,10 @@
   },
   {
    "canon": "notification",
-   "aliases": []
+   "aliases": [
+    "phone notifications",
+    "phone buzzing"
+   ]
   },
   {
    "canon": "text",
@@ -407772,7 +408323,9 @@
   },
   {
    "canon": "creaky floor",
-   "aliases": []
+   "aliases": [
+    "creaking stairs"
+   ]
   },
   {
    "canon": "creaky door",
@@ -407816,7 +408369,9 @@
   },
   {
    "canon": "refrigerator",
-   "aliases": []
+   "aliases": [
+    "fridge humming"
+   ]
   },
   {
    "canon": "ice maker",
@@ -407844,7 +408399,9 @@
   },
   {
    "canon": "air conditioner",
-   "aliases": []
+   "aliases": [
+    "ac"
+   ]
   },
   {
    "canon": "fan",
@@ -408169,7 +408726,8 @@
     "loud neighbors",
     "upstairs neighbors",
     "neighbors upstairs",
-    "footsteps upstairs"
+    "footsteps upstairs",
+    "neighbors partying"
    ]
   },
   {
@@ -408875,7 +409433,10 @@
   },
   {
    "canon": "ripped seat",
-   "aliases": []
+   "aliases": [
+    "graffiti on seats",
+    "writing on seats"
+   ]
   },
   {
    "canon": "tape",
@@ -409010,7 +409571,10 @@
   },
   {
    "canon": "back seat",
-   "aliases": []
+   "aliases": [
+    "drama in the back seat",
+    "cool kids in the back"
+   ]
   },
   {
    "canon": "front seat",
@@ -411069,6 +411633,14 @@
   {
    "canon": "kitty litter for puke",
    "aliases": []
+  },
+  {
+   "canon": "gum under seats",
+   "aliases": []
+  },
+  {
+   "canon": "kids yelling",
+   "aliases": []
   }
  ],
  "Things that need a password": [
@@ -411213,7 +411785,9 @@
   },
   {
    "canon": "school account",
-   "aliases": []
+   "aliases": [
+    "school login"
+   ]
   },
   {
    "canon": "chromebook",
@@ -411338,11 +411912,16 @@
   },
   {
    "canon": "router",
-   "aliases": []
+   "aliases": [
+    "router settings",
+    "wifi router"
+   ]
   },
   {
    "canon": "safe",
-   "aliases": []
+   "aliases": [
+    "home safe"
+   ]
   },
   {
    "canon": "lockbox",
@@ -411374,7 +411953,9 @@
   },
   {
    "canon": "alarm system",
-   "aliases": []
+   "aliases": [
+    "home alarm"
+   ]
   },
   {
    "canon": "security system",
@@ -413009,6 +413590,12 @@
   {
    "canon": "router admin",
    "aliases": []
+  },
+  {
+   "canon": "garage door code",
+   "aliases": [
+    "garage keypad"
+   ]
   }
  ],
  "Things at a school dance": [
@@ -413233,7 +413820,8 @@
     "multipurpose room",
     "ballroom",
     "hotel ballroom",
-    "venue"
+    "venue",
+    "gym floor"
    ]
   },
   {
@@ -413312,7 +413900,9 @@
    "aliases": [
     "loners",
     "people standing by the wall",
-    "standing on the wall"
+    "standing on the wall",
+    "awkward wall standers",
+    "wall standers"
    ]
   },
   {
@@ -414686,6 +415276,16 @@
   },
   {
    "canon": "trash cans",
+   "aliases": []
+  },
+  {
+   "canon": "cotton candy machine",
+   "aliases": [
+    "cotton candy"
+   ]
+  },
+  {
+   "canon": "snacks table",
    "aliases": []
   }
  ],
@@ -425014,7 +425614,9 @@
   },
   {
    "canon": "carpenter pencil",
-   "aliases": []
+   "aliases": [
+    "pencil stub"
+   ]
   },
   {
    "canon": "chisel",
@@ -426258,7 +426860,8 @@
   {
    "canon": "first aid kit",
    "aliases": [
-    "band aids"
+    "band aids",
+    "old bandaids"
    ]
   },
   {
@@ -426366,6 +426969,10 @@
   },
   {
    "canon": "goo gone",
+   "aliases": []
+  },
+  {
+   "canon": "zip ties",
    "aliases": []
   }
  ],
@@ -426604,7 +427211,9 @@
   },
   {
    "canon": "mac and cheese",
-   "aliases": []
+   "aliases": [
+    "mac n cheese"
+   ]
   },
   {
    "canon": "chips",
@@ -428029,6 +428638,28 @@
   {
    "canon": "cleanup",
    "aliases": []
+  },
+  {
+   "canon": "slip n slide",
+   "aliases": [
+    "slip and slide"
+   ]
+  },
+  {
+   "canon": "awkward hugs",
+   "aliases": [
+    "hugs from relatives"
+   ]
+  },
+  {
+   "canon": "relatives you dont know",
+   "aliases": [
+    "random cousins"
+   ]
+  },
+  {
+   "canon": "aunts pinching cheeks",
+   "aliases": []
   }
  ],
  "Things in a medicine cabinet": [
@@ -428469,7 +429100,10 @@
   },
   {
    "canon": "expired medicine",
-   "aliases": []
+   "aliases": [
+    "expired pills",
+    "old prescriptions"
+   ]
   },
   {
    "canon": "old pills",
@@ -430138,7 +430772,9 @@
   },
   {
    "canon": "phone charger",
-   "aliases": []
+   "aliases": [
+    "charger cords"
+   ]
   },
   {
    "canon": "zipper",
@@ -431182,6 +431818,10 @@
   {
    "canon": "paper straw",
    "aliases": []
+  },
+  {
+   "canon": "cookies",
+   "aliases": []
   }
  ],
  "Things in a car's cup holder": [
@@ -431789,7 +432429,9 @@
   },
   {
    "canon": "exercise bike",
-   "aliases": []
+   "aliases": [
+    "dusty exercise bike"
+   ]
   },
   {
    "canon": "weights",
@@ -431859,7 +432501,9 @@
   },
   {
    "canon": "mold",
-   "aliases": []
+   "aliases": [
+    "moldy carpet"
+   ]
   },
   {
    "canon": "mildew",
@@ -432019,7 +432663,9 @@
   },
   {
    "canon": "trophy",
-   "aliases": []
+   "aliases": [
+    "old trophies"
+   ]
   },
   {
    "canon": "old computer",
@@ -432154,7 +432800,8 @@
   {
    "canon": "washing machine",
    "aliases": [
-    "washer and dryer"
+    "washer and dryer",
+    "laundry machines"
    ]
   },
   {
@@ -432530,7 +433177,10 @@
   },
   {
    "canon": "game room",
-   "aliases": []
+   "aliases": [
+    "gaming setup",
+    "gaming pc"
+   ]
   },
   {
    "canon": "home theater",
@@ -433701,6 +434351,12 @@
   {
    "canon": "old bike",
    "aliases": []
+  },
+  {
+   "canon": "old crib",
+   "aliases": [
+    "baby stuff"
+   ]
   }
  ],
  "Things you get for your birthday": [
@@ -435394,7 +436050,10 @@
   },
   {
    "canon": "utilities",
-   "aliases": []
+   "aliases": [
+    "utility setup",
+    "setting up wifi"
+   ]
   },
   {
    "canon": "internet",
@@ -436427,6 +437086,10 @@
    "aliases": [
     "furniture"
    ]
+  },
+  {
+   "canon": "friends to help",
+   "aliases": []
   }
  ],
  "Things at the vet": [
@@ -436668,7 +437331,9 @@
   },
   {
    "canon": "spay",
-   "aliases": []
+   "aliases": [
+    "spay surgery"
+   ]
   },
   {
    "canon": "neuter",
@@ -436712,7 +437377,9 @@
   },
   {
    "canon": "teeth cleaning",
-   "aliases": []
+   "aliases": [
+    "dental cleaning"
+   ]
   },
   {
    "canon": "toothbrush",
@@ -436937,7 +437604,8 @@
   {
    "canon": "clippers",
    "aliases": [
-    "nail clippers"
+    "nail clippers",
+    "nail trimmer"
    ]
   },
   {
@@ -437640,6 +438308,10 @@
   {
    "canon": "thundershirt",
    "aliases": []
+  },
+  {
+   "canon": "waiting room animals",
+   "aliases": []
   }
  ],
  "Things you'd see at a yard sale": [
@@ -437704,7 +438376,9 @@
   },
   {
    "canon": "furniture",
-   "aliases": []
+   "aliases": [
+    "old couch"
+   ]
   },
   {
    "canon": "couch",
@@ -437804,7 +438478,9 @@
   },
   {
    "canon": "bread maker",
-   "aliases": []
+   "aliases": [
+    "kitchen gadgets"
+   ]
   },
   {
    "canon": "tv",
@@ -437828,7 +438504,10 @@
   },
   {
    "canon": "video games",
-   "aliases": []
+   "aliases": [
+    "old video games",
+    "old games"
+   ]
   },
   {
    "canon": "board games",
@@ -437836,7 +438515,10 @@
   },
   {
    "canon": "puzzles",
-   "aliases": []
+   "aliases": [
+    "puzzles missing pieces",
+    "jigsaw puzzles"
+   ]
   },
   {
    "canon": "bike",
@@ -438775,7 +439457,9 @@
   },
   {
    "canon": "waffle maker",
-   "aliases": []
+   "aliases": [
+    "waffle iron"
+   ]
   },
   {
    "canon": "popcorn maker",
@@ -439533,7 +440217,8 @@
    "aliases": [
     "kid's artwork",
     "kids art",
-    "child's drawing"
+    "child's drawing",
+    "kid art"
    ]
   },
   {
@@ -439554,7 +440239,10 @@
   },
   {
    "canon": "school photo",
-   "aliases": []
+   "aliases": [
+    "school pictures",
+    "school pics"
+   ]
   },
   {
    "canon": "baby picture",
@@ -439562,7 +440250,10 @@
   },
   {
    "canon": "calendar",
-   "aliases": []
+   "aliases": [
+    "family calendar",
+    "magnetic calendar"
+   ]
   },
   {
    "canon": "schedule",
@@ -439634,7 +440325,9 @@
   },
   {
    "canon": "wedding invitation",
-   "aliases": []
+   "aliases": [
+    "wedding invites"
+   ]
   },
   {
    "canon": "invitation",
@@ -439650,7 +440343,9 @@
   },
   {
    "canon": "christmas card",
-   "aliases": []
+   "aliases": [
+    "family photo card"
+   ]
   },
   {
    "canon": "holiday card",
@@ -439674,7 +440369,9 @@
   },
   {
    "canon": "takeout menu",
-   "aliases": []
+   "aliases": [
+    "delivery menu"
+   ]
   },
   {
    "canon": "menu",
@@ -439700,7 +440397,9 @@
   },
   {
    "canon": "appointment card",
-   "aliases": []
+   "aliases": [
+    "doctor appointment card"
+   ]
   },
   {
    "canon": "dentist appointment",
@@ -439743,7 +440442,10 @@
   },
   {
    "canon": "ultrasound picture",
-   "aliases": []
+   "aliases": [
+    "sonogram",
+    "baby ultrasound"
+   ]
   },
   {
    "canon": "baby announcement",
@@ -440008,7 +440710,8 @@
   {
    "canon": "honor roll certificate",
    "aliases": [
-    "honor roll"
+    "honor roll",
+    "award certificate"
    ]
   },
   {
@@ -440500,6 +441203,12 @@
   {
    "canon": "relish",
    "aliases": []
+  },
+  {
+   "canon": "bottle opener magnet",
+   "aliases": [
+    "magnetic bottle opener"
+   ]
   }
  ],
  "Things on a kitchen counter": [
@@ -440749,7 +441458,9 @@
   },
   {
    "canon": "phone charger",
-   "aliases": []
+   "aliases": [
+    "phone charging"
+   ]
   },
   {
    "canon": "charger",
@@ -441876,7 +442587,9 @@
   },
   {
    "canon": "candy dish",
-   "aliases": []
+   "aliases": [
+    "hard candy bowl"
+   ]
   },
   {
    "canon": "hard candy",
@@ -441906,7 +442619,10 @@
    "canon": "blue cookie tin",
    "aliases": [
     "cookie tin with sewing stuff",
-    "cookie tin full of sewing stuff"
+    "cookie tin full of sewing stuff",
+    "butter cookie tin with sewing stuff",
+    "cookie tin with sewing supplies",
+    "danish cookie tin"
    ]
   },
   {
@@ -441933,7 +442649,10 @@
   },
   {
    "canon": "plastic couch cover",
-   "aliases": []
+   "aliases": [
+    "plastic on the couch",
+    "plastic covered furniture"
+   ]
   },
   {
    "canon": "doilies",
@@ -441949,7 +442668,10 @@
   },
   {
    "canon": "knitted blanket",
-   "aliases": []
+   "aliases": [
+    "afghan blanket",
+    "crocheted blanket"
+   ]
   },
   {
    "canon": "quilt",
@@ -441981,7 +442703,9 @@
   },
   {
    "canon": "photo album",
-   "aliases": []
+   "aliases": [
+    "old photo albums"
+   ]
   },
   {
    "canon": "old pictures",
@@ -442145,7 +442869,9 @@
   },
   {
    "canon": "crossword puzzle",
-   "aliases": []
+   "aliases": [
+    "word search books"
+   ]
   },
   {
    "canon": "word search",
@@ -442165,7 +442891,9 @@
   },
   {
    "canon": "readers digest",
-   "aliases": []
+   "aliases": [
+    "old magazines"
+   ]
   },
   {
    "canon": "bible",
@@ -442301,7 +443029,9 @@
   },
   {
    "canon": "bingo",
-   "aliases": []
+   "aliases": [
+    "bingo cards"
+   ]
   },
   {
    "canon": "casserole",
@@ -442699,7 +443429,9 @@
   },
   {
    "canon": "prune juice",
-   "aliases": []
+   "aliases": [
+    "glass of prune juice"
+   ]
   },
   {
    "canon": "raisins",
@@ -449113,7 +449845,10 @@
   },
   {
    "canon": "magic dust",
-   "aliases": []
+   "aliases": [
+    "pouch of dust",
+    "pouch of powder"
+   ]
   },
   {
    "canon": "sparkles",
@@ -449481,6 +450216,12 @@
   {
    "canon": "newspaper",
    "aliases": []
+  },
+  {
+   "canon": "enchanted dagger",
+   "aliases": [
+    "magic dagger"
+   ]
   }
  ],
  "Things in a haunted house": [
@@ -453374,10 +454115,6 @@
    "aliases": []
   },
   {
-   "canon": "x-men",
-   "aliases": []
-  },
-  {
    "canon": "fantastic four",
    "aliases": []
   },
@@ -453930,7 +454667,9 @@
   },
   {
    "canon": "cash",
-   "aliases": []
+   "aliases": [
+    "stacks of money"
+   ]
   },
   {
    "canon": "gold",
@@ -454014,7 +454753,9 @@
   },
   {
    "canon": "bug",
-   "aliases": []
+   "aliases": [
+    "listening bug"
+   ]
   },
   {
    "canon": "tracker",
@@ -454046,7 +454787,9 @@
   },
   {
    "canon": "lock pick",
-   "aliases": []
+   "aliases": [
+    "lockpick set"
+   ]
   },
   {
    "canon": "key",
@@ -454491,7 +455234,9 @@
   {
    "canon": "classified documents",
    "aliases": [
-    "classified files"
+    "classified files",
+    "secret documents",
+    "top secret files"
    ]
   },
   {
@@ -455414,10 +456159,6 @@
   },
   {
    "canon": "red panda",
-   "aliases": []
-  },
-  {
-   "canon": "panda",
    "aliases": []
   },
   {
@@ -463036,7 +463777,10 @@
   },
   {
    "canon": "troll",
-   "aliases": []
+   "aliases": [
+    "troll under the bridge",
+    "bridge troll"
+   ]
   },
   {
    "canon": "ogre",
@@ -463138,7 +463882,9 @@
   },
   {
    "canon": "wand",
-   "aliases": []
+   "aliases": [
+    "magic wand"
+   ]
   },
   {
    "canon": "magic",
@@ -464217,7 +464963,10 @@
  "Things a villain would have": [
   {
    "canon": "lair",
-   "aliases": []
+   "aliases": [
+    "evil lair",
+    "secret hideout"
+   ]
   },
   {
    "canon": "secret lair",
@@ -464269,7 +465018,9 @@
   },
   {
    "canon": "laser",
-   "aliases": []
+   "aliases": [
+    "giant laser"
+   ]
   },
   {
    "canon": "doomsday device",
@@ -464309,7 +465060,10 @@
   },
   {
    "canon": "swivel chair",
-   "aliases": []
+   "aliases": [
+    "chair that spins",
+    "spinning chair"
+   ]
   },
   {
    "canon": "chair",
@@ -464321,7 +465075,9 @@
   },
   {
    "canon": "white cat",
-   "aliases": []
+   "aliases": [
+    "evil cat"
+   ]
   },
   {
    "canon": "shark",
@@ -464329,7 +465085,9 @@
   },
   {
    "canon": "shark tank",
-   "aliases": []
+   "aliases": [
+    "pool of sharks"
+   ]
   },
   {
    "canon": "piranha",
@@ -464649,7 +465407,9 @@
   },
   {
    "canon": "mind control device",
-   "aliases": []
+   "aliases": [
+    "mind control helmet"
+   ]
   },
   {
    "canon": "freeze ray",
@@ -465387,6 +466147,12 @@
   {
    "canon": "bounty hunters",
    "aliases": []
+  },
+  {
+   "canon": "secret island",
+   "aliases": [
+    "island lair"
+   ]
   }
  ],
  "Things at a circus": [
@@ -465402,7 +466168,8 @@
    "canon": "big top",
    "aliases": [
     "big top tent",
-    "circus tent"
+    "circus tent",
+    "big tent"
    ]
   },
   {
@@ -466523,7 +467290,8 @@
     "basketball",
     "basketball hoops",
     "hoop fever",
-    "pop a shot"
+    "pop a shot",
+    "hoop shot"
    ]
   },
   {
@@ -466546,7 +467314,9 @@
   },
   {
    "canon": "high score",
-   "aliases": []
+   "aliases": [
+    "high score board"
+   ]
   },
   {
    "canon": "leaderboard",
@@ -466570,7 +467340,9 @@
   },
   {
    "canon": "candy",
-   "aliases": []
+   "aliases": [
+    "candy prizes"
+   ]
   },
   {
    "canon": "bouncy ball",
@@ -466618,7 +467390,10 @@
   },
   {
    "canon": "game card",
-   "aliases": []
+   "aliases": [
+    "card swipe",
+    "arcade card"
+   ]
   },
   {
    "canon": "card swiper",
@@ -468221,7 +468996,9 @@
   },
   {
    "canon": "coffee",
-   "aliases": []
+   "aliases": [
+    "campfire coffee"
+   ]
   },
   {
    "canon": "tin cup",
@@ -470771,6 +471548,10 @@
    "aliases": [
     "takis xplosion"
    ]
+  },
+  {
+   "canon": "everything bagel",
+   "aliases": []
   }
  ],
  "Sit-down restaurant chains": [
