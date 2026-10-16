@@ -133,7 +133,6 @@ for (const c of RAW) {
   let folded = null;
   if (c.pack !== 'wordplay') {
     folded = new Set([...keys].map(foldKey));
-    if ((c.junk || []).some((j) => folded.has(foldKey(answerKey(j))))) folded = null;
   }
   let phrased = null; // phrase key → the dedupe id of the answer it belongs to
   if (c.pack !== 'wordplay') {
@@ -143,9 +142,12 @@ for (const c of RAW) {
       const id = ks.map((k) => phrased.get(k)).find(Boolean) || ks[0];
       for (const k of ks) if (!phrased.has(k)) phrased.set(k, id);
     }
-    if ((c.junk || []).some((j) => phraseKeys(j).some((k) => phrased.has(k)))) phrased = null;
   }
-  LISTS.set(c.name, { ...c, keys, folded, phrased });
+  // a list's own JUNK never scores — refused by its exact key, so one junk word that folds onto a real answer ("glass"
+  // vs "glasses") no longer switches plural / phrase matching off for the whole list (oct16: "Things you can fold"
+  // refused "towels" for that reason)
+  const junkKeys = new Set((c.junk || []).map(answerKey).filter((k) => k && !keys.has(k)));
+  LISTS.set(c.name, { ...c, keys, folded, phrased, junkKeys });
 }
 
 const NAMES = [...LISTS.keys()].sort();
@@ -161,7 +163,9 @@ function onList(category, answer) {
   if (!l) return false;
   const k = answerKey(answer);
   if (k.length === 0) return false;
-  return l.keys.has(k) || (l.folded != null && l.folded.has(foldKey(k))) || (l.phrased != null && phraseKeys(answer).some((pk) => l.phrased.has(pk)));
+  if (l.keys.has(k)) return true;
+  if (l.junkKeys.has(k)) return false;
+  return (l.folded != null && l.folded.has(foldKey(k))) || (l.phrased != null && phraseKeys(answer).some((pk) => l.phrased.has(pk)));
 }
 
 /** The key two answers must share to count as the SAME answer on `category` (the dedupe key). */
