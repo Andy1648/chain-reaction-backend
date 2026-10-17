@@ -259943,10 +259943,6 @@
    "aliases": []
   },
   {
-   "canon": "water",
-   "aliases": []
-  },
-  {
    "canon": "nothing",
    "aliases": []
   },
@@ -260210,10 +260206,6 @@
    "aliases": []
   },
   {
-   "canon": "rice",
-   "aliases": []
-  },
-  {
    "canon": "leftover rice",
    "aliases": []
   },
@@ -260223,10 +260215,6 @@
   },
   {
    "canon": "steak",
-   "aliases": []
-  },
-  {
-   "canon": "mug",
    "aliases": []
   },
   {
@@ -261125,12 +261113,6 @@
    "aliases": []
   },
   {
-   "canon": "coffee",
-   "aliases": [
-    "reheated coffee"
-   ]
-  },
-  {
    "canon": "tea bag with staple",
    "aliases": []
   },
@@ -261492,10 +261474,6 @@
   },
   {
    "canon": "hot pockets",
-   "aliases": []
-  },
-  {
-   "canon": "paper plate",
    "aliases": []
   },
   {
@@ -262479,15 +262457,7 @@
    "aliases": []
   },
   {
-   "canon": "milk",
-   "aliases": []
-  },
-  {
    "canon": "chocolate milk",
-   "aliases": []
-  },
-  {
-   "canon": "tea",
    "aliases": []
   },
   {
@@ -262580,10 +262550,6 @@
   },
   {
    "canon": "paper bowl",
-   "aliases": []
-  },
-  {
-   "canon": "paper towel",
    "aliases": []
   },
   {
@@ -263284,10 +263250,6 @@
   },
   {
    "canon": "microwave itself",
-   "aliases": []
-  },
-  {
-   "canon": "microwave popcorn",
    "aliases": []
   },
   {
@@ -568384,14 +568346,6 @@
    "aliases": []
   },
   {
-   "canon": "teddy bear",
-   "aliases": []
-  },
-  {
-   "canon": "stuffed animal",
-   "aliases": []
-  },
-  {
    "canon": "furby",
    "aliases": []
   },
@@ -569940,10 +569894,6 @@
    "aliases": []
   },
   {
-   "canon": "sheet",
-   "aliases": []
-  },
-  {
    "canon": "ghost sheet",
    "aliases": []
   },
@@ -571077,10 +571027,6 @@
   },
   {
    "canon": "pea",
-   "aliases": []
-  },
-  {
-   "canon": "bed frame",
    "aliases": []
   },
   {
@@ -575546,10 +575492,6 @@
    "aliases": []
   },
   {
-   "canon": "sunglasses",
-   "aliases": []
-  },
-  {
    "canon": "shades",
    "aliases": []
   },
@@ -577136,10 +577078,6 @@
    "aliases": []
   },
   {
-   "canon": "onion",
-   "aliases": []
-  },
-  {
    "canon": "mushroom",
    "aliases": []
   },
@@ -577216,15 +577154,7 @@
    "aliases": []
   },
   {
-   "canon": "mayo",
-   "aliases": []
-  },
-  {
    "canon": "mayonnaise",
-   "aliases": []
-  },
-  {
-   "canon": "mustard",
    "aliases": []
   },
   {
@@ -577244,15 +577174,7 @@
    "aliases": []
   },
   {
-   "canon": "salt",
-   "aliases": []
-  },
-  {
    "canon": "too much salt",
-   "aliases": []
-  },
-  {
-   "canon": "sugar",
    "aliases": []
   },
   {
@@ -579012,10 +578934,6 @@
    "aliases": []
   },
   {
-   "canon": "garlic",
-   "aliases": []
-  },
-  {
    "canon": "raw onion",
    "aliases": []
   },
@@ -580149,10 +580067,6 @@
   },
   {
    "canon": "liver and onions",
-   "aliases": []
-  },
-  {
-   "canon": "ketchup",
    "aliases": []
   },
   {
@@ -589505,6 +589419,1028 @@
   },
   {
    "canon": "ladder",
+   "aliases": []
+  }
+ ],
+ "Things you shouldn't flush down the toilet": [
+  {
+   "canon": "goldfish",
+   "aliases": []
+  },
+  {
+   "canon": "dead goldfish",
+   "aliases": []
+  },
+  {
+   "canon": "phone",
+   "aliases": []
+  },
+  {
+   "canon": "iphone",
+   "aliases": []
+  },
+  {
+   "canon": "airpods",
+   "aliases": []
+  },
+  {
+   "canon": "keys",
+   "aliases": []
+  },
+  {
+   "canon": "car keys",
+   "aliases": []
+  },
+  {
+   "canon": "toys",
+   "aliases": []
+  },
+  {
+   "canon": "lego",
+   "aliases": []
+  },
+  {
+   "canon": "legos",
+   "aliases": []
+  },
+  {
+   "canon": "action figure",
+   "aliases": []
+  },
+  {
+   "canon": "barbie",
+   "aliases": []
+  },
+  {
+   "canon": "hot wheels",
+   "aliases": []
+  },
+  {
+   "canon": "wipes",
+   "aliases": []
+  },
+  {
+   "canon": "baby wipes",
+   "aliases": []
+  },
+  {
+   "canon": "wet wipes",
+   "aliases": []
+  },
+  {
+   "canon": "diaper",
+   "aliases": []
+  },
+  {
+   "canon": "diapers",
+   "aliases": []
+  },
+  {
+   "canon": "paper towels",
+   "aliases": []
+  },
+  {
+   "canon": "paper towel",
+   "aliases": []
+  },
+  {
+   "canon": "napkins",
+   "aliases": []
+  },
+  {
+   "canon": "cotton balls",
+   "aliases": []
+  },
+  {
+   "canon": "q tips",
+   "aliases": []
+  },
+  {
+   "canon": "cotton swabs",
+   "aliases": []
+  },
+  {
+   "canon": "dental floss",
+   "aliases": []
+  },
+  {
+   "canon": "floss",
+   "aliases": []
+  },
+  {
+   "canon": "hair",
+   "aliases": []
+  },
+  {
+   "canon": "hairball",
+   "aliases": []
+  },
+  {
+   "canon": "gum",
+   "aliases": []
+  },
+  {
+   "canon": "chewing gum",
+   "aliases": []
+  },
+  {
+   "canon": "cat litter",
+   "aliases": []
+  },
+  {
+   "canon": "kitty litter",
+   "aliases": []
+  },
+  {
+   "canon": "grease",
+   "aliases": []
+  },
+  {
+   "canon": "cooking oil",
+   "aliases": []
+  },
+  {
+   "canon": "bacon grease",
+   "aliases": []
+  },
+  {
+   "canon": "food",
+   "aliases": []
+  },
+  {
+   "canon": "leftovers",
+   "aliases": []
+  },
+  {
+   "canon": "spaghetti",
+   "aliases": []
+  },
+  {
+   "canon": "rice",
+   "aliases": []
+  },
+  {
+   "canon": "cereal",
+   "aliases": []
+  },
+  {
+   "canon": "chicken bones",
+   "aliases": []
+  },
+  {
+   "canon": "bones",
+   "aliases": []
+  },
+  {
+   "canon": "fish bones",
+   "aliases": []
+  },
+  {
+   "canon": "eggshells",
+   "aliases": []
+  },
+  {
+   "canon": "coffee grounds",
+   "aliases": []
+  },
+  {
+   "canon": "medicine",
+   "aliases": []
+  },
+  {
+   "canon": "pills",
+   "aliases": []
+  },
+  {
+   "canon": "band aid",
+   "aliases": []
+  },
+  {
+   "canon": "band aids",
+   "aliases": []
+  },
+  {
+   "canon": "bandage",
+   "aliases": []
+  },
+  {
+   "canon": "contact lenses",
+   "aliases": []
+  },
+  {
+   "canon": "contacts",
+   "aliases": []
+  },
+  {
+   "canon": "condiment packets",
+   "aliases": []
+  },
+  {
+   "canon": "ketchup packet",
+   "aliases": []
+  },
+  {
+   "canon": "wedding ring",
+   "aliases": []
+  },
+  {
+   "canon": "ring",
+   "aliases": []
+  },
+  {
+   "canon": "jewelry",
+   "aliases": []
+  },
+  {
+   "canon": "earrings",
+   "aliases": []
+  },
+  {
+   "canon": "necklace",
+   "aliases": []
+  },
+  {
+   "canon": "watch",
+   "aliases": []
+  },
+  {
+   "canon": "money",
+   "aliases": []
+  },
+  {
+   "canon": "cash",
+   "aliases": []
+  },
+  {
+   "canon": "coins",
+   "aliases": []
+  },
+  {
+   "canon": "quarters",
+   "aliases": []
+  },
+  {
+   "canon": "wallet",
+   "aliases": []
+  },
+  {
+   "canon": "credit card",
+   "aliases": []
+  },
+  {
+   "canon": "socks",
+   "aliases": []
+  },
+  {
+   "canon": "sock",
+   "aliases": []
+  },
+  {
+   "canon": "underwear",
+   "aliases": []
+  },
+  {
+   "canon": "shirt",
+   "aliases": []
+  },
+  {
+   "canon": "clothes",
+   "aliases": []
+  },
+  {
+   "canon": "towel",
+   "aliases": []
+  },
+  {
+   "canon": "washcloth",
+   "aliases": []
+  },
+  {
+   "canon": "sponge",
+   "aliases": []
+  },
+  {
+   "canon": "toothbrush",
+   "aliases": []
+  },
+  {
+   "canon": "toothpaste",
+   "aliases": []
+  },
+  {
+   "canon": "razor",
+   "aliases": []
+  },
+  {
+   "canon": "makeup",
+   "aliases": []
+  },
+  {
+   "canon": "lipstick",
+   "aliases": []
+  },
+  {
+   "canon": "nail polish",
+   "aliases": []
+  },
+  {
+   "canon": "glitter",
+   "aliases": []
+  },
+  {
+   "canon": "slime",
+   "aliases": []
+  },
+  {
+   "canon": "play doh",
+   "aliases": []
+  },
+  {
+   "canon": "crayons",
+   "aliases": []
+  },
+  {
+   "canon": "markers",
+   "aliases": []
+  },
+  {
+   "canon": "pencil",
+   "aliases": []
+  },
+  {
+   "canon": "pen",
+   "aliases": []
+  },
+  {
+   "canon": "eraser",
+   "aliases": []
+  },
+  {
+   "canon": "paper",
+   "aliases": []
+  },
+  {
+   "canon": "homework",
+   "aliases": []
+  },
+  {
+   "canon": "report card",
+   "aliases": []
+  },
+  {
+   "canon": "math test",
+   "aliases": []
+  },
+  {
+   "canon": "notebook",
+   "aliases": []
+  },
+  {
+   "canon": "book",
+   "aliases": []
+  },
+  {
+   "canon": "textbook",
+   "aliases": []
+  },
+  {
+   "canon": "diary",
+   "aliases": []
+  },
+  {
+   "canon": "love letter",
+   "aliases": []
+  },
+  {
+   "canon": "photo",
+   "aliases": []
+  },
+  {
+   "canon": "hamster",
+   "aliases": []
+  },
+  {
+   "canon": "dead hamster",
+   "aliases": []
+  },
+  {
+   "canon": "turtle",
+   "aliases": []
+  },
+  {
+   "canon": "lizard",
+   "aliases": []
+  },
+  {
+   "canon": "snake",
+   "aliases": []
+  },
+  {
+   "canon": "frog",
+   "aliases": []
+  },
+  {
+   "canon": "spider",
+   "aliases": []
+  },
+  {
+   "canon": "cockroach",
+   "aliases": []
+  },
+  {
+   "canon": "rat",
+   "aliases": []
+  },
+  {
+   "canon": "mouse",
+   "aliases": []
+  },
+  {
+   "canon": "dog",
+   "aliases": []
+  },
+  {
+   "canon": "cat",
+   "aliases": []
+  },
+  {
+   "canon": "baby alligator",
+   "aliases": []
+  },
+  {
+   "canon": "remote",
+   "aliases": []
+  },
+  {
+   "canon": "tv remote",
+   "aliases": []
+  },
+  {
+   "canon": "controller",
+   "aliases": []
+  },
+  {
+   "canon": "charger",
+   "aliases": []
+  },
+  {
+   "canon": "phone charger",
+   "aliases": []
+  },
+  {
+   "canon": "batteries",
+   "aliases": []
+  },
+  {
+   "canon": "battery",
+   "aliases": []
+  },
+  {
+   "canon": "lightbulb",
+   "aliases": []
+  },
+  {
+   "canon": "glass",
+   "aliases": []
+  },
+  {
+   "canon": "plastic bag",
+   "aliases": []
+  },
+  {
+   "canon": "plastic bags",
+   "aliases": []
+  },
+  {
+   "canon": "grocery bag",
+   "aliases": []
+  },
+  {
+   "canon": "ziploc bag",
+   "aliases": []
+  },
+  {
+   "canon": "straws",
+   "aliases": []
+  },
+  {
+   "canon": "plastic straw",
+   "aliases": []
+  },
+  {
+   "canon": "bottle cap",
+   "aliases": []
+  },
+  {
+   "canon": "cigarette butts",
+   "aliases": []
+  },
+  {
+   "canon": "tissues",
+   "aliases": []
+  },
+  {
+   "canon": "kleenex",
+   "aliases": []
+  },
+  {
+   "canon": "facial tissue",
+   "aliases": []
+  },
+  {
+   "canon": "makeup wipes",
+   "aliases": []
+  },
+  {
+   "canon": "toilet paper roll",
+   "aliases": []
+  },
+  {
+   "canon": "paper towel roll",
+   "aliases": []
+  },
+  {
+   "canon": "cardboard",
+   "aliases": []
+  },
+  {
+   "canon": "pizza box",
+   "aliases": []
+  },
+  {
+   "canon": "styrofoam",
+   "aliases": []
+  },
+  {
+   "canon": "balloon",
+   "aliases": []
+  },
+  {
+   "canon": "rubber duck",
+   "aliases": []
+  },
+  {
+   "canon": "toy car",
+   "aliases": []
+  },
+  {
+   "canon": "marbles",
+   "aliases": []
+  },
+  {
+   "canon": "bouncy ball",
+   "aliases": []
+  },
+  {
+   "canon": "fidget spinner",
+   "aliases": []
+  },
+  {
+   "canon": "tennis ball",
+   "aliases": []
+  },
+  {
+   "canon": "golf ball",
+   "aliases": []
+  },
+  {
+   "canon": "ping pong ball",
+   "aliases": []
+  },
+  {
+   "canon": "dice",
+   "aliases": []
+  },
+  {
+   "canon": "uno cards",
+   "aliases": []
+  },
+  {
+   "canon": "pokemon cards",
+   "aliases": []
+  },
+  {
+   "canon": "trading cards",
+   "aliases": []
+  },
+  {
+   "canon": "lego man",
+   "aliases": []
+  },
+  {
+   "canon": "lego head",
+   "aliases": []
+  },
+  {
+   "canon": "brother's toothbrush",
+   "aliases": []
+  },
+  {
+   "canon": "sister's phone",
+   "aliases": []
+  },
+  {
+   "canon": "dad's keys",
+   "aliases": []
+  },
+  {
+   "canon": "mom's ring",
+   "aliases": []
+  },
+  {
+   "canon": "grandma's dentures",
+   "aliases": []
+  },
+  {
+   "canon": "dentures",
+   "aliases": []
+  },
+  {
+   "canon": "teeth",
+   "aliases": []
+  },
+  {
+   "canon": "tooth",
+   "aliases": []
+  },
+  {
+   "canon": "retainer",
+   "aliases": []
+  },
+  {
+   "canon": "braces",
+   "aliases": []
+  },
+  {
+   "canon": "hearing aid",
+   "aliases": []
+  },
+  {
+   "canon": "glasses",
+   "aliases": []
+  },
+  {
+   "canon": "sunglasses",
+   "aliases": []
+  },
+  {
+   "canon": "hat",
+   "aliases": []
+  },
+  {
+   "canon": "shoe",
+   "aliases": []
+  },
+  {
+   "canon": "shoes",
+   "aliases": []
+  },
+  {
+   "canon": "flip flop",
+   "aliases": []
+  },
+  {
+   "canon": "slipper",
+   "aliases": []
+  },
+  {
+   "canon": "bowling ball",
+   "aliases": []
+  },
+  {
+   "canon": "brick",
+   "aliases": []
+  },
+  {
+   "canon": "rock",
+   "aliases": []
+  },
+  {
+   "canon": "sand",
+   "aliases": []
+  },
+  {
+   "canon": "dirt",
+   "aliases": []
+  },
+  {
+   "canon": "mud",
+   "aliases": []
+  },
+  {
+   "canon": "leaves",
+   "aliases": []
+  },
+  {
+   "canon": "sticks",
+   "aliases": []
+  },
+  {
+   "canon": "christmas lights",
+   "aliases": []
+  },
+  {
+   "canon": "ornament",
+   "aliases": []
+  },
+  {
+   "canon": "candle",
+   "aliases": []
+  },
+  {
+   "canon": "wax",
+   "aliases": []
+  },
+  {
+   "canon": "crayon",
+   "aliases": []
+  },
+  {
+   "canon": "chalk",
+   "aliases": []
+  },
+  {
+   "canon": "yarn",
+   "aliases": []
+  },
+  {
+   "canon": "string",
+   "aliases": []
+  },
+  {
+   "canon": "rope",
+   "aliases": []
+  },
+  {
+   "canon": "rubber bands",
+   "aliases": []
+  },
+  {
+   "canon": "hair tie",
+   "aliases": []
+  },
+  {
+   "canon": "bobby pins",
+   "aliases": []
+  },
+  {
+   "canon": "scrunchie",
+   "aliases": []
+  },
+  {
+   "canon": "paint",
+   "aliases": []
+  },
+  {
+   "canon": "concrete",
+   "aliases": []
+  },
+  {
+   "canon": "glue",
+   "aliases": []
+  },
+  {
+   "canon": "superglue",
+   "aliases": []
+  },
+  {
+   "canon": "tape",
+   "aliases": []
+  },
+  {
+   "canon": "duct tape",
+   "aliases": []
+  },
+  {
+   "canon": "aluminum foil",
+   "aliases": []
+  },
+  {
+   "canon": "foil",
+   "aliases": []
+  },
+  {
+   "canon": "plastic wrap",
+   "aliases": []
+  },
+  {
+   "canon": "saran wrap",
+   "aliases": []
+  },
+  {
+   "canon": "fruit peels",
+   "aliases": []
+  },
+  {
+   "canon": "banana peel",
+   "aliases": []
+  },
+  {
+   "canon": "orange peel",
+   "aliases": []
+  },
+  {
+   "canon": "apple core",
+   "aliases": []
+  },
+  {
+   "canon": "corn cob",
+   "aliases": []
+  },
+  {
+   "canon": "candy wrappers",
+   "aliases": []
+  },
+  {
+   "canon": "wrappers",
+   "aliases": []
+  },
+  {
+   "canon": "chip bag",
+   "aliases": []
+  },
+  {
+   "canon": "juice box",
+   "aliases": []
+  },
+  {
+   "canon": "water bottle",
+   "aliases": []
+  },
+  {
+   "canon": "soda can",
+   "aliases": []
+  },
+  {
+   "canon": "ice cube tray",
+   "aliases": []
+  },
+  {
+   "canon": "my ex's stuff",
+   "aliases": []
+  },
+  {
+   "canon": "ex's hoodie",
+   "aliases": []
+  },
+  {
+   "canon": "evidence",
+   "aliases": []
+  },
+  {
+   "canon": "secrets",
+   "aliases": []
+  },
+  {
+   "canon": "my grades",
+   "aliases": []
+  },
+  {
+   "canon": "my dignity",
+   "aliases": []
+  },
+  {
+   "canon": "my hopes and dreams",
+   "aliases": []
+  },
+  {
+   "canon": "the remote",
+   "aliases": []
+  },
+  {
+   "canon": "a whole fish",
+   "aliases": []
+  },
+  {
+   "canon": "fish",
+   "aliases": []
+  },
+  {
+   "canon": "shark",
+   "aliases": []
+  },
+  {
+   "canon": "octopus",
+   "aliases": []
+  },
+  {
+   "canon": "crab",
+   "aliases": []
+  },
+  {
+   "canon": "lobster",
+   "aliases": []
+  },
+  {
+   "canon": "jellyfish",
+   "aliases": []
+  },
+  {
+   "canon": "firecracker",
+   "aliases": []
+  },
+  {
+   "canon": "fireworks",
+   "aliases": []
+  },
+  {
+   "canon": "stink bomb",
+   "aliases": []
+  },
+  {
+   "canon": "pet",
+   "aliases": []
+  },
+  {
+   "canon": "pets",
+   "aliases": []
+  },
+  {
+   "canon": "little brother's toys",
+   "aliases": []
+  },
+  {
+   "canon": "elf on the shelf",
+   "aliases": []
+  },
+  {
+   "canon": "squishmallow",
+   "aliases": []
+  },
+  {
+   "canon": "stuffed animal",
+   "aliases": []
+  },
+  {
+   "canon": "teddy bear",
+   "aliases": []
+  },
+  {
+   "canon": "doll",
+   "aliases": []
+  },
+  {
+   "canon": "baby doll",
+   "aliases": []
+  },
+  {
+   "canon": "barbie head",
+   "aliases": []
+  },
+  {
+   "canon": "phone case",
+   "aliases": []
+  },
+  {
+   "canon": "pop socket",
+   "aliases": []
+  },
+  {
+   "canon": "headphones",
+   "aliases": []
+  },
+  {
+   "canon": "earbuds",
+   "aliases": []
+  },
+  {
+   "canon": "usb",
+   "aliases": []
+  },
+  {
+   "canon": "flash drive",
+   "aliases": []
+  },
+  {
+   "canon": "sd card",
+   "aliases": []
+  },
+  {
+   "canon": "nintendo switch",
+   "aliases": []
+  },
+  {
+   "canon": "game cartridge",
+   "aliases": []
+  },
+  {
+   "canon": "chromebook",
+   "aliases": []
+  },
+  {
+   "canon": "calculator",
+   "aliases": []
+  },
+  {
+   "canon": "ruler",
+   "aliases": []
+  },
+  {
+   "canon": "scissors",
+   "aliases": []
+  },
+  {
+   "canon": "stapler",
    "aliases": []
   }
  ]
