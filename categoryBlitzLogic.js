@@ -28,6 +28,7 @@
 // play are exactly the curated ones; the old accept-lists stay on disk for tooling only.
 const CATEGORY_ANSWERS = require('./categoryAnswers');
 const BLITZ_LISTS = require('./blitzLists');
+const BLITZ_NOT = require('./blitzNot');
 
 // CASE/TRIM-INSENSITIVE ACCEPT-LIST LOOKUP.
 // Several CATEGORIES entries differ in case/whitespace from their categoryAnswers
@@ -1169,6 +1170,8 @@ function createGame(players, difficultyKey, solo = false, selectedPacks = null, 
 const ANSWER_CODES = Object.freeze({
   LIST_HIT: 'list_hit',
   NOT_ON_LIST: 'not_on_list', // STEP 9: list-only — the only rejection for a well-formed answer
+  NOT_NOUN: 'not_noun', // a NOT category accepted a real noun that missed its curated list (blitzNot.js)
+  SAFE_ITEM: 'safe_item', // a NOT category refused an answer that fits the POSITIVE prompt (soup for "shouldn't microwave")
   JUDGE_YES: 'judge_yes',
   JUDGE_NO: 'judge_no',
   JUDGE_UNAVAILABLE: 'judge_unavailable',
@@ -1245,11 +1248,22 @@ async function submitAnswer(game, playerId, rawAnswer, opts = {}) {
 
   // LIST-ONLY (STEP 9): on the category's complete list, or not. No judge, no head-word leniency
   // (it let "zzzz cowboys" score on an NFL list). Synchronous, so no round can move under it.
-  const outcome = { code: ANSWER_CODES.LIST_HIT, via: 'list' };
+  let outcome = { code: ANSWER_CODES.LIST_HIT, via: 'list' };
   if (!listHas(judgeCategory, answer)) {
-    const miss = { code: ANSWER_CODES.NOT_ON_LIST, via: 'list' };
-    recordJudgement(player, answer, miss);
-    return { accepted: false, reason: 'not_on_list', code: miss.code, playerId };
+    // NOT categories (blitzNot.js, Andy oct17): a curated miss still scores when it's a real noun that doesn't fit the
+    // positive prompt — "me", "my little brother", "a trombone" all go in the microwave. Every other list: unchanged.
+    const not = BLITZ_NOT.isNotList(judgeCategory) ? BLITZ_NOT.judge(judgeCategory, answer) : null;
+    if (not && not.ok) {
+      outcome = { code: ANSWER_CODES.NOT_NOUN, via: not.why };
+    } else if (not && not.why === 'safe_item') {
+      const miss = { code: ANSWER_CODES.SAFE_ITEM, via: 'not' };
+      recordJudgement(player, answer, miss);
+      return { accepted: false, reason: 'safe_item', message: not.message, code: miss.code, playerId };
+    } else {
+      const miss = { code: ANSWER_CODES.NOT_ON_LIST, via: 'list' };
+      recordJudgement(player, answer, miss);
+      return { accepted: false, reason: 'not_on_list', code: miss.code, playerId };
+    }
   }
 
   player.answers.push(answer);

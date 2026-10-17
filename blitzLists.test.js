@@ -39,7 +39,9 @@ for (const name of NAMES) {
       const g = freshGame(name);
       const r = await L.submitAnswer(g, 'p1', a);
       assert.equal(r.accepted, false, `junk "${a}" scored`);
-      assert.equal(r.reason, 'not_on_list', `junk "${a}" -> ${r.reason}`);
+      // a NOT list's junk fits the POSITIVE prompt (soup for "shouldn't microwave") → refused as safe_item (blitzNot.js)
+      const expected = list.mode === 'not' && a !== 'zzzzzzzz' ? 'safe_item' : 'not_on_list';
+      assert.equal(r.reason, expected, `junk "${a}" -> ${r.reason}`);
     }
     const z = await L.submitAnswer(freshGame(name), 'p1', 'zzzzzzzz');
     assert.equal(z.accepted, false);
