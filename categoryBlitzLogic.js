@@ -709,6 +709,17 @@ const BENCHED = new Set([
   'Kitchen appliances', 'Things at a hotel', 'Things at the vet', 'Things a cowboy would have', 'Things at a circus',
   'Things in a castle', 'Summer Olympic sports', 'Types of hats', 'Things you need to move house', 'Card games',
   'Animals that live in trees',
+  // Andy oct17 play-test "you cant be to vague (like asking how or why - reasons for not turning in homework? 'grandma
+  // died' works, but you dont have it ... things that break easily (items, objects, theoretical items are much better)":
+  // every prompt whose answers are SENTENCES (excuses, lies, reasons, actions) is out — a list can't hold them all.
+  'Excuses for not doing your homework', 'Lies adults tell kids', 'Red flags on a first date',
+  "Things that get you sent to the principal's office", 'Things that can ruin a friendship', 'Ways to end up in the ER',
+  'Things that cause emotional damage', 'Things kids get grounded for', "Reasons to go to the nurse's office",
+  'Things you do in class instead of listening',
+  // ...and the prompts where ANY object/place fits (oct17 blind probe: 3am buys 75% of honest guesses missed, scams 52%,
+  // just a phase 43%, worst gifts 43%, places to fall asleep 40%, betray you 40%) — no list can be complete.
+  'Suspicious things to buy at 3am', 'Things that are a scam', 'Things that are just a phase', 'Worst gifts to get',
+  'Worst places to fall asleep', 'Things that betray you',
 ]);
 const CATEGORIES = BLITZ_LISTS.NAMES.filter((c) => !BENCHED.has(c));
 const PACK_IDS = (() => {
