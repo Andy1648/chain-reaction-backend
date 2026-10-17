@@ -53,7 +53,11 @@ function headOf(ws) {
   return core[core.length - 1] || null;
 }
 
-const NOUNS = (() => {
+// LAZY: both sets are built on the first NOT-category judgement, never at require time — a server boot shouldn't pay
+// ~0.2 s of list scanning for a category it may not deal (oct17: it tipped the integration boot test past 10 s).
+let NOUNS = null;
+let SAFE = null;
+function buildNouns() {
   const seenIn = new Map();
   for (const [name, l] of BLITZ_LISTS.LISTS) {
     if (l.pack === 'wordplay' || PHRASE_LISTS.test(name) || TITLE_LISTS.test(name)) continue;
@@ -66,24 +70,30 @@ const NOUNS = (() => {
     }
   }
   return new Set([...seenIn].filter(([, n]) => n.size >= 2).map(([w]) => w));
-})();
+}
+const nouns = () => NOUNS || (NOUNS = buildNouns());
 
 // SAFE sets per NOT list: its own `safe` entries + every answer of the lists named in `safeFrom`, minus its curated answers
-const SAFE = new Map();
-for (const [name, l] of BLITZ_LISTS.LISTS) {
-  if (l.mode !== 'not') continue;
-  const s = new Set();
-  for (const a of l.safe || []) s.add(BLITZ_LISTS.answerKey(a));
-  for (const src of l.safeFrom || []) {
-    const from = BLITZ_LISTS.listFor(src);
-    if (from) for (const a of from.answers) s.add(BLITZ_LISTS.answerKey(a));
+function buildSafe() {
+  const m = new Map();
+  for (const [name, l] of BLITZ_LISTS.LISTS) {
+    if (l.mode !== 'not') continue;
+    const s = new Set();
+    for (const a of l.safe || []) s.add(BLITZ_LISTS.answerKey(a));
+    for (const src of l.safeFrom || []) {
+      const from = BLITZ_LISTS.listFor(src);
+      if (from) for (const a of from.answers) s.add(BLITZ_LISTS.answerKey(a));
+    }
+    for (const k of l.keys) s.delete(k);
+    s.delete('');
+    m.set(name, s);
   }
-  for (const k of l.keys) s.delete(k);
-  s.delete('');
-  SAFE.set(name, s);
+  return m;
 }
+const safeSets = () => SAFE || (SAFE = buildSafe());
 
-const isNotList = (category) => SAFE.has(category);
+// cheap: just the flag on the list (no set building)
+const isNotList = (category) => (BLITZ_LISTS.listFor(category) || {}).mode === 'not';
 
 /**
  * Judge an answer that MISSED a NOT list's curated answers. → { ok, why, message? }
@@ -91,7 +101,7 @@ const isNotList = (category) => SAFE.has(category);
  */
 function judge(category, answer) {
   const l = BLITZ_LISTS.listFor(category);
-  const safe = SAFE.get(category);
+  const safe = safeSets().get(category);
   if (!l || !safe) return { ok: false, why: 'not_a_noun' };
   const raw = String(answer == null ? '' : answer).trim().toLowerCase();
   const ws = words(raw);
@@ -107,8 +117,12 @@ function judge(category, answer) {
     return { ok: false, why: 'safe_item', message: l.safeMsg || null };
   }
   if (PEOPLE.has(h) || PEOPLE.has(ws[ws.length - 1])) return { ok: true, why: 'person' };
-  if (NOUNS.has(fold(h))) return { ok: true, why: 'noun' };
+  if (nouns().has(fold(h))) return { ok: true, why: 'noun' };
   return { ok: false, why: 'not_a_noun' };
 }
 
-module.exports = { judge, isNotList, NOUNS, SAFE, headOf };
+module.exports = {
+  judge, isNotList, headOf,
+  get NOUNS() { return nouns(); },
+  get SAFE() { return safeSets(); },
+};
