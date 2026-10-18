@@ -64,6 +64,20 @@ function answersFor(category) {
 }
 
 /**
+ * TOP-N (Andy oct17: "switch 'name as many as you can' to TOP blank answers"): a category's list IS its top answers,
+ * so the client headlines "TOP 376" over PIZZA TOPPINGS. N is the list's canonical `size` (aliases like "cape verde" /
+ * "cabo verde" are one answer), never answers.length. A NOT list (any real noun scores, blitzNot.js) is open-ended:
+ * `openList: true` and the client shows "TOP ∞". Display-only — scoring is unchanged (+1 per on-list answer, and you
+ * already can't score past the list). Spread into every round_start payload; {} when nothing is known.
+ */
+function topNFor(category) {
+  const curated = BLITZ_LISTS.listFor(category);
+  if (curated && curated.mode === 'not') return { openList: true };
+  const n = curated ? (curated.size || curated.keys.size) : (answersFor(category)?.size || 0);
+  return n > 0 ? { topN: n } : {};
+}
+
+/**
  * LIST-ONLY membership (STEP 9). A curated category answers from blitzLists; any other category that
  * still has an accept-list (tooling, tests injecting their own) is matched against that list with the
  * same answerKey normalisation. Never a judge.
@@ -719,8 +733,8 @@ const BENCHED = new Set([
   'Things you do in class instead of listening',
   // ...and the prompts where ANY object/place fits (oct17 blind probe: 3am buys 75% of honest guesses missed, scams 52%,
   // just a phase 43%, worst gifts 43%, places to fall asleep 40%, betray you 40%) — no list can be complete.
-  'Suspicious things to buy at 3am', 'Things that are a scam', 'Things that are just a phase', 'Worst gifts to get',
-  'Worst places to fall asleep', 'Things that betray you',
+  'Suspicious things to buy at 3am', 'Things that are a scam', 'Things that are just a phase', 'Gifts nobody wants',
+  "Places you shouldn't fall asleep", 'Things that betray you',
 ]);
 const CATEGORIES = BLITZ_LISTS.NAMES.filter((c) => !BENCHED.has(c));
 const PACK_IDS = (() => {
@@ -1358,6 +1372,7 @@ function startNextRound(game) {
     round: game.currentRound,
     totalRounds: game.rounds,
     category,
+    ...topNFor(category),
     timerSeconds: game.roundTimeSeconds,
     rerollsRemaining: game.rerollsRemaining,
     ...(game.daily ? { daily: game.daily } : {}),
@@ -1392,6 +1407,7 @@ function rerollCategory(game) {
     round: game.currentRound,
     totalRounds: game.rounds,
     category,
+    ...topNFor(category),
     timerSeconds: game.roundTimeSeconds,
     rerollsRemaining: game.rerollsRemaining,
   };
@@ -1408,6 +1424,7 @@ function getScoreboard(game) {
 
 module.exports = {
   CATEGORIES,
+  topNFor,
   // Exposed for tooling (accept-list expansion / re-ranking).
   RAW_CATEGORIES,
   QUARANTINED_CATEGORIES,

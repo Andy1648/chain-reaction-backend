@@ -11,7 +11,7 @@ const NOT = require('./blitzNot');
 
 const MICRO = "Things you shouldn't microwave";
 const NOT_LISTS = [MICRO, "Things you shouldn't bring to a funeral", "Things you don't want to find in your bed",
-  'Worst things to find in your food', "Things you shouldn't flush down the toilet"];
+  "Things you don't want to find in your food", "Things you shouldn't flush down the toilet"];
 
 function freshGame(category) {
   const g = L.createGame([{ id: 'p1', name: 'P1' }], 'easy', true);
@@ -46,7 +46,7 @@ test('an answer that fits the positive prompt is refused as safe_item with the l
     [MICRO]: ['popcorn', 'leftovers', 'soup', 'a mug', 'water', 'coffee', 'oatmeal', 'pizza'],
     "Things you shouldn't bring to a funeral": ['flowers', 'tissues', 'a black suit', 'sympathy card'],
     "Things you don't want to find in your bed": ['pillow', 'a blanket', 'sheets', 'teddy bear'],
-    'Worst things to find in your food': ['cheese', 'sprinkles', 'bacon', 'salt'],
+    "Things you don't want to find in your food": ['cheese', 'sprinkles', 'bacon', 'salt'],
     "Things you shouldn't flush down the toilet": ['toilet paper', 'poop', 'pee', 'vomit'],
   };
   for (const [n, xs] of Object.entries(cases)) {
