@@ -168340,7 +168340,7 @@
   "botKnown": 120
  },
  {
-  "name": "Worst gifts to get",
+  "name": "Gifts nobody wants",
   "pack": "unhinged",
   "size": 334,
   "answers": [
@@ -168702,7 +168702,7 @@
   "botKnown": 120
  },
  {
-  "name": "Worst places to fall asleep",
+  "name": "Places you shouldn't fall asleep",
   "pack": "unhinged",
   "size": 440,
   "answers": [
@@ -174871,7 +174871,7 @@
   ]
  },
  {
-  "name": "Worst things to find in your food",
+  "name": "Things you don't want to find in your food",
   "pack": "unhinged",
   "size": 985,
   "answers": [
@@ -175934,7 +175934,7 @@
   ]
  },
  {
-  "name": "Worst things to get stuck in an elevator with",
+  "name": "Things you don't want to get stuck in an elevator with",
   "pack": "unhinged",
   "size": 1100,
   "answers": [
@@ -177062,7 +177062,7 @@
   "botKnown": 120
  },
  {
-  "name": "Worst things to hit with your car",
+  "name": "Things to hit with your car",
   "pack": "unhinged",
   "size": 1101,
   "answers": [

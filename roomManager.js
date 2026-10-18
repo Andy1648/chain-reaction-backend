@@ -865,6 +865,7 @@ function startGame(room, opts = {}) {
         round: room.game.currentRound,
         totalRounds: room.game.rounds,
         category: room.game.currentCategory,
+        ...categoryBlitzLogic.roundMeta(room.game.currentCategory),
         timerSeconds: room.game.roundTimeSeconds,
         rerollsRemaining: room.game.rerollsRemaining,
         ...(room.game.daily ? { daily: room.game.daily } : {}),

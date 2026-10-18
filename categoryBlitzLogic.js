@@ -64,6 +64,29 @@ function answersFor(category) {
 }
 
 /**
+ * TOP-N (Andy oct17: "switch 'name as many as you can' to TOP blank answers"): a category's list IS its top answers,
+ * so the client headlines "TOP 376" over PIZZA TOPPINGS. N is the list's canonical `size` (aliases like "cape verde" /
+ * "cabo verde" are one answer), never answers.length. A NOT list (any real noun scores, blitzNot.js) is open-ended:
+ * `openList: true` and the client shows "TOP ∞". Display-only — scoring is unchanged (+1 per on-list answer, and you
+ * already can't score past the list). Spread into every round_start payload; {} when nothing is known.
+ */
+function topNFor(category) {
+  const curated = BLITZ_LISTS.listFor(category);
+  if (curated && curated.mode === 'not') return { openList: true };
+  const n = curated ? (curated.size || curated.keys.size) : (answersFor(category)?.size || 0);
+  return n > 0 ? { topN: n } : {};
+}
+
+/**
+ * Everything round_start says about its category beyond the name: TOP N (above) and its PACK id (Andy oct17 "label
+ * category too") so the client can headline "🍕 FOOD · TOP 376". Additive and display-only.
+ */
+function roundMeta(category) {
+  const pack = BLITZ_LISTS.listFor(category)?.pack;
+  return { ...topNFor(category), ...(pack ? { pack } : {}) };
+}
+
+/**
  * LIST-ONLY membership (STEP 9). A curated category answers from blitzLists; any other category that
  * still has an accept-list (tooling, tests injecting their own) is matched against that list with the
  * same answerKey normalisation. Never a judge.
@@ -607,6 +630,8 @@ const QUARANTINED_CATEGORIES = new Set([
 // (bot-playtest sim: Japanese shoguns 1.00, Inca emperors 0.99, Skyrim races 0.75, ...). Kept in
 // blitzLists.json (tooling, the judge), out of rotation.
 const BENCHED = new Set([
+  // oct17 (Andy: "i know 0 'cartoon network shows'"): fails EASY — a round you can't open is a dead round.
+  'Cartoon Network shows',
   // oct15 audit 2: near-duplicates, dull brand lists, phrase-heavy or unbounded answers.
   "Popular baby names", "Words ending in -OLOGY", "Things you do in winter", "Things your mom tells you to do",
   "Things at a cookout", "Things in a car's cup holder", "Things you'd find in a treasure chest",
@@ -719,8 +744,8 @@ const BENCHED = new Set([
   'Things you do in class instead of listening',
   // ...and the prompts where ANY object/place fits (oct17 blind probe: 3am buys 75% of honest guesses missed, scams 52%,
   // just a phase 43%, worst gifts 43%, places to fall asleep 40%, betray you 40%) — no list can be complete.
-  'Suspicious things to buy at 3am', 'Things that are a scam', 'Things that are just a phase', 'Worst gifts to get',
-  'Worst places to fall asleep', 'Things that betray you',
+  'Suspicious things to buy at 3am', 'Things that are a scam', 'Things that are just a phase', 'Gifts nobody wants',
+  "Places you shouldn't fall asleep", 'Things that betray you',
 ]);
 const CATEGORIES = BLITZ_LISTS.NAMES.filter((c) => !BENCHED.has(c));
 const PACK_IDS = (() => {
@@ -1259,6 +1284,12 @@ async function submitAnswer(game, playerId, rawAnswer, opts = {}) {
       const miss = { code: ANSWER_CODES.SAFE_ITEM, via: 'not' };
       recordJudgement(player, answer, miss);
       return { accepted: false, reason: 'safe_item', message: not.message, code: miss.code, playerId };
+    } else if (not && not.why === 'blocked') {
+      // TOP-N rebrand (Andy oct17): a TOP ∞ list is billed "FAMILY-FRIENDLY ANSWERS", so a slur / swear that would
+      // otherwise be a real noun says why it missed instead of a bare "not on the list". Still a miss, same code.
+      const miss = { code: ANSWER_CODES.NOT_ON_LIST, via: 'blocked' };
+      recordJudgement(player, answer, miss);
+      return { accepted: false, reason: 'family_friendly', code: miss.code, playerId };
     } else {
       const miss = { code: ANSWER_CODES.NOT_ON_LIST, via: 'list' };
       recordJudgement(player, answer, miss);
@@ -1358,6 +1389,7 @@ function startNextRound(game) {
     round: game.currentRound,
     totalRounds: game.rounds,
     category,
+    ...roundMeta(category),
     timerSeconds: game.roundTimeSeconds,
     rerollsRemaining: game.rerollsRemaining,
     ...(game.daily ? { daily: game.daily } : {}),
@@ -1392,6 +1424,7 @@ function rerollCategory(game) {
     round: game.currentRound,
     totalRounds: game.rounds,
     category,
+    ...roundMeta(category),
     timerSeconds: game.roundTimeSeconds,
     rerollsRemaining: game.rerollsRemaining,
   };
@@ -1408,6 +1441,8 @@ function getScoreboard(game) {
 
 module.exports = {
   CATEGORIES,
+  topNFor,
+  roundMeta,
   // Exposed for tooling (accept-list expansion / re-ranking).
   RAW_CATEGORIES,
   QUARANTINED_CATEGORIES,
