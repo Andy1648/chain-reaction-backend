@@ -78,6 +78,15 @@ function topNFor(category) {
 }
 
 /**
+ * Everything round_start says about its category beyond the name: TOP N (above) and its PACK id (Andy oct17 "label
+ * category too") so the client can headline "🍕 FOOD · TOP 376". Additive and display-only.
+ */
+function roundMeta(category) {
+  const pack = BLITZ_LISTS.listFor(category)?.pack;
+  return { ...topNFor(category), ...(pack ? { pack } : {}) };
+}
+
+/**
  * LIST-ONLY membership (STEP 9). A curated category answers from blitzLists; any other category that
  * still has an accept-list (tooling, tests injecting their own) is matched against that list with the
  * same answerKey normalisation. Never a judge.
@@ -1380,7 +1389,7 @@ function startNextRound(game) {
     round: game.currentRound,
     totalRounds: game.rounds,
     category,
-    ...topNFor(category),
+    ...roundMeta(category),
     timerSeconds: game.roundTimeSeconds,
     rerollsRemaining: game.rerollsRemaining,
     ...(game.daily ? { daily: game.daily } : {}),
@@ -1415,7 +1424,7 @@ function rerollCategory(game) {
     round: game.currentRound,
     totalRounds: game.rounds,
     category,
-    ...topNFor(category),
+    ...roundMeta(category),
     timerSeconds: game.roundTimeSeconds,
     rerollsRemaining: game.rerollsRemaining,
   };
@@ -1433,6 +1442,7 @@ function getScoreboard(game) {
 module.exports = {
   CATEGORIES,
   topNFor,
+  roundMeta,
   // Exposed for tooling (accept-list expansion / re-ranking).
   RAW_CATEGORIES,
   QUARANTINED_CATEGORIES,

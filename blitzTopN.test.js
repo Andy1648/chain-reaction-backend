@@ -25,12 +25,23 @@ test('every curated list yields a positive topN or openList', () => {
   }
 });
 
-test('startNextRound and rerollCategory payloads carry it', () => {
+test('roundMeta adds the pack id', () => {
+  assert.deepEqual(L.roundMeta('Pizza toppings'), { topN: 376, pack: 'food' });
+});
+
+test('startNextRound and rerollCategory payloads carry topN/openList + pack', () => {
+  const pick = (p) => ({ topN: p.topN, openList: p.openList, pack: p.pack });
+  const want = (c) => ({ topN: undefined, openList: undefined, pack: undefined, ...L.roundMeta(c) });
   const g = L.createGame([{ id: 'a', name: 'A' }], 'easy', true);
   const next = L.startNextRound(g);
-  assert.deepEqual({ topN: next.topN, openList: next.openList }, { ...{ topN: undefined, openList: undefined }, ...L.topNFor(next.category) });
+  assert.deepEqual(pick(next), want(next.category));
+  assert.ok(next.pack);
   const rr = L.rerollCategory(g);
-  assert.deepEqual({ topN: rr.topN, openList: rr.openList }, { ...{ topN: undefined, openList: undefined }, ...L.topNFor(rr.category) });
+  assert.deepEqual(pick(rr), want(rr.category));
+});
+
+test('Cartoon Network shows is benched (Andy knows 0 — fails EASY)', () => {
+  assert.ok(!L.CATEGORIES.includes('Cartoon Network shows'));
 });
 
 test('no superlative category names (TOP already ranks them)', () => {
