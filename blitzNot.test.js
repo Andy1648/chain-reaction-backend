@@ -77,6 +77,7 @@ test('a blocked word sinks the whole answer, even riding on a real noun', async 
   for (const a of ['shit phone', 'my damn dog', 'porn mag']) {
     const r = await submit(MICRO, a);
     assert.equal(r.accepted, false, `"${a}" scored`);
+    assert.equal(r.reason, 'family_friendly', `"${a}" -> ${r.reason}`); // TOP ∞ = family-friendly answers
   }
 });
 

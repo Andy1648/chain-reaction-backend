@@ -621,6 +621,8 @@ const QUARANTINED_CATEGORIES = new Set([
 // (bot-playtest sim: Japanese shoguns 1.00, Inca emperors 0.99, Skyrim races 0.75, ...). Kept in
 // blitzLists.json (tooling, the judge), out of rotation.
 const BENCHED = new Set([
+  // oct17 (Andy: "i know 0 'cartoon network shows'"): fails EASY — a round you can't open is a dead round.
+  'Cartoon Network shows',
   // oct15 audit 2: near-duplicates, dull brand lists, phrase-heavy or unbounded answers.
   "Popular baby names", "Words ending in -OLOGY", "Things you do in winter", "Things your mom tells you to do",
   "Things at a cookout", "Things in a car's cup holder", "Things you'd find in a treasure chest",
@@ -1273,6 +1275,12 @@ async function submitAnswer(game, playerId, rawAnswer, opts = {}) {
       const miss = { code: ANSWER_CODES.SAFE_ITEM, via: 'not' };
       recordJudgement(player, answer, miss);
       return { accepted: false, reason: 'safe_item', message: not.message, code: miss.code, playerId };
+    } else if (not && not.why === 'blocked') {
+      // TOP-N rebrand (Andy oct17): a TOP ∞ list is billed "FAMILY-FRIENDLY ANSWERS", so a slur / swear that would
+      // otherwise be a real noun says why it missed instead of a bare "not on the list". Still a miss, same code.
+      const miss = { code: ANSWER_CODES.NOT_ON_LIST, via: 'blocked' };
+      recordJudgement(player, answer, miss);
+      return { accepted: false, reason: 'family_friendly', code: miss.code, playerId };
     } else {
       const miss = { code: ANSWER_CODES.NOT_ON_LIST, via: 'list' };
       recordJudgement(player, answer, miss);
