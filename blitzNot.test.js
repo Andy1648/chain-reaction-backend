@@ -30,6 +30,47 @@ test('the five NOT lists are in play, each with a safe set and its own toast', (
   assert.equal(NOT.isNotList('Fruits'), false);
 });
 
+// batch 2 (oct18): every NOT list — not just the first five — carries a toast, a real safe set, and blind-probe coverage
+test('every NOT list in play has a toast, a safe set of 30+ and a blind-probe fixture', () => {
+  const probe = JSON.parse(fs.readFileSync(path.join(__dirname, 'tests', 'fixtures', 'blitzNotProbe.json'), 'utf8'));
+  const all = L.CATEGORIES.filter((c) => NOT.isNotList(c));
+  assert.ok(all.length >= 19, `${all.length} NOT lists`);
+  for (const n of all) {
+    assert.ok(BLITZ.listFor(n).safeMsg, `${n} has a safe_item toast`);
+    assert.ok(NOT.SAFE.get(n).size >= (NOT_LISTS.includes(n) ? 8 : 30), `${n} safe set`);
+    assert.ok((probe[n] || []).length >= 40, `${n} blind-probed`);
+  }
+});
+
+test('batch 2: the obvious "that\'s actually fine" answers are refused with the list toast', async () => {
+  const cases = {
+    "Things you shouldn't put in a washing machine": ['socks', 'towels', 'dirty laundry', 'a hoodie'],
+    "Things you shouldn't bring on a plane": ['passport', 'a neck pillow', 'headphones', 'snacks'],
+    "Things you shouldn't feed a dog": ['dog food', 'kibble', 'a bone', 'peanut butter'],
+    "Things you shouldn't put in a fish tank": ['fish', 'gravel', 'a castle', 'fish food'],
+    "Things you shouldn't wear to a job interview": ['a suit', 'a tie', 'dress shoes', 'blazer'],
+    "Things you shouldn't bring to the beach": ['sunscreen', 'a towel', 'an umbrella', 'a cooler'],
+    "Things you shouldn't put on a pizza": ['cheese', 'pepperoni', 'mushrooms', 'extra cheese'],
+    "Things you don't want to step on barefoot": ['grass', 'carpet', 'a rug', 'sand'],
+    "Things you shouldn't bring to a sleepover": ['pillow', 'a sleeping bag', 'pajamas', 'snacks'],
+    "Things you shouldn't put in your pocket": ['phone', 'my keys', 'wallet', 'coins'],
+    "Things you don't want to find in your shoe": ['foot', 'a sock', 'insoles', 'shoelace'],
+    "Things you shouldn't bring on a first date": ['flowers', 'chocolates', 'wallet', 'cologne'],
+    "Things you shouldn't pet": ['dog', 'a puppy', 'kitten', 'a golden retriever'],
+    "Things you shouldn't put in a blender": ['banana', 'ice', 'strawberries', 'protein powder'],
+  };
+  for (const [n, xs] of Object.entries(cases)) {
+    for (const a of xs) {
+      const r = await submit(n, a);
+      assert.equal(r.reason, 'safe_item', `${n}: "${a}" -> ${r.accepted ? 'scored' : r.reason}`);
+      assert.equal(r.message, BLITZ.listFor(n).safeMsg);
+    }
+  }
+  // and the joke lands: the curated meme beats the safe set, and a clause no longer hides the head noun
+  assert.equal((await submit("Things you shouldn't put on a pizza", 'pineapple')).accepted, true);
+  assert.equal((await submit("Things you shouldn't wear to a job interview", 'a shirt that says lol')).accepted, true);
+});
+
 test('any real noun scores — off the curated list too — and so do people and "me"', async () => {
   const offList = ['trombone', 'my homework', 'a giraffe', 'me', 'myself', 'my little brother', 'grandma', 'the principal',
     'a bowling ball', 'a snowman', 'kazoo', 'theremin', 'nunchucks', 'my report card'];

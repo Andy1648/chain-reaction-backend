@@ -23,8 +23,10 @@ const { isBlockedForDisplay } = require('./blockedTerms');
 const STOP = new Set(['a', 'an', 'the', 'my', 'your', 'his', 'her', 'their', 'our', 'some', 'this', 'that', 'whole', 'entire',
   'big', 'small', 'little', 'giant', 'tiny', 'old', 'new', 'dead', 'live', 'living', 'used', 'raw', 'frozen', 'full', 'empty',
   'wet', 'hot', 'cold']);
-// "X with/of/in … Y" → the head is X's last word ("bag of chips" → bag)
-const PREP = new Set(['with', 'of', 'in', 'on', 'from', 'inside', 'full', 'made', 'without', 'covered', 'filled', 'and']);
+// "X with/of/in … Y" → the head is X's last word ("bag of chips" → bag); a clause ends the head too ("a shirt THAT says
+// lol" → shirt, "phones AT 2am" → phones — blind probe oct18)
+const PREP = new Set(['with', 'of', 'in', 'on', 'from', 'inside', 'full', 'made', 'without', 'covered', 'filled', 'and',
+  'that', 'which', 'who', 'at', 'for']);
 // mild swears blockedTerms lets through (it only guards slurs + hard profanity) — still out of a school game here,
 // where ANY noun can score and a modifier is never checked against a list
 const MILD = new Set(['damn', 'damned', 'hell', 'crap', 'crappy', 'ass', 'asses', 'piss', 'pissy', 'sucks', 'freaking',
