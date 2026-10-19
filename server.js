@@ -71,6 +71,9 @@ const {
   startTurnTimer,
   startRoomReaper,
 } = require('./roomManager');
+// FRENCH RUSH CLASS ROOM: its own store and lifecycle (classRoom.js). Every `class_*` message is
+// routed there and every socket close is reported to it; nothing else here touches it.
+const { createClassHub } = require('./classRoom');
 
 // Category Blitz pack ids — the valid set the host's set_packs selection is checked
 // against. Derived from CATEGORY_PACKS so it can't drift from the real assignments.
@@ -240,6 +243,8 @@ function send(ws, type, payload) {
   }
 }
 
+const classHub = createClassHub({ send: (ws, type, payload) => send(ws, type, payload), log: logInfo });
+
 function sendError(ws, message, context) {
   send(ws, 'error', { message, context });
 }
@@ -296,6 +301,13 @@ wss.on('connection', (ws) => {
     const { type, payload } = message;
 
     try {
+      if (typeof type === 'string' && type.startsWith('class_')) {
+        classHub.handle(ws, type, payload, {
+          allowCreate: () => allowCreateRoom(ws),
+          allowJoin: () => allowJoin(ws),
+        });
+        return;
+      }
       switch (type) {
         case 'create_room': {
           // Throttle create-spam from a single connection first.
@@ -802,6 +814,12 @@ wss.on('connection', (ws) => {
   });
 
   ws.on('close', () => {
+    // A class seat is kept for its grace window (classRoom.js), never dropped here.
+    try {
+      classHub.onClose(ws);
+    } catch (err) {
+      logError('class_close_error', { playerId: ws.id }, err);
+    }
     // Look the room up directly (not via getRoomForConnection, which would try
     // to send an error to a socket that's already gone). Drop the mapping FIRST
     // so it can't leak even if the cleanup below fails.
@@ -874,9 +892,10 @@ server.listen(PORT, () => {
   }
   // Start the single idle-room reaper sweep (deletes dead non-empty lobbies).
   startRoomReaper();
+  classHub.startSweeper();
 });
 
 // Test hook: integration tests (t2-server.test.js) boot this real server on an
 // ephemeral port (PORT=0) and drive it with real WebSocket clients. Production
 // never reads these exports.
-module.exports = { server, wss };
+module.exports = { server, wss, classHub };
