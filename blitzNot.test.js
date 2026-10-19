@@ -150,3 +150,38 @@ test('blind-probe regression: under 3% of real players\' guesses miss as NOT ON 
     assert.ok(missed.length / guesses.length < 0.03, `${n}: ${missed.length}/${guesses.length} missed — ${missed.join(', ')}`);
   }
 });
+
+// batch 3 (oct19, Andy "need more of these genius ones"): 13 more NOT lists
+test('batch 3: the "that\'s actually fine" answers bounce, the real dangers and the jokes score', async () => {
+  const fine = {
+    "Things you shouldn't put in your mouth": ['pizza', 'an apple', 'a toothbrush', 'gum'],
+    "Things you shouldn't bring to school": ['pencil', 'a backpack', 'my chromebook', 'notebook'],
+    "Things you shouldn't put in a toaster": ['bread', 'a bagel', 'waffle', 'pop tart'],
+    "Things you shouldn't name your baby": ['emma', 'liam', 'olivia', 'noah'],
+    "Things you shouldn't plug into the wall": ['a lamp', 'my phone', 'a charger', 'tv'],
+    "Things you shouldn't keep in the fridge": ['milk', 'eggs', 'butter', 'leftovers'],
+    "Things you shouldn't give a toddler": ['blocks', 'a teddy bear', 'sippy cup', 'crayons'],
+    "Things you shouldn't put in the dishwasher": ['plates', 'a cup', 'bowls', 'forks'],
+    "Things you shouldn't put in a mailbox": ['letters', 'a package', 'bills', 'postcard'],
+    "Things you shouldn't sit on": ['a chair', 'couch', 'bench', 'a toilet'],
+    "Things you shouldn't put in a pool": ['water', 'a pool noodle', 'floaties', 'chlorine'],
+    "Things you shouldn't lick": ['ice cream', 'a lollipop', 'popsicle', 'stamp'],
+    "Things you shouldn't throw at a wedding": ['rice', 'confetti', 'the bouquet', 'flower petals'],
+  };
+  for (const [n, xs] of Object.entries(fine)) {
+    assert.ok(L.CATEGORIES.includes(n), `${n} in play`);
+    for (const a of xs) {
+      const r = await submit(n, a);
+      assert.equal(r.reason, 'safe_item', `${n}: "${a}" -> ${r.accepted ? 'scored' : r.reason}`);
+      assert.equal(r.message, BLITZ.listFor(n).safeMsg);
+    }
+  }
+  const score = [["Things you shouldn't put in the dishwasher", 'knives'], ["Things you shouldn't put in the dishwasher", 'a cast iron pan'],
+    ["Things you shouldn't put in a pool", 'bleach'], ["Things you shouldn't keep in the fridge", 'old milk'],
+    ["Things you shouldn't sit on", 'a wet bench'], ["Things you shouldn't put in your mouth", 'old gum'],
+    ["Things you shouldn't name your baby", 'sauron'], ["Things you shouldn't name your baby", 'toaster'],
+    ["Things you shouldn't give a toddler", 'a chainsaw'], ["Things you shouldn't lick", 'a frozen flagpole']];
+  for (const [n, a] of score) assert.equal((await submit(n, a)).accepted, true, `${n}: "${a}"`);
+  // a baby named after a dictator, a slur or a god is not the joke — those never score
+  for (const a of ['hitler', 'adolf', 'mussolini']) assert.equal((await submit("Things you shouldn't name your baby", a)).accepted, false, a);
+});
