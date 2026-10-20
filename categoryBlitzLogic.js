@@ -82,6 +82,22 @@ function topNFor(category) {
 }
 
 /**
+ * THE BREAK BETWEEN ROUNDS (Andy oct19: "sometimes i think category blitz rounds (in between) are too short. maybe add a
+ * second for every person … it should somewhat scale so people can read each others"). Was a flat 5 s. Now 4 s + 1 s per
+ * player (bots count: their answers are on the results screen too), capped at 10 s; solo stays 5 s. round_end carries the
+ * value as `nextInMs` so the client counts down the SAME number the server waits.
+ */
+const BREAK_SOLO_MS = 5000;
+const BREAK_BASE_MS = 4000;
+const BREAK_PER_PLAYER_MS = 1000;
+const BREAK_MAX_MS = 10000;
+function intermissionMs(playerCount) {
+  const n = Math.max(1, Math.floor(Number(playerCount) || 1));
+  if (n <= 1) return BREAK_SOLO_MS;
+  return Math.min(BREAK_MAX_MS, BREAK_BASE_MS + BREAK_PER_PLAYER_MS * n);
+}
+
+/**
  * Everything round_start says about its category beyond the name: TOP N (above) and its PACK id (Andy oct17 "label
  * category too") so the client can headline "🍕 FOOD · TOP 376". Additive and display-only.
  */
@@ -1450,6 +1466,7 @@ module.exports = {
   CATEGORIES,
   topNFor,
   roundMeta,
+  intermissionMs,
   // Exposed for tooling (accept-list expansion / re-ranking).
   RAW_CATEGORIES,
   QUARANTINED_CATEGORIES,

@@ -225,6 +225,8 @@ test('Category Blitz: two players race through all 3 rounds to the final scorebo
   for (const c of [alice, bob]) {
     const ends = ofType(c, 'round_end');
     assert.equal(ends.length, 3, 'every round produced a round_end');
+    // the break scales with the room and the client is told how long it is (Andy oct19): 2 players -> 4s + 2s
+    for (const e of ends) assert.equal(e.payload.nextInMs, 6000, 'round_end carries the scaled break');
     ends.forEach((end, i) => {
       assert.equal(end.payload.round, i + 1);
       assert.equal(end.payload.category, categoriesPlayed[i]);
