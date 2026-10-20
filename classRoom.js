@@ -25,7 +25,7 @@
 //   class_result {index, outcome, hints} student, once per word ('clean' | 'hinted' | 'miss')
 //   class_leave                         student leaves for good
 // Server → client: class_created {code, hostToken}, class_joined {studentId}, class_state {…},
-//   class_tally {…} (host only, debounced), class_closed {reason}, class_error {code, message}.
+//   class_tally {…} (host only, debounced; a host's done snapshot adds summary + per-student totals), class_closed {reason}, class_error {code, message}.
 
 const crypto = require('crypto');
 const { sanitizeName } = require('./security');
@@ -158,6 +158,21 @@ function createClassHub({ send, now = Date.now, log = () => {} } = {}) {
     });
   }
 
+  // Per-student totals for the teacher's class report (host-only, done phase): every seated student,
+  // in join order. A word with no result (joined late) counts as nothing, not as a miss.
+  function studentsOf(c) {
+    return liveStudents(c).map((s) => {
+      const t = { id: s.id, name: s.name, clean: 0, hinted: 0, miss: 0, hints: 0 };
+      for (let i = 0; i < c.rows.length; i += 1) {
+        const r = c.results[i] && c.results[i].get(s.id);
+        if (!r) continue;
+        t[r.outcome] += 1;
+        t.hints += r.hints || 0;
+      }
+      return t;
+    });
+  }
+
   function stateFor(c, role, student, withRows) {
     const base = {
       code: c.code,
@@ -175,7 +190,10 @@ function createClassHub({ send, now = Date.now, log = () => {} } = {}) {
     if (role === 'host') {
       base.roster = liveStudents(c).map((s) => ({ id: s.id, name: s.name, away: !s.ws }));
       if (c.phase === 'word' || c.phase === 'review') base.tally = tallyOf(c, c.index);
-      if (c.phase === 'done') base.summary = summaryOf(c);
+      if (c.phase === 'done') {
+        base.summary = summaryOf(c);
+        base.students = studentsOf(c);
+      }
     } else {
       base.you = student.id;
       base.name = student.name;
