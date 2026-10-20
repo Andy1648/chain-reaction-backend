@@ -175,7 +175,13 @@ test('full lockstep run: start → result → reveal → next … → done with 
     ['ami', 1, 1, 0],
     ['chanter', 0, 0, 2],
   ]);
+  // per-student totals for the teacher's report: host-only, hints summed
+  assert.deepEqual(hs.students.map((s) => [s.name, s.clean, s.hinted, s.miss, s.hints]), [
+    ['Ana', 1, 1, 1, 2],
+    ['Ben', 1, 0, 2, 0],
+  ]);
   assert.equal(env.last(a, 'class_state').payload.phase, 'done');
+  assert.equal(env.last(a, 'class_state').payload.students, undefined, 'students never see the class report');
   env.hub.handle(host, 'class_end', {});
   assert.equal(env.last(a, 'class_closed').payload.reason, 'ended');
 });
