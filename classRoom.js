@@ -19,6 +19,8 @@
 //   class_join   {code, name, token}    student (token = per-tab random id the client keeps)
 //   class_rejoin {code, token}          host or student, sent on every socket (re)open while in a class
 //   class_start | class_reveal | class_next | class_end   host only
+//   class_restart {set, rows}           host only: a NEW SET in the same class (replay the missed words,
+//                                       or a fresh set) — students keep their seats, back to the lobby
 //   class_kick   {studentId}            host only
 //   class_result {index, outcome, hints} student, once per word ('clean' | 'hinted' | 'miss')
 //   class_leave                         student leaves for good
@@ -43,6 +45,7 @@ const TALLY_DEBOUNCE_MS = 250;
 const SWEEP_MS = 15 * 1000;
 const TOKEN_RE = /^[A-Za-z0-9_-]{8,64}$/;
 const OUTCOMES = new Set(['clean', 'hinted', 'miss']);
+const VOICES = new Set(['projector', 'phones', 'off']); // where the word is read aloud
 
 const ERRORS = {
   class_not_found: 'No class found with that code.',
@@ -82,6 +85,18 @@ function createClassHub({ send, now = Date.now, log = () => {} } = {}) {
 
   function err(ws, code, context) {
     send(ws, 'class_error', { code, message: ERRORS[code] || 'Something went wrong.', context });
+  }
+
+  function cleanSet(set, rows) {
+    const s = set && typeof set === 'object' ? set : {};
+    return {
+      theme: cleanSetField(s.theme),
+      level: cleanSetField(s.level),
+      n: rows.length,
+      mode: cleanSetField(s.mode),
+      voice: VOICES.has(s.voice) ? s.voice : 'projector',
+      replay: s.replay === true,
+    };
   }
 
   function cleanSetField(v) {
@@ -146,6 +161,7 @@ function createClassHub({ send, now = Date.now, log = () => {} } = {}) {
   function stateFor(c, role, student, withRows) {
     const base = {
       code: c.code,
+      round: c.round, // bumps on every class_restart: a client's run belongs to one round
       role,
       phase: c.phase,
       index: c.index,
@@ -291,7 +307,8 @@ function createClassHub({ send, now = Date.now, log = () => {} } = {}) {
         createdAt: now(),
         lastActivity: now(),
         host: { token: crypto.randomBytes(18).toString('base64url'), ws, awaySince: null, name: sanitizeName(p.name, 'Teacher') },
-        set: { theme: cleanSetField(set.theme), level: cleanSetField(set.level), n: rows.length, mode: cleanSetField(set.mode) },
+        set: cleanSet(set, rows),
+        round: 1,
         rows,
         phase: 'lobby',
         index: 0,
@@ -379,6 +396,24 @@ function createClassHub({ send, now = Date.now, log = () => {} } = {}) {
         return;
       }
       startWord(c, c.index + 1);
+    },
+
+    class_restart(ws, p) {
+      const { c, error } = hostClass(ws);
+      if (error) return err(ws, error, 'class_restart');
+      const rows = cleanRows(p.rows);
+      if (!rows) return err(ws, 'bad_rows', 'class_restart');
+      c.rows = rows;
+      c.set = cleanSet(p.set, rows);
+      c.round += 1;
+      c.phase = 'lobby';
+      c.index = 0;
+      c.results = [];
+      touch(c);
+      log('class_restarted', { classCode: c.code, round: c.round, words: rows.length });
+      // the rows go to everyone again (a new set); seats, names and tokens are kept
+      sendState(c, c.host.ws, 'host', null, true);
+      for (const s of c.students.values()) sendState(c, s.ws, 'student', s, true);
     },
 
     class_end(ws) {

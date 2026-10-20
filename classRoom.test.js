@@ -343,3 +343,43 @@ test('unknown class_ types and junk payloads never throw', () => {
   env.hub.onClose(ws);
   assert.ok(env.frames(ws).every((f) => f.type === 'class_error'));
 });
+
+test('restart: a new set in the same class — seats kept, results cleared, rows resent, round bumps', () => {
+  const env = setup();
+  const { host, code } = hostWithClass(env);
+  const a = join(env, code, 1, 'Ana');
+  env.hub.handle(host, 'class_start', {});
+  env.hub.handle(a, 'class_result', { index: 0, outcome: 'miss' });
+  env.hub.handle(host, 'class_end', {});
+  assert.equal(env.last(a, 'class_state').payload.phase, 'done');
+  assert.equal(env.last(a, 'class_state').payload.round, 1);
+
+  env.hub.handle(a, 'class_restart', { rows: ROWS.slice(0, 1) });
+  assert.equal(env.last(a, 'class_error').payload.code, 'not_host');
+
+  env.hub.handle(host, 'class_restart', { set: { mode: 'lineup', replay: true, voice: 'phones' }, rows: ROWS.slice(0, 1) });
+  const st = env.last(a, 'class_state').payload;
+  assert.equal(st.phase, 'lobby');
+  assert.equal(st.round, 2);
+  assert.equal(st.total, 1);
+  assert.deepEqual(st.rows.map((r) => r.word), ['famille']);
+  assert.deepEqual(st.mine, [null]);
+  assert.equal(st.set.voice, 'phones');
+  assert.equal(st.set.replay, true);
+  const hs = env.last(host, 'class_state').payload;
+  assert.equal(hs.roster.length, 1);
+  // a late student can join the new round
+  const b = join(env, code, 2, 'Ben');
+  assert.equal(env.last(b, 'class_state').payload.round, 2);
+  env.hub.handle(host, 'class_start', {});
+  assert.equal(env.last(b, 'class_state').payload.phase, 'word');
+});
+
+test('set.voice defaults to the projector and only takes known values', () => {
+  const env = setup();
+  const { host } = hostWithClass(env);
+  assert.equal(env.last(host, 'class_state').payload.set.voice, 'projector');
+  const h2 = env.sock();
+  env.hub.handle(h2, 'class_create', { set: { voice: '<script>' }, rows: ROWS });
+  assert.equal(env.last(h2, 'class_state').payload.set.voice, 'projector');
+});
