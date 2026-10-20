@@ -66,13 +66,17 @@ function answersFor(category) {
 /**
  * TOP-N (Andy oct17: "switch 'name as many as you can' to TOP blank answers"): a category's list IS its top answers,
  * so the client headlines "TOP 376" over PIZZA TOPPINGS. N is the list's canonical `size` (aliases like "cape verde" /
- * "cabo verde" are one answer), never answers.length. A NOT list (any real noun scores, blitzNot.js) is open-ended:
- * `openList: true` and the client shows "TOP ∞". Display-only — scoring is unchanged (+1 per on-list answer, and you
- * already can't score past the list). Spread into every round_start payload; {} when nothing is known.
+ * "cabo verde" are one answer), never answers.length. A NOT list (any real noun scores, blitzNot.js) used to send
+ * `openList: true` ("TOP ∞"); Andy oct19 "NO MORE top infinite … a REALLY large number": it now sends the real count of
+ * answers its judge accepts (blitzNot.poolSize, ~4.7k-10k). Display-only — scoring is unchanged. Spread into every
+ * round_start payload; {} when nothing is known.
  */
 function topNFor(category) {
   const curated = BLITZ_LISTS.listFor(category);
-  if (curated && curated.mode === 'not') return { openList: true };
+  if (curated && curated.mode === 'not') {
+    const n = BLITZ_NOT.poolSize(category);
+    return n > 0 ? { topN: n } : {};
+  }
   const n = curated ? (curated.size || curated.keys.size) : (answersFor(category)?.size || 0);
   return n > 0 ? { topN: n } : {};
 }
@@ -1065,7 +1069,10 @@ const FAMILIES = [
   ['brands-food', /^(Fast food|Soda|Candy|Breakfast cereals|Cereal mascots|McDonaldland)/i],
   ['halloween-films', /^(Saw|Scream|Final Destination) films/i],
 ];
+// ONE NOT PROMPT PER GAME (Andy oct19: the any-noun prompts "are too lenient and occur too much" — measured: ~1 round in
+// 4 with every pack on): every NOT list is one family, so after a game deals one, the rest of it deals none.
 function familyOf(name) {
+  if ((BLITZ_LISTS.listFor(name) || {}).mode === 'not') return 'not-list';
   for (const [fam, re] of FAMILIES) if (re.test(name)) return fam;
   return null;
 }

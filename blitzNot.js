@@ -94,6 +94,24 @@ function buildSafe() {
 }
 const safeSets = () => SAFE || (SAFE = buildSafe());
 
+// TOP N for a NOT list (Andy oct19 "NO MORE top infinite - you can do like a REALLY large number but its not truly"):
+// how many different answers the judge would actually take — every noun it knows, minus the ones this prompt rules
+// out as SAFE, plus its curated answers and the person words. A real count (~4.7k-10k), so "TOP 9,231" is true. Built on
+// the first ask per list (the noun set is the same lazy one judge() uses) and cached.
+const POOL = new Map();
+function poolSize(category) {
+  if (POOL.has(category)) return POOL.get(category);
+  const l = BLITZ_LISTS.listFor(category);
+  const safe = safeSets().get(category);
+  if (!l || !safe) return 0;
+  const pool = new Set();
+  for (const n of nouns()) if (!safe.has(n)) pool.add(n);
+  for (const k of l.keys) pool.add(fold(k));
+  for (const p of PEOPLE) pool.add(p);
+  POOL.set(category, pool.size);
+  return pool.size;
+}
+
 // cheap: just the flag on the list (no set building)
 const isNotList = (category) => (BLITZ_LISTS.listFor(category) || {}).mode === 'not';
 
@@ -124,7 +142,7 @@ function judge(category, answer) {
 }
 
 module.exports = {
-  judge, isNotList, headOf,
+  judge, isNotList, headOf, poolSize,
   get NOUNS() { return nouns(); },
   get SAFE() { return safeSets(); },
 };
