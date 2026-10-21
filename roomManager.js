@@ -485,7 +485,7 @@ function scheduleTimerAfterCountdown(room, startFn) {
  * a timer_tick every second (same shape as the Word Bomb turn timer). When
  * time runs out it ends the round, broadcasts round_end with everyone's
  * results (the endRound snapshot, including sampleAnswers - acceptable
- * answers nobody gave), then after a 5-second intermission either advances to the next
+ * answers nobody gave), then after an intermission that scales with the player count (intermissionMs) either advances to the next
  * round (round_start + a fresh round timer) or, if all rounds are done,
  * broadcasts game_over with the final scoreboard.
  */
@@ -508,7 +508,9 @@ function startRoundTimer(room) {
       clearRoundTimer(room);
 
       const results = categoryBlitzLogic.endRound(game);
-      broadcastToRoom(room, { type: 'round_end', payload: results });
+      // The break scales with the room (Andy oct19): the client counts down nextInMs, the timeout below waits it.
+      const pauseMs = categoryBlitzLogic.intermissionMs(game.players.length);
+      broadcastToRoom(room, { type: 'round_end', payload: { ...results, nextInMs: pauseMs } });
 
       // Intermission so players can read the round results before the next
       // category drops (or the game ends).
@@ -533,7 +535,7 @@ function startRoundTimer(room) {
           broadcastToRoom(room, { type: 'round_start', payload: next });
           scheduleTimerAfterCountdown(room, startRoundTimer);
         }
-      }), 5000);
+      }), pauseMs);
 
       return;
     }
