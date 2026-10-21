@@ -750,6 +750,14 @@ const BENCHED = new Set([
   // just a phase 43%, worst gifts 43%, places to fall asleep 40%, betray you 40%) — no list can be complete.
   'Suspicious things to buy at 3am', 'Things that are a scam', 'Things that are just a phase', 'Gifts nobody wants',
   "Places you shouldn't fall asleep", 'Things that betray you',
+  // Andy oct20 "'robots' is a horrible category on category blitz you'll need to do a bit better than that": out go the
+  // textbook / grocery-aisle lists everyone has seen in every party game (a fruit, a bird, a job, things that are round),
+  // each swapped 1-for-1 in its own pack for a niche, funnier noun list (claude/blitz-niche, blind-probed).
+  'Famous robots', 'Superheroes', 'Fruits', 'Vegetables', 'Desserts', 'Snack foods', 'Types of bread', 'Types of cheese',
+  'Types of pasta', 'Foods that are green', 'Foods that are orange', 'Kitchen utensils', 'Birds', 'Insects', 'Pets',
+  'Farm animals', 'Flowers', 'Rooms in a house', 'Types of weather', 'Things that are round', 'Things that are cold',
+  'Things that are sticky', 'Music genres', 'Musical instruments', 'Jobs', 'Clothing', 'Hobbies', 'Things that are fluffy',
+  'Things that are loud', 'Things that are squishy', 'Sports with a ball',
 ]);
 const CATEGORIES = BLITZ_LISTS.NAMES.filter((c) => !BENCHED.has(c));
 const PACK_IDS = (() => {
@@ -921,6 +929,15 @@ const TIER_BROAD = new Set([
   'Things you send in a group chat', 'Things that make you sneeze', 'Hot dog toppings', 'Things you dip fries in',
   'Animals that would be terrifying if huge', 'Fair & carnival foods', 'School cafeteria foods',
   'Halloween costumes', 'Sleepover activities', "Reasons to go to the nurse's office", 'Household chores',
+  // oct21 niche swap (Andy oct20 "'robots' is a horrible category"): everyone can open these, so they rank broad
+  'Foods that stain your fingers', 'Foods that make your breath stink', 'Foods that make you fart', 'Foods named after places',
+  'Foods that come in a tube', 'Foods that jiggle', 'Foods with holes in them', 'Foods you peel before eating',
+  'Foods that go bad fast', 'Foods that are basically just sugar', 'Animals that could kill you', 'Things that explode',
+  'Things that leak', 'Things that are see-through', "Things in a mad scientist's lab", 'Animals that live underground',
+  "Things you'd find in a swamp", 'Animals that eat bugs', 'Things that are smaller than an ant', 'Things with tentacles',
+  'Famous sidekicks', 'Bald characters', "Nursery rhymes & kids' songs", 'Songs that have their own dance',
+  'Things at a crime scene', "Things you'd find in jail", 'Things people wear at work', 'Things that are slippery',
+  'Things that squeak', "Things in a principal's office", 'Sports injuries',
 ]);
 // Mainstream franchises where naming a few is EASY (not enthusiasts-only): they
 // match a niche franchise pattern below but belong in MEDIUM, not NICHE.
@@ -1068,6 +1085,9 @@ const FAMILIES = [
   ['mario', /Mario/i],
   ['brands-food', /^(Fast food|Soda|Candy|Breakfast cereals|Cereal mascots|McDonaldland)/i],
   ['halloween-films', /^(Saw|Scream|Final Destination) films/i],
+  // oct21 niche swap: two gross-food prompts / two cops-and-robbers prompts share most of their answers
+  ['gross-food', /^Foods that make (you fart|your breath stink)/i],
+  ['crime', /^Things (at a crime scene|you'd find in jail)/i],
 ];
 // ONE NOT PROMPT PER GAME (Andy oct19: the any-noun prompts "are too lenient and occur too much" — measured: ~1 round in
 // 4 with every pack on): every NOT list is one family, so after a game deals one, the rest of it deals none.
