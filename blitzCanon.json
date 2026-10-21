@@ -609604,6 +609604,10 @@
   {
    "canon": "fruit juice",
    "aliases": []
+  },
+  {
+   "canon": "red velvet",
+   "aliases": []
   }
  ],
  "Foods that make your breath stink": [
@@ -611169,6 +611173,14 @@
   },
   {
    "canon": "teacher's coffee",
+   "aliases": []
+  },
+  {
+   "canon": "broccli",
+   "aliases": []
+  },
+  {
+   "canon": "my lunch",
    "aliases": []
   }
  ],
@@ -614810,6 +614822,14 @@
   {
    "canon": "denver omelet",
    "aliases": []
+  },
+  {
+   "canon": "boston cream",
+   "aliases": []
+  },
+  {
+   "canon": "boston cream donut",
+   "aliases": []
   }
  ],
  "Foods that come in a tube": [
@@ -615819,6 +615839,26 @@
   },
   {
    "canon": "candy",
+   "aliases": []
+  },
+  {
+   "canon": "biscits",
+   "aliases": []
+  },
+  {
+   "canon": "cheese whiz",
+   "aliases": []
+  },
+  {
+   "canon": "baby food",
+   "aliases": []
+  },
+  {
+   "canon": "cake icing",
+   "aliases": []
+  },
+  {
+   "canon": "icing tube",
    "aliases": []
   }
  ],
@@ -617085,6 +617125,10 @@
   },
   {
    "canon": "calf's foot jelly",
+   "aliases": []
+  },
+  {
+   "canon": "jelly mold",
    "aliases": []
   }
  ],
@@ -620212,6 +620256,22 @@
   {
    "canon": "roadkill",
    "aliases": []
+  },
+  {
+   "canon": "apples",
+   "aliases": []
+  },
+  {
+   "canon": "cut apple",
+   "aliases": []
+  },
+  {
+   "canon": "sliced apples",
+   "aliases": []
+  },
+  {
+   "canon": "gas station sushi",
+   "aliases": []
   }
  ],
  "Foods that are basically just sugar": [
@@ -621597,6 +621657,26 @@
   },
   {
    "canon": "peanut brittle",
+   "aliases": []
+  },
+  {
+   "canon": "pop rocks",
+   "aliases": []
+  },
+  {
+   "canon": "peppermints",
+   "aliases": []
+  },
+  {
+   "canon": "peppermint",
+   "aliases": []
+  },
+  {
+   "canon": "lemon drops",
+   "aliases": []
+  },
+  {
+   "canon": "lemonheads",
    "aliases": []
   }
  ],
@@ -624883,6 +624963,10 @@
   },
   {
    "canon": "sydney funnel web",
+   "aliases": []
+  },
+  {
+   "canon": "gorrila",
    "aliases": []
   }
  ],
@@ -631647,6 +631731,10 @@
   },
   {
    "canon": "hydraulic line",
+   "aliases": []
+  },
+  {
+   "canon": "government secrets",
    "aliases": []
   }
  ],
@@ -644916,6 +645004,10 @@
   {
    "canon": "bladderwort",
    "aliases": []
+  },
+  {
+   "canon": "shrek's toilet",
+   "aliases": []
   }
  ],
  "Animals that eat bugs": [
@@ -655588,6 +655680,14 @@
   {
    "canon": "tire impressions",
    "aliases": []
+  },
+  {
+   "canon": "camra",
+   "aliases": []
+  },
+  {
+   "canon": "confused witness",
+   "aliases": []
   }
  ],
  "Things you'd find in jail": [
@@ -658298,6 +658398,14 @@
   {
    "canon": "chow hall",
    "aliases": []
+  },
+  {
+   "canon": "spoon tunnel",
+   "aliases": []
+  },
+  {
+   "canon": "visitation room",
+   "aliases": []
   }
  ],
  "Things people wear at work": [
@@ -660871,6 +660979,14 @@
   },
   {
    "canon": "astronaut diaper",
+   "aliases": []
+  },
+  {
+   "canon": "smock",
+   "aliases": []
+  },
+  {
+   "canon": "art smock",
    "aliases": []
   }
  ],
@@ -669145,6 +669261,10 @@
   },
   {
    "canon": "accreditation certificate",
+   "aliases": []
+  },
+  {
+   "canon": "typewriter",
    "aliases": []
   }
  ],
@@ -689719,6 +689839,10 @@
   },
   {
    "canon": "achilles tendon",
+   "aliases": []
+  },
+  {
+   "canon": "brokn finger",
    "aliases": []
   }
  ]
