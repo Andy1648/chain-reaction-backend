@@ -40,6 +40,29 @@ const NEVER = new Set(('yes no yeah yep nope ok okay idk lol lmao bruh hello hi 
 const PHRASE_LISTS = /^(Things you do|Ways|Household chores|Sleepover activities|Dance styles|Hobbies|Internet slang|Things you call|Cute nicknames|Comic book sound|Animal sounds|Words |Rhymes|Excuses|Lies|Red flags|Reasons|Things kids get grounded|Things that get you sent|Things that can ruin|Things that cause emotional)/;
 const TITLE_LISTS = /(films|movies|books|shows|games|characters|members|villains|heroes|celebrities|singers|rappers|athletes|YouTubers|streamers|bands|albums|songs|dwarfs|cats|dogs|robots|duos|presidents|monarchs|names|mascots|brainrot|costumes|2010s|send in a group chat|Superpowers|Olympic|legends|fighters|agents|champions|gods|Muppets|family|gang|team|princesses|animatronics)/i;
 
+// NOT A THING (Andy oct21: "apparently numbers worked for 'things NOT...' - it's still too lenient"): the noun set is
+// mined from every list's answers, so it had picked up counts and ordinals ("100", "1st", "one", "a million"), filler that
+// names no thing at all ("thing", "stuff", "something", "anything", "object", "item") and chat noise ("xd"). None of them is
+// an answer to "things you shouldn't microwave", so the judge (and the noun set behind TOP N) refuses them as the HEAD.
+// Real things that carry a number ("a 3DS", "7up", "100 spiders") still score: only a bare count/ordinal head is refused.
+const NUMBER_WORDS = new Set(('zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen '
+  + 'sixteen seventeen eighteen nineteen twenty thirty forty fifty sixty seventy eighty ninety hundred hundreds thousand '
+  + 'thousands million millions billion billions trillion trillions gazillion bajillion zillion infinity dozen dozens '
+  + 'first second third fourth fifth sixth seventh eighth ninth tenth half halves number numbers digit digits').split(' '));
+const FILLER = new Set(('thing things stuff something somethings anything everything nothing object objects item items '
+  + 'random whatever whatnot stuffs').split(' '));
+// "sharp stuff", "wet things", "fragile items" ARE answers (blind probe oct21): a stand-in noun counts when a real
+// describing word sits in front of it. "a thing", "random stuff", "literally anything" never do.
+const STAND_IN = new Set('thing things stuff stuffs object objects item items'.split(' '));
+const DETERMINERS = new Set('a an the my your his her their our this that these those'.split(' '));
+// a quantity is judged by what it counts: "a bunch of bananas" scores, "lots of things" does not
+const QUANTITY = new Set('lot lots ton tons load loads bunch bunches heap heaps pile piles handful couple few bag bags box boxes'.split(' '));
+const VAGUE = new Set(('literally just any some random all every other many lots lot bunch whole kind kinds sort sorts '
+  + 'type types weird cool good bad nice').split(' '));
+const CHAT = new Set('xd xdd rofl lmfao lmao smh tbh idc ngl fr frfr ong bet bruh bro sus ez gg wp kek'.split(' '));
+const isCount = (w) => /^\d+(st|nd|rd|th|s)?$/.test(w) || NUMBER_WORDS.has(w);
+const notAThing = (w) => !w || isCount(w) || FILLER.has(w) || CHAT.has(w);
+
 const word = (w) => w.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/'s$/, '')
   .replace(/[^a-z0-9]/g, '');
 const words = (s) => String(s == null ? '' : s).split(/\s+/).map(word).filter(Boolean);
@@ -65,7 +88,7 @@ function buildNouns() {
     if (l.pack === 'wordplay' || PHRASE_LISTS.test(name) || TITLE_LISTS.test(name)) continue;
     for (const a of l.answers) {
       const h = headOf(words(a));
-      if (!h || h.length < 2 || NEVER.has(h)) continue;
+      if (!h || h.length < 2 || NEVER.has(h) || notAThing(h)) continue;
       const f = fold(h);
       if (!seenIn.has(f)) seenIn.set(f, new Set());
       seenIn.get(f).add(name);
@@ -135,6 +158,19 @@ function judge(category, answer) {
   // the whole answer is safe ("leftover pizza" as typed), or it is one plain safe noun ("a mug", "soups")
   if (safe.has(k) || safe.has(fold(k)) || (core.length === 1 && (safe.has(core[0]) || safe.has(fold(core[0]))))) {
     return { ok: false, why: 'safe_item', message: l.safeMsg || null };
+  }
+  const ofAt = ws.indexOf('of');
+  if (ofAt > 0 && ofAt < ws.length - 1 && QUANTITY.has(h)) {
+    const counted = ws.slice(ofAt + 1);
+    const ch = headOf(counted);
+    if (!ch || notAThing(ch) || notAThing(fold(ch))) return { ok: false, why: 'not_a_noun' };
+  }
+  // a count, an ordinal, filler or chat noise is not a thing, whatever it rides on ("a million", "literally anything") —
+  // except a stand-in noun with a real describing word in front ("sharp stuff", "wet things")
+  if (notAThing(h) || notAThing(fold(h))) {
+    const before = ws.slice(0, ws.lastIndexOf(h)).filter((w) => !DETERMINERS.has(w) && !VAGUE.has(w) && !notAThing(w) && !NEVER.has(w));
+    if (!(STAND_IN.has(h) && before.length > 0)) return { ok: false, why: 'not_a_noun' };
+    return { ok: true, why: 'noun' };
   }
   if (PEOPLE.has(h) || PEOPLE.has(ws[ws.length - 1])) return { ok: true, why: 'person' };
   if (nouns().has(fold(h))) return { ok: true, why: 'noun' };
