@@ -82,15 +82,16 @@ function topNFor(category) {
 }
 
 /**
- * THE BREAK BETWEEN ROUNDS (Andy oct19: "sometimes i think category blitz rounds (in between) are too short. maybe add a
- * second for every person … it should somewhat scale so people can read each others"). Was a flat 5 s. Now 4 s + 1 s per
- * player (bots count: their answers are on the results screen too), capped at 10 s; solo stays 5 s. round_end carries the
- * value as `nextInMs` so the client counts down the SAME number the server waits.
+ * THE BREAK BETWEEN ROUNDS (Andy oct19: "maybe add a second for every person … so people can read each others"; oct22,
+ * with the round-break SHOWCASE: "S1 — 8s + 1.5s per player, max 18s"). The break is now the showcase — everyone's
+ * answers side by side, the uniques, the score reveal, the lead changes — so it is long enough to actually read:
+ * 8 s + 1.5 s per player (bots count: their answers are on the board too), capped at 18 s. Solo stays 5 s (no one to
+ * compare against). round_end carries the value as `nextInMs`, so the client counts down the SAME number the server waits.
  */
 const BREAK_SOLO_MS = 5000;
-const BREAK_BASE_MS = 4000;
-const BREAK_PER_PLAYER_MS = 1000;
-const BREAK_MAX_MS = 10000;
+const BREAK_BASE_MS = 8000;
+const BREAK_PER_PLAYER_MS = 1500;
+const BREAK_MAX_MS = 18000;
 function intermissionMs(playerCount) {
   const n = Math.max(1, Math.floor(Number(playerCount) || 1));
   if (n <= 1) return BREAK_SOLO_MS;

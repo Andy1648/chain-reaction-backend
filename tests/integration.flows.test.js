@@ -208,14 +208,14 @@ test('Category Blitz: two players race through all 3 rounds to the final scorebo
     startRoundTimer(room);
 
     if (round < 3) {
-      // Real flow: 1s round -> round_end -> 5s intermission -> round_start.
+      // Real flow: 1s round -> round_end -> the scaled break (11s for 2 players) -> round_start.
       await waitFor(
         () => room.game.currentRound === round + 1 && room.game.status === 'in_progress',
-        { timeoutMs: 9000, label: `round ${round + 1} to start` }
+        { timeoutMs: 16000, label: `round ${round + 1} to start` }
       );
     } else {
       await waitFor(() => room.game.status === 'finished', {
-        timeoutMs: 9000,
+        timeoutMs: 16000,
         label: 'the game to finish',
       });
     }
@@ -225,8 +225,8 @@ test('Category Blitz: two players race through all 3 rounds to the final scorebo
   for (const c of [alice, bob]) {
     const ends = ofType(c, 'round_end');
     assert.equal(ends.length, 3, 'every round produced a round_end');
-    // the break scales with the room and the client is told how long it is (Andy oct19): 2 players -> 4s + 2s
-    for (const e of ends) assert.equal(e.payload.nextInMs, 6000, 'round_end carries the scaled break');
+    // the break scales with the room and the client is told how long it is (Andy oct22 S1): 2 players -> 8s + 3s
+    for (const e of ends) assert.equal(e.payload.nextInMs, 11000, 'round_end carries the scaled break');
     ends.forEach((end, i) => {
       assert.equal(end.payload.round, i + 1);
       assert.equal(end.payload.category, categoriesPlayed[i]);
