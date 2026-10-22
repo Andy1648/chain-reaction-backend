@@ -75,6 +75,9 @@ const {
 // routed there and every socket close is reported to it; nothing else here touches it.
 const { createClassHub } = require('./classRoom');
 
+// set_hero: a hero id is a short lowercase slug with an optional -elite / -gold variant (riot, mecha, riot-elite …).
+const HERO_ID = /^[a-z]{2,12}(-(elite|gold))?$/;
+const HERO_MIN_GAP_MS = 400;
 // Category Blitz pack ids — the valid set the host's set_packs selection is checked
 // against. Derived from CATEGORY_PACKS so it can't drift from the real assignments.
 const { PACK_IDS, ROUND_OPTIONS: BLITZ_ROUND_OPTIONS } = require('./categoryBlitzLogic');
@@ -484,6 +487,28 @@ wss.on('connection', (ws) => {
             return;
           }
           room.blitzRounds = rounds;
+          broadcastToRoom(room, buildRoomUpdatePayload(room));
+          break;
+        }
+
+        // HEROES IN EVERY SEAT (oct21): a player tells the room which hero they have equipped. Purely cosmetic: stored on
+        // the room roster entry and relayed in room_update so every client draws it. Shape-checked only (the client owns
+        // the roster and falls back to its seat-colour hero for an id it doesn't know). Throttled per player so a spammed
+        // change can't flood the room with broadcasts.
+        case 'set_hero': {
+          const room = getRoomForConnection(ws);
+          if (!room) return;
+          const hero = payload?.hero;
+          if (typeof hero !== 'string' || !HERO_ID.test(hero)) {
+            sendError(ws, 'Invalid hero.', 'set_hero');
+            return;
+          }
+          const me = room.players.find((p) => p.id === ws.id);
+          if (!me || me.hero === hero) return;
+          const now = Date.now();
+          if (me.heroAt && now - me.heroAt < HERO_MIN_GAP_MS) return;
+          me.hero = hero;
+          me.heroAt = now;
           broadcastToRoom(room, buildRoomUpdatePayload(room));
           break;
         }
