@@ -185,3 +185,25 @@ test('batch 3: the "that\'s actually fine" answers bounce, the real dangers and 
   // a baby named after a dictator, a slur or a god is not the joke — those never score
   for (const a of ['hitler', 'adolf', 'mussolini']) assert.equal((await submit("Things you shouldn't name your baby", a)).accepted, false, a);
 });
+
+// oct21 (Andy: "apparently numbers worked for 'things NOT...' - it's still too lenient and that's a bit too far"): a count,
+// an ordinal, filler or chat noise is not a thing on ANY NOT list; real things — even ones with a number in them, or a
+// stand-in noun with a real describing word — still score.
+test('NOT lists refuse numbers, filler and chat noise; real things still score', async () => {
+  const BLITZ_LISTS = require('./blitzLists');
+  const nots = BLITZ_LISTS.NAMES.filter((n) => (BLITZ_LISTS.listFor(n) || {}).mode === 'not');
+  const junk = ['1', '42', '100', '69', '4.5', '1st', 'one', 'zero', 'a million', 'a hundred', 'infinity', 'thing', 'stuff',
+    'something', 'anything', 'literally anything', 'a thing', 'random stuff', 'lots of things', 'object', 'item', 'xd'];
+  for (const n of nots) {
+    for (const a of junk) {
+      if (BLITZ_LISTS.onList(n, a)) continue; // a curated joke ("nothing" in an empty microwave) is the list's call
+      const r = await submit(n, a);
+      assert.equal(r.accepted, false, `${n}: "${a}" scored`);
+    }
+  }
+  const real = ['a fork', 'a 3ds', '7up', '100 spiders', 'grandma', 'me', 'sharp stuff', 'wet things', 'a bunch of bananas'];
+  for (const a of real) {
+    const r = await submit("Things you shouldn't microwave", a);
+    assert.ok(r.accepted || r.reason === 'safe_item', `"${a}" -> ${r.reason}`);
+  }
+});
