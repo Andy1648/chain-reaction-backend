@@ -325,6 +325,8 @@ function buildRoomUpdatePayload(room) {
         // Surfaced so the lobby can mark the bot and offer a REMOVE BOT control;
         // botDifficulty (easy|medium|hard) is the bot's own skill, shown on its card.
         ...(p.isBot ? { isBot: true, botDifficulty: p.botDifficulty || 'medium' } : {}),
+        // The player's equipped HERO (set_hero) so every client draws everyone's real hero in their seat.
+        ...(p.hero ? { hero: p.hero } : {}),
       })),
     },
   };
