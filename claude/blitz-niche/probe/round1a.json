@@ -1,0 +1,114 @@
+{
+  "Foods that stain your fingers": [
+    { "player": "kid9", "guesses": ["cheetos", "chocolate", "popsicle", "blueberrys", "ketchup", "candy", "doritos", "strawberries", "juice", "markers", "pizza", "cherries"] },
+    { "player": "edgy13", "guesses": ["hot cheetos", "my brothers boogers", "takis", "blood", "doritos", "mustard", "crayons", "beets", "ketchup", "poop", "warheads", "blue raspberry"] },
+    { "player": "teen16", "guesses": ["takis", "hot cheetos", "flamin hot", "doritos", "blue slushie", "cheez its", "wings", "buffalo wings", "funyuns", "ring pop", "pomegranate", "nacho cheese"] },
+    { "player": "parent", "guesses": ["beets", "blueberries", "turmeric", "curry", "cherries", "pomegranate", "cheetos", "mustard", "blackberries", "chocolate", "red wine", "tomato sauce"] },
+    { "player": "nerd", "guesses": ["turmeric", "beetroot", "saffron", "pomegranate", "mulberries", "annatto", "jamun", "walnuts", "sumac", "paprika", "elderberries", "squid ink"] }
+  ],
+  "Foods that make your breath stink": [
+    { "player": "kid9", "guesses": ["garlic", "onions", "fish", "eggs", "cheese", "brocoli", "tuna", "pizza", "hot dogs", "milk", "beans", "pickles"] },
+    { "player": "edgy13", "guesses": ["garlic", "my dads breath", "tuna", "poop", "onion", "rotten eggs", "dog food", "sardines", "cat food", "boiled eggs", "anchovies", "my teachers coffee"] },
+    { "player": "teen16", "guesses": ["garlic", "onions", "tuna", "coffee", "doritos", "garlic bread", "hot cheetos", "energy drinks", "shrimp", "ramen", "kimchi", "sushi"] },
+    { "player": "parent", "guesses": ["garlic", "onions", "coffee", "tuna", "blue cheese", "anchovies", "sardines", "horseradish", "salami", "alcohol", "curry", "egg salad"] },
+    { "player": "nerd", "guesses": ["garlic", "durian", "asafoetida", "limburger", "surstromming", "kimchi", "natto", "ramps", "shallots", "leeks", "fish sauce", "gorgonzola"] }
+  ],
+  "Foods that make you fart": [
+    { "player": "kid9", "guesses": ["beans", "brocoli", "eggs", "cabbage", "milk", "soda", "chili", "cheese", "corn", "pizza", "taco", "apples"] },
+    { "player": "edgy13", "guesses": ["beans", "taco bell", "chili", "my moms cooking", "school lunch", "eggs", "cafeteria food", "baked beans", "chipotle", "milk", "spicy food", "broccoli"] },
+    { "player": "teen16", "guesses": ["beans", "taco bell", "chipotle", "protein shake", "milk", "broccoli", "sparkling water", "eggs", "cheese", "burritos", "prime", "onions"] },
+    { "player": "parent", "guesses": ["beans", "broccoli", "cabbage", "cauliflower", "brussels sprouts", "lentils", "onions", "dairy", "chili", "prunes", "bran", "chickpeas"] },
+    { "player": "nerd", "guesses": ["jerusalem artichokes", "lentils", "chickpeas", "brussels sprouts", "sugar alcohols", "sorbitol", "inulin", "kidney beans", "kale", "asparagus", "soybeans", "split peas"] }
+  ],
+  "Foods named after places": [
+    { "player": "kid9", "guesses": ["french fries", "hamburger", "pizza", "french toast", "mexican food", "chinese food", "hot dog", "swiss cheese", "texas toast", "brussel sprouts", "turkey", "chicken nuggets"] },
+    { "player": "edgy13", "guesses": ["turkey", "french fries", "hamburger", "frankfurter", "china", "brazil nuts", "chili", "kentucky fried chicken", "new york pizza", "texas roadhouse", "swiss cheese", "my butt"] },
+    { "player": "teen16", "guesses": ["buffalo wings", "philly cheesesteak", "hamburger", "french fries", "chicago hot dog", "new york pizza", "kfc", "turkey", "texas toast", "swiss cheese", "french toast", "nashville hot chicken"] },
+    { "player": "parent", "guesses": ["hamburger", "frankfurter", "buffalo wings", "brussels sprouts", "swiss cheese", "cheddar", "parmesan", "bologna", "boston cream pie", "philly cheesesteak", "denver omelet", "black forest cake"] },
+    { "player": "nerd", "guesses": ["bologna", "cheddar", "gouda", "parmesan", "champagne", "dijon mustard", "worcestershire sauce", "tabasco", "bakewell tart", "linzer torte", "camembert", "cantaloupe"] }
+  ],
+  "Foods that come in a tube": [
+    { "player": "kid9", "guesses": ["gogurt", "toothpaste", "pringles", "freeze pops", "frosting", "ice pops", "pillsbury", "cookie dough", "push pops", "candy", "pixy stix", "otter pops"] },
+    { "player": "edgy13", "guesses": ["gogurt", "toothpaste", "pringles", "glue", "sausage", "mayo", "my dads hair gel", "hot dogs", "ketchup", "frosting", "space food", "cookie dough"] },
+    { "player": "teen16", "guesses": ["pringles", "gogurt", "pixy stix", "cookie dough", "push pops", "freeze pops", "cinnamon rolls", "biscuits", "mentos", "frosting", "toothpaste", "crescent rolls"] },
+    { "player": "parent", "guesses": ["pringles", "go-gurt", "tomato paste", "crescent rolls", "cookie dough", "biscuits", "polenta", "sausage", "frosting", "anchovy paste", "mustard", "tube of wasabi"] },
+    { "player": "nerd", "guesses": ["tomato paste", "anchovy paste", "harissa", "wasabi", "kalles kaviar", "polenta", "liverwurst", "braunschweiger", "sweetened condensed milk", "mayonnaise", "astronaut food", "gochujang"] }
+  ],
+  "Foods that jiggle": [
+    { "player": "kid9", "guesses": ["jello", "pudding", "gummy bears", "jelly", "flan", "custard", "slime", "cranberry sauce", "cheesecake", "gummy worms", "marshmallow", "yogurt"] },
+    { "player": "edgy13", "guesses": ["jello", "my uncles belly", "pudding", "flan", "cranberry sauce", "gummies", "fat", "jello shots", "eyeballs", "boba", "tofu", "brains"] },
+    { "player": "teen16", "guesses": ["jello", "boba", "flan", "pudding", "panna cotta", "mochi", "tofu", "gummy bears", "jiggly cheesecake", "jelly", "cranberry sauce", "japanese cheesecake"] },
+    { "player": "parent", "guesses": ["jello", "flan", "pudding", "cranberry sauce", "aspic", "panna cotta", "creme brulee", "custard", "tofu", "souffle", "jello salad", "egg whites"] },
+    { "player": "nerd", "guesses": ["aspic", "panna cotta", "agar jelly", "konjac jelly", "blancmange", "head cheese", "creme caramel", "silken tofu", "nata de coco", "souffle cheesecake", "grass jelly", "calf's foot jelly"] }
+  ],
+  "Foods with holes in them": [
+    { "player": "kid9", "guesses": ["donuts", "swiss cheese", "cheerios", "bagels", "pretzels", "lifesavers", "pineapple", "crackers", "waffles", "spongebob", "pancakes", "onion rings"] },
+    { "player": "edgy13", "guesses": ["donuts", "swiss cheese", "bagels", "cheerios", "my socks", "onion rings", "froot loops", "pringles", "sponge", "pineapple rings", "lotus root", "bread"] },
+    { "player": "teen16", "guesses": ["donuts", "bagels", "swiss cheese", "cheerios", "froot loops", "onion rings", "crumpets", "english muffins", "pretzels", "ritz", "lifesavers", "penne"] },
+    { "player": "parent", "guesses": ["bagels", "donuts", "swiss cheese", "english muffins", "crumpets", "cheerios", "lifesavers", "pineapple rings", "macaroni", "sourdough", "onion rings", "ritz crackers"] },
+    { "player": "nerd", "guesses": ["emmental", "lotus root", "crumpets", "injera", "bucatini", "ziti", "rigatoni", "jarlsberg", "polo mints", "ciabatta", "taiyaki", "cheese puffs"] }
+  ],
+  "Foods you peel before eating": [
+    { "player": "kid9", "guesses": ["banana", "orange", "apple", "eggs", "potato", "carrots", "grapes", "string cheese", "clementine", "mango", "kiwi", "avacado"] },
+    { "player": "edgy13", "guesses": ["banana", "orange", "scabs", "string cheese", "eggs", "shrimp", "my skin", "onion", "potato", "garlic", "mango", "fruit by the foot"] },
+    { "player": "teen16", "guesses": ["banana", "orange", "mandarin", "cuties", "kiwi", "avocado", "mango", "shrimp", "hard boiled eggs", "string cheese", "lychee", "pomegranate"] },
+    { "player": "parent", "guesses": ["banana", "orange", "potato", "onion", "garlic", "carrot", "cucumber", "avocado", "kiwi", "mango", "grapefruit", "eggs"] },
+    { "player": "nerd", "guesses": ["lychee", "rambutan", "mangosteen", "longan", "pomelo", "jicama", "celeriac", "taro", "plantain", "dragon fruit", "kohlrabi", "crawfish"] }
+  ],
+  "Foods that go bad fast": [
+    { "player": "kid9", "guesses": ["milk", "bananas", "bread", "strawberrys", "eggs", "fish", "avocado", "lettuce", "chicken", "yogurt", "cheese", "grapes"] },
+    { "player": "edgy13", "guesses": ["milk", "my lunch", "fish", "bananas", "sushi", "school lunch", "eggs", "chicken", "mayo", "roadkill", "raw meat", "avocado"] },
+    { "player": "teen16", "guesses": ["avocado", "milk", "bananas", "sushi", "berries", "bread", "raw chicken", "lettuce", "fries", "mcdonalds fries", "strawberries", "fish"] },
+    { "player": "parent", "guesses": ["milk", "avocados", "berries", "bananas", "lettuce", "fish", "ground beef", "raspberries", "fresh herbs", "cilantro", "bread", "mushrooms"] },
+    { "player": "nerd", "guesses": ["raspberries", "bean sprouts", "fresh fish", "oysters", "basil", "mushrooms", "ground meat", "cut melon", "fresh pasta", "ricotta", "sushi rice", "mussels"] }
+  ],
+  "Foods that are basically just sugar": [
+    { "player": "kid9", "guesses": ["candy", "cotton candy", "lollipops", "soda", "gummy bears", "skittles", "cake", "frosting", "pixy stix", "candy canes", "jelly beans", "sprinkles"] },
+    { "player": "edgy13", "guesses": ["cotton candy", "pixy stix", "my little sister", "sugar", "candy corn", "mountain dew", "nerds", "frosting", "red bull", "honey", "marshmallows", "warheads"] },
+    { "player": "teen16", "guesses": ["cotton candy", "pixy stix", "nerds", "sour patch kids", "mountain dew", "starbucks frappuccino", "monster", "skittles", "peeps", "gushers", "airheads", "swedish fish"] },
+    { "player": "parent", "guesses": ["cotton candy", "candy corn", "marshmallows", "soda", "frosting", "fudge", "maple syrup", "honey", "peeps", "jelly beans", "rock candy", "sugar cereal"] },
+    { "player": "nerd", "guesses": ["rock candy", "fondant", "molasses", "maple syrup", "pixy stix", "candy floss", "dextrose tablets", "smarties", "agave nectar", "simple syrup", "brittle", "marzipan"] }
+  ],
+  "Animals that could kill you": [
+    { "player": "kid9", "guesses": ["shark", "lion", "tiger", "bear", "snake", "crocodile", "spider", "alligator", "wolf", "scorpion", "jellyfish", "gorilla"] },
+    { "player": "edgy13", "guesses": ["shark", "hippo", "my mom", "mosquito", "lion", "snake", "black widow", "box jellyfish", "honey badger", "goose", "crocodile", "human"] },
+    { "player": "teen16", "guesses": ["hippo", "shark", "grizzly bear", "mosquito", "box jellyfish", "cassowary", "polar bear", "king cobra", "crocodile", "elephant", "moose", "orca"] },
+    { "player": "parent", "guesses": ["shark", "bear", "lion", "rattlesnake", "alligator", "hippo", "moose", "bees", "mosquitoes", "rhino", "elephant", "buffalo"] },
+    { "player": "nerd", "guesses": ["inland taipan", "box jellyfish", "cone snail", "blue ringed octopus", "poison dart frog", "cassowary", "cape buffalo", "saltwater crocodile", "stonefish", "tsetse fly", "brazilian wandering spider", "sydney funnel web"] }
+  ],
+  "Things that explode": [
+    { "player": "kid9", "guesses": ["bomb", "fireworks", "volcano", "balloon", "dynamite", "popcorn", "grenade", "tnt", "creeper", "rocket", "soda", "cars"] },
+    { "player": "edgy13", "guesses": ["bomb", "creeper", "my toilet", "microwave eggs", "grenade", "nuke", "mentos and coke", "my brother", "samsung phone", "tnt", "c4", "pimple"] },
+    { "player": "teen16", "guesses": ["creeper", "tnt", "c4", "nuke", "grenade", "fireworks", "samsung galaxy note 7", "end crystal", "dynamite", "volcano", "supernova", "rocket"] },
+    { "player": "parent", "guesses": ["fireworks", "dynamite", "bomb", "volcano", "gas tank", "propane tank", "pressure cooker", "balloon", "popcorn", "landmine", "star", "egg in microwave"] },
+    { "player": "nerd", "guesses": ["supernova", "nitroglycerin", "sodium in water", "tnt", "c4", "semtex", "grain silo", "magma chamber", "exploding whale", "bombardier beetle", "kilonova", "thermite"] }
+  ],
+  "Things that leak": [
+    { "player": "kid9", "guesses": ["faucet", "roof", "water bottle", "pipe", "sink", "juice box", "pen", "diaper", "toilet", "nose", "boat", "cup"] },
+    { "player": "edgy13", "guesses": ["my nose", "diaper", "toilet", "pipes", "faucet", "pen", "my grandpa", "trash bag", "roof", "boat", "nuclear reactor", "the titanic"] },
+    { "player": "teen16", "guesses": ["faucet", "roof", "pipe", "water bottle", "gta 6 trailer", "pen", "phone battery", "boat", "hydro flask", "stanley cup", "pool", "tire"] },
+    { "player": "parent", "guesses": ["faucet", "roof", "pipes", "tire", "water heater", "gas tank", "dishwasher", "basement", "toilet", "boat", "radiator", "oil pan"] },
+    { "player": "nerd", "guesses": ["radiator", "head gasket", "battery acid", "capacitor", "ballpoint pen", "memory leak", "gas line", "hydraulic line", "valve", "dam", "sippy cup", "aquarium"] }
+  ],
+  "Things that are see-through": [
+    { "player": "kid9", "guesses": ["glass", "window", "water", "plastic", "jellyfish", "ice", "glasses", "bubbles", "air", "ghost", "tape", "water bottle"] },
+    { "player": "edgy13", "guesses": ["window", "glass", "ghost", "my excuses", "jellyfish", "water", "plastic wrap", "air", "my brothers lies", "glass frog", "ice", "saran wrap"] },
+    { "player": "teen16", "guesses": ["glass", "window", "water", "phone case", "clear phone case", "ghost", "jellyfish", "plastic", "glass frog", "ice", "lenses", "windshield"] },
+    { "player": "parent", "guesses": ["glass", "window", "water", "saran wrap", "cellophane", "contact lenses", "ice", "sheer curtains", "plastic bag", "windshield", "eyeglasses", "tupperware"] },
+    { "player": "nerd", "guesses": ["glass frog", "ghost shrimp", "barreleye fish", "glasswing butterfly", "quartz", "acrylic", "plexiglass", "cellophane", "jellyfish", "salp", "aerogel", "cornea"] }
+  ],
+  "Things in a mad scientist's lab": [
+    { "player": "kid9", "guesses": ["potions", "test tubes", "beakers", "goggles", "lab coat", "robot", "slime", "brain", "frankenstein", "monster", "fire", "microscope"] },
+    { "player": "edgy13", "guesses": ["brains in jars", "dead body", "beakers", "my teacher", "eyeballs", "frankenstein", "body parts", "chemicals", "zombies", "skeleton", "acid", "cloned sheep"] },
+    { "player": "teen16", "guesses": ["beakers", "test tubes", "lab coat", "goggles", "tesla coil", "chemicals", "rick sanchez", "portal gun", "brain in a jar", "lightning", "lab rats", "clones"] },
+    { "player": "parent", "guesses": ["test tubes", "beakers", "bunsen burner", "lab coat", "goggles", "microscope", "frankenstein", "chemicals", "lightning", "lab rat", "igor", "skeleton"] },
+    { "player": "nerd", "guesses": ["tesla coil", "jacobs ladder", "erlenmeyer flask", "bunsen burner", "van de graaff generator", "centrifuge", "specimen jars", "formaldehyde", "petri dishes", "operating table", "hunchbacked assistant", "bell jar"] }
+  ],
+  "Animals that live underground": [
+    { "player": "kid9", "guesses": ["mole", "worm", "ants", "rabbit", "snake", "gopher", "groundhog", "bugs", "beetle", "spider", "mice", "fox"] },
+    { "player": "edgy13", "guesses": ["worms", "mole", "ants", "my brother in the basement", "zombies", "rats", "gopher", "naked mole rat", "cicadas", "goblins", "badger", "groundhog"] },
+    { "player": "teen16", "guesses": ["mole", "naked mole rat", "worms", "ants", "gopher", "meerkat", "prairie dog", "groundhog", "badger", "rabbits", "termites", "armadillo"] },
+    { "player": "parent", "guesses": ["moles", "gophers", "groundhogs", "prairie dogs", "earthworms", "ants", "rabbits", "badgers", "chipmunks", "voles", "termites", "woodchuck"] },
+    { "player": "nerd", "guesses": ["naked mole rat", "aardvark", "wombat", "star nosed mole", "caecilian", "pangolin", "tuco tuco", "fennec fox", "trapdoor spider", "periodical cicada nymph", "aardwolf", "golden mole"] }
+  ]
+}

@@ -1,0 +1,27 @@
+ 94% accepted  Things with tentacles (48 guesses, misses/player avg 0.8 max 1)
+      misses: monster | my grandma | sea creature
+ 96% accepted  Things at a crime scene (48 guesses, misses/player avg 0.5 max 1)
+      misses: camra | a confused witness
+ 96% accepted  Things you'd find in jail (48 guesses, misses/player avg 0.5 max 1)
+      misses: a spoon tunnel | visitation room
+ 98% accepted  Things you'd find in a swamp (48 guesses, misses/player avg 0.3 max 1)
+      misses: shreks toilet
+ 98% accepted  Famous sidekicks (48 guesses, misses/player avg 0.3 max 1)
+      misses: me
+ 98% accepted  Bald characters (48 guesses, misses/player avg 0.3 max 1)
+      misses: phineas
+ 98% accepted  Things people wear at work (48 guesses, misses/player avg 0.3 max 1)
+      misses: smock
+ 98% accepted  Things that are slippery (48 guesses, misses/player avg 0.3 max 1)
+      misses: lube
+ 98% accepted  Things in a principal's office (48 guesses, misses/player avg 0.3 max 1)
+      misses: typewriter
+ 98% accepted  Sports injuries (48 guesses, misses/player avg 0.3 max 1)
+      misses: brokn finger
+100% accepted  Animals that eat bugs (48 guesses, misses/player avg 0.0 max 0)
+100% accepted  Things that are smaller than an ant (48 guesses, misses/player avg 0.0 max 0)
+100% accepted  Nursery rhymes & kids' songs (48 guesses, misses/player avg 0.0 max 0)
+100% accepted  Songs that have their own dance (48 guesses, misses/player avg 0.0 max 0)
+100% accepted  Things that squeak (48 guesses, misses/player avg 0.0 max 0)
+
+TOTAL 720 guesses, 14 misses — 98.1% accepted

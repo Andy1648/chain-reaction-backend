@@ -1,0 +1,92 @@
+{
+  "Things you'd find in a swamp": [
+    { "player": "kid11", "guesses": ["frog", "alligator", "shrek", "mud", "snake", "lily pad", "mosquito", "turtle", "crocodile", "fish", "duck", "slime"] },
+    { "player": "class-clown14", "guesses": ["shrek", "dead body", "leeches", "donkey", "swamp water", "my ex", "quicksand", "bog monster", "shreks toilet", "gator", "a missing hiker", "onions"] },
+    { "player": "college20", "guesses": ["cypress trees", "spanish moss", "alligators", "shrek", "mangroves", "cattails", "algae", "methane", "herons", "airboat", "swamp people", "will o the wisp"] },
+    { "player": "grandparent65", "guesses": ["alligator", "moss", "cypress", "frogs", "snakes", "mosquitoes", "reeds", "water moccasin", "herons", "cattails", "bullfrog", "mud"] }
+  ],
+  "Animals that eat bugs": [
+    { "player": "kid11", "guesses": ["frog", "lizard", "spider", "bird", "anteater", "bat", "chameleon", "toad", "gecko", "fish", "chicken", "venus flytrap"] },
+    { "player": "class-clown14", "guesses": ["bear grylls", "my little brother", "anteater", "frog", "spider", "venus fly trap", "timon and pumbaa", "pumbaa", "bat", "me", "aardvark", "chicken"] },
+    { "player": "college20", "guesses": ["anteater", "aardvark", "pangolin", "gecko", "bearded dragon", "bats", "swallows", "woodpecker", "praying mantis", "armadillo", "shrew", "dragonfly"] },
+    { "player": "grandparent65", "guesses": ["frog", "toad", "bird", "bat", "lizard", "spider", "woodpecker", "anteater", "swallow", "robin", "skunk", "mole"] }
+  ],
+  "Things that are smaller than an ant": [
+    { "player": "kid11", "guesses": ["germ", "dust", "bacteria", "atom", "sand", "flea", "salt", "crumb", "cell", "ant man", "virus", "baby ant"] },
+    { "player": "class-clown14", "guesses": ["my brain", "my brothers brain", "plankton", "germs", "my grades", "atom", "dust mite", "your chances", "virus", "flea", "my paycheck", "a booger"] },
+    { "player": "college20", "guesses": ["atom", "quark", "bacteria", "tardigrade", "dust mite", "pollen", "molecule", "electron", "microchip", "grain of sand", "amoeba", "plankton"] },
+    { "player": "grandparent65", "guesses": ["germ", "flea", "dust", "speck", "grain of sand", "atom", "pinhead", "seed", "salt", "mite", "pollen", "gnat"] }
+  ],
+  "Things with tentacles": [
+    { "player": "kid11", "guesses": ["octopus", "squid", "jellyfish", "kraken", "ursula", "alien", "squidward", "sea anemone", "doc ock", "octupus", "monster", "dr octopus"] },
+    { "player": "class-clown14", "guesses": ["octopus", "squidward", "ursula", "cthulhu", "kraken", "my grandma", "doc ock", "jellyfish", "davy jones", "squid", "slenderman", "venom"] },
+    { "player": "college20", "guesses": ["octopus", "squid", "cuttlefish", "cthulhu", "kraken", "jellyfish", "davy jones", "sea anemone", "ursula", "nautilus", "doctor octopus", "hydra"] },
+    { "player": "grandparent65", "guesses": ["octopus", "squid", "jellyfish", "sea monster", "anemone", "man of war", "cuttlefish", "snail", "sea creature", "kraken", "starfish", "alien"] }
+  ],
+  "Famous sidekicks": [
+    { "player": "kid11", "guesses": ["robin", "donkey", "patrick", "olaf", "ron", "pikachu", "sven", "minions", "luigi", "tails", "timon", "dory"] },
+    { "player": "class-clown14", "guesses": ["robin", "donkey", "patrick star", "luigi", "morty", "chewbacca", "kevin", "pinky", "dobby", "me", "watson", "jar jar binks"] },
+    { "player": "college20", "guesses": ["robin", "watson", "chewbacca", "samwise", "ron weasley", "hermione", "goose", "morty", "bucky", "donkey", "jesse pinkman", "dr watson"] },
+    { "player": "grandparent65", "guesses": ["robin", "tonto", "watson", "sancho panza", "barney fife", "ed mcmahon", "kato", "igor", "friar tuck", "little john", "jiminy cricket", "goofy"] }
+  ],
+  "Bald characters": [
+    { "player": "kid11", "guesses": ["charlie brown", "aang", "mr clean", "caillou", "stewie", "homer", "dr evil", "phineas", "saitama", "lex luthor", "professor x", "megamind"] },
+    { "player": "class-clown14", "guesses": ["caillou", "mr clean", "my dad", "saitama", "voldemort", "dr evil", "walter white", "the rock", "lex luthor", "gollum", "charlie brown", "krillin"] },
+    { "player": "college20", "guesses": ["walter white", "saitama", "professor x", "voldemort", "aang", "lex luthor", "agent 47", "thanos", "dr evil", "krillin", "mr clean", "gru"] },
+    { "player": "grandparent65", "guesses": ["kojak", "mr clean", "yul brynner", "uncle fester", "charlie brown", "daddy warbucks", "telly savalas", "elmer fudd", "humpty dumpty", "lex luthor", "dr evil", "mr magoo"] }
+  ],
+  "Nursery rhymes & kids' songs": [
+    { "player": "kid11", "guesses": ["baby shark", "twinkle twinkle", "abc song", "wheels on the bus", "old mcdonald", "itsy bitsy spider", "humpty dumpty", "row row row your boat", "bingo", "london bridge", "baa baa black sheep", "if your happy and you know it"] },
+    { "player": "class-clown14", "guesses": ["baby shark", "ring around the rosie", "rock a bye baby", "three blind mice", "humpty dumpty", "the song that never ends", "barney song", "pop goes the weasel", "london bridge", "jack and jill", "five little monkeys", "skidamarink"] },
+    { "player": "college20", "guesses": ["baby shark", "twinkle twinkle little star", "wheels on the bus", "head shoulders knees and toes", "itsy bitsy spider", "old macdonald", "hickory dickory dock", "mary had a little lamb", "cocomelon", "the muffin man", "hokey pokey", "five little ducks"] },
+    { "player": "grandparent65", "guesses": ["mary had a little lamb", "jack and jill", "humpty dumpty", "little miss muffet", "hey diddle diddle", "london bridge", "baa baa black sheep", "old mother hubbard", "pat a cake", "hickory dickory dock", "rock a bye baby", "three blind mice"] }
+  ],
+  "Songs that have their own dance": [
+    { "player": "kid11", "guesses": ["macarena", "chicken dance", "hokey pokey", "cha cha slide", "floss", "gangnam style", "ymca", "cupid shuffle", "baby shark", "whip nae nae", "the git up", "fortnite dance"] },
+    { "player": "class-clown14", "guesses": ["macarena", "cha cha slide", "gangnam style", "chicken dance", "harlem shake", "cotton eye joe", "thriller", "the griddy", "whip nae nae", "soulja boy", "ymca", "hokey pokey"] },
+    { "player": "college20", "guesses": ["cupid shuffle", "cha cha slide", "wobble", "macarena", "single ladies", "thriller", "crank that", "gangnam style", "renegade", "say so", "electric slide", "uptown funk"] },
+    { "player": "grandparent65", "guesses": ["the twist", "macarena", "ymca", "electric slide", "hokey pokey", "chicken dance", "the locomotion", "mashed potato", "achy breaky heart", "time warp", "the hustle", "limbo"] }
+  ],
+  "Things at a crime scene": [
+    { "player": "kid11", "guesses": ["police", "caution tape", "detective", "blood", "fingerprints", "knife", "gun", "police car", "magnifying glass", "footprints", "evidence", "camra"] },
+    { "player": "class-clown14", "guesses": ["dead body", "chalk outline", "blood", "the murderer", "my alibi", "knife", "crime scene tape", "fingerprints", "donut", "body bag", "bullet holes", "a confused witness"] },
+    { "player": "college20", "guesses": ["police tape", "evidence markers", "forensics", "fingerprints", "chalk outline", "bullet casings", "blood spatter", "luminol", "coroner", "body bag", "detective", "csi"] },
+    { "player": "grandparent65", "guesses": ["police", "detective", "body", "weapon", "fingerprints", "tape", "evidence", "witness", "photographer", "coroner", "squad car", "footprints"] }
+  ],
+  "Things you'd find in jail": [
+    { "player": "kid11", "guesses": ["bars", "bed", "toilet", "prisoners", "guard", "handcuffs", "orange suit", "keys", "police", "cell", "food tray", "bad guys"] },
+    { "player": "class-clown14", "guesses": ["bars", "toilet", "shank", "orange jumpsuit", "my uncle", "soap", "guards", "commissary", "ramen", "tattoos", "a spoon tunnel", "cellmate"] },
+    { "player": "college20", "guesses": ["cell", "bunk bed", "jumpsuit", "guards", "commissary", "shank", "ramen", "handcuffs", "visitation room", "yard", "metal toilet", "cigarettes"] },
+    { "player": "grandparent65", "guesses": ["bars", "cot", "prisoners", "guards", "warden", "keys", "handcuffs", "cell", "toilet", "uniform", "bread and water", "chain gang"] }
+  ],
+  "Things people wear at work": [
+    { "player": "kid11", "guesses": ["uniform", "hard hat", "tie", "suit", "name tag", "apron", "gloves", "badge", "lab coat", "vest", "helmut", "boots"] },
+    { "player": "class-clown14", "guesses": ["a fake smile", "name tag", "hairnet", "tie", "uniform", "apron", "clown makeup", "hard hat", "pajama pants", "headset", "lanyard", "scrubs"] },
+    { "player": "college20", "guesses": ["lanyard", "business casual", "scrubs", "blazer", "hard hat", "hi vis vest", "name tag", "steel toe boots", "apron", "khakis", "airpods", "polo shirt"] },
+    { "player": "grandparent65", "guesses": ["suit", "tie", "uniform", "apron", "hard hat", "overalls", "name badge", "dress shoes", "smock", "work boots", "hairnet", "coveralls"] }
+  ],
+  "Things that are slippery": [
+    { "player": "kid11", "guesses": ["ice", "banana peel", "soap", "water", "slime", "fish", "wet floor", "snot", "oil", "mud", "slip and slide", "jello"] },
+    { "player": "class-clown14", "guesses": ["banana peel", "soap", "wet floor", "my excuses", "eel", "butter", "politicians", "snot", "ice", "greased pig", "slug", "lube"] },
+    { "player": "college20", "guesses": ["ice", "black ice", "banana peel", "wet floor", "soap", "butter", "eel", "oil", "lotion", "slip n slide", "seaweed", "vaseline"] },
+    { "player": "grandparent65", "guesses": ["ice", "soap", "eel", "wet floor", "oil", "butter", "banana peel", "grease", "mud", "wet leaves", "fish", "bathtub"] }
+  ],
+  "Things that squeak": [
+    { "player": "kid11", "guesses": ["mouse", "dog toy", "rubber duck", "door", "shoes", "guinea pig", "balloon", "hamster", "swing", "bed", "chalk", "sneakers"] },
+    { "player": "class-clown14", "guesses": ["mouse", "rubber chicken", "whoopee cushion", "my voice", "squeaky toy", "door", "bed springs", "sneakers on gym floor", "my knees", "guinea pig", "balloon", "dolphin"] },
+    { "player": "college20", "guesses": ["mouse", "dog toy", "rubber duck", "door hinge", "sneakers", "guinea pig", "floorboards", "chalkboard", "brakes", "dolphin", "balloon", "swing set"] },
+    { "player": "grandparent65", "guesses": ["mouse", "door", "hinge", "floorboard", "shoes", "rocking chair", "bed", "brakes", "wheel", "rubber duck", "mattress", "gate"] }
+  ],
+  "Things in a principal's office": [
+    { "player": "kid11", "guesses": ["desk", "chair", "computer", "phone", "principal", "papers", "pencils", "trophy", "flag", "intercom", "detention slip", "stapler"] },
+    { "player": "class-clown14", "guesses": ["me", "detention slip", "confiscated phones", "my permanent record", "paddle", "desk", "the principal", "candy jar", "my mom", "intercom", "fidget spinners", "angry parents"] },
+    { "player": "college20", "guesses": ["desk", "intercom", "filing cabinet", "computer", "diploma", "nameplate", "confiscated items", "school flag", "coffee mug", "candy bowl", "printer", "awards"] },
+    { "player": "grandparent65", "guesses": ["desk", "paddle", "chair", "filing cabinet", "telephone", "flag", "diploma", "bell", "typewriter", "ruler", "papers", "clock"] }
+  ],
+  "Sports injuries": [
+    { "player": "kid11", "guesses": ["broken arm", "broken leg", "sprained ankle", "concussion", "bruise", "scrape", "black eye", "cut", "bloody nose", "twisted ankle", "brokn finger", "jammed finger"] },
+    { "player": "class-clown14", "guesses": ["concussion", "torn acl", "broken nose", "getting hit in the nuts", "black eye", "dislocated shoulder", "broken leg", "turf burn", "my ego", "whiplash", "lost tooth", "tommy john"] },
+    { "player": "college20", "guesses": ["torn acl", "concussion", "sprained ankle", "tennis elbow", "rotator cuff", "shin splints", "hamstring pull", "achilles tear", "torn meniscus", "groin pull", "turf toe", "dislocated shoulder"] },
+    { "player": "grandparent65", "guesses": ["sprained ankle", "pulled muscle", "tennis elbow", "broken bone", "bad knee", "torn ligament", "concussion", "charley horse", "bruise", "slipped disc", "dislocated shoulder", "golfers elbow"] }
+  ]
+}

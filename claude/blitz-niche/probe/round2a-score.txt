@@ -1,0 +1,30 @@
+ 85% accepted  Foods named after places (48 guesses, misses/player avg 1.8 max 5)
+      misses: pizza | hot dog | chicken nuggets | spagetti | nachos | chile | boston cream
+ 88% accepted  Foods that come in a tube (48 guesses, misses/player avg 1.5 max 3)
+      misses: toothpaste | biscits | cheese whiz | baby food | cake icing
+ 92% accepted  Foods that jiggle (48 guesses, misses/player avg 1.0 max 2)
+      misses: jiggly puff | slime | my belly | jelly mold
+ 94% accepted  Foods that stain your fingers (48 guesses, misses/player avg 0.8 max 3)
+      misses: crime scene | red velvet | mystery meat
+ 94% accepted  Foods that are basically just sugar (48 guesses, misses/player avg 0.8 max 2)
+      misses: pop rocks | peppermints | lemon drops
+ 96% accepted  Foods that make your breath stink (48 guesses, misses/player avg 0.5 max 1)
+      misses: broccli | my lunch
+ 96% accepted  Foods with holes in them (48 guesses, misses/player avg 0.5 max 1)
+      misses: spongebob | my excuses
+ 96% accepted  Foods that go bad fast (48 guesses, misses/player avg 0.5 max 1)
+      misses: apples | gas station sushi
+ 98% accepted  Foods you peel before eating (48 guesses, misses/player avg 0.3 max 1)
+      misses: scabs
+ 98% accepted  Animals that could kill you (48 guesses, misses/player avg 0.3 max 1)
+      misses: gorrila
+ 98% accepted  Things that leak (48 guesses, misses/player avg 0.3 max 1)
+      misses: government secrets
+ 98% accepted  Things that are see-through (48 guesses, misses/player avg 0.3 max 1)
+      misses: vodka
+100% accepted  Foods that make you fart (48 guesses, misses/player avg 0.0 max 0)
+100% accepted  Things that explode (48 guesses, misses/player avg 0.0 max 0)
+100% accepted  Things in a mad scientist's lab (48 guesses, misses/player avg 0.0 max 0)
+100% accepted  Animals that live underground (48 guesses, misses/player avg 0.0 max 0)
+
+TOTAL 768 guesses, 33 misses — 95.7% accepted
