@@ -1105,6 +1105,14 @@ const FAMILIES = [
   // oct21 niche swap: two gross-food prompts / two cops-and-robbers prompts share most of their answers
   ['gross-food', /^Foods that make (you fart|your breath stink)/i],
   ['crime', /^Things (at a crime scene|you'd find in jail)/i],
+  // oct26 more-prompts batch: twins of one gimmick, or a new list sharing a chunk of an older one
+  ['lives-in', /^Things that live in the (walls|sewer)$/i],
+  ['stuck-in', /^Things that get stuck in your (teeth|hair)$/i],
+  ['spill-leak', /^Things (you can spill|that leak)$/i],
+  ['see-through', /^Things that are (see-through|invisible)$/i],
+  ['grandma', /^Things at (grandma's house|a nursing home)$/i],
+  ['crash-broken', /^Things that (crash|are always broken)$/i],
+  ['expire-rot', /^(Things that expire|Foods that go bad fast)$/i],
 ];
 // ONE NOT PROMPT PER GAME (Andy oct19: the any-noun prompts "are too lenient and occur too much" — measured: ~1 round in
 // 4 with every pack on): every NOT list is one family, so after a game deals one, the rest of it deals none.

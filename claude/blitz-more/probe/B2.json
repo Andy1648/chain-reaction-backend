@@ -1,0 +1,116 @@
+{
+"Things you can catch": [
+{"player":"kid12","guesses":["ball","fish","bug","frog","cold","flu","butterflies","fireflies","lizard","football","baseball","bus"]},
+{"player":"theater-kid15","guesses":["feelings","a cold","the flu","a glimpse","a vibe","the bus","fish","ball","my breath","a break","bouquet","a wave"]},
+{"player":"edgelord15","guesses":["hands","these hands","a charge","a case","covid","the flu","strays","bullets","fish","an L","depression","diseases"]},
+{"player":"senior17","guesses":["ball","fish","cold","flu","bus","flight","train","a break","feelings","a thief","wave","fire"]}
+],
+"Things you can crack": [
+{"player":"kid12","guesses":["egg","nuts","knuckles","phone","glass","ice","walnut","peanut","window","code","screen","mirror"]},
+{"player":"theater-kid15","guesses":["a joke","a smile","under pressure","voice","my voice","egg","knuckles","the case","a book","window","the code","a whip"]},
+{"player":"edgelord15","guesses":["skull","bones","ribs","knuckles","back","neck","safe","password","code","egg","phone screen","mental"]},
+{"player":"senior17","guesses":["egg","knuckles","code","safe","case","joke","smile","nut","window","glass","whip","sidewalk"]}
+],
+"Things you can spill": [
+{"player":"kid12","guesses":["milk","juice","water","soda","paint","cereal","glue","sand","glitter","beans","ketchup","chocolate milk"]},
+{"player":"theater-kid15","guesses":["tea","the tea","secrets","the beans","coffee","water","milk","juice","wine","my heart out","glitter","gossip"]},
+{"player":"edgelord15","guesses":["blood","guts","secrets","the tea","beans","soda","gasoline","acid","milk","water","coffee","my soul"]},
+{"player":"senior17","guesses":["coffee","milk","water","tea","the beans","secrets","oil","paint","soup","drink","juice","wine"]}
+],
+"Things you can squeeze": [
+{"player":"kid12","guesses":["lemon","orange","toothpaste","ketchup","squishy","stress ball","sponge","juice box","hand","play doh","pillow","teddy bear"]},
+{"player":"theater-kid15","guesses":["lemon","hand","a hug","stress ball","toothpaste","orange","lime","sponge","cheeks","shoulder","tube","grapefruit"]},
+{"player":"edgelord15","guesses":["necks","throat","pimples","zits","lemon","stress ball","toothpaste","the life out","hand","ketchup","sponge","grapes"]},
+{"player":"senior17","guesses":["lemon","lime","orange","toothpaste","stress ball","sponge","hand","pimple","tube","ketchup","mustard","honey"]}
+],
+"Things you can flip": [
+{"player":"kid12","guesses":["pancake","coin","page","pancakes","bottle","book","card","burger","switch","flip flops","cup","table"]},
+{"player":"theater-kid15","guesses":["hair","the script","pancake","coin","page","table","switch","a car","the bird","card","burger","omlette"]},
+{"player":"edgelord15","guesses":["the bird","a table","tables","car","coin","the switch","pancake","burger","bottle","houses","a knife","my life"]},
+{"player":"senior17","guesses":["coin","pancake","house","houses","switch","page","table","burger","car","card","phone","the script"]}
+],
+"Things that expire": [
+{"player":"kid12","guesses":["milk","food","eggs","bread","yogurt","cheese","juice","candy","medicine","meat","cookies","coupon"]},
+{"player":"theater-kid15","guesses":["milk","coupons","tickets","yogurt","passport","friendships","love","eggs","bread","makeup","medicine","license"]},
+{"player":"edgelord15","guesses":["people","humans","me","milk","my patience","life","license","passport","eggs","coupons","meat","subscriptions"]},
+{"player":"senior17","guesses":["milk","eggs","license","passport","coupons","medicine","warranty","lease","contract","credit card","gift card","permit"]}
+],
+"Things a cat would knock off a table": [
+{"player":"kid12","guesses":["cup","glass","pencil","pen","phone","plate","toy","keys","crayon","water","bowl","remote"]},
+{"player":"theater-kid15","guesses":["glass","vase","mug","candle","phone","earrings","keys","plant","pen","remote","picture frame","cup"]},
+{"player":"edgelord15","guesses":["glass","your hopes","phone","grandmas ashes","cup","vase","knife","plate","keys","mug","remote","laptop"]},
+{"player":"senior17","guesses":["glass","mug","cup","phone","keys","pen","remote","vase","plant","coaster","wallet","candle"]}
+],
+"Things at a graduation": [
+{"player":"kid12","guesses":["cap","gown","diploma","hat","cake","balloons","flowers","teachers","parents","stage","chairs","music"]},
+{"player":"theater-kid15","guesses":["cap","gown","tassel","diploma","speech","valedictorian","crying","flowers","pomp and circumstance","stage","balloons","photos"]},
+{"player":"edgelord15","guesses":["caps","gowns","diploma","debt","student loans","boring speech","crying parents","principal","stage","balloons","airhorn","flowers"]},
+{"player":"senior17","guesses":["cap","gown","tassel","diploma","valedictorian","principal","speech","stage","parents","flowers","leis","stole"]}
+],
+"Things in a locker room": [
+{"player":"kid12","guesses":["lockers","towels","bench","shoes","socks","shower","clothes","bag","water bottle","shorts","deodorant","locks"]},
+{"player":"theater-kid15","guesses":["lockers","mirror","towels","benches","showers","deoderant","hair dryer","costumes","perfume","bags","socks","shoes"]},
+{"player":"edgelord15","guesses":["smell","sweat","mold","axe","stink","lockers","towels","fungus","athletes foot","showers","benches","socks"]},
+{"player":"senior17","guesses":["lockers","benches","towels","showers","deodorant","uniforms","jerseys","cleats","pads","whiteboard","tape","coach"]}
+],
+"Things you can win": [
+{"player":"kid12","guesses":["game","prize","trophy","medal","race","money","award","toy","stuffed animal","ribbon","contest","candy"]},
+{"player":"theater-kid15","guesses":["award","tony","oscar","trophy","prize","game","lottery","competition","heart","her heart","medal","scholarship"]},
+{"player":"edgelord15","guesses":["fights","the fight","argument","lottery","money","game","trophy","war","nothing","prize","bet","award"]},
+{"player":"senior17","guesses":["game","trophy","award","prize","lottery","scholarship","election","championship","medal","bet","argument","raffle"]}
+],
+"Things at a concert": [
+{"player":"kid12","guesses":["music","singer","band","stage","lights","speakers","guitar","drums","people","microphone","tickets","fans"]},
+{"player":"theater-kid15","guesses":["stage","lights","singer","band","crowd","merch","encore","tickets","glow sticks","friendship bracelets","signs","mic"]},
+{"player":"edgelord15","guesses":["mosh pit","crowd","security","drunk people","pyro","stage","band","singer","merch","speakers","earplugs","sweat"]},
+{"player":"senior17","guesses":["stage","band","singer","crowd","merch","lights","speakers","tickets","security","mosh pit","opener","encore"]}
+],
+"Things on a gamer's desk": [
+{"player":"kid12","guesses":["computer","keyboard","mouse","monitor","headphones","controller","snacks","lights","soda","pc","chips","mousepad"]},
+{"player":"theater-kid15","guesses":["keyboard","mouse","monitor","headset","rgb","figurines","energy drink","plushie","microphone","led lights","snacks","webcam"]},
+{"player":"edgelord15","guesses":["monster cans","empty cans","crumbs","doritos","keyboard","mouse","headset","monitor","pee jar","dust","mountain dew","trash"]},
+{"player":"senior17","guesses":["monitor","keyboard","mouse","headset","mouse pad","microphone","speakers","pc","webcam","controller","energy drink","lamp"]}
+],
+"Things you can unlock": [
+{"player":"kid12","guesses":["door","phone","lock","car","box","chest","diary","house","locker","levels","ipad","gate"]},
+{"player":"theater-kid15","guesses":["door","phone","potential","secrets","memories","heart","diary","locker","achievement","car","safe","talent"]},
+{"player":"edgelord15","guesses":["new fear","trauma","phone","door","safe","locker","car","achievements","skins","secrets","darkness","memories"]},
+{"player":"senior17","guesses":["door","phone","car","safe","locker","achievement","potential","computer","padlock","chest","level","screen"]}
+],
+"Things that crash": [
+{"player":"kid12","guesses":["car","plane","computer","game","bike","train","waves","truck","boat","phone","ipad","chromebook"]},
+{"player":"theater-kid15","guesses":["car","plane","waves","computer","party","cymbals","stock market","website","app","my mood","game","bike"]},
+{"player":"edgelord15","guesses":["planes","cars","stock market","the economy","my grades","computer","server","game","my life","trains","drones","helicopters"]},
+{"player":"senior17","guesses":["car","plane","computer","waves","stock market","economy","server","website","app","motorcycle","party","cymbals"]}
+],
+"Things in a Christmas stocking": [
+{"player":"kid12","guesses":["candy","toys","candy cane","chocolate","coal","gift card","socks","gum","lego","money","orange","yo yo"]},
+{"player":"theater-kid15","guesses":["candy canes","chapstick","lip gloss","nail polish","socks","chocolate","gift card","orange","coal","lotion","candy","hair clips"]},
+{"player":"edgelord15","guesses":["coal","nothing","disappointment","socks","candy cane","orange","toothbrush","gift card","chocolate","gum","batteries","coal again"]},
+{"player":"senior17","guesses":["candy","candy canes","gift cards","socks","chapstick","chocolate","orange","coal","money","gum","toothbrush","batteries"]}
+],
+"Things in a witch's cauldron": [
+{"player":"kid12","guesses":["potion","frogs","eyeballs","spiders","bones","snake","bats","slime","worms","soup","toad","bugs"]},
+{"player":"theater-kid15","guesses":["eye of newt","toe of frog","wool of bat","tongue of dog","potion","herbs","brew","toad","bat wing","newt","spider","mushrooms"]},
+{"player":"edgelord15","guesses":["children","blood","bones","skulls","eyeballs","poison","rat","frog","toes","organs","hearts","snake"]},
+{"player":"senior17","guesses":["potion","eye of newt","frog","bat wings","toad","herbs","bones","spider","snake","mushrooms","brew","eyeballs"]}
+],
+"Things that get stuck in your hair": [
+{"player":"kid12","guesses":["gum","glue","leaves","sticks","bugs","slime","sand","food","paint","tape","sticker","brush"]},
+{"player":"theater-kid15","guesses":["gum","glitter","hair tie","brush","bobby pins","hairspray","leaves","comb","scrunchie","sticks","hair clip","lice"]},
+{"player":"edgelord15","guesses":["gum","lice","bugs","spiders","bats","birds","blood","glue","dandruff","burrs","sticks","fingers"]},
+{"player":"senior17","guesses":["gum","brush","hair tie","leaves","twigs","glitter","lice","burrs","sand","bobby pin","comb","bugs"]}
+],
+"School mascots": [
+{"player":"kid12","guesses":["tiger","eagle","bear","lion","wolf","shark","dog","bulldog","panther","hawk","dragon","cheetah"]},
+{"player":"theater-kid15","guesses":["wildcats","tigers","eagles","bulldogs","knights","pirates","spartans","vikings","mustangs","cougars","panthers","rams"]},
+{"player":"edgelord15","guesses":["demons","devils","blue devils","spartans","vikings","tigers","warriors","raiders","trojans","bulldogs","reapers","wolves"]},
+{"player":"senior17","guesses":["wildcats","eagles","tigers","bulldogs","panthers","spartans","trojans","mustangs","cougars","falcons","hornets","knights"]}
+],
+"Things with a lid": [
+{"player":"kid12","guesses":["box","jar","pot","cup","bottle","trash can","toilet","lunchbox","bucket","container","pan","tupperware"]},
+{"player":"theater-kid15","guesses":["jar","pot","teapot","box","eyes","eyelid","jewelry box","toilet","piano","trash can","coffee cup","makeup palette"]},
+{"player":"edgelord15","guesses":["coffin","casket","urn","toilet","trash can","jar","pot","box","eye","laptop","grave","cooler"]},
+{"player":"senior17","guesses":["jar","pot","pan","box","container","coffee cup","trash can","toilet","laptop","piano","cooler","tupperware"]}
+]
+}
