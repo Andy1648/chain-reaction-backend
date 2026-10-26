@@ -22,9 +22,11 @@ const letterStormMode = require('./t5LetterStormMode');
 const herdMindMode = require('./t5HerdMindMode');
 // WORD RACE rides the same plugin hooks (additive: its own game type + messages).
 const wordRaceMode = require('./wordRaceMode');
+// MINER (Andy oct26): the endless rare-answer dig that replaced DAILY BLITZ.
+const minerMode = require('./minerMode');
 
 const MODES = {};
-for (const mode of [fuseMode, letterStormMode, herdMindMode, wordRaceMode]) {
+for (const mode of [fuseMode, letterStormMode, herdMindMode, wordRaceMode, minerMode]) {
   MODES[mode.gameType] = mode;
 }
 
@@ -35,6 +37,8 @@ const ERROR_MESSAGES = {
   submission_pending: 'Your last word is still being checked - one at a time!',
   not_a_racer: "You're not in this race.",
   not_a_race_room: 'That room is not a Word Race.',
+  not_a_miner_room: 'That room is not a MINER room.',
+  not_a_miner: "You're not in this mine.",
 };
 
 module.exports = { MODES, ERROR_MESSAGES };
