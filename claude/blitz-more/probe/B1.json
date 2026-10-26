@@ -1,0 +1,116 @@
+{
+"Things at a funeral": [
+{"player":"kid12","guesses":["coffin","flowers","body","crying","people","church","priest","graveyard","dirt","tisues","music","food"]},
+{"player":"theater-kid15","guesses":["casket","eulogy","black veil","lilies","weeping widow","organ music","hymns","drama","flowers","candles","choir","the will reading"]},
+{"player":"edgelord15","guesses":["corpse","coffin","worms","death","my will to live","fake tears","grave","hearse","the reaper","embalming fluid","crows","my soul"]},
+{"player":"senior17","guesses":["casket","flowers","hearse","eulogy","mourners","urn","obituary","tissues","funeral director","programs","reception food","casseroles"]}
+],
+"Things you'd find in a dumpster": [
+{"player":"kid12","guesses":["trash","rats","garbage","food","boxes","bottles","bugs","cans","raccoon","paper","bags","flies"]},
+{"player":"theater-kid15","guesses":["raccoons","trash","oscar the grouch","old costumes","broken props","pizza boxes","rats","cardboard","flowers","glitter","old scripts","my audition"]},
+{"player":"edgelord15","guesses":["dead body","rats","maggots","my future","trash","needles","rotting meat","roaches","my self esteem","flies","evidence","raccoons"]},
+{"player":"senior17","guesses":["garbage bags","cardboard","rats","raccoons","old furniture","pizza boxes","broken electronics","food waste","bottles","maggots","mattresses","yard waste"]}
+],
+"Things that live in the walls": [
+{"player":"kid12","guesses":["mice","rats","bugs","spiders","ghosts","ants","bats","termites","roaches","snakes","squirrels","mouse"]},
+{"player":"theater-kid15","guesses":["phantom of the opera","ghosts","mice","rats","the guy in the walls","spiders","termites","bats","cockroaches","stuart little","poltergeist","secrets"]},
+{"player":"edgelord15","guesses":["the voices","rats","demons","ghosts","the man in my walls","cockroaches","termites","mold","spiders","dead bodies","skeletons","black mold"]},
+{"player":"senior17","guesses":["mice","rats","termites","carpenter ants","cockroaches","mold","squirrels","bats","bees","wires","insulation","pipes"]}
+],
+"Things that live in the sewer": [
+{"player":"kid12","guesses":["rats","ninja turtles","alligators","pennywise","bugs","cockroaches","poop","crocodiles","snakes","worms","fish","frogs"]},
+{"player":"theater-kid15","guesses":["phantom of the opera","rats","pennywise","ninja turtles","alligators","splinter","the mole people","roaches","crocodiles","remy","slime","clowns"]},
+{"player":"edgelord15","guesses":["rats","pennywise","alligators","sewage","cockroaches","bacteria","dead bodies","mutants","mole people","leeches","my soul","fatberg"]},
+{"player":"senior17","guesses":["rats","cockroaches","alligators","bacteria","fatbergs","ninja turtles","pennywise","worms","leeches","mold","flies","snakes"]}
+],
+"Things at a nursing home": [
+{"player":"kid12","guesses":["old people","grandma","nurses","wheelchairs","beds","bingo","walkers","medicine","tv","cookies","food","canes"]},
+{"player":"theater-kid15","guesses":["old people","bingo night","karaoke","nurses","wheelchairs","jello","sing alongs","canes","dentures","pudding cups","talent show","grandpa"]},
+{"player":"edgelord15","guesses":["old people","death","diapers","bedpans","dentures","the smell","pills","bingo","wheelchairs","loneliness","nurses","grim reaper"]},
+{"player":"senior17","guesses":["residents","nurses","caregivers","wheelchairs","walkers","bingo","medication","hearing aids","dentures","oxygen tanks","activity room","visitors"]}
+],
+"Things that spy on you": [
+{"player":"kid12","guesses":["cameras","phone","the government","mom","alexa","siri","google","fbi","spies","dad","teacher","cia"]},
+{"player":"theater-kid15","guesses":["fbi agent","alexa","tiktok","nosy neighbors","elf on the shelf","mom","cameras","santa","the drama teacher","instagram","siri","gossip girl"]},
+{"player":"edgelord15","guesses":["the government","fbi","nsa","cia","webcam","phone","tiktok","china","google","cameras","drones","big brother"]},
+{"player":"senior17","guesses":["the government","nsa","security cameras","doorbell cameras","alexa","smartphones","social media","cookies","google","tiktok","satellites","hackers"]}
+],
+"Foods with seeds": [
+{"player":"kid12","guesses":["watermelon","apple","strawberry","grapes","orange","tomato","pumpkin","kiwi","cucumber","pear","cherrys","lemon"]},
+{"player":"theater-kid15","guesses":["watermelon","pomegranate","strawberry","kiwi","dragon fruit","passion fruit","avocado","pumpkin","tomato","everything bagel","sesame buns","figs"]},
+{"player":"edgelord15","guesses":["watermelon","apples","cyanide apple seeds","pomegranate","strawberry","tomato","peppers","jalapeno","sunflower seeds","pumpkin","grapes","seeded bread"]},
+{"player":"senior17","guesses":["watermelon","pomegranate","strawberries","kiwi","avocado","tomatoes","cucumbers","bell peppers","papaya","raspberries","figs","chia pudding"]}
+],
+"Things that get stuck in your teeth": [
+{"player":"kid12","guesses":["popcorn","gum","food","candy","corn","meat","caramel","seeds","spinach","chips","hair","lettuce"]},
+{"player":"theater-kid15","guesses":["popcorn","spinach","lipstick","corn","caramel","taffy","sesame seeds","glitter","steak","gum","lettuce","raspberry seeds"]},
+{"player":"edgelord15","guesses":["popcorn","meat","bones","hair","gum","steak","spinach","floss","corn","fingernails","jerky","seeds"]},
+{"player":"senior17","guesses":["popcorn","spinach","corn","steak","sesame seeds","poppy seeds","caramel","taffy","celery","chicken","beef jerky","floss"]}
+],
+"Foods rich people eat": [
+{"player":"kid12","guesses":["caviar","lobster","steak","sushi","gold","shrimp","crab","cake","snails","champagne","fancy cheese","wagyu"]},
+{"player":"theater-kid15","guesses":["caviar","escargot","truffles","foie gras","champagne","oysters","lobster","gold leaf","macarons","creme brulee","filet mignon","tiny portions"]},
+{"player":"edgelord15","guesses":["caviar","the poor","gold","wagyu","lobster","truffles","foie gras","fish eggs","snails","shark fin","veal","diamonds"]},
+{"player":"senior17","guesses":["caviar","truffles","wagyu","lobster","oysters","foie gras","escargot","kobe beef","king crab","champagne","saffron","bluefin tuna"]}
+],
+"Foods that come rolled up": [
+{"player":"kid12","guesses":["burrito","sushi","egg roll","fruit roll up","cinnamon roll","taco","wrap","pizza rolls","hot dog","crepe","spring rolls","tortillas"]},
+{"player":"theater-kid15","guesses":["sushi","burritos","crepes","cinnamon rolls","swiss roll","fruit roll-ups","cannoli","egg rolls","enchiladas","spring rolls","jelly roll","yule log"]},
+{"player":"edgelord15","guesses":["burrito","sushi","joint","egg roll","fruit by the foot","taquitos","pizza rolls","spring rolls","cinnamon rolls","enchiladas","wraps","blunts"]},
+{"player":"senior17","guesses":["sushi","burritos","enchiladas","taquitos","egg rolls","spring rolls","crepes","cinnamon rolls","swiss rolls","fruit roll ups","lumpia","dolmas"]}
+],
+"Things that fall from the sky": [
+{"player":"kid12","guesses":["rain","snow","hail","birds","meteors","planes","leaves","stars","bird poop","rocks","water","snowflakes"]},
+{"player":"theater-kid15","guesses":["rain","snow","stars","confetti","meteors","angels","bird poop","cloudy with a chance of meatballs","hail","glitter","flower petals","planes"]},
+{"player":"edgelord15","guesses":["rain","bombs","meteors","acid rain","planes","dead birds","nukes","hail","ash","asteroids","bird poop","missiles"]},
+{"player":"senior17","guesses":["rain","snow","hail","sleet","meteorites","bird poop","lightning","leaves","airplanes","satellites","space debris","frogs"]}
+],
+"Things that crawl": [
+{"player":"kid12","guesses":["babies","bugs","spiders","ants","worms","snakes","caterpillars","crabs","lizards","turtles","roaches","beetles"]},
+{"player":"theater-kid15","guesses":["babies","spiders","ants","the exorcist girl","worms","caterpillars","crabs","snails","zombies","centipedes","lobsters","crawling king snake"]},
+{"player":"edgelord15","guesses":["spiders","cockroaches","maggots","zombies","babies","centipedes","the girl from the ring","worms","scorpions","snakes","bed bugs","my skin"]},
+{"player":"senior17","guesses":["babies","spiders","ants","centipedes","millipedes","caterpillars","worms","beetles","crabs","scorpions","snails","traffic"]}
+],
+"Things you'd find in a cave": [
+{"player":"kid12","guesses":["bats","rocks","bears","water","spiders","stalactites","crystals","dirt","cavemen","gold","bugs","bones"]},
+{"player":"theater-kid15","guesses":["bats","gollum","cave paintings","echo","stalactites","dragons","treasure","crystals","bears","the one ring","trolls","plato's shadows"]},
+{"player":"edgelord15","guesses":["bats","bones","skeletons","bears","darkness","spiders","bodies","cave paintings","stalactites","gollum","mold","guano"]},
+{"player":"senior17","guesses":["bats","stalactites","stalagmites","crystals","bears","cave paintings","fossils","guano","minerals","underground rivers","spiders","salamanders"]}
+],
+"Things that float": [
+{"player":"kid12","guesses":["boats","balloons","ducks","wood","ice","bubbles","clouds","leaves","pool noodles","rafts","feathers","ships"]},
+{"player":"theater-kid15","guesses":["balloons","boats","bubbles","clouds","ghosts","pennywise balloons","rubber ducks","lily pads","feathers","we all float down here","ice","jellyfish"]},
+{"player":"edgelord15","guesses":["dead bodies","boats","balloons","ghosts","poop","dead fish","oil","bubbles","witches","ice","garbage","corpses"]},
+{"player":"senior17","guesses":["boats","icebergs","balloons","buoys","life jackets","driftwood","rubber ducks","bubbles","pool floats","oil","clouds","rafts"]}
+],
+"Things with spikes": [
+{"player":"kid12","guesses":["cactus","porcupine","hedgehog","sonic","pufferfish","roses","bowser","dinosaur","shoes","fence","pineapple","sea urchin"]},
+{"player":"theater-kid15","guesses":["cactus","sonic","hedgehog","porcupine","punk jackets","chokers","statue of liberty crown","bowser","stegosaurus","roses","cleats","mohawks"]},
+{"player":"edgelord15","guesses":["spiked collar","cactus","barbed wire","mace","iron maiden","porcupine","chokers","bowser","brass knuckles","pufferfish","morning star","bracelets"]},
+{"player":"senior17","guesses":["cactus","porcupine","hedgehog","sea urchin","pufferfish","stegosaurus","barbed wire","cleats","durian","thistle","spiked collar","pineapple"]}
+],
+"Things that are invisible": [
+{"player":"kid12","guesses":["air","ghosts","wind","germs","invisible man","oxygen","farts","gas","sound","wifi","glass","god"]},
+{"player":"theater-kid15","guesses":["air","ghosts","love","wind","the invisible man","feelings","mime walls","germs","oxygen","magic","music","the fourth wall"]},
+{"player":"edgelord15","guesses":["air","my dad","ghosts","demons","germs","radiation","gas","wind","my friends","viruses","carbon monoxide","me"]},
+{"player":"senior17","guesses":["air","oxygen","wind","germs","bacteria","viruses","gravity","radiation","carbon monoxide","wifi","dark matter","sound waves"]}
+],
+"Things that sink": [
+{"player":"kid12","guesses":["rocks","titanic","boats","anchor","coins","ships","metal","stones","keys","bricks","people","phones"]},
+{"player":"theater-kid15","guesses":["titanic","rocks","anchors","my heart","ships","coins","atlantis","bricks","the lusitania","submarines","jack","my hopes"]},
+{"player":"edgelord15","guesses":["rocks","dead bodies","titanic","my heart","anchors","my grades","cement shoes","ships","bricks","the economy","me","submarines"]},
+{"player":"senior17","guesses":["rocks","anchors","titanic","submarines","coins","shipwrecks","bricks","bowling balls","lead","steel","keys","my gpa"]}
+],
+"Things that bite": [
+{"player":"kid12","guesses":["dogs","sharks","snakes","mosquitos","spiders","cats","lions","alligators","babies","vampires","ants","bugs"]},
+{"player":"theater-kid15","guesses":["vampires","dracula","sharks","dogs","snakes","mosquitoes","jaws","zombies","toddlers","werewolves","edward cullen","crocodiles"]},
+{"player":"edgelord15","guesses":["vampires","zombies","sharks","snakes","dogs","rabid raccoons","piranhas","ticks","bed bugs","my ex","karma","the cold"]},
+{"player":"senior17","guesses":["mosquitoes","sharks","dogs","snakes","alligators","ticks","fleas","bedbugs","piranhas","horseflies","spiders","vampires"]}
+],
+"Things that come out at night": [
+{"player":"kid12","guesses":["moon","stars","owls","bats","ghosts","vampires","monsters","raccoons","zombies","fireflies","wolves","bugs"]},
+{"player":"theater-kid15","guesses":["stars","the moon","vampires","werewolves","ghosts","bats","owls","fireflies","the phantom","raccoons","moths","dracula"]},
+{"player":"edgelord15","guesses":["vampires","demons","bats","the moon","serial killers","ghosts","werewolves","my thoughts","raccoons","owls","stars","rats"]},
+{"player":"senior17","guesses":["stars","moon","owls","bats","raccoons","opossums","fireflies","moths","coyotes","crickets","skunks","foxes"]}
+]
+}

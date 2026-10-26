@@ -1,0 +1,2102 @@
+{
+ "Things at a funeral": [
+  {
+   "player": "kid10",
+   "guesses": [
+    "coffin",
+    "flowers",
+    "dead body",
+    "people crying",
+    "priest",
+    "black clothes",
+    "candles",
+    "tissues",
+    "grave",
+    "food",
+    "ghost",
+    "zombie"
+   ]
+  },
+  {
+   "player": "band-kid14",
+   "guesses": [
+    "casket",
+    "flowers",
+    "tears",
+    "organ music",
+    "pastor",
+    "eulogy",
+    "pictures",
+    "hearse",
+    "black dress",
+    "my band teacher",
+    "awkward cousins",
+    "free sandwiches"
+   ]
+  },
+  {
+   "player": "athlete15",
+   "guesses": [
+    "casket",
+    "flowers",
+    "dead guy",
+    "preacher",
+    "hearse",
+    "suits",
+    "tissues",
+    "family",
+    "shovel",
+    "dirt",
+    "my ex",
+    "the corpse"
+   ]
+  },
+  {
+   "player": "junior16",
+   "guesses": [
+    "casket",
+    "corpse",
+    "flowers",
+    "eulogy",
+    "hearse",
+    "mourners",
+    "urn",
+    "ashes",
+    "tissues",
+    "bagpipes",
+    "my will to live",
+    "a guy checking his phone"
+   ]
+  }
+ ],
+ "Things you'd find in a dumpster": [
+  {
+   "player": "kid10",
+   "guesses": [
+    "trash",
+    "rats",
+    "raccoon",
+    "old food",
+    "pizza box",
+    "garbage bags",
+    "cardboard",
+    "flies",
+    "bottles",
+    "banana peel",
+    "homeless guy",
+    "my homework"
+   ]
+  },
+  {
+   "player": "band-kid14",
+   "guesses": [
+    "trash bags",
+    "cardboard",
+    "rats",
+    "raccoons",
+    "pizza boxes",
+    "old couch",
+    "broken chair",
+    "cans",
+    "maggots",
+    "mold",
+    "my clarinet",
+    "my grades"
+   ]
+  },
+  {
+   "player": "athlete15",
+   "guesses": [
+    "garbage",
+    "trash",
+    "rats",
+    "raccoons",
+    "cardboard boxes",
+    "old mattress",
+    "bottles",
+    "food",
+    "flies",
+    "my teams season",
+    "cats",
+    "stinky stuff"
+   ]
+  },
+  {
+   "player": "junior16",
+   "guesses": [
+    "garbage bags",
+    "cardboard",
+    "raccoons",
+    "rats",
+    "maggots",
+    "old furniture",
+    "broken tv",
+    "needles",
+    "a body",
+    "my future",
+    "cigarette butts",
+    "expired food"
+   ]
+  }
+ ],
+ "Things that live in the walls": [
+  {
+   "player": "kid10",
+   "guesses": [
+    "mice",
+    "rats",
+    "bugs",
+    "spiders",
+    "cockroaches",
+    "termites",
+    "ghosts",
+    "ants",
+    "snakes",
+    "my brother",
+    "monsters",
+    "bats"
+   ]
+  },
+  {
+   "player": "band-kid14",
+   "guesses": [
+    "mice",
+    "rats",
+    "termites",
+    "cockroaches",
+    "spiders",
+    "ghosts",
+    "raccoons",
+    "wires",
+    "pipes",
+    "my neighbor",
+    "squirells",
+    "mold"
+   ]
+  },
+  {
+   "player": "athlete15",
+   "guesses": [
+    "mice",
+    "rats",
+    "bugs",
+    "roaches",
+    "termites",
+    "spiders",
+    "ghost",
+    "squirrels",
+    "bats",
+    "ants",
+    "the guy from that movie",
+    "demons"
+   ]
+  },
+  {
+   "player": "junior16",
+   "guesses": [
+    "mice",
+    "rats",
+    "termites",
+    "cockroaches",
+    "silverfish",
+    "mold",
+    "ghosts",
+    "bed bugs",
+    "wasps",
+    "the previous owner",
+    "asbestos",
+    "carpenter ants"
+   ]
+  }
+ ],
+ "Things that live in the sewer": [
+  {
+   "player": "kid10",
+   "guesses": [
+    "rats",
+    "alligators",
+    "ninja turtles",
+    "pennywise",
+    "clowns",
+    "cockroaches",
+    "poop",
+    "snakes",
+    "crocodiles",
+    "bugs",
+    "mutants",
+    "spiders"
+   ]
+  },
+  {
+   "player": "band-kid14",
+   "guesses": [
+    "rats",
+    "alligators",
+    "teenage mutant ninja turtles",
+    "cockroaches",
+    "pennywise",
+    "fatbergs",
+    "mold",
+    "bacteria",
+    "sewage",
+    "crocs",
+    "splinter",
+    "homeless people"
+   ]
+  },
+  {
+   "player": "athlete15",
+   "guesses": [
+    "rats",
+    "gators",
+    "ninja turtles",
+    "roaches",
+    "pennywise",
+    "clown",
+    "poop",
+    "snakes",
+    "worms",
+    "leeches",
+    "it",
+    "slime"
+   ]
+  },
+  {
+   "player": "junior16",
+   "guesses": [
+    "rats",
+    "alligators",
+    "cockroaches",
+    "pennywise",
+    "tmnt",
+    "fatbergs",
+    "bacteria",
+    "crocodiles",
+    "mole people",
+    "c.h.u.d.",
+    "leeches",
+    "sewer people"
+   ]
+  }
+ ],
+ "Things at a nursing home": [
+  {
+   "player": "kid10",
+   "guesses": [
+    "old people",
+    "wheelchairs",
+    "nurses",
+    "walkers",
+    "bingo",
+    "beds",
+    "medicine",
+    "dentures",
+    "tv",
+    "grandma",
+    "pills",
+    "jello"
+   ]
+  },
+  {
+   "player": "band-kid14",
+   "guesses": [
+    "old people",
+    "nurses",
+    "wheelchairs",
+    "walkers",
+    "bingo",
+    "pills",
+    "jello",
+    "dentures",
+    "hearing aids",
+    "wrinkly people",
+    "knitting",
+    "death"
+   ]
+  },
+  {
+   "player": "athlete15",
+   "guesses": [
+    "old people",
+    "nurses",
+    "wheelchairs",
+    "walkers",
+    "bingo",
+    "medicine",
+    "beds",
+    "canes",
+    "tv",
+    "pudding",
+    "grandpa",
+    "crossword"
+   ]
+  },
+  {
+   "player": "junior16",
+   "guesses": [
+    "elderly",
+    "nurses",
+    "wheelchairs",
+    "walkers",
+    "bingo",
+    "dentures",
+    "hearing aids",
+    "pill organizers",
+    "jello",
+    "oxygen tanks",
+    "wheel of fortune",
+    "someone yelling"
+   ]
+  }
+ ],
+ "Things that spy on you": [
+  {
+   "player": "kid10",
+   "guesses": [
+    "cameras",
+    "phone",
+    "alexa",
+    "the government",
+    "spies",
+    "cia",
+    "fbi",
+    "google",
+    "tiktok",
+    "mom",
+    "siri",
+    "drones"
+   ]
+  },
+  {
+   "player": "band-kid14",
+   "guesses": [
+    "cameras",
+    "phones",
+    "alexa",
+    "fbi agent",
+    "google",
+    "tiktok",
+    "the government",
+    "siri",
+    "webcam",
+    "my mom",
+    "neighbors",
+    "security cameras"
+   ]
+  },
+  {
+   "player": "athlete15",
+   "guesses": [
+    "cameras",
+    "phone",
+    "fbi",
+    "cia",
+    "google",
+    "alexa",
+    "siri",
+    "drones",
+    "my coach",
+    "tiktok",
+    "instagram",
+    "satellites"
+   ]
+  },
+  {
+   "player": "junior16",
+   "guesses": [
+    "cameras",
+    "security cameras",
+    "alexa",
+    "smart tv",
+    "nsa",
+    "fbi",
+    "google",
+    "cookies",
+    "tiktok",
+    "webcam",
+    "my fbi agent",
+    "goguardian"
+   ]
+  }
+ ],
+ "Foods with seeds": [
+  {
+   "player": "kid10",
+   "guesses": [
+    "watermelon",
+    "apple",
+    "strawberries",
+    "orange",
+    "grapes",
+    "pumpkin",
+    "tomato",
+    "kiwi",
+    "banana",
+    "cucumber",
+    "sunflower seeds",
+    "peppers"
+   ]
+  },
+  {
+   "player": "band-kid14",
+   "guesses": [
+    "watermelon",
+    "strawberry",
+    "apple",
+    "kiwi",
+    "tomato",
+    "pomegranate",
+    "cucumber",
+    "pumpkin",
+    "grapes",
+    "raspberries",
+    "bell pepper",
+    "sesame bagel"
+   ]
+  },
+  {
+   "player": "athlete15",
+   "guesses": [
+    "watermelon",
+    "apples",
+    "strawberries",
+    "oranges",
+    "grapes",
+    "cherries",
+    "peaches",
+    "tomatoes",
+    "cucumbers",
+    "avocado",
+    "pumpkin",
+    "kiwi"
+   ]
+  },
+  {
+   "player": "junior16",
+   "guesses": [
+    "pomegranate",
+    "watermelon",
+    "strawberries",
+    "kiwi",
+    "tomatoes",
+    "cucumber",
+    "dragon fruit",
+    "passion fruit",
+    "figs",
+    "bell peppers",
+    "jalapenos",
+    "sesame buns"
+   ]
+  }
+ ],
+ "Things that get stuck in your teeth": [
+  {
+   "player": "kid10",
+   "guesses": [
+    "popcorn",
+    "food",
+    "corn",
+    "spinach",
+    "meat",
+    "gum",
+    "candy",
+    "seeds",
+    "caramel",
+    "apple",
+    "chips",
+    "hair"
+   ]
+  },
+  {
+   "player": "band-kid14",
+   "guesses": [
+    "popcorn",
+    "spinach",
+    "corn on the cob",
+    "meat",
+    "seeds",
+    "celery",
+    "caramel",
+    "gum",
+    "chicken",
+    "steak",
+    "my reed",
+    "floss"
+   ]
+  },
+  {
+   "player": "athlete15",
+   "guesses": [
+    "popcorn",
+    "steak",
+    "meat",
+    "corn",
+    "spinach",
+    "chicken",
+    "seeds",
+    "gum",
+    "candy",
+    "lettuce",
+    "food",
+    "mouthguard"
+   ]
+  },
+  {
+   "player": "junior16",
+   "guesses": [
+    "popcorn kernels",
+    "spinach",
+    "steak",
+    "corn",
+    "sesame seeds",
+    "poppy seeds",
+    "celery",
+    "stringy chicken",
+    "mango",
+    "caramel",
+    "pulled pork",
+    "floss"
+   ]
+  }
+ ],
+ "Foods rich people eat": [
+  {
+   "player": "kid10",
+   "guesses": [
+    "caviar",
+    "lobster",
+    "steak",
+    "sushi",
+    "gold",
+    "truffles",
+    "fancy cheese",
+    "shrimp",
+    "crab",
+    "wagyu",
+    "champagne",
+    "cake"
+   ]
+  },
+  {
+   "player": "band-kid14",
+   "guesses": [
+    "caviar",
+    "lobster",
+    "wagyu",
+    "truffles",
+    "escargot",
+    "oysters",
+    "foie gras",
+    "sushi",
+    "crab legs",
+    "gold leaf",
+    "filet mignon",
+    "steak"
+   ]
+  },
+  {
+   "player": "athlete15",
+   "guesses": [
+    "steak",
+    "lobster",
+    "caviar",
+    "wagyu",
+    "sushi",
+    "crab",
+    "shrimp",
+    "oysters",
+    "truffle",
+    "gold steak",
+    "filet mignon",
+    "salmon"
+   ]
+  },
+  {
+   "player": "junior16",
+   "guesses": [
+    "caviar",
+    "foie gras",
+    "truffles",
+    "wagyu",
+    "escargot",
+    "oysters",
+    "lobster",
+    "kobe beef",
+    "filet mignon",
+    "gold flakes",
+    "avocado toast",
+    "the poor"
+   ]
+  }
+ ],
+ "Things that fall from the sky": [
+  {
+   "player": "kid10",
+   "guesses": [
+    "rain",
+    "snow",
+    "hail",
+    "leaves",
+    "birds",
+    "meteors",
+    "airplanes",
+    "bird poop",
+    "sleet",
+    "stars",
+    "money",
+    "cats and dogs"
+   ]
+  },
+  {
+   "player": "band-kid14",
+   "guesses": [
+    "rain",
+    "snow",
+    "hail",
+    "meteors",
+    "bird poop",
+    "leaves",
+    "sleet",
+    "planes",
+    "asteroids",
+    "frogs",
+    "my grades",
+    "parachutes"
+   ]
+  },
+  {
+   "player": "athlete15",
+   "guesses": [
+    "rain",
+    "snow",
+    "hail",
+    "leaves",
+    "birds",
+    "meteor",
+    "planes",
+    "bird poop",
+    "skydivers",
+    "balls",
+    "lightning",
+    "asteroid"
+   ]
+  },
+  {
+   "player": "junior16",
+   "guesses": [
+    "rain",
+    "snow",
+    "hail",
+    "sleet",
+    "meteorites",
+    "satellites",
+    "bird poop",
+    "space junk",
+    "ash",
+    "frogs",
+    "my gpa",
+    "acid rain"
+   ]
+  }
+ ],
+ "Things you'd find in a cave": [
+  {
+   "player": "kid10",
+   "guesses": [
+    "bats",
+    "rocks",
+    "bears",
+    "stalactites",
+    "water",
+    "spiders",
+    "treasure",
+    "gold",
+    "crystals",
+    "bugs",
+    "caveman",
+    "dragon"
+   ]
+  },
+  {
+   "player": "band-kid14",
+   "guesses": [
+    "bats",
+    "stalactites",
+    "stalagmites",
+    "crystals",
+    "bears",
+    "rocks",
+    "water",
+    "bones",
+    "cave paintings",
+    "guano",
+    "minecraft diamonds",
+    "spiders"
+   ]
+  },
+  {
+   "player": "athlete15",
+   "guesses": [
+    "bats",
+    "bears",
+    "rocks",
+    "water",
+    "stalactites",
+    "spiders",
+    "bones",
+    "treasure",
+    "gold",
+    "darkness",
+    "echo",
+    "lions"
+   ]
+  },
+  {
+   "player": "junior16",
+   "guesses": [
+    "bats",
+    "stalagmites",
+    "stalactites",
+    "guano",
+    "cave paintings",
+    "crystals",
+    "bones",
+    "blind fish",
+    "minerals",
+    "spelunkers",
+    "gollum",
+    "hermits"
+   ]
+  }
+ ],
+ "Things that float": [
+  {
+   "player": "kid10",
+   "guesses": [
+    "boats",
+    "balloons",
+    "ducks",
+    "wood",
+    "ice",
+    "clouds",
+    "bubbles",
+    "leaves",
+    "pool noodle",
+    "rubber duck",
+    "ghosts",
+    "poop"
+   ]
+  },
+  {
+   "player": "band-kid14",
+   "guesses": [
+    "boats",
+    "balloons",
+    "rubber ducks",
+    "ice",
+    "bubbles",
+    "clouds",
+    "wood",
+    "pool floaties",
+    "buoys",
+    "corks",
+    "lily pads",
+    "witches"
+   ]
+  },
+  {
+   "player": "athlete15",
+   "guesses": [
+    "boats",
+    "balloon",
+    "ice",
+    "wood",
+    "ducks",
+    "life jacket",
+    "pool noodle",
+    "surfboard",
+    "kayak",
+    "bubbles",
+    "leaves",
+    "logs"
+   ]
+  },
+  {
+   "player": "junior16",
+   "guesses": [
+    "boats",
+    "buoys",
+    "icebergs",
+    "balloons",
+    "helium",
+    "corks",
+    "driftwood",
+    "clouds",
+    "bubbles",
+    "pool floaties",
+    "witches",
+    "dead bodies"
+   ]
+  }
+ ],
+ "Things with spikes": [
+  {
+   "player": "kid10",
+   "guesses": [
+    "cactus",
+    "porcupine",
+    "hedgehog",
+    "pufferfish",
+    "bowser",
+    "roses",
+    "dinosaur",
+    "sonic",
+    "pinecone",
+    "chestnut",
+    "spikes",
+    "bracelet"
+   ]
+  },
+  {
+   "player": "band-kid14",
+   "guesses": [
+    "cactus",
+    "porcupine",
+    "hedgehog",
+    "pufferfish",
+    "sea urchin",
+    "stegosaurus",
+    "rose",
+    "bowser",
+    "spiked collar",
+    "thorns",
+    "durian",
+    "iron maiden"
+   ]
+  },
+  {
+   "player": "athlete15",
+   "guesses": [
+    "cactus",
+    "porcupine",
+    "hedgehog",
+    "cleats",
+    "track spikes",
+    "puffer fish",
+    "roses",
+    "sea urchin",
+    "bowser",
+    "dinosaur",
+    "mace",
+    "football cleats"
+   ]
+  },
+  {
+   "player": "junior16",
+   "guesses": [
+    "cactus",
+    "porcupine",
+    "hedgehog",
+    "sea urchin",
+    "pufferfish",
+    "durian",
+    "stegosaurus",
+    "mace",
+    "spiked collar",
+    "iron maiden",
+    "punk jacket",
+    "morning star"
+   ]
+  }
+ ],
+ "Things that are invisible": [
+  {
+   "player": "kid10",
+   "guesses": [
+    "air",
+    "wind",
+    "ghosts",
+    "germs",
+    "wifi",
+    "oxygen",
+    "invisible man",
+    "god",
+    "feelings",
+    "smell",
+    "sound",
+    "my dad"
+   ]
+  },
+  {
+   "player": "band-kid14",
+   "guesses": [
+    "air",
+    "wind",
+    "oxygen",
+    "germs",
+    "ghosts",
+    "wifi",
+    "bacteria",
+    "gravity",
+    "radio waves",
+    "thoughts",
+    "my social life",
+    "band kids"
+   ]
+  },
+  {
+   "player": "athlete15",
+   "guesses": [
+    "air",
+    "wind",
+    "oxygen",
+    "germs",
+    "ghost",
+    "wifi",
+    "john cena",
+    "gravity",
+    "sound",
+    "smell",
+    "carbon dioxide",
+    "my girlfriend"
+   ]
+  },
+  {
+   "player": "junior16",
+   "guesses": [
+    "air",
+    "oxygen",
+    "germs",
+    "wifi",
+    "radio waves",
+    "uv rays",
+    "gravity",
+    "ghosts",
+    "dark matter",
+    "john cena",
+    "my motivation",
+    "my dad"
+   ]
+  }
+ ],
+ "Things you can catch": [
+  {
+   "player": "kid10",
+   "guesses": [
+    "ball",
+    "fish",
+    "cold",
+    "flu",
+    "bus",
+    "frisbee",
+    "football",
+    "baseball",
+    "feelings",
+    "bugs",
+    "pokemon",
+    "covid"
+   ]
+  },
+  {
+   "player": "band-kid14",
+   "guesses": [
+    "a cold",
+    "the flu",
+    "a ball",
+    "fish",
+    "frisbee",
+    "the bus",
+    "feelings",
+    "covid",
+    "a train",
+    "pokemon",
+    "fireflies",
+    "hands"
+   ]
+  },
+  {
+   "player": "athlete15",
+   "guesses": [
+    "football",
+    "baseball",
+    "frisbee",
+    "cold",
+    "flu",
+    "fish",
+    "pass",
+    "bus",
+    "feelings",
+    "ball",
+    "these hands",
+    "a fade"
+   ]
+  },
+  {
+   "player": "junior16",
+   "guesses": [
+    "a cold",
+    "the flu",
+    "covid",
+    "the bus",
+    "fish",
+    "feelings",
+    "a fade",
+    "these hands",
+    "a vibe",
+    "z's",
+    "a break",
+    "pokemon"
+   ]
+  }
+ ],
+ "Things you can crack": [
+  {
+   "player": "kid10",
+   "guesses": [
+    "eggs",
+    "knuckles",
+    "nuts",
+    "phone",
+    "walnuts",
+    "code",
+    "jokes",
+    "safe",
+    "ice",
+    "whip",
+    "back",
+    "neck"
+   ]
+  },
+  {
+   "player": "band-kid14",
+   "guesses": [
+    "eggs",
+    "knuckles",
+    "phone screen",
+    "nuts",
+    "code",
+    "a joke",
+    "safe",
+    "neck",
+    "back",
+    "a smile",
+    "window",
+    "glasses"
+   ]
+  },
+  {
+   "player": "athlete15",
+   "guesses": [
+    "eggs",
+    "knuckles",
+    "back",
+    "neck",
+    "phone",
+    "nuts",
+    "code",
+    "safe",
+    "joke",
+    "a window",
+    "ice",
+    "a beer"
+   ]
+  },
+  {
+   "player": "junior16",
+   "guesses": [
+    "eggs",
+    "knuckles",
+    "safe",
+    "code",
+    "walnuts",
+    "phone screen",
+    "a joke",
+    "a smile",
+    "the case",
+    "a window",
+    "open a cold one",
+    "my back"
+   ]
+  }
+ ],
+ "Things you can spill": [
+  {
+   "player": "kid10",
+   "guesses": [
+    "milk",
+    "water",
+    "juice",
+    "soda",
+    "coffee",
+    "tea",
+    "paint",
+    "cereal",
+    "beans",
+    "the tea",
+    "drinks",
+    "ketchup"
+   ]
+  },
+  {
+   "player": "band-kid14",
+   "guesses": [
+    "water",
+    "milk",
+    "coffee",
+    "the tea",
+    "soda",
+    "juice",
+    "paint",
+    "secrets",
+    "beans",
+    "valve oil",
+    "glitter",
+    "ink"
+   ]
+  },
+  {
+   "player": "athlete15",
+   "guesses": [
+    "water",
+    "gatorade",
+    "milk",
+    "soda",
+    "juice",
+    "coffee",
+    "tea",
+    "the tea",
+    "beans",
+    "protein shake",
+    "paint",
+    "sauce"
+   ]
+  },
+  {
+   "player": "junior16",
+   "guesses": [
+    "coffee",
+    "milk",
+    "the tea",
+    "the beans",
+    "secrets",
+    "wine",
+    "paint",
+    "nail polish",
+    "ink",
+    "soup",
+    "your guts",
+    "juice"
+   ]
+  }
+ ],
+ "Things you can squeeze": [
+  {
+   "player": "kid10",
+   "guesses": [
+    "lemon",
+    "orange",
+    "ketchup",
+    "toothpaste",
+    "stress ball",
+    "hand",
+    "sponge",
+    "pillow",
+    "grapes",
+    "cat",
+    "mustard",
+    "someone"
+   ]
+  },
+  {
+   "player": "band-kid14",
+   "guesses": [
+    "lemons",
+    "oranges",
+    "toothpaste",
+    "stress ball",
+    "ketchup bottle",
+    "a hand",
+    "sponge",
+    "limes",
+    "accordion",
+    "bagpipes",
+    "a pimple",
+    "mustard"
+   ]
+  },
+  {
+   "player": "athlete15",
+   "guesses": [
+    "lemon",
+    "orange",
+    "stress ball",
+    "ketchup",
+    "toothpaste",
+    "hand",
+    "gatorade bottle",
+    "sponge",
+    "pimple",
+    "mustard",
+    "grip strengthener",
+    "water bottle"
+   ]
+  },
+  {
+   "player": "junior16",
+   "guesses": [
+    "lemons",
+    "limes",
+    "toothpaste",
+    "stress ball",
+    "pimples",
+    "sponges",
+    "a hand",
+    "ketchup",
+    "mayo",
+    "honey bear",
+    "someone's cheeks",
+    "accordion"
+   ]
+  }
+ ],
+ "Things you can flip": [
+  {
+   "player": "kid10",
+   "guesses": [
+    "pancakes",
+    "coin",
+    "burger",
+    "water bottle",
+    "table",
+    "bed",
+    "switch",
+    "light switch",
+    "page",
+    "pancake",
+    "car",
+    "book"
+   ]
+  },
+  {
+   "player": "band-kid14",
+   "guesses": [
+    "pancakes",
+    "coins",
+    "burgers",
+    "pages",
+    "water bottle",
+    "tables",
+    "switches",
+    "the bird",
+    "records",
+    "houses",
+    "cards",
+    "a light switch"
+   ]
+  },
+  {
+   "player": "athlete15",
+   "guesses": [
+    "pancakes",
+    "coin",
+    "burgers",
+    "water bottle",
+    "table",
+    "backflip",
+    "car",
+    "tire",
+    "switch",
+    "cards",
+    "page",
+    "the bird"
+   ]
+  },
+  {
+   "player": "junior16",
+   "guesses": [
+    "pancakes",
+    "coins",
+    "houses",
+    "burgers",
+    "tables",
+    "water bottles",
+    "light switches",
+    "records",
+    "the script",
+    "the bird",
+    "phones",
+    "cars"
+   ]
+  }
+ ],
+ "Things that expire": [
+  {
+   "player": "kid10",
+   "guesses": [
+    "milk",
+    "food",
+    "eggs",
+    "yogurt",
+    "bread",
+    "medicine",
+    "coupons",
+    "cheese",
+    "meat",
+    "passport",
+    "license",
+    "people"
+   ]
+  },
+  {
+   "player": "band-kid14",
+   "guesses": [
+    "milk",
+    "eggs",
+    "coupons",
+    "medicine",
+    "yogurt",
+    "passport",
+    "drivers license",
+    "gift cards",
+    "subscriptions",
+    "meat",
+    "my will to live",
+    "me"
+   ]
+  },
+  {
+   "player": "athlete15",
+   "guesses": [
+    "milk",
+    "food",
+    "eggs",
+    "bread",
+    "meat",
+    "gatorade",
+    "license",
+    "passport",
+    "coupons",
+    "medicine",
+    "cheese",
+    "my eligibility"
+   ]
+  },
+  {
+   "player": "junior16",
+   "guesses": [
+    "milk",
+    "coupons",
+    "passports",
+    "licenses",
+    "warranties",
+    "medicine",
+    "yogurt",
+    "subscriptions",
+    "contracts",
+    "leases",
+    "visa",
+    "me"
+   ]
+  }
+ ],
+ "Things at a graduation": [
+  {
+   "player": "kid10",
+   "guesses": [
+    "caps",
+    "gowns",
+    "diplomas",
+    "tassels",
+    "parents",
+    "speeches",
+    "balloons",
+    "flowers",
+    "cake",
+    "cameras",
+    "principal",
+    "seniors"
+   ]
+  },
+  {
+   "player": "band-kid14",
+   "guesses": [
+    "caps",
+    "gowns",
+    "tassels",
+    "diplomas",
+    "pomp and circumstance",
+    "speeches",
+    "valedictorian",
+    "flowers",
+    "balloons",
+    "band",
+    "beach balls",
+    "crying parents"
+   ]
+  },
+  {
+   "player": "athlete15",
+   "guesses": [
+    "caps and gowns",
+    "diplomas",
+    "tassels",
+    "speech",
+    "parents",
+    "flowers",
+    "principal",
+    "cameras",
+    "balloons",
+    "cords",
+    "stage",
+    "graduates"
+   ]
+  },
+  {
+   "player": "junior16",
+   "guesses": [
+    "caps",
+    "gowns",
+    "diplomas",
+    "tassels",
+    "cords",
+    "valedictorian",
+    "speeches",
+    "commencement",
+    "leis",
+    "crying moms",
+    "student debt",
+    "beach balls"
+   ]
+  }
+ ],
+ "Things in a locker room": [
+  {
+   "player": "kid10",
+   "guesses": [
+    "lockers",
+    "towels",
+    "showers",
+    "benches",
+    "smelly socks",
+    "shoes",
+    "deodorant",
+    "clothes",
+    "jerseys",
+    "soap",
+    "coach",
+    "gym bag"
+   ]
+  },
+  {
+   "player": "band-kid14",
+   "guesses": [
+    "lockers",
+    "benches",
+    "showers",
+    "towels",
+    "axe body spray",
+    "smelly socks",
+    "deodorant",
+    "gym clothes",
+    "mirror",
+    "sweat",
+    "gym bag",
+    "pe uniform"
+   ]
+  },
+  {
+   "player": "athlete15",
+   "guesses": [
+    "lockers",
+    "towels",
+    "benches",
+    "showers",
+    "axe",
+    "deodorant",
+    "cleats",
+    "jerseys",
+    "pads",
+    "tape",
+    "coach",
+    "athletes foot"
+   ]
+  },
+  {
+   "player": "junior16",
+   "guesses": [
+    "lockers",
+    "benches",
+    "showers",
+    "towels",
+    "axe body spray",
+    "athlete's foot",
+    "jockstraps",
+    "whiteboard",
+    "sweaty jerseys",
+    "mildew",
+    "lost and found",
+    "that one smell"
+   ]
+  }
+ ],
+ "Things you can win": [
+  {
+   "player": "kid10",
+   "guesses": [
+    "games",
+    "money",
+    "prizes",
+    "trophy",
+    "medal",
+    "lottery",
+    "race",
+    "award",
+    "contest",
+    "fights",
+    "teddy bear",
+    "robux"
+   ]
+  },
+  {
+   "player": "band-kid14",
+   "guesses": [
+    "trophy",
+    "medals",
+    "money",
+    "lottery",
+    "awards",
+    "prizes",
+    "competitions",
+    "games",
+    "scholarships",
+    "first chair",
+    "arguments",
+    "a grammy"
+   ]
+  },
+  {
+   "player": "athlete15",
+   "guesses": [
+    "games",
+    "championship",
+    "trophy",
+    "medal",
+    "money",
+    "lottery",
+    "race",
+    "ring",
+    "mvp",
+    "state",
+    "award",
+    "fights"
+   ]
+  },
+  {
+   "player": "junior16",
+   "guesses": [
+    "the lottery",
+    "money",
+    "trophies",
+    "medals",
+    "awards",
+    "arguments",
+    "a scholarship",
+    "elections",
+    "a car",
+    "someone's heart",
+    "an oscar",
+    "nobel prize"
+   ]
+  }
+ ],
+ "Things at a concert": [
+  {
+   "player": "kid10",
+   "guesses": [
+    "music",
+    "singer",
+    "band",
+    "lights",
+    "speakers",
+    "guitar",
+    "drums",
+    "crowd",
+    "microphone",
+    "stage",
+    "tickets",
+    "merch"
+   ]
+  },
+  {
+   "player": "band-kid14",
+   "guesses": [
+    "stage",
+    "band",
+    "lights",
+    "speakers",
+    "mosh pit",
+    "guitars",
+    "drums",
+    "microphones",
+    "merch",
+    "crowd",
+    "glow sticks",
+    "crowd surfers"
+   ]
+  },
+  {
+   "player": "athlete15",
+   "guesses": [
+    "music",
+    "stage",
+    "lights",
+    "band",
+    "singer",
+    "crowd",
+    "speakers",
+    "guitar",
+    "drums",
+    "mosh pit",
+    "security",
+    "tickets"
+   ]
+  },
+  {
+   "player": "junior16",
+   "guesses": [
+    "mosh pit",
+    "stage",
+    "speakers",
+    "lights",
+    "merch booth",
+    "overpriced water",
+    "crowd surfers",
+    "security",
+    "setlist",
+    "phones",
+    "encore",
+    "vapes"
+   ]
+  }
+ ],
+ "Things on a gamer's desk": [
+  {
+   "player": "kid10",
+   "guesses": [
+    "computer",
+    "keyboard",
+    "mouse",
+    "monitor",
+    "headphones",
+    "controller",
+    "energy drink",
+    "snacks",
+    "chips",
+    "rgb",
+    "mic",
+    "cup"
+   ]
+  },
+  {
+   "player": "band-kid14",
+   "guesses": [
+    "keyboard",
+    "mouse",
+    "monitor",
+    "headset",
+    "pc",
+    "rgb lights",
+    "mouse pad",
+    "mic",
+    "energy drinks",
+    "chips",
+    "webcam",
+    "mountain dew"
+   ]
+  },
+  {
+   "player": "athlete15",
+   "guesses": [
+    "monitor",
+    "keyboard",
+    "mouse",
+    "headset",
+    "controller",
+    "energy drink",
+    "pc",
+    "mic",
+    "snacks",
+    "mouse pad",
+    "xbox",
+    "ps5"
+   ]
+  },
+  {
+   "player": "junior16",
+   "guesses": [
+    "monitor",
+    "mechanical keyboard",
+    "mouse",
+    "headset",
+    "rgb",
+    "gfuel",
+    "monster cans",
+    "dorito dust",
+    "mousepad",
+    "webcam",
+    "figurines",
+    "piss bottle"
+   ]
+  }
+ ],
+ "Things you can unlock": [
+  {
+   "player": "kid10",
+   "guesses": [
+    "door",
+    "phone",
+    "car",
+    "achievements",
+    "levels",
+    "chest",
+    "lock",
+    "safe",
+    "skins",
+    "characters",
+    "diary",
+    "computer"
+   ]
+  },
+  {
+   "player": "band-kid14",
+   "guesses": [
+    "doors",
+    "phones",
+    "cars",
+    "achievements",
+    "safes",
+    "levels",
+    "skins",
+    "lockers",
+    "diaries",
+    "potential",
+    "secrets",
+    "a bike"
+   ]
+  },
+  {
+   "player": "athlete15",
+   "guesses": [
+    "door",
+    "phone",
+    "car",
+    "locker",
+    "levels",
+    "achievements",
+    "skins",
+    "safe",
+    "chest",
+    "gate",
+    "potential",
+    "bike lock"
+   ]
+  },
+  {
+   "player": "junior16",
+   "guesses": [
+    "doors",
+    "phones",
+    "achievements",
+    "safes",
+    "lockers",
+    "potential",
+    "new levels",
+    "characters",
+    "a door",
+    "memories",
+    "my phone",
+    "the secret ending"
+   ]
+  }
+ ],
+ "Things that crash": [
+  {
+   "player": "kid10",
+   "guesses": [
+    "cars",
+    "planes",
+    "computer",
+    "waves",
+    "stock market",
+    "game",
+    "phone",
+    "website",
+    "bikes",
+    "trains",
+    "server",
+    "roblox"
+   ]
+  },
+  {
+   "player": "band-kid14",
+   "guesses": [
+    "cars",
+    "planes",
+    "computers",
+    "stock market",
+    "waves",
+    "games",
+    "websites",
+    "servers",
+    "chrome",
+    "my laptop",
+    "my grades",
+    "cymbals"
+   ]
+  },
+  {
+   "player": "athlete15",
+   "guesses": [
+    "cars",
+    "planes",
+    "computer",
+    "game",
+    "waves",
+    "bike",
+    "stock market",
+    "server",
+    "phone",
+    "my mom",
+    "minecraft",
+    "wifi"
+   ]
+  },
+  {
+   "player": "junior16",
+   "guesses": [
+    "cars",
+    "planes",
+    "stock market",
+    "computers",
+    "servers",
+    "waves",
+    "websites",
+    "cymbals",
+    "parties",
+    "chromebooks",
+    "sugar crash",
+    "my mental health"
+   ]
+  }
+ ],
+ "Things in a Christmas stocking": [
+  {
+   "player": "kid10",
+   "guesses": [
+    "candy",
+    "toys",
+    "candy canes",
+    "chocolate",
+    "coal",
+    "gift cards",
+    "socks",
+    "money",
+    "oranges",
+    "gum",
+    "lego",
+    "game"
+   ]
+  },
+  {
+   "player": "band-kid14",
+   "guesses": [
+    "candy canes",
+    "chocolate",
+    "coal",
+    "gift cards",
+    "socks",
+    "oranges",
+    "lip balm",
+    "toothbrush",
+    "candy",
+    "money",
+    "reeds",
+    "valve oil"
+   ]
+  },
+  {
+   "player": "athlete15",
+   "guesses": [
+    "candy",
+    "candy canes",
+    "chocolate",
+    "coal",
+    "gift card",
+    "socks",
+    "money",
+    "oranges",
+    "gum",
+    "toys",
+    "airpods",
+    "beef jerky"
+   ]
+  },
+  {
+   "player": "junior16",
+   "guesses": [
+    "candy canes",
+    "chocolate coins",
+    "coal",
+    "gift cards",
+    "tangerines",
+    "socks",
+    "chapstick",
+    "toothbrush",
+    "mini toys",
+    "lottery tickets",
+    "disappointment",
+    "underwear"
+   ]
+  }
+ ],
+ "Things in a witch's cauldron": [
+  {
+   "player": "kid10",
+   "guesses": [
+    "potion",
+    "frog",
+    "eyeballs",
+    "bones",
+    "green stuff",
+    "snakes",
+    "bats",
+    "spiders",
+    "soup",
+    "poison",
+    "slime",
+    "toads"
+   ]
+  },
+  {
+   "player": "band-kid14",
+   "guesses": [
+    "potion",
+    "eye of newt",
+    "frogs",
+    "bat wings",
+    "eyeballs",
+    "toads",
+    "bones",
+    "snake",
+    "spiders",
+    "herbs",
+    "hair",
+    "children"
+   ]
+  },
+  {
+   "player": "athlete15",
+   "guesses": [
+    "potion",
+    "frogs",
+    "eyes",
+    "bones",
+    "snakes",
+    "bat wings",
+    "poison",
+    "soup",
+    "toes",
+    "rats",
+    "witch brew",
+    "spiders"
+   ]
+  },
+  {
+   "player": "junior16",
+   "guesses": [
+    "eye of newt",
+    "toe of frog",
+    "bat wings",
+    "potion",
+    "toads",
+    "eyeballs",
+    "mandrake root",
+    "wolfsbane",
+    "newts",
+    "snake venom",
+    "small children",
+    "hansel and gretel"
+   ]
+  }
+ ],
+ "Things that get stuck in your hair": [
+  {
+   "player": "kid10",
+   "guesses": [
+    "gum",
+    "leaves",
+    "sticks",
+    "bugs",
+    "food",
+    "glitter",
+    "sand",
+    "spider",
+    "tangle",
+    "knots",
+    "bird poop",
+    "slime"
+   ]
+  },
+  {
+   "player": "band-kid14",
+   "guesses": [
+    "gum",
+    "glitter",
+    "leaves",
+    "bugs",
+    "sand",
+    "twigs",
+    "food",
+    "knots",
+    "lint",
+    "spiders",
+    "hairspray",
+    "confetti"
+   ]
+  },
+  {
+   "player": "athlete15",
+   "guesses": [
+    "gum",
+    "leaves",
+    "grass",
+    "sand",
+    "bugs",
+    "dirt",
+    "sticks",
+    "knots",
+    "sweat",
+    "food",
+    "hat",
+    "headband"
+   ]
+  },
+  {
+   "player": "junior16",
+   "guesses": [
+    "gum",
+    "glitter",
+    "burrs",
+    "leaves",
+    "sand",
+    "lice",
+    "twigs",
+    "hair ties",
+    "bobby pins",
+    "tangles",
+    "silly string",
+    "syrup"
+   ]
+  }
+ ]
+}

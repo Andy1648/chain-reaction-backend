@@ -1,0 +1,59 @@
+ 90% accepted  Things at a funeral (48 guesses, misses/player avg 1.3 max 3)
+      misses: people crying | my band teacher | awkward cousins | free sandwiches | a guy checking his phone
+ 92% accepted  Things you'd find in a dumpster (48 guesses, misses/player avg 1.0 max 2)
+      misses: my clarinet | my teams season | stinky stuff | expired food
+ 92% accepted  Things that live in the walls (48 guesses, misses/player avg 1.0 max 2)
+      misses: my neighbor | squirells | the guy from that movie | the previous owner
+ 92% accepted  Things in a Christmas stocking (48 guesses, misses/player avg 1.0 max 2)
+      misses: reeds | valve oil | beef jerky | mini toys
+ 94% accepted  Things that get stuck in your teeth (48 guesses, misses/player avg 0.8 max 1)
+      misses: my reed | mouthguard | stringy chicken
+ 94% accepted  Things you can catch (48 guesses, misses/player avg 0.8 max 2)
+      misses: a fade | z's
+ 94% accepted  Things you can squeeze (48 guesses, misses/player avg 0.8 max 2)
+      misses: someone | gatorade bottle | grip strengthener
+ 94% accepted  Things in a locker room (48 guesses, misses/player avg 0.8 max 2)
+      misses: pe uniform | sweaty jerseys | that one smell
+ 96% accepted  Things that live in the sewer (48 guesses, misses/player avg 0.5 max 2)
+      misses: c.h.u.d. | sewer people
+ 96% accepted  Things at a nursing home (48 guesses, misses/player avg 0.5 max 1)
+      misses: wrinkly people | someone yelling
+ 96% accepted  Things that fall from the sky (48 guesses, misses/player avg 0.5 max 1)
+      misses: balls | my gpa
+ 96% accepted  Things you'd find in a cave (48 guesses, misses/player avg 0.5 max 1)
+      misses: minecraft diamonds | lions
+ 96% accepted  Things you can spill (48 guesses, misses/player avg 0.5 max 1)
+      misses: valve oil | protein shake
+ 96% accepted  Things that expire (48 guesses, misses/player avg 0.5 max 2)
+      misses: gatorade | my eligibility
+ 96% accepted  Things at a graduation (48 guesses, misses/player avg 0.5 max 2)
+      misses: commencement | student debt
+ 96% accepted  Things you can win (48 guesses, misses/player avg 0.5 max 1)
+      misses: first chair | state
+ 96% accepted  Things on a gamer's desk (48 guesses, misses/player avg 0.5 max 2)
+      misses: dorito dust | piss bottle
+ 96% accepted  Things in a witch's cauldron (48 guesses, misses/player avg 0.5 max 1)
+      misses: green stuff | small children
+ 98% accepted  Things that spy on you (48 guesses, misses/player avg 0.3 max 1)
+      misses: my coach
+ 98% accepted  Foods rich people eat (48 guesses, misses/player avg 0.3 max 1)
+      misses: cake
+ 98% accepted  Things that float (48 guesses, misses/player avg 0.3 max 1)
+      misses: helium
+ 98% accepted  Things that are invisible (48 guesses, misses/player avg 0.3 max 1)
+      misses: band kids
+ 98% accepted  Things you can crack (48 guesses, misses/player avg 0.3 max 1)
+      misses: open a cold one
+ 98% accepted  Things you can flip (48 guesses, misses/player avg 0.3 max 1)
+      misses: tire
+ 98% accepted  Things at a concert (48 guesses, misses/player avg 0.3 max 1)
+      misses: merch booth
+ 98% accepted  Things you can unlock (48 guesses, misses/player avg 0.3 max 1)
+      misses: a bike
+ 98% accepted  Things that get stuck in your hair (48 guesses, misses/player avg 0.3 max 1)
+      misses: silly string
+100% accepted  Foods with seeds (48 guesses, misses/player avg 0.0 max 0)
+100% accepted  Things with spikes (48 guesses, misses/player avg 0.0 max 0)
+100% accepted  Things that crash (48 guesses, misses/player avg 0.0 max 0)
+
+TOTAL 1440 guesses, 58 misses — 96.0% accepted
