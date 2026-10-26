@@ -101,6 +101,8 @@ const {
 const { MODES: T5_MODES, ERROR_MESSAGES: T5_ERROR_MESSAGES } = require('./t5Modes');
 // WORD RACE quick-match queue (additive: its own messages, see wordRaceMatch.js).
 const wordRaceMatch = require('./wordRaceMatch');
+// MINER quick-match queue (additive: its own messages, see minerMatch.js).
+const minerMatch = require('./minerMatch');
 
 // Pre-warm the dictionary cache with our starter words so the very first
 // move of any game doesn't depend on the Dictionary API being reachable.
@@ -424,6 +426,8 @@ wss.on('connection', (ws) => {
           connectionToRoomCode.set(ws.id, code);
           send(ws, 'room_joined', { code });
           broadcastToRoom(result.room, buildRoomUpdatePayload(result.room));
+          // MINER: a code-joiner into a waiting quick-match mine updates its queue (and fills it).
+          if (!result.spectator) minerMatch.afterJoin(result.room);
           // STEP 54: joined a Word Bomb round in progress → put the joiner straight into the game
           // view as a spectator (dealt in next turn): the same game_started + turn_update frames
           // everyone else got, sent to this socket only.
@@ -789,6 +793,45 @@ wss.on('connection', (ws) => {
           send(ws, result.created ? 'room_created' : 'room_joined', { code: room.code });
           broadcastToRoom(room, buildRoomUpdatePayload(room));
           wordRaceMatch.afterJoin(room);
+          break;
+        }
+
+        // MINER quick-match: join the fullest waiting mine or open one. Same join + create throttles and
+        // room-hop cleanup as race_quick_match.
+        case 'miner_quick_match': {
+          if (!allowJoin(ws)) {
+            sendError(ws, humanizeError('rate_limited'), 'miner_quick_match');
+            return;
+          }
+          const name = sanitizeName(payload?.name);
+          leaveCurrentRoom(ws);
+          const result = minerMatch.quickMatch(ws, name, () => allowCreateRoom(ws));
+          if (result.error) {
+            sendError(ws, humanizeError(result.error), 'miner_quick_match');
+            return;
+          }
+          const room = result.room;
+          connectionToRoomCode.set(ws.id, room.code);
+          send(ws, result.created ? 'room_created' : 'room_joined', { code: room.code });
+          broadcastToRoom(room, buildRoomUpdatePayload(room));
+          minerMatch.afterJoin(room);
+          break;
+        }
+
+        // MINER: the host seats an extra bot miner in the lobby.
+        case 'miner_add_bot': {
+          const room = getRoomForConnection(ws);
+          if (!room) return;
+          if (room.hostId !== ws.id) {
+            sendError(ws, 'Only the host can add a bot.', 'miner_add_bot');
+            return;
+          }
+          const result = T5_MODES.miner.addLobbyBot(room);
+          if (result.error) {
+            sendError(ws, humanizeError(result.error), 'miner_add_bot');
+            return;
+          }
+          broadcastToRoom(room, buildRoomUpdatePayload(room));
           break;
         }
 
