@@ -13,10 +13,10 @@
 //
 // WIRE (all additive message types):
 //   miner_start  -> room  { miners, target, lives, serverNow, goAt }
-//   miner_round  -> room  { round, prompt, pack, size, endsAt, roundMs, serverNow }
-//   miner_result -> submitter only { accepted, answer, reason, ore, depth }
+//   miner_round  -> room  { round, prompt, ask, pack, endsAt, roundMs, serverNow }   ask = the singular line shown
+//   miner_result -> submitter only { accepted, answer, reason, message, ore, depth, top }
 //   miner_locked -> room  { ids, locked, total }   (WHO has an answer in - never what it is)
-//   miner_reveal -> room  { round, prompt, picks, diamond, miners, over, nextInMs, serverNow }
+//   miner_reveal -> room  { round, prompt, ask, picks (top = TOP n% RAREST, rarest = the crowned find), diamond, miners, over, nextInMs, serverNow }
 //   miner_over   -> room  { winnerIds, reason, standings, target, rounds, serverNow }
 //   miner_left   -> room  { id }
 
@@ -133,6 +133,7 @@ function openRound(room, helpers) {
     payload: {
       round: g.round,
       prompt,
+      ask: miner.askFor(prompt),
       pack: list ? list.pack : null,
       endsAt: now + ROUND_MS,
       roundMs: ROUND_MS,
@@ -207,7 +208,7 @@ function handleSubmit(room, connectionId, text, helpers) {
   const res = miner.submit(g, connectionId, text);
   const answer = String(text == null ? '' : text).trim().slice(0, 40);
   if (!res.accepted) {
-    sendTo(room, connectionId, 'miner_result', { accepted: false, answer, reason: res.reason });
+    sendTo(room, connectionId, 'miner_result', { accepted: false, answer, reason: res.reason, message: res.message || null });
     return { result: { accepted: false, reason: res.reason } };
   }
   helpers.touchRoom(room);
@@ -217,6 +218,7 @@ function handleSubmit(room, connectionId, text, helpers) {
     reason: null,
     ore: res.pick.ore,
     depth: res.pick.depth,
+    top: res.pick.top,
   });
   helpers.broadcastToRoom(room, { type: 'miner_locked', payload: lockedPayload(g) });
   if (miner.allLocked(g)) closeRound(room, helpers);
