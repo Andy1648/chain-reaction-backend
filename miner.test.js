@@ -11,14 +11,18 @@ function seq(...vals) {
   return () => vals[i++ % vals.length];
 }
 
-test('every prompt is a real Blitz list with a canon order, no duplicates, no unhinged/wordplay', () => {
+test('every prompt is a real Blitz list with a canon order and a SINGULAR ask, no duplicates, no wordplay', () => {
   assert.equal(new Set(miner.PROMPTS).size, miner.PROMPTS.length);
-  assert.ok(miner.PROMPTS.length >= 100, 'endless needs a deep deck');
+  assert.ok(miner.PROMPTS.length >= 200, 'endless needs a deep deck (Andy oct27: many more categories)');
   for (const p of miner.PROMPTS) {
     const list = BLITZ_LISTS.listFor(p);
     assert.ok(list, `${p} is in blitzLists.json`);
     assert.ok(CANON[p] && CANON[p].length >= 30, `${p} has a canon deep enough to have a DIAMOND band`);
-    assert.ok(!['unhinged', 'wordplay'].includes(list.pack), `${p} is an easy noun list`);
+    assert.notEqual(list.pack, 'wordplay', `${p} is a noun list`);
+    const ask = miner.askFor(p);
+    assert.equal(ask, ask.toUpperCase(), `${p}: the ask is upper-case`);
+    // Andy oct27: "pizza topping", not "pizza toppings" - one rare answer, asked in the singular
+    assert.doesNotMatch(ask, /^(THINGS|FOODS|ANIMALS|TYPES|PLACES)\b|^(A|AN|THE) /, `${p}: "${ask}" is a bare singular`);
   }
 });
 
@@ -120,4 +124,39 @@ test('bot answers are always on the list and reach every ore over time', () => {
     }
   }
   assert.deepEqual([...ores].sort(), ['coal', 'diamond', 'dirt', 'gold']);
+});
+
+test('a find carries TOP n% RAREST; the round crowns its deepest unshared find', () => {
+  const g = miner.createGame([{ id: 'a', name: 'A' }, { id: 'b', name: 'B' }, { id: 'c', name: 'C' }]);
+  g.status = 'digging';
+  g.prompt = 'US states';
+  assert.equal(miner.submit(g, 'a', 'Wyoming').pick.ore, 'diamond');
+  assert.equal(miner.submit(g, 'b', 'Texas').pick.ore, 'dirt');
+  const top = g.miners[0].pick.top;
+  assert.ok(top >= 1 && top <= 45, `Wyoming is a deep cut (top ${top}%)`);
+  assert.ok(g.miners[1].pick.top > 90, 'Texas is the obvious answer');
+  const r = miner.endRound(g);
+  assert.equal(r.ask, 'US STATE');
+  assert.deepEqual(r.picks.filter((p) => p.rarest).map((p) => p.id), ['a']);
+  assert.equal(r.picks.find((p) => p.id === 'a').top, top);
+});
+
+test('a shared vein is never crowned', () => {
+  const g = miner.createGame([{ id: 'a', name: 'A' }, { id: 'b', name: 'B' }]);
+  g.status = 'digging';
+  g.prompt = 'US states';
+  miner.submit(g, 'a', 'Wyoming');
+  miner.submit(g, 'b', 'wyoming');
+  assert.equal(miner.endRound(g).picks.some((p) => p.rarest), false);
+});
+
+test("a NOT list takes any real noun (COAL) like Blitz does, and refuses a safe one", () => {
+  const lick = "Things you shouldn't lick";
+  const knife = miner.judgeAnswer(lick, 'a rusty knife');
+  assert.equal(knife.ok, true);
+  assert.equal(knife.ore, 'coal');
+  assert.deepEqual(miner.judgeAnswer(lick, 'lol'), { ok: false, reason: 'not_on_list' });
+  const soup = miner.judgeAnswer("Things you shouldn't microwave", 'soup');
+  assert.equal(soup.ok, false);
+  assert.equal(soup.reason, 'safe_item');
 });

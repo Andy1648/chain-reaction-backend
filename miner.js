@@ -2,8 +2,8 @@
 // MINER - the endless rare-answer dig (replaces DAILY BLITZ, Andy oct26). PURE state machine: no timers,
 // no sockets - minerMode.js owns the clocks and the wire.
 //
-// THE GAME: every round drops ONE easy Category Blitz list ("Pizza toppings"). Each miner locks in ONE
-// answer on the list. The RARER the answer, the deeper it digs:
+// THE GAME: every round drops ONE easy Category Blitz list, asked in the singular ("THE RAREST PIZZA TOPPING",
+// minerPrompts.js). Each miner locks in ONE answer on the list. The RARER the answer, the deeper it digs:
 //   DIRT 10m · COAL 25m · GOLD 50m · DIAMOND 100m
 // Rarity is the answer's place in blitzCanon.json, whose members are ordered best-known first (the same
 // order the Blitz bot leans on): the top 8% of a list is DIRT, then COAL to 25%, GOLD to 55%, DIAMOND
@@ -14,6 +14,7 @@
 // Prompts never repeat inside a game, so the game is endless in practice.
 
 const BLITZ_LISTS = require('./blitzLists');
+const BLITZ_NOT = require('./blitzNot');
 const CANON = require('./blitzCanon.json');
 
 const TARGET_DEPTH = 500;
@@ -28,50 +29,8 @@ const ORES = [
 ];
 const ORE_BY_ID = Object.fromEntries(ORES.map((o) => [o.id, o]));
 
-// EASY prompts only: everyday NOUN lists anyone can answer (Andy's Blitz rules - no phrase/excuse prompts,
-// no unhinged pack, no wordplay), each big enough to have a deep end. Every name is asserted to exist in
-// blitzLists.json + blitzCanon.json by miner.test.js.
-const PROMPTS = [
-  // food
-  'Pizza toppings', 'Ice cream flavors', 'Sandwiches', 'Fruits', 'Vegetables', 'Desserts', 'Breakfast foods',
-  'Things in a fridge', 'Snack foods', 'Candy brands', 'Soda brands', 'Fast food chains', 'Breakfast cereals',
-  'Types of pasta', 'Types of cheese', 'Types of bread', 'Hot dog toppings', 'Things you dip fries in',
-  'Ice cream toppings', 'Things you put on toast', 'Things you put on a burger', 'Things you can put in a taco',
-  'Drinks (no alcohol)', 'Foods that are crunchy', 'Foods you eat with your hands', 'Foods that come on a stick',
-  "Things you'd find in a soup", 'Movie theater snacks', 'Things you put in a smoothie', 'Berries',
-  'Tropical fruits', 'Chip flavors', 'Foods you can deep fry', 'Thanksgiving dinner foods', 'Kitchen utensils',
-  'Kitchen appliances', "McDonald's menu items", 'Things that taste sweet', 'Things that taste sour',
-  // animals + nature
-  'Farm animals', 'Sea creatures', 'Insects', 'Birds', 'Pets', 'Dog breeds', 'Big cats', 'Dinosaurs', 'Sharks',
-  'Flowers', 'Animals with stripes', 'Animals with spots', 'Animals that live in trees', 'Things in a pond',
-  'Things with wings', 'Things with a tail', 'Things that lay eggs', 'Things with a shell', 'Mythical creatures',
-  // things
-  'Things in space', 'Things that are round', 'Things that are cold', 'Things that are sticky',
-  'Things that bounce', 'Things that melt', 'Things that glow', 'Things that spin', 'Rooms in a house',
-  'Types of weather', 'Types of hats', 'Types of shoes', 'School supplies', 'Things in a bathroom',
-  'Playground equipment', 'Amusement park rides', 'Things you find at the beach', 'Jobs', 'Clothing',
-  'Things in a backpack', 'Things in a junk drawer', 'Things in a classroom', "Things you'd see at the zoo",
-  'Things in a garage', 'Things at a hotel', 'Things at the gym', 'Camping gear', 'Things that come in pairs',
-  'Things you lose all the time', "Things you'd find at an airport", "Things you'd find at Walmart",
-  'Things in your pocket', "Things at grandma's house", 'Things in a castle', "Things you'd see in the jungle",
-  'Things you can ride', 'Things that are loud', 'Things that are fluffy', 'Things that are squishy',
-  'Things that are expensive', 'Things people collect', 'Things at a birthday party',
-  'Things you see on Halloween', 'Things a pirate would have', 'Things a wizard would carry',
-  // tech
-  'Car brands', 'Things with wheels', 'Things with buttons', 'Things you plug in', 'Things with a screen',
-  'Things that run on batteries', 'Apps on your phone', 'Social media apps', 'Streaming services', 'Car parts',
-  // pop culture + play
-  'Superheroes', 'Cartoon characters', 'Disney villains', 'Famous TV shows', 'Animated movies',
-  'Video game characters', 'Popular video games', 'Disney Channel shows', 'Nickelodeon shows',
-  'Cartoon Network shows', 'Movie villains', 'Famous cartoon dogs', 'Famous robots', 'Superpowers',
-  'Halloween costumes', 'Musical instruments', 'Music genres', 'Famous singers', 'Famous athletes',
-  'Sports with a ball', 'Sports equipment', 'Summer Olympic sports', 'Classic toys', 'Classic board games',
-  'Card games', 'Stores at the mall', 'Clothing & shoe brands', 'Toy brands',
-  // closed but easy (a well-known head and a real deep end)
-  'US states', 'NBA teams', 'NFL teams', 'European countries', 'African countries', 'Asian countries',
-  'Pokemon from Gen 1', 'Minecraft mobs', 'US presidents', 'Mario characters', 'Toy Story characters',
-  'SpongeBob characters',
-];
+// THE DECK + the singular ASK each list is shown as (Andy oct27): minerPrompts.js.
+const { PROMPTS, askFor } = require('./minerPrompts');
 
 /* ---------------------------------- rarity ---------------------------------- */
 
@@ -106,13 +65,29 @@ function oreForPct(pct) {
 function judgeAnswer(category, raw) {
   const text = String(raw == null ? '' : raw).trim();
   if (BLITZ_LISTS.answerKey(text).length < 2) return { ok: false, reason: 'too_short' };
-  if (!BLITZ_LISTS.onList(category, text)) return { ok: false, reason: 'not_on_list' };
+  if (!BLITZ_LISTS.onList(category, text)) {
+    // NOT lists ("THING YOU SHOULDN'T LICK") judge like Category Blitz (blitzNot.js): a real noun that misses the
+    // curated list still counts - a knife, bleach, a car battery (blind probe oct27: MINER refused them). It scores
+    // COAL: better than the obvious answer, never as deep as a ranked deep cut.
+    const not = BLITZ_NOT.isNotList(category) ? BLITZ_NOT.judge(category, text) : null;
+    if (not && not.ok) return { ok: true, key: BLITZ_LISTS.sameAnswerKey(category, text), ore: 'coal', depth: ORE_BY_ID.coal.depth, pct: null, noun: true };
+    if (not && not.why === 'safe_item') return { ok: false, reason: 'safe_item', message: not.message || null };
+    return { ok: false, reason: 'not_on_list' };
+  }
   const key = BLITZ_LISTS.sameAnswerKey(category, text);
   const { byKey, size } = rankIndex(category);
   const at = byKey.get(key);
   const pct = at === undefined ? null : at / size;
   const ore = pct === null ? ORE_BY_ID.gold : oreForPct(pct);
   return { ok: true, key, ore: ore.id, depth: ore.depth, pct };
+}
+
+/**
+ * How rare a find is, as the screen says it: "TOP n% RAREST" (n = the share of the list at or past this answer's
+ * place, 1..100). An on-list answer off the canon is a deep cut nobody ranked -> null (the screen calls it OFF THE MAP).
+ */
+function topPct(pct) {
+  return pct === null || pct === undefined ? null : Math.max(1, Math.min(100, Math.ceil((1 - pct) * 100)));
 }
 
 /** A DIAMOND answer nobody dug this round, to show at the reveal (the deep end of the list). */
@@ -192,8 +167,8 @@ function submit(game, id, raw) {
   if (m.out || m.left) return { accepted: false, reason: 'caved_in' };
   if (m.pick) return { accepted: false, reason: 'already_locked' };
   const j = judgeAnswer(game.prompt, raw);
-  if (!j.ok) return { accepted: false, reason: j.reason };
-  m.pick = { text: String(raw).trim().slice(0, 40), key: j.key, ore: j.ore, depth: j.depth };
+  if (!j.ok) return { accepted: false, reason: j.reason, message: j.message || null };
+  m.pick = { text: String(raw).trim().slice(0, 40), key: j.key, ore: j.ore, depth: j.depth, top: j.noun ? null : topPct(j.pct) };
   return { accepted: true, pick: m.pick };
 }
 
@@ -226,7 +201,7 @@ function endRound(game) {
       if (!m.best || m.pick.depth > m.best.depth) {
         m.best = { text: m.pick.text, ore: m.pick.ore, depth: m.pick.depth, prompt: game.prompt };
       }
-      picks.push({ id: m.id, answer: m.pick.text, ore: m.pick.ore, gained, shared });
+      picks.push({ id: m.id, answer: m.pick.text, ore: m.pick.ore, gained, shared, top: m.pick.top });
     } else {
       m.lives -= 1;
       if (m.lives <= 0) {
@@ -237,10 +212,17 @@ function endRound(game) {
     }
   }
 
+  // THE RAREST FIND (Andy oct27: the rare find is the hero moment): the round's deepest UNSHARED dig - the
+  // reveal crowns it. A round where every find was shared or nobody found anything has no crown.
+  let crown = null;
+  for (const p of picks) if (p.answer && !p.shared && (!crown || p.gained > crown.gained)) crown = p;
+  if (crown) crown.rarest = true;
+
   const taken = new Set(live.filter((m) => m.pick).map((m) => m.pick.key));
   const reveal = {
     round: game.round,
     prompt: game.prompt,
+    ask: askFor(game.prompt),
     picks,
     diamond: diamondExample(game.prompt, taken, game.rng),
   };
@@ -320,6 +302,7 @@ module.exports = {
   MAX_MINERS,
   ORES,
   PROMPTS,
+  askFor,
   judgeAnswer,
   oreForPct,
   diamondExample,
