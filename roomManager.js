@@ -238,12 +238,18 @@ function listPublicRooms() {
     if (!room.isPublic) continue;
     if (room.game !== null) continue; // waiting only (excludes in-progress/finished)
     if (room.players.length >= MAX_PLAYERS_PER_ROOM) continue; // not full
+    // feat/public-rooms-host (menu OPEN ROOMS panel): the host's display name + equipped hero so a
+    // row can say WHO is waiting. Both are already public in room_update; hostHero is omitted when
+    // the host hasn't sent set_hero (the client falls back to the mode icon).
+    const host = room.players.find((p) => p.id === room.hostId);
     out.push({
       code: room.code,
       playerCount: room.players.length,
       maxPlayers: MAX_PLAYERS_PER_ROOM,
       gameType: room.gameType,
       status: 'waiting',
+      hostName: host ? host.name : null,
+      ...(host && host.hero ? { hostHero: host.hero } : {}),
     });
   }
   return out;

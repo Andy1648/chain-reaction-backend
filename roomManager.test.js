@@ -194,13 +194,31 @@ test('listPublicRooms entries expose only the display-safe summary', () => {
 
   const [entry] = listPublicRooms();
   assert.deepEqual(Object.keys(entry).sort(), [
-    'code', 'gameType', 'maxPlayers', 'playerCount', 'status',
+    'code', 'gameType', 'hostName', 'maxPlayers', 'playerCount', 'status',
   ]);
+  assert.equal(entry.hostName, 'Host');
   assert.equal(entry.code, pub.code);
   assert.equal(entry.playerCount, 2);
   assert.equal(entry.maxPlayers, MAX_PLAYERS_PER_ROOM);
   assert.equal(entry.gameType, 'word-bomb');
   assert.equal(entry.status, 'waiting');
+});
+
+test('listPublicRooms carries the host name + equipped hero (menu OPEN ROOMS panel)', () => {
+  const pub = createRoom(conn(), 'Hosty', true).room;
+  joinRoom(pub.code, conn(), 'P1');
+  // No set_hero yet -> no hostHero key (client falls back to the mode icon).
+  let [entry] = listPublicRooms();
+  assert.equal(entry.hostName, 'Hosty');
+  assert.equal('hostHero' in entry, false);
+
+  // set_hero stores the id on the player object (server.js `me.hero = hero`).
+  pub.players.find((p) => p.id === pub.hostId).hero = 'riot-elite';
+  // A non-host's hero must never be reported as the host's.
+  pub.players.find((p) => p.id !== pub.hostId).hero = 'mecha';
+  [entry] = listPublicRooms();
+  assert.equal(entry.hostHero, 'riot-elite');
+  assert.equal(entry.hostName, 'Hosty');
 });
 
 // ---- quickPlay ------------------------------------------------------------
