@@ -270,15 +270,21 @@ function comboEffectiveLength(combo) {
  * from it, so the prompt visibly changes from one turn to the next rather than
  * (rarely) repeating. `completedTurnCount` defaults to 0 (easiest weighting) so
  * the game-start call needs no progress argument. `usedCombos` (a Set, optional) is
- * every combo this game has shown; none of them is picked again.
+ * every combo this game has shown; none of them is picked again. `recentCombos` (a Set, optional) is what the ROOM's
+ * previous game showed (nov4, Andy "they need more combo variations"): skipped too, while anything else is left.
  */
-function pickRandomCombo(excludeCombo, completedTurnCount = 0, usedCombos = null) {
+function pickRandomCombo(excludeCombo, completedTurnCount = 0, usedCombos = null, recentCombos = null) {
   let pool = excludeCombo ? COMBOS.filter((c) => c !== excludeCombo) : COMBOS;
   // NO REPEATS IN A GAME (Andy oct14): skip every combo this game has already shown.
   // Only once all ~700 are used (never in practice) does it fall back to "not the last one".
   if (usedCombos && usedCombos.size) {
     const fresh = pool.filter((c) => !usedCombos.has(c));
     if (fresh.length) pool = fresh;
+  }
+  // …and, across games in the same room, the combos the LAST game showed (applyRecentCombos)
+  if (recentCombos && recentCombos.size) {
+    const fresher = pool.filter((c) => !recentCombos.has(c));
+    if (fresher.length) pool = fresher;
   }
   const pressure = comboDifficultyPressure(completedTurnCount);
 
@@ -344,9 +350,30 @@ function createGame(players, difficultyKey) {
 /** The next combo for this game — never the current one, never one already shown — recorded as used. */
 function nextCombo(game, completedTurnCount) {
   if (!game.usedCombos) game.usedCombos = new Set(game.currentCombo ? [game.currentCombo] : []);
-  const combo = pickRandomCombo(game.currentCombo, completedTurnCount, game.usedCombos);
+  const combo = pickRandomCombo(game.currentCombo, completedTurnCount, game.usedCombos, game.recentCombos || null);
   game.usedCombos.add(combo);
   return combo;
+}
+
+/** The newest combos a room remembers from its last game (a long game shows ~100; the pool is ~850). */
+const RECENT_COMBOS_CAP = 150;
+
+/**
+ * CROSS-GAME MEMORY (nov4): give a fresh game the combos the room's previous game showed, so a rematch doesn't reopen on
+ * the same prompts. Re-picks the opening combo if it was one of them. Call right after createGame, before the
+ * game_started broadcast. Pure (no I/O); a no-op for an empty / missing list.
+ */
+function applyRecentCombos(game, recent) {
+  if (!game || !recent) return game;
+  const list = [...recent].slice(-RECENT_COMBOS_CAP);
+  if (!list.length) return game;
+  game.recentCombos = new Set(list);
+  if (game.recentCombos.has(game.currentCombo)) {
+    game.usedCombos.delete(game.currentCombo);
+    game.currentCombo = null;
+    game.currentCombo = nextCombo(game, 0);
+  }
+  return game;
 }
 
 function getCurrentPlayerId(game) {
@@ -566,6 +593,8 @@ module.exports = {
   submitWord,
   pickRandomCombo,
   nextCombo,
+  applyRecentCombos,
+  RECENT_COMBOS_CAP,
   comboDifficultyPressure,
   _setDictionaryForTesting,
 };

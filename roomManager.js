@@ -840,6 +840,8 @@ function startGame(room, opts = {}) {
   clearRoundTimer(room);
 
   const logic = logicForGameType(room.gameType);
+  // CROSS-GAME MEMORY (nov4): the combos the room's last Word Bomb game showed — the next one skips them
+  const prevCombos = room.game && room.game.gameType === 'word-bomb' && room.game.usedCombos ? [...room.game.usedCombos] : null;
   room.game = logic.createGame(
     room.players.map((p) => ({ id: p.id, name: p.name })),
     room.difficultyKey,
@@ -851,6 +853,7 @@ function startGame(room, opts = {}) {
   // Stamp the type onto the game so payload builders and submission routing
   // know which mode this in-progress game is, independent of the room.
   room.game.gameType = room.gameType;
+  if (room.gameType === 'word-bomb' && prevCombos && typeof logic.applyRecentCombos === 'function') logic.applyRecentCombos(room.game, prevCombos);
   touchRoom(room); // starting a game proves the room is alive
   logInfo('game_started', {
     roomCode: room.code,
