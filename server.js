@@ -58,6 +58,7 @@ const {
   resetGame,
   addBot,
   removeBot,
+  onLobbyGameTypeChange,
   handleWordSubmission,
   handleRerollCategory,
   removePlayer,
@@ -324,7 +325,7 @@ wss.on('connection', (ws) => {
           // isPublic defaults to false: a plain create_room stays code-only/
           // private exactly as before. Only an explicit true opts into the
           // public list / quick-play.
-          const result = createRoom(ws, name, payload?.isPublic === true);
+          const result = createRoom(ws, name, payload?.isPublic === true, { lobbyBots: payload?.lobbyBots === true });
           if (result.error) {
             // Global cap hit (server_busy) - graceful, no crash/silent drop.
             sendError(ws, humanizeError(result.error), 'create_room');
@@ -366,7 +367,7 @@ wss.on('connection', (ws) => {
           // explicit "abandon where I am, find me a game", so leaving first
           // matches intent even if the search then fails.
           leaveCurrentRoom(ws);
-          const result = quickPlay(ws, name, () => allowCreateRoom(ws));
+          const result = quickPlay(ws, name, () => allowCreateRoom(ws), { lobbyBots: payload?.lobbyBots === true });
           if (result.error) {
             sendError(ws, humanizeError(result.error), 'quick_play');
             return;
@@ -542,8 +543,10 @@ wss.on('connection', (ws) => {
           // if the host switches modes with a bot still in the lobby, drop it so
           // a stale-flavor bot never carries into a mode it wasn't built for.
           // Re-adding the right kind is one click.
-          const lobbyBot = room.players.find((p) => p.isBot);
-          if (lobbyBot && lobbyBot.botGameType !== gameType) removeBot(room);
+          const soloBot = room.players.find((p) => p.isBot && !p.lobbyBot);
+          if (soloBot && soloBot.botGameType !== gameType) removeBot(room);
+          // LOBBY BOTS keep their persona and take the new mode's brain (or leave a mode with no bot brain)
+          onLobbyGameTypeChange(room);
           broadcastToRoom(room, buildRoomUpdatePayload(room));
           break;
         }
