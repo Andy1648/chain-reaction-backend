@@ -95,7 +95,7 @@ function tick(room, deps) {
       room.players.push(bot);
       did = 'join';
     }
-  } else if (bots.length > want || (bots.length > 0 && rnd() < LEAVE_CHANCE)) {
+  } else if (bots.length > want || (bots.length > 0 && rnd() < (deps.leaveChance ?? LEAVE_CHANCE))) {
     const out = bots[Math.floor(rnd() * bots.length)];
     room.players = room.players.filter((p) => p !== out);
     did = 'leave';

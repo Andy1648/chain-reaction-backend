@@ -22,7 +22,8 @@ const lobbyBots = require('./lobbyBots');
 
 let nextId = 0;
 const conn = () => { nextId += 1; return { id: `c${nextId}`, readyState: 1, send() {} }; };
-const deps = (extra = {}) => ({ broadcast() {}, maxPlayers: MAX_PLAYERS_PER_ROOM, isGameLive: (r) => !!r.game && r.game.status !== 'finished', random: Math.random, ...extra });
+// leaveChance 0: no random wander-off, so a count after fill() is exact (the churn itself has its own test below)
+const deps = (extra = {}) => ({ broadcast() {}, maxPlayers: MAX_PLAYERS_PER_ROOM, isGameLive: (r) => !!r.game && r.game.status !== 'finished', random: Math.random, leaveChance: 0, ...extra });
 const lobby = (r) => r.players.filter((p) => p.isBot && p.lobbyBot);
 const fill = (room, n = 20) => { for (let i = 0; i < n; i += 1) lobbyBots.tick(room, deps()); };
 
@@ -144,6 +145,17 @@ test('the solo bot controls ignore lobby bots (add allowed beside them, remove l
   assert.equal(addBot(room, 'easy').ok, true);
   assert.equal(removeBot(room).ok, true);
   assert.equal(lobby(room).length, n);
+});
+
+test('a settled lobby still sees a bot wander off now and then (replaced on a later step)', () => {
+  const room = createRoom(conn(), 'ANNA', true, { lobbyBots: true }).room;
+  room.lobbyBotSeats = 4;
+  fill(room);
+  assert.equal(lobby(room).length, 3);
+  assert.equal(lobbyBots.tick(room, deps({ leaveChance: 1 })), 'leave');
+  assert.equal(lobby(room).length, 2);
+  assert.equal(lobbyBots.tick(room, deps()), 'join');
+  assert.equal(lobby(room).length, 3);
 });
 
 test('skill follows the persona: veterans lean hard, newcomers easy', () => {
