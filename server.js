@@ -59,6 +59,9 @@ const {
   addBot,
   removeBot,
   onLobbyGameTypeChange,
+  spectateRoom,
+  unspectate,
+  buildSpectateSnapshot,
   handleWordSubmission,
   handleRerollCategory,
   removePlayer,
@@ -176,6 +179,15 @@ const wss = new WebSocketServer({ server, maxPayload: MAX_WS_PAYLOAD_BYTES });
 // Tracks which room each live connection currently belongs to, so we can
 // clean up properly on disconnect without the client having to tell us.
 const connectionToRoomCode = new Map();
+// SPECTATE (nov4): the room a socket is WATCHING. Kept apart from connectionToRoomCode on purpose - getRoomForConnection
+// never finds a watcher's room, so no game action (submit, typing, start, reroll ...) can come from one.
+const spectatorToRoomCode = new Map();
+function leaveSpectating(ws) {
+  const code = spectatorToRoomCode.get(ws.id);
+  if (!code) return;
+  spectatorToRoomCode.delete(ws.id);
+  unspectate(getRoom(code), ws.id);
+}
 
 // Per-connection create_room throttle: at most CREATE_LIMIT room creations per
 // CREATE_WINDOW_MS from a single socket, so one client can't spam the registry.
@@ -321,6 +333,7 @@ wss.on('connection', (ws) => {
             sendError(ws, humanizeError('rate_limited'), 'create_room');
             return;
           }
+          leaveSpectating(ws);
           const name = sanitizeName(payload?.name);
           // isPublic defaults to false: a plain create_room stays code-only/
           // private exactly as before. Only an explicit true opts into the
@@ -345,7 +358,7 @@ wss.on('connection', (ws) => {
         // no room membership required, so it doesn't go through
         // getRoomForConnection. Replies straight to the asking socket.
         case 'list_public_rooms': {
-          send(ws, 'public_rooms', { rooms: listPublicRooms() });
+          send(ws, 'public_rooms', { rooms: listPublicRooms({ withLive: payload?.withLive === true }) });
           break;
         }
 
@@ -353,6 +366,7 @@ wss.on('connection', (ws) => {
         // public one if none exist. Reuses joinRoom's guards (race-safe retry
         // inside quickPlay) and the same create throttle as create_room.
         case 'quick_play': {
+          leaveSpectating(ws);
           // quick_play joins a public room too, so it shares the join throttle
           // (it can't target a code, so this isn't a brute-force path — the cap
           // just bounds join/leave churn symmetrically with join_room).
@@ -395,6 +409,7 @@ wss.on('connection', (ws) => {
           }
           const code = (payload?.code || '').toUpperCase().trim();
           const name = sanitizeName(payload?.name);
+          leaveSpectating(ws); // a watcher taking a seat (the room is back in its lobby) stops watching first
 
           // Re-joining the room you're already in is a no-op ack, NOT a
           // leave+rejoin: joinRoom would push a duplicate roster entry, and
@@ -768,6 +783,36 @@ wss.on('connection', (ws) => {
           break;
         }
 
+        // SPECTATE (nov4): watch a public room's live game read-only. The watcher gets the roster, a game_started marked
+        // watchOnly and a snapshot (Word Bomb's turn / Blitz's round), then every room broadcast; it is never a player.
+        case 'spectate_room': {
+          if (!allowJoin(ws)) {
+            sendError(ws, humanizeError('rate_limited'), 'spectate_room');
+            return;
+          }
+          const code = (payload?.code || '').toUpperCase().trim();
+          const name = sanitizeName(payload?.name);
+          const result = spectateRoom(code, ws, name);
+          if (result.error) {
+            sendError(ws, humanizeError(result.error), 'spectate_room');
+            return;
+          }
+          leaveCurrentRoom(ws); // only after the spectate succeeded (see create_room)
+          leaveSpectating(ws);
+          spectatorToRoomCode.set(ws.id, code);
+          const room = result.room;
+          send(ws, 'room_spectating', { code });
+          send(ws, ...Object.values(buildRoomUpdatePayload(room)));
+          send(ws, 'game_started', { difficultyKey: room.difficultyKey, gameType: room.game.gameType, spectator: true, watchOnly: true });
+          for (const msg of buildSpectateSnapshot(room)) send(ws, ...Object.values(msg));
+          break;
+        }
+
+        case 'stop_spectating': {
+          leaveSpectating(ws);
+          break;
+        }
+
         case 'leave_room': {
           const room = getRoomForConnection(ws);
           if (!room) return;
@@ -885,6 +930,11 @@ wss.on('connection', (ws) => {
   });
 
   ws.on('close', () => {
+    try {
+      leaveSpectating(ws);
+    } catch (err) {
+      logError('spectate_close_error', { playerId: ws.id }, err);
+    }
     // A class seat is kept for its grace window (classRoom.js), never dropped here.
     try {
       classHub.onClose(ws);
@@ -941,6 +991,12 @@ function humanizeError(code) {
     bot_already_added: 'There is already a bot in this room.',
     bot_solo_only: 'You can only add a bot when you are the only player.',
     daily_solo_only: 'The Daily Challenge is solo Category Blitz only — no other players or bots.',
+    // SPECTATE
+    room_not_public: 'Only public games can be watched.',
+    not_live: 'That game has ended - join the room instead.',
+    spectate_unsupported: "This mode can't be watched yet.",
+    already_playing: "You're already playing in that room.",
+    spectators_full: 'Too many people are watching that game right now.',
   };
   return messages[code] || T5_ERROR_MESSAGES[code] || 'Something went wrong.';
 }
