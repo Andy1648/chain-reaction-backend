@@ -35,6 +35,7 @@ const { logInfo, logWarn, logError } = require('./logger');
 // the category's pre-generated accept-list, so its submissions always resolve
 // on the free Stage-1 lookup and never touch the Haiku judge.
 const categoryBlitzBot = require('./categoryBlitzBot');
+const lobbyBots = require('./lobbyBots');
 
 // [T5] Experimental mode registry. Each T5 mode is a self-contained plugin
 // (pure logic + orchestrator in its own t5*Mode.js file); this file only
@@ -113,6 +114,15 @@ const MAX_ACTIVE_ROOMS = 500;
 
 const rooms = new Map(); // roomCode -> room object
 
+// LOBBY BOTS (lobbyBots.js): what the lobby-bot timer needs from the room manager, injected so lobbyBots never imports it
+const lobbyBotDeps = {
+  broadcast: (room) => broadcastToRoom(room, buildRoomUpdatePayload(room)),
+  maxPlayers: MAX_PLAYERS_PER_ROOM,
+  isGameLive: (room) => isGameLive(room),
+  onError: (err) => logError('lobby_bot_tick_failed', {}, err),
+};
+const scheduleLobbyBots = (room) => lobbyBots.scheduleLobbyBots(room, lobbyBotDeps);
+
 // Marks a room as alive. Call from the events that prove a room is in active use
 // (see the call sites: join, leave, game start, an accepted submission, rematch)
 // so the idle reaper only ever removes genuinely dead lobbies. One helper, one
@@ -142,7 +152,7 @@ function generateRoomCode() {
  * started), and a reference to the active turn-timer interval so it can
  * be cleared on cleanup.
  */
-function createRoom(hostConnection, hostName, isPublic = false) {
+function createRoom(hostConnection, hostName, isPublic = false, opts = {}) {
   // Global cap backstop (DoS guard). The caller surfaces 'server_busy' to the
   // client rather than crashing or silently dropping.
   if (rooms.size >= MAX_ACTIVE_ROOMS) {
@@ -159,6 +169,10 @@ function createRoom(hostConnection, hostName, isPublic = false) {
     // the public list / quick-play; public rooms are joinable by anyone. Set once
     // at creation - nothing mutates it later.
     isPublic: !!isPublic,
+    // LOBBY BOTS (lobbyBots.js): opt-in per room - only a client that renders them as players asks (create_room
+    // { lobbyBots: true }), and only a PUBLIC room gets them.
+    lobbyBots: !!(isPublic && opts.lobbyBots),
+    lobbyBotTimer: null,
     difficultyKey: 'medium',
     gameType: 'word-bomb', // 'word-bomb' | 'category-blitz'
     // Activity timestamps for the idle reaper. createdAt is fixed; lastActivity
@@ -184,6 +198,7 @@ function createRoom(hostConnection, hostName, isPublic = false) {
   };
   rooms.set(code, room);
   logInfo('room_created', { roomCode: code, playerId: hostConnection.id, isPublic: room.isPublic });
+  scheduleLobbyBots(room);
   return { room };
 }
 
@@ -212,11 +227,13 @@ function joinRoom(code, connection, playerName, { allowSpectate = false } = {}) 
     logInfo('player_joined_midgame', { roomCode: code, playerId: connection.id });
     return { room, spectator: true };
   }
-  if (room.players.length >= MAX_PLAYERS_PER_ROOM) {
+  // a FULL lobby gives a human the seat a lobby bot was keeping warm (lobby bots never block a real player)
+  if (room.players.length >= MAX_PLAYERS_PER_ROOM && !lobbyBots.freeSeatForHuman(room)) {
     return { error: 'room_full' };
   }
   room.players.push({ id: connection.id, name: playerName, connection });
   touchRoom(room); // a join proves the room is alive
+  scheduleLobbyBots(room);
   return { room };
 }
 
@@ -269,7 +286,7 @@ function listPublicRooms() {
  * quick-play can't be abused to spam the registry; createRoom's global cap is
  * the final backstop. Returns { room, created } on success, or { error }.
  */
-function quickPlay(connection, playerName, allowCreate) {
+function quickPlay(connection, playerName, allowCreate, opts = {}) {
   const candidates = [];
   for (const room of rooms.values()) {
     if (!room.isPublic) continue;
@@ -291,7 +308,7 @@ function quickPlay(connection, playerName, allowCreate) {
   if (typeof allowCreate === 'function' && !allowCreate()) {
     return { error: 'rate_limited' };
   }
-  const res = createRoom(connection, playerName, true);
+  const res = createRoom(connection, playerName, true, opts);
   if (res.error) return { error: res.error };
   return { room: res.room, created: true };
 }
@@ -331,6 +348,9 @@ function buildRoomUpdatePayload(room) {
         // Surfaced so the lobby can mark the bot and offer a REMOVE BOT control;
         // botDifficulty (easy|medium|hard) is the bot's own skill, shown on its card.
         ...(p.isBot ? { isBot: true, botDifficulty: p.botDifficulty || 'medium' } : {}),
+        // LOBBY BOT: the client draws it as a player (no BOT tag / remove control) - but it stays isBot above, so every
+        // payout / gem / match-win rule that treats bot rivals differently still applies (never farmable)
+        ...(p.lobbyBot ? { lobbyBot: true } : {}),
         // The player's equipped HERO (set_hero) so every client draws everyone's real hero in their seat.
         ...(p.hero ? { hero: p.hero } : {}),
       })),
@@ -659,7 +679,7 @@ function addBot(room, difficulty) {
   if (isGameLive(room)) return { error: 'game_already_started' };
   const botFactory = BOT_FACTORY_BY_GAME_TYPE[room.gameType];
   if (!botFactory) return { error: 'bot_mode_unsupported' };
-  if (room.players.some((p) => p.isBot)) return { error: 'bot_already_added' };
+  if (room.players.some((p) => p.isBot && !p.lobbyBot)) return { error: 'bot_already_added' };
   if (room.players.filter((p) => !p.isBot).length !== 1) return { error: 'bot_solo_only' };
 
   room.players.push(botFactory.createBotPlayer(difficulty));
@@ -673,7 +693,7 @@ function addBot(room, difficulty) {
 function removeBot(room) {
   if (!room) return { error: 'no_room' };
   if (isGameLive(room)) return { error: 'game_already_started' };
-  room.players = room.players.filter((p) => !p.isBot);
+  room.players = room.players.filter((p) => !p.isBot || p.lobbyBot); // the solo bot only - lobby bots come and go on their own
   return { ok: true };
 }
 
@@ -794,6 +814,12 @@ function maybeScheduleBotMove(room) {
 }
 
 function startGame(room, opts = {}) {
+  const result = startGameInner(room, opts);
+  scheduleLobbyBots(room); // a live game clears the lobby-bot timer (the bots seated play the game)
+  return result;
+}
+
+function startGameInner(room, opts = {}) {
   // Double-fire / mid-game restart guard: a second start_game while a game is
   // LIVE (any unfinished status - see isGameLive) must not silently discard
   // the running game and re-init it, wiping everyone's progress and firing a
@@ -1097,6 +1123,7 @@ function resetGame(room) {
   clearRoundTimer(room);
   clearCountdownTimeout(room);
   room.game = null;
+  scheduleLobbyBots(room); // back in the lobby: lobby bots may come and go again
   // The bot (if the player added one) stays in the roster across a rematch, so
   // they can start again straight away or remove it from the lobby.
   touchRoom(room); // a rematch proves the room is alive
@@ -1110,6 +1137,7 @@ function resetGame(room) {
 // clearRoundTimer each also clear the countdown timeout, but calling all three
 // is explicit and idempotent.)
 function destroyRoom(room) {
+  lobbyBots.clearLobbyBotTimer(room);
   clearTurnTimer(room);
   clearRoundTimer(room);
   clearCountdownTimeout(room);
@@ -1184,6 +1212,7 @@ function removePlayer(room, connectionId) {
   if (room.hostId === connectionId) {
     room.hostId = (room.players.find((p) => !p.isBot) || room.players[0]).id;
   }
+  scheduleLobbyBots(room);
 
   const game = room.game;
   // STEP 54: a spectator waiting to be dealt in leaves with nothing else to unwind.
@@ -1333,6 +1362,7 @@ function _getStatsForTesting() {
 // see a clean slate. Tears down any timers first so nothing leaks across tests.
 function _resetRoomsForTesting() {
   for (const room of rooms.values()) {
+    lobbyBots.clearLobbyBotTimer(room);
     clearTurnTimer(room);
     clearRoundTimer(room);
     clearCountdownTimeout(room);
@@ -1347,6 +1377,7 @@ module.exports = {
   listPublicRooms,
   quickPlay,
   startGame,
+  onLobbyGameTypeChange: (room) => { lobbyBots.onGameTypeChange(room); scheduleLobbyBots(room); },
   resetGame,
   addBot,
   removeBot,
