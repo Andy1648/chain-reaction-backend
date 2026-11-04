@@ -161,7 +161,7 @@ test('real turn-timer expiries cost exactly one life each, and the eliminating e
 
 // ---- listPublicRooms filtering -------------------------------------------
 
-test('listPublicRooms returns only public, waiting, not-full rooms', () => {
+test('listPublicRooms: public rooms a player can JOIN (waiting / finished, not full) or WATCH (live) - nov4 SPECTATE', () => {
   // public + waiting + room (should appear)
   const pub = createRoom(conn(), 'Host', true).room;
 
@@ -172,20 +172,28 @@ test('listPublicRooms returns only public, waiting, not-full rooms', () => {
   const full = createRoom(conn(), 'Host', true).room;
   fillTo(full.code, MAX_PLAYERS_PER_ROOM);
 
-  // public but in-progress (excluded - game !== null)
+  // public, LIVE (listed as 'playing' so it can be watched - SPECTATE, nov4)
   const playing = createRoom(conn(), 'Host', true).room;
   joinRoom(playing.code, conn(), 'P1'); // need 2 to start word-bomb
   startGame(playing);
 
-  // public but finished (excluded - game !== null)
+  // public, game FINISHED (a finished game still joins like a lobby: listed as 'waiting')
   const finished = createRoom(conn(), 'Host', true).room;
   joinRoom(finished.code, conn(), 'P1');
   startGame(finished);
   finished.game.status = 'finished';
 
-  const list = listPublicRooms();
-  assert.equal(list.length, 1);
-  assert.equal(list[0].code, pub.code);
+  // an older client (no withLive) never sees a live game it could only fail to JOIN
+  assert.deepEqual(listPublicRooms().map((r) => r.code).sort(), [pub.code, finished.code].sort());
+
+  const list = listPublicRooms({ withLive: true });
+  const by = Object.fromEntries(list.map((r) => [r.code, r]));
+  assert.equal(list.length, 3, 'the private room and the full waiting room are not listed');
+  assert.equal(by[pub.code].status, 'waiting');
+  assert.equal(by[playing.code].status, 'playing');
+  assert.equal(by[playing.code].canSpectate, true);
+  assert.equal(by[finished.code].status, 'waiting');
+  assert.equal(by[full.code], undefined);
 });
 
 test('listPublicRooms entries expose only the display-safe summary', () => {
@@ -194,8 +202,9 @@ test('listPublicRooms entries expose only the display-safe summary', () => {
 
   const [entry] = listPublicRooms();
   assert.deepEqual(Object.keys(entry).sort(), [
-    'code', 'gameType', 'hostName', 'maxPlayers', 'playerCount', 'status',
+    'code', 'gameType', 'hostName', 'maxPlayers', 'playerCount', 'spectators', 'status',
   ]);
+  assert.equal(entry.spectators, 0);
   assert.equal(entry.hostName, 'Host');
   assert.equal(entry.code, pub.code);
   assert.equal(entry.playerCount, 2);

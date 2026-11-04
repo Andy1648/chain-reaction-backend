@@ -173,6 +173,9 @@ function createRoom(hostConnection, hostName, isPublic = false, opts = {}) {
     // { lobbyBots: true }), and only a PUBLIC room gets them.
     lobbyBots: !!(isPublic && opts.lobbyBots),
     lobbyBotTimer: null,
+    // SPECTATE (nov4): read-only watchers of a live public game. NOT players: never in game state, never mapped to the
+    // room for actions (server.js keeps them in their own map), they only receive the room's broadcasts.
+    spectators: [],
     difficultyKey: 'medium',
     gameType: 'word-bomb', // 'word-bomb' | 'category-blitz'
     // Activity timestamps for the idle reaper. createdAt is fixed; lastActivity
@@ -241,6 +244,55 @@ function getRoom(code) {
   return rooms.get(code);
 }
 
+// SPECTATE (nov4, Andy: "public rooms stay listed once a game starts, with SPECTATE"): the modes whose live game a
+// watcher can follow from the room's broadcasts + a snapshot; a room holds at most MAX_SPECTATORS watchers
+const SPECTATABLE = new Set(['word-bomb', 'category-blitz']);
+const MAX_SPECTATORS = 20;
+
+/** Watch a PUBLIC room's LIVE game, read-only. Returns { room } or { error }. */
+function spectateRoom(code, connection, name) {
+  const room = rooms.get(code);
+  if (!room) return { error: 'room_not_found' };
+  if (!room.isPublic) return { error: 'room_not_public' };
+  if (!isGameLive(room)) return { error: 'not_live' };
+  if (!SPECTATABLE.has(room.game.gameType)) return { error: 'spectate_unsupported' };
+  if (room.players.some((p) => p.id === connection.id)) return { error: 'already_playing' };
+  room.spectators = (room.spectators || []).filter((p) => p.id !== connection.id);
+  if (room.spectators.length >= MAX_SPECTATORS) return { error: 'spectators_full' };
+  room.spectators.push({ id: connection.id, name, connection });
+  logInfo('spectator_joined', { roomCode: code, playerId: connection.id });
+  return { room };
+}
+
+/** Stop watching (left, joined something else, disconnected). No-op if not watching. */
+function unspectate(room, connectionId) {
+  if (!room || !room.spectators) return;
+  room.spectators = room.spectators.filter((p) => p.id !== connectionId);
+}
+
+/** The frames that put a new watcher straight into the live game view: Word Bomb's turn, Blitz's current round. */
+function buildSpectateSnapshot(room) {
+  const { game } = room;
+  if (!game) return [];
+  if (game.gameType === 'word-bomb' && Array.isArray(game.turnOrder)) return [buildTurnUpdatePayload(room)];
+  if (game.gameType === 'category-blitz') {
+    const left = room.roundDeadline ? Math.max(0, Math.ceil((room.roundDeadline - Date.now()) / 1000)) : game.roundTimeSeconds;
+    return [{
+      type: 'round_start',
+      payload: {
+        round: game.currentRound,
+        totalRounds: game.rounds,
+        category: game.currentCategory,
+        ...categoryBlitzLogic.roundMeta(game.currentCategory),
+        timerSeconds: left,
+        rerollsRemaining: game.rerollsRemaining,
+        spectate: true, // mid-round: no round-1 countdown on the watcher's screen
+      },
+    }];
+  }
+  return [];
+}
+
 /**
  * Returns the list of joinable PUBLIC rooms for the lobby browser. A room is
  * listed only if it's public AND waiting (no game object yet) AND not full.
@@ -249,12 +301,16 @@ function getRoom(code) {
  * 'waiting' by construction; it's included so the client doesn't have to infer
  * it. No connections/internal fields leak - just the display-safe summary.
  */
-function listPublicRooms() {
+function listPublicRooms({ withLive = false } = {}) {
   const out = [];
   for (const room of rooms.values()) {
     if (!room.isPublic) continue;
-    if (room.game !== null) continue; // waiting only (excludes in-progress/finished)
-    if (room.players.length >= MAX_PLAYERS_PER_ROOM) continue; // not full
+    // SPECTATE (nov4): a room in a LIVE game stays listed as 'playing' (watchable, full or not); a waiting / finished
+    // room is listed only while a seat is free (a finished game still joins like a lobby)
+    // (only for a client that can WATCH - list_public_rooms { withLive: true }; an older one would offer JOIN on a live game)
+    const live = isGameLive(room);
+    if (live && !withLive) continue;
+    if (!live && room.players.length >= MAX_PLAYERS_PER_ROOM) continue; // not full
     // feat/public-rooms-host (menu OPEN ROOMS panel): the host's display name + equipped hero so a
     // row can say WHO is waiting. Both are already public in room_update; hostHero is omitted when
     // the host hasn't sent set_hero (the client falls back to the mode icon).
@@ -264,7 +320,9 @@ function listPublicRooms() {
       playerCount: room.players.length,
       maxPlayers: MAX_PLAYERS_PER_ROOM,
       gameType: room.gameType,
-      status: 'waiting',
+      status: live ? 'playing' : 'waiting',
+      spectators: (room.spectators || []).length,
+      ...(live ? { canSpectate: SPECTATABLE.has(room.game.gameType) && (room.spectators || []).length < MAX_SPECTATORS } : {}),
       hostName: host ? host.name : null,
       ...(host && host.hero ? { hostHero: host.hero } : {}),
     });
@@ -315,7 +373,7 @@ function quickPlay(connection, playerName, allowCreate, opts = {}) {
 
 function broadcastToRoom(room, message) {
   const payload = JSON.stringify(message);
-  room.players.forEach((p) => {
+  [...room.players, ...(room.spectators || [])].forEach((p) => {
     // Per-recipient try/catch: readyState can flip between the check and the
     // send (socket teardown race), and one bad socket must not abort the rest
     // of the room's broadcast — or, when called from a timer, crash the process.
@@ -1138,6 +1196,12 @@ function resetGame(room) {
 // is explicit and idempotent.)
 function destroyRoom(room) {
   lobbyBots.clearLobbyBotTimer(room);
+  // the watchers learn the room is gone (players left / reaped) instead of staring at a frozen game
+  if (room.spectators && room.spectators.length) {
+    const msg = JSON.stringify({ type: 'room_closed', payload: { code: room.code, reason: 'ended' } });
+    room.spectators.forEach((p) => { try { if (p.connection.readyState === 1) p.connection.send(msg); } catch { /* gone */ } });
+    room.spectators = [];
+  }
   clearTurnTimer(room);
   clearRoundTimer(room);
   clearCountdownTimeout(room);
@@ -1324,11 +1388,13 @@ function getRoomStats() {
     gamesInProgress: 0,
     players: 0,
     bots: 0,
+    spectators: 0,
     roomsByGameType: {},
   };
   for (const room of rooms.values()) {
     if (room.isPublic) stats.publicRooms += 1;
     if (room.game && room.game.status !== 'finished') stats.gamesInProgress += 1;
+    stats.spectators += (room.spectators || []).length;
     for (const p of room.players) {
       if (p.isBot) stats.bots += 1;
       else stats.players += 1;
@@ -1375,6 +1441,10 @@ module.exports = {
   joinRoom,
   getRoom,
   listPublicRooms,
+  spectateRoom,
+  unspectate,
+  buildSpectateSnapshot,
+  MAX_SPECTATORS,
   quickPlay,
   startGame,
   onLobbyGameTypeChange: (room) => { lobbyBots.onGameTypeChange(room); scheduleLobbyBots(room); },
