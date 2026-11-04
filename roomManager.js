@@ -840,8 +840,12 @@ function startGame(room, opts = {}) {
   clearRoundTimer(room);
 
   const logic = logicForGameType(room.gameType);
-  // CROSS-GAME MEMORY (nov4): the combos the room's last Word Bomb game showed — the next one skips them
-  const prevCombos = room.game && room.game.gameType === 'word-bomb' && room.game.usedCombos ? [...room.game.usedCombos] : null;
+  // CROSS-GAME MEMORY (nov4): what the room's last game of THIS mode showed — the next one skips it (Word Bomb combos,
+  // Category Blitz categories, MINER prompts)
+  const prev = room.game && room.game.gameType === room.gameType ? room.game : null;
+  const prevCombos = prev && prev.usedCombos ? [...prev.usedCombos] : null;
+  const prevCategories = prev && prev.usedCategories && !prev.dailyPlan ? [...prev.usedCategories] : null;
+  const prevPrompts = prev && prev.used instanceof Set ? [...prev.used] : null;
   room.game = logic.createGame(
     room.players.map((p) => ({ id: p.id, name: p.name })),
     room.difficultyKey,
@@ -854,6 +858,8 @@ function startGame(room, opts = {}) {
   // know which mode this in-progress game is, independent of the room.
   room.game.gameType = room.gameType;
   if (room.gameType === 'word-bomb' && prevCombos && typeof logic.applyRecentCombos === 'function') logic.applyRecentCombos(room.game, prevCombos);
+  if (room.gameType === 'category-blitz' && prevCategories && typeof logic.applyRecentCategories === 'function') logic.applyRecentCategories(room.game, prevCategories);
+  if (room.gameType === 'miner' && prevPrompts && room.game.used instanceof Set) for (const pr of prevPrompts) room.game.used.add(pr); // pickPrompt skips them (it resets the deck only once all 259 are used)
   touchRoom(room); // starting a game proves the room is alive
   logInfo('game_started', {
     roomCode: room.code,

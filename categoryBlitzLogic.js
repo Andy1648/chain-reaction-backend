@@ -1121,12 +1121,18 @@ function familyOf(name) {
   for (const [fam, re] of FAMILIES) if (re.test(name)) return fam;
   return null;
 }
-function pickRandomCategory(excludeSet, selectedPacks, rounds = TOTAL_ROUNDS) {
+function pickRandomCategory(excludeSet, selectedPacks, rounds = TOTAL_ROUNDS, recentSet = null) {
   const base = categoriesForPacks(selectedPacks, rounds);
   const fresh = (list) => (excludeSet ? list.filter((c) => !excludeSet.has(c)) : list);
   // Pack exhausted (rerolls on a small pack) → spill into the full pool before
   // ever repeating a category; only a fully-played pool repeats.
   let pool = fresh(base);
+  // CROSS-GAME MEMORY (nov4, Andy "they need more … variations"): skip what the room's LAST game played while the pack
+  // has anything else — never a reason to spill out of the host's packs (a 6-category pack rematch was 50% repeats)
+  if (recentSet && recentSet.size) {
+    const unplayed = pool.filter((c) => !recentSet.has(c));
+    if (unplayed.length) pool = unplayed;
+  }
   if (!pool.length && base !== CATEGORIES) pool = fresh(CATEGORIES);
   if (excludeSet && excludeSet.size) {
     const played = new Set([...excludeSet].map(familyOf).filter(Boolean));
@@ -1135,6 +1141,27 @@ function pickRandomCategory(excludeSet, selectedPacks, rounds = TOTAL_ROUNDS) {
   }
   const choices = pool.length ? pool : base;
   return pickWeightedByTier(choices) || choices[Math.floor(Math.random() * choices.length)];
+}
+
+/** The newest categories a room remembers from its last game. */
+const RECENT_CATEGORIES_CAP = 60;
+
+/**
+ * CROSS-GAME MEMORY (nov4): give a fresh game the categories the room's previous game played, so a rematch on the same
+ * packs doesn't replay them. Re-picks round 1 if it was one of them. A no-op for the Daily Challenge (its board is fixed
+ * for everyone) and for an empty / missing list. Call right after createGame, before the start broadcast.
+ */
+function applyRecentCategories(game, recent) {
+  if (!game || !recent || game.dailyPlan) return game;
+  const list = [...recent].slice(-RECENT_CATEGORIES_CAP);
+  if (!list.length) return game;
+  game.recentCategories = new Set(list);
+  if (game.recentCategories.has(game.currentCategory)) {
+    const first = pickRandomCategory(null, game.selectedPacks, game.rounds, game.recentCategories);
+    game.currentCategory = first;
+    game.usedCategories = new Set([first]);
+  }
+  return game;
 }
 
 /**
@@ -1428,7 +1455,7 @@ function startNextRound(game) {
   // non-repeating category.
   const category = game.dailyPlan
     ? game.dailyPlan[game.currentRound - 1]
-    : pickRandomCategory(game.usedCategories, game.selectedPacks, game.rounds);
+    : pickRandomCategory(game.usedCategories, game.selectedPacks, game.rounds, game.recentCategories || null);
   game.currentCategory = category;
   game.usedCategories.add(category);
   game.players.forEach((p) => {
@@ -1468,7 +1495,7 @@ function rerollCategory(game) {
     p.answers = [];
     p.answerJudgements = [];
   });
-  const category = pickRandomCategory(game.usedCategories, game.selectedPacks, game.rounds);
+  const category = pickRandomCategory(game.usedCategories, game.selectedPacks, game.rounds, game.recentCategories || null);
   game.currentCategory = category;
   game.usedCategories.add(category);
   game.rerollsRemaining -= 1;
@@ -1492,6 +1519,8 @@ function getScoreboard(game) {
 }
 
 module.exports = {
+  applyRecentCategories,
+  RECENT_CATEGORIES_CAP,
   CATEGORIES,
   topNFor,
   roundMeta,
