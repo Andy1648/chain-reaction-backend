@@ -1113,6 +1113,15 @@ const FAMILIES = [
   ['grandma', /^Things at (grandma's house|a nursing home)$/i],
   ['crash-broken', /^Things that (crash|are always broken)$/i],
   ['expire-rot', /^(Things that expire|Foods that go bad fast)$/i],
+  // nov6 more-prompts batch: same rule
+  ['phone-files', /^(Things you can (download|delete)|Apps on your phone)$/i],
+  ['in-a-game', /^Things (in a video game|that kill you in a video game)$/i],
+  ['board-games', /^(Classic board games|Things at a game night)$/i],
+  ['pop-star', /^Things (a rapper would brag about|in a music video)$/i],
+  ['disney', /^(Disney villains|Things in a Disney movie)$/i],
+  ['pool-water', /^Things (at a water park|in a public pool)$/i],
+  ['ocean', /^(Sea creatures|Things at the bottom of the ocean)$/i],
+  ['snack-stop', /^Things (in a vending machine|you'd find at a gas station)$/i],
 ];
 // ONE NOT PROMPT PER GAME (Andy oct19: the any-noun prompts "are too lenient and occur too much" — measured: ~1 round in
 // 4 with every pack on): every NOT list is one family, so after a game deals one, the rest of it deals none.

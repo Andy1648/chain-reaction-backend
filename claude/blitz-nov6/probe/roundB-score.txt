@@ -1,0 +1,49 @@
+ 83% accepted  Things in a pop star's dressing room (48 guesses, misses/player avg 2.0 max 3)
+      misses: clothes | food | wardrobe rack | sequins | lozenges | stanley cup | glam squad | fruit basket
+ 83% accepted  Things that make you rage quit (48 guesses, misses/player avg 2.0 max 3)
+      misses: bad controller | getting killed | unskilled teammates | impossible boss | connection error | stream snipers | kids | tetris
+ 83% accepted  Things in a Roblox game (48 guesses, misses/player avg 2.0 max 4)
+      misses: developer | npc | badges | admin abuse | characters | houses | kids | obstacles
+ 88% accepted  Things at a cult meeting (48 guesses, misses/player avg 1.5 max 2)
+      misses: people | weird guy | charismatic leader | manifesto | coffee | bible
+ 90% accepted  Things in a music video (48 guesses, misses/player avg 1.3 max 3)
+      misses: set | extras | storyline | baddies | fits
+ 90% accepted  Foods that make a mess (48 guesses, misses/player avg 1.3 max 4)
+      misses: birria | boba | powdered sugar | crumbl | juice
+ 92% accepted  Things a rapper would brag about (48 guesses, misses/player avg 1.0 max 2)
+      misses: wealth | reputation | bitches | rollie
+ 92% accepted  Things at the Olympics (48 guesses, misses/player avg 1.0 max 2)
+      misses: village | cauldron | pommel horse guy | pin guy
+ 92% accepted  Things on a school Chromebook (48 guesses, misses/player avg 1.0 max 3)
+      misses: cool math | email | apps | browser
+ 94% accepted  Things in a YouTube video (48 guesses, misses/player avg 0.8 max 1)
+      misses: narrator | smash that like | person talking
+ 94% accepted  Things in an action movie (48 guesses, misses/player avg 0.8 max 2)
+      misses: protagonist | gunfight | aura
+ 94% accepted  Things in a Disney movie (48 guesses, misses/player avg 0.8 max 1)
+      misses: witch | enchanted castle | mickey ears
+ 96% accepted  Things you can delete (48 guesses, misses/player avg 0.5 max 1)
+      misses: applications | ex photos
+ 96% accepted  Things that kill you in a video game (48 guesses, misses/player avg 0.5 max 1)
+      misses: spike trap | turtles
+ 96% accepted  Things at a game night (48 guesses, misses/player avg 0.5 max 1)
+      misses: tiktok | trivial pursuit
+ 96% accepted  Things in a public pool (48 guesses, misses/player avg 0.5 max 1)
+      misses: kickboard | fat guy
+ 96% accepted  Things in a vending machine (48 guesses, misses/player avg 0.5 max 1)
+      misses: sour patch | mints
+ 98% accepted  Things in a school band room (48 guesses, misses/player avg 0.3 max 1)
+      misses: conductor baton
+ 98% accepted  Things at a bowling alley (48 guesses, misses/player avg 0.3 max 1)
+      misses: cosmic lights
+ 98% accepted  Things at a skate park (48 guesses, misses/player avg 0.3 max 1)
+      misses: boards
+ 98% accepted  Things at a wrestling match (48 guesses, misses/player avg 0.3 max 1)
+      misses: ticket
+ 98% accepted  Things in a high school movie (48 guesses, misses/player avg 0.3 max 1)
+      misses: 23 year olds
+ 98% accepted  Things at the bottom of the ocean (48 guesses, misses/player avg 0.3 max 1)
+      misses: sediment
+100% accepted  Things you can download (48 guesses, misses/player avg 0.0 max 0)
+
+TOTAL 1152 guesses, 77 misses — 93.3% accepted

@@ -1,0 +1,146 @@
+{
+  "Things in a school band room": [
+    { "player": "sporty12", "guesses": ["drums", "trumpet", "flute", "chairs", "music stands", "piano", "tuba", "clarinet", "saxophone", "teacher", "sheet music", "trombone"] },
+    { "player": "bookish15", "guesses": ["music stand", "sheet music", "clarinet", "oboe", "timpani", "metronome", "conductor baton", "bassoon", "french horn", "valve oil", "reeds", "podium"] },
+    { "player": "tiktok13", "guesses": ["trumpet", "drums", "sax", "instrument lockers", "flute", "spit valve", "band kids", "tuba", "cases", "xylophone", "reed", "mouthpiece"] },
+    { "player": "parent40", "guesses": ["instruments", "music stands", "chairs", "piano", "drums", "trumpets", "sheet music", "whiteboard", "lockers", "tuner", "flutes", "conductor"] }
+  ],
+  "Things in a music video": [
+    { "player": "sporty12", "guesses": ["singer", "dancers", "cars", "camera", "lights", "guitar", "microphone", "money", "backup dancers", "drums", "band", "explosions"] },
+    { "player": "bookish15", "guesses": ["choreography", "backup dancers", "director", "lip syncing", "costumes", "fog machine", "lighting", "set", "love interest", "slow motion", "extras", "storyline"] },
+    { "player": "tiktok13", "guesses": ["baddies", "lambo", "dancers", "cameo", "chains", "autotune", "rapper", "fits", "drip", "rain", "models", "smoke"] },
+    { "player": "parent40", "guesses": ["singer", "dancers", "band", "guitars", "costumes", "cars", "lights", "makeup", "camera", "microphone", "models", "smoke machine"] }
+  ],
+  "Things a rapper would brag about": [
+    { "player": "sporty12", "guesses": ["money", "cars", "chains", "shoes", "mansion", "girls", "gold", "watch", "jewelry", "fame", "diamonds", "cash"] },
+    { "player": "bookish15", "guesses": ["wealth", "diamonds", "lyrics", "rolex", "platinum records", "grammys", "mansion", "yacht", "private jet", "bars", "reputation", "street cred"] },
+    { "player": "tiktok13", "guesses": ["drip", "bands", "racks", "ice", "chains", "lambo", "opps", "benz", "bitches", "rollie", "whips", "designer"] },
+    { "player": "parent40", "guesses": ["money", "cars", "jewelry", "houses", "gold chains", "women", "watches", "clothes", "fame", "boats", "albums", "awards"] }
+  ],
+  "Things in a pop star's dressing room": [
+    { "player": "sporty12", "guesses": ["mirror", "clothes", "makeup", "couch", "food", "flowers", "water", "shoes", "lights", "dresses", "snacks", "wigs"] },
+    { "player": "bookish15", "guesses": ["vanity mirror", "wardrobe rack", "hairspray", "wigs", "bouquets", "costumes", "assistant", "fan mail", "sequins", "lozenges", "tea", "setlist"] },
+    { "player": "tiktok13", "guesses": ["ring light", "wigs", "makeup", "stanley cup", "glam squad", "lashes", "outfits", "phone", "red bull", "extensions", "fan letters", "lip gloss"] },
+    { "player": "parent40", "guesses": ["mirror", "makeup", "flowers", "costumes", "couch", "fruit basket", "hairbrush", "water bottles", "hair spray", "clothes rack", "chocolates", "robe"] }
+  ],
+  "Things at a bowling alley": [
+    { "player": "sporty12", "guesses": ["bowling ball", "pins", "shoes", "lane", "gutter", "pizza", "scoreboard", "bumpers", "nachos", "arcade", "soda", "ball return"] },
+    { "player": "bookish15", "guesses": ["pins", "lanes", "rental shoes", "gutter", "scoreboard", "ball return", "foul line", "pinsetter", "shoe spray", "hand dryer", "snack bar", "league"] },
+    { "player": "tiktok13", "guesses": ["bowling balls", "pins", "ugly shoes", "bumpers", "claw machine", "arcade", "fries", "strike", "cosmic lights", "slushie", "gutter", "turkey"] },
+    { "player": "parent40", "guesses": ["balls", "pins", "shoes", "lanes", "scoreboard", "bar", "beer", "pizza", "bumpers", "socks", "arcade games", "ramp"] }
+  ],
+  "Things at a skate park": [
+    { "player": "sporty12", "guesses": ["skateboard", "ramp", "helmet", "rails", "scooter", "bike", "half pipe", "kids", "knee pads", "stairs", "bench", "concrete"] },
+    { "player": "bookish15", "guesses": ["half pipe", "quarter pipe", "grind rail", "skateboards", "bowl", "graffiti", "helmets", "elbow pads", "ledge", "bmx", "wax", "funbox"] },
+    { "player": "tiktok13", "guesses": ["skater boys", "scooter kids", "ramps", "vans", "graffiti", "rails", "bmx", "vape", "boards", "bowl", "speaker", "broken arm"] },
+    { "player": "parent40", "guesses": ["skateboards", "ramps", "helmets", "teenagers", "scooters", "pads", "graffiti", "rails", "bikes", "benches", "water fountain", "fence"] }
+  ],
+  "Things at a wrestling match": [
+    { "player": "sporty12", "guesses": ["ring", "ropes", "referee", "belt", "wrestlers", "chair", "fans", "bell", "mat", "singlet", "ticket", "crowd"] },
+    { "player": "bookish15", "guesses": ["referee", "turnbuckle", "championship belt", "singlet", "ring announcer", "folding chair", "mat", "ropes", "spandex", "headgear", "commentators", "bell"] },
+    { "player": "tiktok13", "guesses": ["john cena", "ring", "steel chair", "belt", "ref", "roman reigns", "ropes", "signs", "masks", "table", "cena", "fans"] },
+    { "player": "parent40", "guesses": ["ring", "referee", "crowd", "wrestlers", "ropes", "popcorn", "belt", "chairs", "hot dogs", "bell", "masks", "announcer"] }
+  ],
+  "Things at the Olympics": [
+    { "player": "sporty12", "guesses": ["medals", "torch", "athletes", "flags", "gold medal", "track", "swimming", "gymnastics", "stadium", "rings", "pool", "runners"] },
+    { "player": "bookish15", "guesses": ["olympic torch", "podium", "gold medal", "national anthem", "opening ceremony", "athletes", "javelin", "flags", "discus", "pole vault", "village", "cauldron"] },
+    { "player": "tiktok13", "guesses": ["simone biles", "medals", "pommel horse guy", "flags", "torch", "pin guy", "breakdancing", "muffins", "podium", "track", "swimmers", "rings"] },
+    { "player": "parent40", "guesses": ["medals", "torch", "flags", "athletes", "stadium", "swimmers", "gymnasts", "rings", "podium", "fans", "judges", "national anthem"] }
+  ],
+  "Things you can download": [
+    { "player": "sporty12", "guesses": ["games", "apps", "music", "movies", "pictures", "roblox", "fortnite", "videos", "songs", "files", "minecraft", "photos"] },
+    { "player": "bookish15", "guesses": ["pdf", "ebook", "apps", "software", "podcasts", "files", "music", "audiobook", "fonts", "updates", "movies", "documents"] },
+    { "player": "tiktok13", "guesses": ["tiktok", "apps", "capcut", "games", "roblox", "spotify", "discord", "virus", "vpn", "wallpaper", "mods", "ram"] },
+    { "player": "parent40", "guesses": ["apps", "music", "movies", "photos", "files", "pdf", "software", "updates", "games", "podcast", "documents", "books"] }
+  ],
+  "Things you can delete": [
+    { "player": "sporty12", "guesses": ["apps", "photos", "games", "texts", "messages", "videos", "files", "pictures", "emails", "words", "account", "contacts"] },
+    { "player": "bookish15", "guesses": ["files", "emails", "browser history", "photos", "documents", "folders", "drafts", "contacts", "text messages", "applications", "paragraph", "cookies"] },
+    { "player": "tiktok13", "guesses": ["tiktok", "instagram", "snapchat", "search history", "texts", "ex photos", "account", "comments", "apps", "system32", "posts", "streak"] },
+    { "player": "parent40", "guesses": ["emails", "photos", "apps", "files", "voicemail", "text messages", "contacts", "documents", "history", "videos", "spam", "programs"] }
+  ],
+  "Things on a school Chromebook": [
+    { "player": "sporty12", "guesses": ["google", "keyboard", "games", "screen", "docs", "stickers", "classroom", "chrome", "trackpad", "camera", "gmail", "charger"] },
+    { "player": "bookish15", "guesses": ["google docs", "google classroom", "goguardian", "keyboard", "trackpad", "slides", "asset tag", "webcam", "drive", "bookmarks", "kahoot", "blocked sites"] },
+    { "player": "tiktok13", "guesses": ["goguardian", "blocked sites", "cool math", "unblocked games", "stickers", "missing keys", "ixl", "lightspeed", "kahoot", "blooket", "gimkit", "cracked screen"] },
+    { "player": "parent40", "guesses": ["google docs", "keyboard", "email", "homework", "gmail", "screen", "camera", "school logo", "charger port", "calendar", "apps", "browser"] }
+  ],
+  "Things in a YouTube video": [
+    { "player": "sporty12", "guesses": ["ads", "youtuber", "likes", "comments", "subscribe button", "music", "thumbnail", "title", "views", "intro", "mrbeast", "camera"] },
+    { "player": "bookish15", "guesses": ["sponsor", "thumbnail", "intro", "outro", "description", "subtitles", "advertisement", "like button", "timestamp", "comments", "narrator", "chapters"] },
+    { "player": "tiktok13", "guesses": ["sponsor", "raid shadow legends", "ads", "mrbeast", "skibidi", "smash that like", "merch", "nordvpn", "clickbait", "intro", "jump cuts", "memes"] },
+    { "player": "parent40", "guesses": ["ads", "commercials", "comments", "music", "subscribe", "person talking", "views", "cats", "tutorial", "captions", "likes", "description"] }
+  ],
+  "Things that kill you in a video game": [
+    { "player": "sporty12", "guesses": ["zombies", "lava", "boss", "guns", "creeper", "spikes", "falling", "bombs", "monsters", "enemies", "sword", "fire"] },
+    { "player": "bookish15", "guesses": ["fall damage", "lava", "final boss", "spike trap", "poison", "enemy", "dragon", "drowning", "headshot", "sniper", "goomba", "landmine"] },
+    { "player": "tiktok13", "guesses": ["creeper", "campers", "lag", "storm", "sweat", "lava", "void", "fall damage", "sniper", "hacker", "warden", "aimbot"] },
+    { "player": "parent40", "guesses": ["monsters", "bad guys", "zombies", "lava", "pits", "guns", "bombs", "fire", "turtles", "ghosts", "aliens", "water"] }
+  ],
+  "Things that make you rage quit": [
+    { "player": "sporty12", "guesses": ["losing", "lag", "cheaters", "bad teammates", "wifi", "dying", "boss", "hackers", "campers", "bad controller", "little kids", "getting killed"] },
+    { "player": "bookish15", "guesses": ["lag", "unskilled teammates", "impossible boss", "cheaters", "glitches", "lost progress", "connection error", "camping", "matchmaking", "checkpoint", "bugs", "trolls"] },
+    { "player": "tiktok13", "guesses": ["lag", "sweats", "hackers", "teammates", "ping", "campers", "noobs", "stream snipers", "toxic chat", "obby", "aimbot", "bots"] },
+    { "player": "parent40", "guesses": ["losing", "bad internet", "cheaters", "kids", "game crash", "hard levels", "wifi", "bad wifi", "low battery", "controller", "tetris", "monopoly"] }
+  ],
+  "Things in a Roblox game": [
+    { "player": "sporty12", "guesses": ["robux", "avatars", "obby", "noobs", "pets", "swords", "blocks", "coins", "levels", "cars", "guns", "brainrot"] },
+    { "player": "bookish15", "guesses": ["robux", "avatar", "gamepass", "obby", "leaderboard", "checkpoints", "chat", "tycoon", "developer", "npc", "dominus", "badges"] },
+    { "player": "tiktok13", "guesses": ["robux", "brainrot", "grow a garden", "steal a brainrot", "noob", "bacon hair", "oof", "gamepass", "adopt me", "blox fruits", "obby", "admin abuse"] },
+    { "player": "parent40", "guesses": ["blocks", "avatars", "robux", "characters", "coins", "pets", "houses", "kids", "levels", "ads", "chat", "obstacles"] }
+  ],
+  "Things at a game night": [
+    { "player": "sporty12", "guesses": ["monopoly", "cards", "snacks", "uno", "dice", "pizza", "chips", "board games", "soda", "friends", "candy", "jenga"] },
+    { "player": "bookish15", "guesses": ["scrabble", "catan", "board games", "dice", "charades", "playing cards", "pictionary", "clue", "codenames", "snacks", "scorecard", "chess"] },
+    { "player": "tiktok13", "guesses": ["uno", "monopoly", "jackbox", "mario kart", "snacks", "cards against humanity", "jenga", "smash bros", "pizza", "exploding kittens", "tiktok", "drama"] },
+    { "player": "parent40", "guesses": ["board games", "cards", "snacks", "wine", "monopoly", "scrabble", "pizza", "dice", "chips", "family", "trivial pursuit", "friends"] }
+  ],
+  "Things in an action movie": [
+    { "player": "sporty12", "guesses": ["explosions", "guns", "car chase", "bad guy", "hero", "fights", "cars", "bombs", "helicopter", "punches", "knives", "swords"] },
+    { "player": "bookish15", "guesses": ["explosion", "villain", "protagonist", "car chase", "henchmen", "stuntman", "one liners", "gunfight", "helicopter", "sidekick", "hostage", "double agent"] },
+    { "player": "tiktok13", "guesses": ["explosions", "the rock", "tom cruise", "guns", "car chase", "john wick", "villain", "fast cars", "vin diesel", "stunts", "bullets", "aura"] },
+    { "player": "parent40", "guesses": ["explosions", "car chases", "guns", "villain", "hero", "fight scene", "stunts", "helicopters", "bruce willis", "bombs", "bad guys", "motorcycle"] }
+  ],
+  "Things in a Disney movie": [
+    { "player": "sporty12", "guesses": ["princess", "songs", "prince", "villain", "castle", "magic", "animals", "dead parents", "mickey", "talking animals", "sidekick", "witch"] },
+    { "player": "bookish15", "guesses": ["orphan", "princess", "evil stepmother", "musical number", "sidekick", "villain", "fairy godmother", "true love's kiss", "curse", "enchanted castle", "talking animal", "spell"] },
+    { "player": "tiktok13", "guesses": ["dead parents", "princess", "villain song", "elsa", "stitch", "simba", "olaf", "moana", "castle", "plot twist", "sidekick", "mickey ears"] },
+    { "player": "parent40", "guesses": ["princesses", "songs", "castles", "animals", "villains", "magic", "dead parents", "prince", "fairy", "happy ending", "talking animals", "evil queen"] }
+  ],
+  "Things in a high school movie": [
+    { "player": "sporty12", "guesses": ["lockers", "jocks", "cheerleaders", "prom", "bullies", "football", "teacher", "nerds", "cafeteria", "principal", "school bus", "homework"] },
+    { "player": "bookish15", "guesses": ["prom", "lockers", "queen bee", "jock", "cafeteria", "nerd", "detention", "makeover", "cliques", "yearbook", "valedictorian", "new kid"] },
+    { "player": "tiktok13", "guesses": ["mean girls", "prom", "jocks", "cheer captain", "love triangle", "23 year olds", "lockers", "bully", "house party", "makeover", "nerd", "detention"] },
+    { "player": "parent40", "guesses": ["prom", "lockers", "cheerleaders", "jocks", "cafeteria", "football", "dance", "principal", "teachers", "nerds", "house party", "yearbook"] }
+  ],
+  "Things in a public pool": [
+    { "player": "sporty12", "guesses": ["water", "kids", "lifeguard", "diving board", "pee", "slide", "goggles", "floaties", "chlorine", "noodles", "towels", "band aids"] },
+    { "player": "bookish15", "guesses": ["chlorine", "lifeguard", "lane rope", "diving board", "urine", "band aid", "goggles", "hair", "deep end", "kickboard", "sunscreen", "drain"] },
+    { "player": "tiktok13", "guesses": ["pee", "band aids", "hair", "lifeguard", "floaties", "germs", "little kids", "chlorine", "fat guy", "speedo", "poop", "noodles"] },
+    { "player": "parent40", "guesses": ["chlorine", "lifeguard", "kids", "pee", "floaties", "diving board", "band aids", "towels", "sunscreen", "noodles", "ladder", "shallow end"] }
+  ],
+  "Things at a cult meeting": [
+    { "player": "sporty12", "guesses": ["robes", "candles", "leader", "people", "chanting", "kool aid", "chairs", "circle", "hoods", "weird guy", "book", "knife"] },
+    { "player": "bookish15", "guesses": ["charismatic leader", "robes", "chanting", "kool aid", "sacrifice", "altar", "candles", "manifesto", "incense", "followers", "ritual", "pamphlets"] },
+    { "player": "tiktok13", "guesses": ["kool aid", "robes", "chanting", "candles", "leader", "goat", "brainwashing", "sacrifice", "hoods", "pentagram", "swifties", "matching outfits"] },
+    { "player": "parent40", "guesses": ["candles", "leader", "robes", "kool aid", "followers", "chanting", "chairs", "pamphlets", "donation box", "coffee", "bible", "snacks"] }
+  ],
+  "Things in a vending machine": [
+    { "player": "sporty12", "guesses": ["chips", "candy", "soda", "water", "snickers", "doritos", "gatorade", "cookies", "gum", "pretzels", "coke", "skittles"] },
+    { "player": "bookish15", "guesses": ["chips", "candy bars", "soda", "granola bar", "coin slot", "pretzels", "trail mix", "bottled water", "pop tarts", "cheez its", "peanuts", "dollar slot"] },
+    { "player": "tiktok13", "guesses": ["hot cheetos", "takis", "doritos", "prime", "skittles", "sprite", "stuck chips", "kitkat", "reeses", "celsius", "water", "sour patch"] },
+    { "player": "parent40", "guesses": ["chips", "candy", "soda", "gum", "crackers", "water", "coffee", "peanuts", "cookies", "granola bars", "mints", "pretzels"] }
+  ],
+  "Foods that make a mess": [
+    { "player": "sporty12", "guesses": ["spaghetti", "tacos", "ribs", "pizza", "burgers", "ice cream", "wings", "sloppy joe", "soup", "watermelon", "cheetos", "chili"] },
+    { "player": "bookish15", "guesses": ["sloppy joes", "spaghetti", "barbecue ribs", "powdered donuts", "tacos", "pomegranate", "lobster", "buffalo wings", "mango", "soup", "gravy", "fondue"] },
+    { "player": "tiktok13", "guesses": ["hot cheetos", "tacos", "wings", "spaghetti", "birria", "ramen", "ice cream", "burrito", "boba", "sloppy joe", "powdered sugar", "crumbl"] },
+    { "player": "parent40", "guesses": ["spaghetti", "sloppy joes", "tacos", "ice cream", "ribs", "popsicle", "soup", "yogurt", "corn on the cob", "peanut butter", "juice", "watermelon"] }
+  ],
+  "Things at the bottom of the ocean": [
+    { "player": "sporty12", "guesses": ["fish", "shipwreck", "sharks", "titanic", "coral", "treasure", "crabs", "rocks", "sand", "octopus", "whale", "starfish"] },
+    { "player": "bookish15", "guesses": ["anglerfish", "shipwreck", "hydrothermal vent", "titanic", "sediment", "mariana trench", "giant squid", "plankton", "coral", "submarine", "sea cucumber", "kraken"] },
+    { "player": "tiktok13", "guesses": ["titanic", "spongebob", "megalodon", "anglerfish", "titan sub", "bikini bottom", "trash", "atlantis", "kraken", "bloop", "shipwreck", "plastic"] },
+    { "player": "parent40", "guesses": ["shipwrecks", "fish", "sand", "titanic", "coral", "treasure chest", "crabs", "seaweed", "rocks", "submarine", "clams", "trash"] }
+  ]
+}
