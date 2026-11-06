@@ -156,6 +156,15 @@ const COMBOS = [
   'pac', 'clo', 'cro', 'gan', 'dem', 'rig', 'hon', 'mod', 'spa', 'sea', 'mai', 'tem', 'leg', 'ket', 'oke', 'eng', 'def',
   'roo', 'bel', 'ape', 'nom', 'org', 'pet', 'coo', 'fra', 'dra', 'rod', 'gro', 'pho', 'roc', 'tee', 'lim', 'bal', 'cap',
   'bor', 'thi', 'off', 'mag', 'bar', 'rus', 'eak', 'fre', 'cli', 'hoo', 'uth', 'til', 'pas', 'vol',
+  // ---- content-expand batch 6 (Andy nov6 "more combos"): every one sits in >= 30 of botWords.txt (batch 5's floor) AND in
+  // >= 10 of the 5,000 most common words, which screens out web jargon (tl: little/title, wh: what/when, ok: book/look,
+  // ean: mean/clean/ocean). The pool-size weighting files the thinner ones as late-game, as before ----
+  'tl', 'ht', 'gs', 'ak', 'nf', 'go', 'ms', 'nv', 'rv', 'ok', 'ys', 'gn', 'bs', 'eb', 'ey', 'of', 'rl', 'hr', 'eo',
+  'tc', 'rp', 'wh', 'cs', 'dl', 'eq', 'wn', 'hy', 'dy', 'je', 'ws', 'dg', 'xt', 'yi', 'rf', 'xe', 'dv', 'nl', 'xc',
+  'lv', 'ik', 'oe', 'ja', 'ix',
+  'usi', 'ema', 'ved', 'ode', 'ues', 'cks', 'evi', 'rov', 'arg', 'pon', 'eni', 'asi', 'nch', 'ffi', 'rce', 'ory',
+  'mpo', 'ean', 'uit', 'ept', 'cts', 'rne', 'ima', 'exc', 'lls', 'ena', 'oth', 'oca', 'ela', 'egi', 'ega', 'ume',
+  'rts', 'atu', 'oss', 'rds', 'efe', 'rde', 'ece', 'ays', 'rth', 'cus', 'rro',
 ];
 
 // ---- Escalating combo difficulty ----
