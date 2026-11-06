@@ -1,0 +1,146 @@
+{
+  "Things in a school band room": [
+    { "player": "kid11", "guesses": ["drums", "flute", "trumpit", "music stand", "chairs", "clarinet", "piano", "sheet music", "teacher", "tuba", "recorder", "saxaphone"] },
+    { "player": "gamer13", "guesses": ["drum kit", "trombone", "tuba", "spit valve", "sax", "stands", "metronome", "lockers", "baton", "cymbals", "that one kid", "reeds"] },
+    { "player": "class-clown14", "guesses": ["spit", "broken dreams", "crying trombone", "lost recorder", "mouth germs", "tuba kid", "valve oil", "bad notes", "angry teacher", "dead reed", "hearing damage", "triangle"] },
+    { "player": "average16", "guesses": ["instruments", "music stands", "conductor", "podium", "sheet music", "drums", "xylophone", "french horn", "lockers", "tuner", "folders", "uniforms"] }
+  ],
+  "Things in a music video": [
+    { "player": "kid11", "guesses": ["singer", "dancers", "lights", "cars", "music", "guitar", "microfone", "costumes", "fire", "smoke", "money", "dogs"] },
+    { "player": "gamer13", "guesses": ["rapper", "green screen", "lambo", "drip", "backup dancers", "explosions", "autotune", "chains", "cgi", "camera", "drones", "fog machine"] },
+    { "player": "class-clown14", "guesses": ["random models", "rented lambo", "fake money", "slow motion", "sad rain", "pointless plot", "girlfriend", "fake tears", "burning car", "guy in hoodie", "weird horse", "lip syncing"] },
+    { "player": "average16", "guesses": ["dancers", "singer", "band", "cars", "choreography", "outfits", "lights", "camera", "models", "smoke", "rain", "director"] }
+  ],
+  "Things a rapper would brag about": [
+    { "player": "kid11", "guesses": ["money", "cars", "gold chains", "big house", "shoes", "girls", "diamonds", "jewlery", "mansion", "fame", "watches", "cash"] },
+    { "player": "gamer13", "guesses": ["drip", "rolex", "bands", "lambo", "ice", "grills", "racks", "bugatti", "opps", "plaques", "private jet", "clout"] },
+    { "player": "class-clown14", "guesses": ["his mom", "credit score", "tax evasion", "ankle monitor", "fake watch", "rented car", "court dates", "lawsuit", "child support", "his ego", "criminal record", "unpaid bills"] },
+    { "player": "average16", "guesses": ["money", "cars", "jewelry", "women", "chains", "fame", "grammys", "mansion", "watches", "record sales", "designer clothes", "street cred"] }
+  ],
+  "Things in a pop star's dressing room": [
+    { "player": "kid11", "guesses": ["makeup", "mirror", "dresses", "flowers", "snacks", "shoes", "lights", "couch", "water", "wigs", "candy", "hairspray"] },
+    { "player": "gamer13", "guesses": ["wig", "lights mirror", "green m&ms", "bodyguard", "energy drinks", "stylist", "in ear monitors", "outfits", "fruit platter", "autotune", "fan mail", "microphone"] },
+    { "player": "class-clown14", "guesses": ["autotune machine", "fake smile", "lip sync track", "tiny dog", "crying assistant", "bodyguard", "fake abs", "nda", "lawyers", "ego", "oxygen tank", "exes list"] },
+    { "player": "average16", "guesses": ["makeup", "mirror", "costumes", "flowers", "wardrobe", "hair stylist", "water bottles", "couch", "assistant", "perfume", "wigs", "heels"] }
+  ],
+  "Things at a bowling alley": [
+    { "player": "kid11", "guesses": ["bowling balls", "pins", "shoes", "lanes", "nachos", "bumpers", "pizza", "arcade", "gutter", "claw machine", "slushy", "fries"] },
+    { "player": "gamer13", "guesses": ["strike", "spare", "gutter ball", "arcade", "ball return", "scoreboard", "rental shoes", "pin setter", "ramp", "nachos", "foul line", "turkey"] },
+    { "player": "class-clown14", "guesses": ["foot fungus", "sweaty shoes", "gutter", "old guys", "birthday kid", "crying child", "stale nachos", "toe germs", "ramp kid", "dropped ball", "broken toe", "bad pizza"] },
+    { "player": "average16", "guesses": ["balls", "pins", "lanes", "rental shoes", "scoreboard", "gutters", "snack bar", "bumpers", "arcade games", "pitchers", "ball polisher", "lockers"] }
+  ],
+  "Things at a skate park": [
+    { "player": "kid11", "guesses": ["skateboards", "ramps", "scooters", "helmets", "bikes", "rails", "kids", "knee pads", "half pipe", "bumps", "stairs", "grafitti"] },
+    { "player": "gamer13", "guesses": ["half pipe", "grind rail", "kickflip", "bowl", "quarter pipe", "scooter kid", "skateboard", "bmx", "ollie", "funbox", "tony hawk", "grip tape"] },
+    { "player": "class-clown14", "guesses": ["broken bones", "scooter kids", "vape", "missing teeth", "ambulance", "graffiti", "bad haircuts", "concussions", "high schoolers", "no helmet", "road rash", "dropouts"] },
+    { "player": "average16", "guesses": ["skateboards", "ramps", "rails", "helmets", "graffiti", "scooters", "half pipe", "bowl", "pads", "bmx bikes", "benches", "stairs"] }
+  ],
+  "Things at a wrestling match": [
+    { "player": "kid11", "guesses": ["ring", "wrestlers", "ropes", "belt", "chairs", "ref", "crowd", "mask", "championship", "popcorn", "bell", "john cena"] },
+    { "player": "gamer13", "guesses": ["steel chair", "john cena", "ring", "title belt", "referee", "turnbuckle", "ropes", "the rock", "suplex", "folding table", "bell", "body slam"] },
+    { "player": "class-clown14", "guesses": ["steel chair", "fake blood", "baby oil", "tiny shorts", "fake punches", "sweat", "armpits", "headlock", "ladder", "broken table", "ring girl", "screaming dads"] },
+    { "player": "average16", "guesses": ["ring", "referee", "wrestlers", "singlets", "mats", "crowd", "championship belt", "announcer", "headgear", "chairs", "bell", "ropes"] }
+  ],
+  "Things at the Olympics": [
+    { "player": "kid11", "guesses": ["medals", "athletes", "torch", "flags", "swimming", "gold medal", "running", "gymnasts", "rings", "track", "pool", "skiing"] },
+    { "player": "gamer13", "guesses": ["gold medal", "torch", "usain bolt", "michael phelps", "podium", "javelin", "breakdancing", "flags", "pole vault", "steroids", "olympic rings", "drug test"] },
+    { "player": "class-clown14", "guesses": ["steroids", "drug tests", "cardboard beds", "bad judges", "crying gymnast", "fencing", "bribes", "dirty river", "russia", "speedo", "old guy shooter", "torch"] },
+    { "player": "average16", "guesses": ["athletes", "medals", "torch", "gymnastics", "swimming", "track", "flags", "stadium", "national anthem", "judges", "podium", "opening ceremony"] }
+  ],
+  "Things you can download": [
+    { "player": "kid11", "guesses": ["apps", "games", "music", "movies", "pictures", "roblox", "minecraft", "videos", "tiktok", "fortnite", "songs", "wallpapers"] },
+    { "player": "gamer13", "guesses": ["steam", "mods", "dlc", "roblox", "minecraft", "discord", "texture packs", "patches", "fortnite", "drivers", "skins", "ram"] },
+    { "player": "class-clown14", "guesses": ["viruses", "more ram", "malware", "a car", "bad decisions", "trojan", "free robux", "my brain", "homework answers", "spyware", "pirated movies", "regret"] },
+    { "player": "average16", "guesses": ["apps", "music", "pdf", "games", "movies", "files", "photos", "software", "podcasts", "spotify", "updates", "zip file"] }
+  ],
+  "Things you can delete": [
+    { "player": "kid11", "guesses": ["photos", "apps", "games", "pictures", "texts", "videos", "files", "emails", "words", "tiktok", "contacts", "letters"] },
+    { "player": "gamer13", "guesses": ["system32", "save file", "fortnite", "roblox", "browser history", "account", "discord", "cookies", "steam", "world", "cache", "minecraft world"] },
+    { "player": "class-clown14", "guesses": ["browser history", "system32", "my grades", "evidence", "my ex", "homework", "bad texts", "my life", "snapchat", "instagram", "teacher email", "screenshots"] },
+    { "player": "average16", "guesses": ["photos", "emails", "texts", "apps", "history", "files", "instagram", "contacts", "messages", "posts", "accounts", "voicemail"] }
+  ],
+  "Things on a school Chromebook": [
+    { "player": "kid11", "guesses": ["google docs", "games", "stickers", "keyboard", "homework", "camera", "google classroom", "kahoot", "chrome", "screen", "charger", "trackpad"] },
+    { "player": "gamer13", "guesses": ["unblocked games", "goguardian", "securly", "google classroom", "cool math games", "blocked sites", "missing keys", "slope", "1v1 lol", "ixl", "dino game", "lightspeed"] },
+    { "player": "class-clown14", "guesses": ["missing keys", "stickers", "go guardian", "crumbs", "scratches", "unblocked games", "dead battery", "cracked screen", "teacher spying", "pen marks", "sticky stuff", "blocked everything"] },
+    { "player": "average16", "guesses": ["google docs", "google classroom", "gmail", "keyboard", "stickers", "blocked websites", "canvas", "webcam", "asset tag", "trackpad", "slides", "charger port"] }
+  ],
+  "Things in a YouTube video": [
+    { "player": "kid11", "guesses": ["ads", "likes", "comments", "subscribe button", "thumbnail", "music", "youtuber", "mr beast", "views", "title", "sponsers", "intro"] },
+    { "player": "gamer13", "guesses": ["ads", "sponsor", "intro", "outro", "raid shadow legends", "thumbnail", "like button", "skip button", "subscribe", "end screen", "jump cut", "subtitles"] },
+    { "player": "class-clown14", "guesses": ["raid shadow legends", "nordvpn", "fake crying", "apology", "shocked face", "clickbait", "unskippable ads", "bell icon", "mrbeast money", "smash that like", "bad mic", "drama"] },
+    { "player": "average16", "guesses": ["ads", "comments", "likes", "thumbnail", "description", "sponsors", "intro", "captions", "views", "title", "subscribe button", "chapters"] }
+  ],
+  "Things that kill you in a video game": [
+    { "player": "kid11", "guesses": ["zombies", "lava", "creepers", "monsters", "boss", "guns", "spikes", "falling", "bombs", "water", "skeletons", "bad guys"] },
+    { "player": "gamer13", "guesses": ["creeper", "fall damage", "lava", "storm", "sniper", "campers", "goomba", "boss", "lag", "the void", "headshot", "grenade"] },
+    { "player": "class-clown14", "guesses": ["lag", "my teammates", "friendly fire", "the wifi", "my little brother", "hackers", "goomba", "cheaters", "bad aim", "that one ledge", "mom unplugging", "12 year olds"] },
+    { "player": "average16", "guesses": ["enemies", "lava", "falling", "bosses", "guns", "traps", "spikes", "zombies", "explosions", "poison", "drowning", "snipers"] }
+  ],
+  "Things that make you rage quit": [
+    { "player": "kid11", "guesses": ["losing", "lag", "dying", "hackers", "my brother", "bad wifi", "hard levels", "cheaters", "boss", "glitches", "teammates", "obby"] },
+    { "player": "gamer13", "guesses": ["lag", "hackers", "bad teammates", "campers", "sweats", "aimbot", "skill issue", "spawn kill", "tryhards", "ping", "dark souls", "geometry dash"] },
+    { "player": "class-clown14", "guesses": ["my teammates", "my mom", "homework", "skill issue", "little kids", "teabagging", "disconnects", "hackers", "wifi", "algebra", "being bad", "getting dumped"] },
+    { "player": "average16", "guesses": ["losing", "lag", "cheaters", "bad teammates", "glitches", "hard bosses", "controller drift", "dying", "trash talk", "wifi", "campers", "unfair matches"] }
+  ],
+  "Things in a Roblox game": [
+    { "player": "kid11", "guesses": ["robux", "obby", "avatars", "pets", "noobs", "adopt me", "blocks", "brookhaven", "hats", "coins", "tycoon", "lava"] },
+    { "player": "gamer13", "guesses": ["robux", "noob", "gamepass", "obby", "blox fruits", "bacon hair", "kill brick", "checkpoint", "grow a garden", "tower of hell", "admin", "spawn point"] },
+    { "player": "class-clown14", "guesses": ["creepy guys", "scammers", "oof", "online daters", "bacon hair", "pay to win", "slenders", "free robux", "6 year olds", "ban", "bad graphics", "hackers"] },
+    { "player": "average16", "guesses": ["avatars", "robux", "obbies", "noobs", "chat", "coins", "pets", "tycoons", "checkpoints", "hats", "game passes", "players"] }
+  ],
+  "Things at a game night": [
+    { "player": "kid11", "guesses": ["monopoly", "uno", "snacks", "cards", "board games", "pizza", "dice", "family", "chips", "candyland", "soda", "sorry"] },
+    { "player": "gamer13", "guesses": ["mario kart", "uno", "smash bros", "jackbox", "monopoly", "controllers", "catan", "pizza", "dnd", "dice", "mountain dew", "chess"] },
+    { "player": "class-clown14", "guesses": ["fighting", "flipped table", "cheating dad", "monopoly", "uno reverse", "divorce", "broken friendships", "angry aunt", "crying", "stolen money", "sore loser", "wine moms"] },
+    { "player": "average16", "guesses": ["board games", "cards", "snacks", "friends", "pizza", "monopoly", "dice", "uno", "drinks", "charades", "scorecard", "jenga"] }
+  ],
+  "Things in an action movie": [
+    { "player": "kid11", "guesses": ["explosions", "guns", "cars", "bad guys", "fighting", "hero", "helicopter", "fire", "bombs", "chases", "punching", "swords"] },
+    { "player": "gamer13", "guesses": ["explosions", "car chase", "john wick", "the rock", "villain", "machine gun", "helicopter", "henchmen", "tom cruise", "grenade", "plot armor", "one liners"] },
+    { "player": "class-clown14", "guesses": ["dead wife", "plot armor", "cool walk", "dead dog", "bad guys missing", "one liners", "revenge", "bald guy", "no plot", "shirtless guy", "exploding everything", "dead sidekick"] },
+    { "player": "average16", "guesses": ["explosions", "guns", "car chases", "fight scenes", "hero", "villain", "stunts", "helicopters", "one liners", "bombs", "spies", "love interest"] }
+  ],
+  "Things in a Disney movie": [
+    { "player": "kid11", "guesses": ["princess", "songs", "castle", "prince", "talking animals", "villan", "magic", "mickey mouse", "elsa", "frozen", "fairy godmother", "dragons"] },
+    { "player": "gamer13", "guesses": ["princess", "villain", "sidekick", "songs", "magic", "dead parents", "castle", "talking animals", "evil queen", "true love", "glass slipper", "genie"] },
+    { "player": "class-clown14", "guesses": ["dead parents", "dead mom", "evil stepmother", "talking crab", "kidnapping", "trauma", "mufasa dying", "weird romance", "sad orphan", "bambi mom", "creepy prince", "copyright lawyers"] },
+    { "player": "average16", "guesses": ["princess", "songs", "villain", "castle", "prince", "magic", "animals", "sidekick", "dead parents", "happy ending", "true love", "fairy tale"] }
+  ],
+  "Things in a high school movie": [
+    { "player": "kid11", "guesses": ["lockers", "bullys", "teachers", "cheerleaders", "prom", "football", "school bus", "homework", "dance", "friends", "cafeteria", "principal"] },
+    { "player": "gamer13", "guesses": ["jocks", "nerds", "prom", "cheerleaders", "lockers", "mean girls", "bully", "cafeteria", "big game", "popular kids", "makeover", "house party"] },
+    { "player": "class-clown14", "guesses": ["30 year old students", "mean girls", "wedgie", "evil principal", "makeover", "cheating boyfriend", "swirlie", "bully", "no homework", "nerd glasses", "food fight", "fake teens"] },
+    { "player": "average16", "guesses": ["prom", "lockers", "jocks", "cheerleaders", "nerds", "cafeteria", "football game", "crush", "party", "principal", "bully", "detention"] }
+  ],
+  "Things in a public pool": [
+    { "player": "kid11", "guesses": ["water", "pee", "lifeguard", "diving board", "slide", "floaties", "kids", "goggles", "towels", "noodles", "chlorine", "band aids"] },
+    { "player": "gamer13", "guesses": ["pee", "chlorine", "lifeguard", "diving board", "band aid", "pool noodle", "water slide", "snack bar", "deep end", "hair", "marco polo", "rizz"] },
+    { "player": "class-clown14", "guesses": ["pee", "band aids", "old man hair", "floating poop", "toenails", "swim diapers", "mystery water", "germs", "hairy guys", "speedo", "dead bugs", "warm spot"] },
+    { "player": "average16", "guesses": ["lifeguard", "chlorine", "diving board", "kids", "pee", "towels", "lounge chairs", "floaties", "deep end", "swimmers", "lane ropes", "sunscreen"] }
+  ],
+  "Things at a cult meeting": [
+    { "player": "kid11", "guesses": ["candles", "robes", "weird people", "leader", "chanting", "books", "knifes", "circle", "statue", "hoods", "kool aid", "singing"] },
+    { "player": "gamer13", "guesses": ["robes", "candles", "pentagram", "sacrifice", "kool aid", "leader", "chanting", "altar", "hoods", "goat", "skull", "ritual"] },
+    { "player": "class-clown14", "guesses": ["kool aid", "sacrifice", "tax fraud", "my aunt", "free snacks", "robes", "pyramid scheme", "weird guy steve", "goat", "matching shoes", "brainwashing", "essential oils"] },
+    { "player": "average16", "guesses": ["robes", "candles", "leader", "chanting", "followers", "sacrifice", "altar", "kool aid", "prayers", "hoods", "brainwashing", "symbols"] }
+  ],
+  "Things in a vending machine": [
+    { "player": "kid11", "guesses": ["chips", "candy", "soda", "snickers", "water", "doritos", "gum", "cookies", "skittles", "coins", "pop tarts", "gatorade"] },
+    { "player": "gamer13", "guesses": ["doritos", "takis", "snickers", "coke", "stuck chips", "coin slot", "cheetos", "mountain dew", "m&ms", "gatorade", "red bull", "dollar slot"] },
+    { "player": "class-clown14", "guesses": ["stuck snack", "stale chips", "expired granola", "my dollar", "my arm", "sadness", "weird gum", "old pretzels", "nobody's raisins", "spring coil", "dead mouse", "lost hopes"] },
+    { "player": "average16", "guesses": ["chips", "candy bars", "soda", "water", "gum", "pretzels", "cookies", "granola bars", "sprite", "crackers", "energy drinks", "trail mix"] }
+  ],
+  "Foods that make a mess": [
+    { "player": "kid11", "guesses": ["spagetti", "ice cream", "tacos", "pizza", "soup", "sauce", "jello", "ketchup", "watermelon", "ribs", "burgers", "popsicle"] },
+    { "player": "gamer13", "guesses": ["tacos", "wings", "ribs", "spaghetti", "cheetos", "burrito", "sloppy joe", "takis", "powdered donut", "soup", "nachos", "ramen"] },
+    { "player": "class-clown14", "guesses": ["sloppy joe", "cafeteria chili", "chili", "ribs", "beans", "school pizza", "exploding burrito", "gas station sushi", "soup", "mystery meat", "crab", "spaghetti"] },
+    { "player": "average16", "guesses": ["tacos", "spaghetti", "wings", "ribs", "sloppy joes", "burgers", "ice cream", "soup", "lobster", "powdered sugar donuts", "burritos", "mango"] }
+  ],
+  "Things at the bottom of the ocean": [
+    { "player": "kid11", "guesses": ["sharks", "fish", "titanic", "coral", "treasure", "sand", "submarine", "shipwreck", "squid", "crabs", "whales", "rocks"] },
+    { "player": "gamer13", "guesses": ["titanic", "anglerfish", "megalodon", "kraken", "bikini bottom", "submarine", "shipwreck", "giant squid", "atlantis", "treasure chest", "subnautica", "hydrothermal vent"] },
+    { "player": "class-clown14", "guesses": ["titan sub", "titanic", "my grades", "dead bodies", "spongebob", "my will to live", "trash", "skeletons", "nemo's dad", "whale bones", "plastic bags", "cthulhu"] },
+    { "player": "average16", "guesses": ["shipwrecks", "titanic", "anglerfish", "sand", "coral", "submarines", "giant squid", "treasure", "rocks", "crabs", "trash", "volcanoes"] }
+  ]
+}

@@ -1,0 +1,50 @@
+ 71% accepted  Things in a music video (48 guesses, misses/player avg 3.5 max 9)
+      misses: music | microfone | camera | random models | rented lambo | fake money | sad rain | pointless plot | fake tears | burning car | guy in hoodie | weird horse | director
+ 73% accepted  Things a rapper would brag about (48 guesses, misses/player avg 3.3 max 9)
+      misses: jewlery | clout | tax evasion | fake watch | rented car | court dates | lawsuit | child support | his ego | criminal record | unpaid bills | record sales | street cred
+ 79% accepted  Things in a school band room (48 guesses, misses/player avg 2.5 max 7)
+      misses: trumpit | saxaphone | that one kid | broken dreams | crying trombone | lost recorder | tuba kid | angry teacher | dead reed | hearing damage
+ 79% accepted  Things in a Disney movie (48 guesses, misses/player avg 2.5 max 7)
+      misses: villan | talking crab | kidnapping | mufasa dying | weird romance | sad orphan | creepy prince | copyright lawyers | animals | fairy tale
+ 79% accepted  Things in a vending machine (48 guesses, misses/player avg 2.5 max 9)
+      misses: dollar slot | stale chips | expired granola | sadness | weird gum | old pretzels | nobody's raisins | spring coil | dead mouse | lost hopes
+ 81% accepted  Things in a pop star's dressing room (48 guesses, misses/player avg 2.3 max 5)
+      misses: lights | lights mirror | fake smile | crying assistant | fake abs | nda | exes list | wardrobe | water bottles
+ 81% accepted  Things in an action movie (48 guesses, misses/player avg 2.3 max 7)
+      misses: fighting | plot armor | cool walk | bad guys missing | bald guy | no plot | exploding everything | dead sidekick
+ 81% accepted  Things in a high school movie (48 guesses, misses/player avg 2.3 max 6)
+      misses: friends | popular kids | 30 year old students | evil principal | cheating boyfriend | no homework | nerd glasses | fake teens | football game
+ 83% accepted  Things at a wrestling match (48 guesses, misses/player avg 2.0 max 5)
+      misses: championship | folding table | tiny shorts | armpits | headlock | ring girl | screaming dads | headgear
+ 83% accepted  Things that make you rage quit (48 guesses, misses/player avg 2.0 max 3)
+      misses: dying | hard levels | algebra | being bad | getting dumped | controller drift | unfair matches
+ 85% accepted  Things at a bowling alley (48 guesses, misses/player avg 1.8 max 6)
+      misses: sweaty shoes | crying child | stale nachos | toe germs | ramp kid | bad pizza | ball polisher
+ 85% accepted  Things at the Olympics (48 guesses, misses/player avg 1.8 max 7)
+      misses: bad judges | crying gymnast | bribes | dirty river | russia | speedo | old guy shooter
+ 85% accepted  Foods that make a mess (48 guesses, misses/player avg 1.8 max 5)
+      misses: spagetti | sauce | cafeteria chili | school pizza | exploding burrito | gas station sushi | mystery meat
+ 88% accepted  Things at a skate park (48 guesses, misses/player avg 1.5 max 4)
+      misses: bumps | grafitti | bad haircuts | high schoolers | no helmet | dropouts
+ 88% accepted  Things that kill you in a video game (48 guesses, misses/player avg 1.5 max 4)
+      misses: monsters | bad guys | bad aim | that one ledge | mom unplugging | 12 year olds
+ 88% accepted  Things at a game night (48 guesses, misses/player avg 1.5 max 3)
+      misses: candyland | mountain dew | cheating dad | angry aunt | stolen money | drinks
+ 88% accepted  Things in a public pool (48 guesses, misses/player avg 1.5 max 4)
+      misses: rizz | old man hair | floating poop | mystery water | hairy guys | lane ropes
+ 88% accepted  Things at a cult meeting (48 guesses, misses/player avg 1.5 max 3)
+      misses: weird people | ritual | tax fraud | free snacks | weird guy steve | prayers
+ 90% accepted  Things in a YouTube video (48 guesses, misses/player avg 1.3 max 3)
+      misses: music | sponsers | mrbeast money | smash that like | bad mic
+ 90% accepted  Things in a Roblox game (48 guesses, misses/player avg 1.3 max 3)
+      misses: spawn point | creepy guys | pay to win | 6 year olds | players
+ 92% accepted  Things you can download (48 guesses, misses/player avg 1.0 max 4)
+      misses: bad decisions | my brain | homework answers | regret
+ 92% accepted  Things on a school Chromebook (48 guesses, misses/player avg 1.0 max 3)
+      misses: games | teacher spying | sticky stuff | blocked everything
+ 94% accepted  Things at the bottom of the ocean (48 guesses, misses/player avg 0.8 max 2)
+      misses: subnautica | my grades | nemo's dad
+ 96% accepted  Things you can delete (48 guesses, misses/player avg 0.5 max 1)
+      misses: steam | bad texts
+
+TOTAL 1152 guesses, 174 misses — 84.9% accepted
