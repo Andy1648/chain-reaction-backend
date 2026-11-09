@@ -131,6 +131,7 @@ function start(room, helpers) {
   g.botPaceMs = race.seedPace(paces);
 
   const now = Date.now();
+  g.countdownGoAt = now + COUNTDOWN_MS; // a watcher arriving in the countdown gets the same go
   helpers.broadcastToRoom(room, {
     type: 'race_start',
     payload: {
@@ -308,8 +309,49 @@ function setPace(room, playerId, msPerWord) {
   return true;
 }
 
+/**
+ * SPECTATE (nov9): the frames that put a watcher straight into a race already under way - the same race_start every
+ * racer got (the countdown's real go), race_go once it is live, then where every racer stands (race_progress) and who
+ * left. All of them are frames the client already reduces; nothing here is new on the wire but `spectate: true`.
+ */
+function spectateSnapshot(room) {
+  const g = room.game;
+  if (!g || g.gameType !== GAME_TYPE || g.status === 'finished') return [];
+  const now = Date.now();
+  const out = [{
+    type: 'race_start',
+    payload: {
+      seed: g.seed,
+      variant: g.variant,
+      ...(g.variant === 'words' ? { words: g.words } : {}),
+      fragments: g.fragments,
+      tiers: g.tiers,
+      target: g.target,
+      capMs: g.capMs,
+      racers: g.racers.map((r) => ({ id: r.id, name: r.name, isBot: r.isBot })),
+      serverNow: now,
+      goAt: g.goAt || g.countdownGoAt || now,
+      spectate: true,
+    },
+  }];
+  if (g.status === 'in_progress') {
+    out.push({ type: 'race_go', payload: { goAt: g.goAt, endsAt: g.goAt + g.capMs, serverNow: now } });
+  }
+  for (const r of g.racers) {
+    if (r.index > 0) {
+      out.push({
+        type: 'race_progress',
+        payload: { racerId: r.id, index: r.index, word: r.words[r.words.length - 1] || '', fragment: g.fragments[r.index - 1] || null, t: r.reachedAt, serverNow: now },
+      });
+    }
+    if (r.left) out.push({ type: 'race_racer_left', payload: { racerId: r.id } });
+  }
+  return out;
+}
+
 module.exports = {
   gameType: GAME_TYPE,
+  spectateSnapshot,
   minPlayers: 1, // a lone racer is fine: bots fill the grid at launch
   logic,
   start,

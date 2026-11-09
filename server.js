@@ -74,6 +74,7 @@ const {
   clearTurnTimer,
   startTurnTimer,
   startRoomReaper,
+  startHouseRooms,
 } = require('./roomManager');
 // FRENCH RUSH CLASS ROOM: its own store and lifecycle (classRoom.js). Every `class_*` message is
 // routed there and every socket close is reported to it; nothing else here touches it.
@@ -1019,6 +1020,9 @@ server.listen(PORT, () => {
   }
   // Start the single idle-room reaper sweep (deletes dead non-empty lobbies).
   startRoomReaper();
+  // HOUSE ROOMS (houseRooms.js): bot-hosted public rooms while the list is thin. Never under node --test (a suite counts
+  // rooms) and off with HOUSE_ROOMS=0.
+  if (process.env.HOUSE_ROOMS !== '0' && !process.env.NODE_TEST_CONTEXT) startHouseRooms();
   classHub.startSweeper();
 });
 
