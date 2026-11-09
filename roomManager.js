@@ -46,6 +46,7 @@ const lobbyBots = require('./lobbyBots');
 // path (resetGame / destroyRoom / _resetRoomsForTesting) tears them down
 // unchanged.
 const t5Modes = require('./t5Modes').MODES;
+const houseRooms = require('./houseRooms');
 const t5Helpers = {
   broadcastToRoom,
   scheduleTimerAfterCountdown,
@@ -122,6 +123,23 @@ const lobbyBotDeps = {
   onError: (err) => logError('lobby_bot_tick_failed', {}, err),
 };
 const scheduleLobbyBots = (room) => lobbyBots.scheduleLobbyBots(room, lobbyBotDeps);
+
+// HOUSE ROOMS (houseRooms.js): the server's own bot-hosted public rooms while the list is thin; injected like lobbyBotDeps
+const houseDeps = {
+  rooms: () => rooms.values(),
+  hasRoom: (room) => rooms.get(room.code) === room,
+  isGameLive: (room) => isGameLive(room),
+  maxPlayers: MAX_PLAYERS_PER_ROOM,
+  create: (gameType, bots) => createHouseRoom(gameType, bots),
+  destroy: (room) => destroyRoom(room),
+  reset: (room) => resetGame(room),
+  start: (room) => {
+    const res = startGame(room);
+    if (res && res.error) logWarn('house_start_failed', { roomCode: room.code, error: res.error });
+  },
+  onError: (err) => logError('house_room_tick_failed', {}, err),
+};
+const houseRoster = (room) => houseRooms.onRosterChange(room, houseDeps);
 
 // Marks a room as alive. Call from the events that prove a room is in active use
 // (see the call sites: join, leave, game start, an accepted submission, rematch)
@@ -205,6 +223,24 @@ function createRoom(hostConnection, hostName, isPublic = false, opts = {}) {
   return { room };
 }
 
+/** A HOUSE room: public, hosted and seated by `bots` lobby-bot personas, waiting for a human (houseRooms.js). */
+function createHouseRoom(gameType, bots = 2) {
+  const first = lobbyBots.makeLobbyBot({ gameType, players: [] });
+  if (!first) return null;
+  const res = createRoom(first.connection, first.name, true);
+  if (res.error) return null;
+  const room = res.room;
+  room.house = true;
+  room.gameType = gameType;
+  room.players = [first];
+  for (let i = 1; i < bots; i += 1) {
+    const bot = lobbyBots.makeLobbyBot(room);
+    if (bot) room.players.push(bot);
+  }
+  logInfo('house_room_created', { roomCode: room.code, gameType, bots: room.players.length });
+  return room;
+}
+
 function joinRoom(code, connection, playerName, { allowSpectate = false } = {}) {
   const room = rooms.get(code);
   if (!room) {
@@ -235,8 +271,11 @@ function joinRoom(code, connection, playerName, { allowSpectate = false } = {}) 
     return { error: 'room_full' };
   }
   room.players.push({ id: connection.id, name: playerName, connection });
+  // a freed seat can have been the host bot's (a house room filling up): the room is the humans' now
+  if (!room.players.some((p) => p.id === room.hostId)) room.hostId = (room.players.find((p) => !p.isBot) || room.players[0]).id;
   touchRoom(room); // a join proves the room is alive
   scheduleLobbyBots(room);
+  houseRoster(room); // a house lobby starts counting down once a human sits down
   return { room };
 }
 
@@ -246,16 +285,22 @@ function getRoom(code) {
 
 // SPECTATE (nov4, Andy: "public rooms stay listed once a game starts, with SPECTATE"): the modes whose live game a
 // watcher can follow from the room's broadcasts + a snapshot; a room holds at most MAX_SPECTATORS watchers
+// (nov9: + every T5 mode that can build a snapshot - WORD RACE and MINER; a public room in any other mode is listed
+// with watch: 'unsupported', so the client never offers a SPECTATE that would be refused)
 const SPECTATABLE = new Set(['word-bomb', 'category-blitz']);
+// OPT-IN like lobby bots: only a client that sends watchAll (it can draw a Word Race / MINER watch view) is offered them;
+// an older client keeps seeing those live rooms as unwatchable.
+const canWatchType = (gameType, watchAll = true) =>
+  SPECTATABLE.has(gameType) || !!(watchAll && t5Modes[gameType] && typeof t5Modes[gameType].spectateSnapshot === 'function');
 const MAX_SPECTATORS = 20;
 
 /** Watch a PUBLIC room's LIVE game, read-only. Returns { room } or { error }. */
-function spectateRoom(code, connection, name) {
+function spectateRoom(code, connection, name, { watchAll = false } = {}) {
   const room = rooms.get(code);
   if (!room) return { error: 'room_not_found' };
   if (!room.isPublic) return { error: 'room_not_public' };
   if (!isGameLive(room)) return { error: 'not_live' };
-  if (!SPECTATABLE.has(room.game.gameType)) return { error: 'spectate_unsupported' };
+  if (!canWatchType(room.game.gameType, watchAll)) return { error: 'spectate_unsupported' };
   if (room.players.some((p) => p.id === connection.id)) return { error: 'already_playing' };
   room.spectators = (room.spectators || []).filter((p) => p.id !== connection.id);
   if (room.spectators.length >= MAX_SPECTATORS) return { error: 'spectators_full' };
@@ -290,6 +335,9 @@ function buildSpectateSnapshot(room) {
       },
     }];
   }
+  if (t5Modes[game.gameType] && typeof t5Modes[game.gameType].spectateSnapshot === 'function') {
+    return t5Modes[game.gameType].spectateSnapshot(room);
+  }
   return [];
 }
 
@@ -301,7 +349,13 @@ function buildSpectateSnapshot(room) {
  * 'waiting' by construction; it's included so the client doesn't have to infer
  * it. No connections/internal fields leak - just the display-safe summary.
  */
-function listPublicRooms({ withLive = false } = {}) {
+/** Whether a LIVE room can take a watcher, and if not why: 'open' | 'full' | 'unsupported'. */
+function watchState(room, watchAll) {
+  const watch = !canWatchType(room.game.gameType, watchAll) ? 'unsupported' : (room.spectators || []).length >= MAX_SPECTATORS ? 'full' : 'open';
+  return { canSpectate: watch === 'open', watch };
+}
+
+function listPublicRooms({ withLive = false, watchAll = false } = {}) {
   const out = [];
   for (const room of rooms.values()) {
     if (!room.isPublic) continue;
@@ -322,7 +376,9 @@ function listPublicRooms({ withLive = false } = {}) {
       gameType: room.gameType,
       status: live ? 'playing' : 'waiting',
       spectators: (room.spectators || []).length,
-      ...(live ? { canSpectate: SPECTATABLE.has(room.game.gameType) && (room.spectators || []).length < MAX_SPECTATORS } : {}),
+      ...(live ? watchState(room, watchAll) : {}),
+      // a lobby counting down to an automatic start (a house room with a human seated): the row can say STARTS IN
+      ...(!live && room.houseStartAt ? { startsInMs: Math.max(0, room.houseStartAt - Date.now()) } : {}),
       hostName: host ? host.name : null,
       ...(host && host.hero ? { hostHero: host.hero } : {}),
     });
@@ -400,6 +456,10 @@ function buildRoomUpdatePayload(room) {
       selectedPacks: room.selectedPacks || null,
       // Category Blitz: host-selected game length (3 / 5 / 10); 3 until set_rounds.
       blitzRounds: room.blitzRounds || 3,
+      // HOUSE ROOMS: the lobby starts on its own this long from now (nobody has to press START)
+      ...(room.houseStartAt && !room.game ? { autoStartInMs: Math.max(0, room.houseStartAt - Date.now()) } : {}),
+      // how many are watching a live game (the players' screens can say so)
+      watchers: (room.spectators || []).length,
       players: room.players.map((p) => ({
         id: p.id,
         name: p.name,
@@ -873,6 +933,7 @@ function maybeScheduleBotMove(room) {
 
 function startGame(room, opts = {}) {
   const result = startGameInner(room, opts);
+  if (!result.error) houseRooms.clearHouseTimer(room);
   scheduleLobbyBots(room); // a live game clears the lobby-bot timer (the bots seated play the game)
   return result;
 }
@@ -1185,6 +1246,7 @@ function resetGame(room) {
   // The bot (if the player added one) stays in the roster across a rematch, so
   // they can start again straight away or remove it from the lobby.
   touchRoom(room); // a rematch proves the room is alive
+  houseRoster(room); // a house room back in its lobby counts down again
   broadcastToRoom(room, buildRoomUpdatePayload(room));
   broadcastToRoom(room, { type: 'game_reset', payload: {} });
 }
@@ -1196,6 +1258,7 @@ function resetGame(room) {
 // is explicit and idempotent.)
 function destroyRoom(room) {
   lobbyBots.clearLobbyBotTimer(room);
+  houseRooms.clearHouseTimer(room);
   // the watchers learn the room is gone (players left / reaped) instead of staring at a frozen game
   if (room.spectators && room.spectators.length) {
     const msg = JSON.stringify({ type: 'room_closed', payload: { code: room.code, reason: 'ended' } });
@@ -1277,6 +1340,7 @@ function removePlayer(room, connectionId) {
     room.hostId = (room.players.find((p) => !p.isBot) || room.players[0]).id;
   }
   scheduleLobbyBots(room);
+  houseRoster(room); // the last human out of a counting-down house lobby stops the countdown
 
   const game = room.game;
   // STEP 54: a spectator waiting to be dealt in leaves with nothing else to unwind.
@@ -1429,6 +1493,7 @@ function _getStatsForTesting() {
 function _resetRoomsForTesting() {
   for (const room of rooms.values()) {
     lobbyBots.clearLobbyBotTimer(room);
+    houseRooms.clearHouseTimer(room);
     clearTurnTimer(room);
     clearRoundTimer(room);
     clearCountdownTimeout(room);
@@ -1436,8 +1501,24 @@ function _resetRoomsForTesting() {
   rooms.clear();
 }
 
+let houseInterval = null;
+/** Keep the house rooms going (server.js, on listen). Off with HOUSE_ROOMS=0. */
+function startHouseRooms() {
+  if (!houseInterval) houseInterval = houseRooms.startHouseRooms(houseDeps);
+  return houseInterval;
+}
+function stopHouseRooms() {
+  if (houseInterval) clearInterval(houseInterval);
+  houseInterval = null;
+}
+
 module.exports = {
   createRoom,
+  createHouseRoom,
+  startHouseRooms,
+  stopHouseRooms,
+  tickHouseRooms: () => houseRooms.tick(houseDeps),
+  canWatchType,
   joinRoom,
   getRoom,
   listPublicRooms,

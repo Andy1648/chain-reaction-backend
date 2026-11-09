@@ -108,6 +108,7 @@ function start(room, helpers) {
     miner.addMiner(g, { id: bot.id, name: bot.name, isBot: true });
   }
   const now = Date.now();
+  g.countdownGoAt = now + COUNTDOWN_MS; // a watcher arriving in the countdown gets the same go
   helpers.broadcastToRoom(room, {
     type: 'miner_start',
     payload: {
@@ -128,14 +129,17 @@ function openRound(room, helpers) {
   const list = BLITZ_LISTS.listFor(prompt);
   const now = Date.now();
   helpers.touchRoom(room);
+  g.roundEndsAt = now + ROUND_MS;
+  g.roundPack = list ? list.pack : null;
+  g.lastReveal = null;
   helpers.broadcastToRoom(room, {
     type: 'miner_round',
     payload: {
       round: g.round,
       prompt,
       ask: miner.askFor(prompt),
-      pack: list ? list.pack : null,
-      endsAt: now + ROUND_MS,
+      pack: g.roundPack,
+      endsAt: g.roundEndsAt,
       roundMs: ROUND_MS,
       serverNow: now,
     },
@@ -179,6 +183,7 @@ function closeRound(room, helpers) {
   helpers.clearRoundTimer(room); // the bell + every pending bot answer
   const reveal = miner.endRound(g);
   const nextInMs = reveal.over ? OVER_HOLD_MS : REVEAL_MS;
+  g.lastReveal = { reveal, nextAt: Date.now() + nextInMs }; // a watcher arriving mid-reveal sees the same reveal
   helpers.broadcastToRoom(room, {
     type: 'miner_reveal',
     payload: { ...reveal, nextInMs, serverNow: Date.now() },
@@ -252,8 +257,52 @@ function addLobbyBot(room) {
   return { ok: true, bot };
 }
 
+/**
+ * SPECTATE (nov9): the frames that put a watcher straight into a mine already under way - miner_start (who is digging,
+ * how deep, lives), then the round being dug (with its real bell) and who has locked, or the reveal on screen right now.
+ * Frames the client already reduces, plus `spectate: true`.
+ */
+function spectateSnapshot(room) {
+  const g = room.game;
+  if (!g || g.gameType !== GAME_TYPE || g.status === 'finished') return [];
+  const now = Date.now();
+  const out = [{
+    type: 'miner_start',
+    payload: {
+      miners: miner.minersSnapshot(g),
+      target: g.target,
+      lives: miner.START_LIVES,
+      serverNow: now,
+      goAt: g.status === 'countdown' || !g.round ? (g.countdownGoAt || now) : now,
+      spectate: true,
+    },
+  }];
+  if (!g.round) return out; // still in the opening countdown
+  out.push({
+    type: 'miner_round',
+    payload: {
+      round: g.round,
+      prompt: g.prompt,
+      ask: miner.askFor(g.prompt),
+      pack: g.roundPack || null,
+      endsAt: g.roundEndsAt || now,
+      roundMs: ROUND_MS,
+      serverNow: now,
+    },
+  });
+  if (g.status === 'digging') out.push({ type: 'miner_locked', payload: lockedPayload(g) });
+  else if (g.status === 'reveal' && g.lastReveal) {
+    out.push({
+      type: 'miner_reveal',
+      payload: { ...g.lastReveal.reveal, nextInMs: Math.max(0, g.lastReveal.nextAt - now), serverNow: now },
+    });
+  }
+  return out;
+}
+
 module.exports = {
   gameType: GAME_TYPE,
+  spectateSnapshot,
   minPlayers: 1, // a lone miner is fine: bots fill the mine at launch
   logic,
   start,

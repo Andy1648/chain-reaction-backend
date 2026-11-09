@@ -137,6 +137,12 @@ test('WATCH a live Word Bomb game: roster + watchOnly game_started + the turn sn
   host.send('list_public_rooms', { withLive: true });
   const { payload: { rooms } } = await host.waitFor('public_rooms');
   assert.equal(rooms.find((r) => r.code === code).spectators, 1);
+
+  // the PLAYERS hear it too: room_update.watchers (their N WATCHING), and it drops when the watcher goes
+  let upd;
+  do { upd = await host.waitFor('room_update'); } while (upd.payload.watchers !== 1);
+  w.close();
+  do { upd = await host.waitFor('room_update'); } while (upd.payload.watchers !== 0);
 });
 
 test('WATCH a live Category Blitz game: the snapshot is the current round, marked spectate (no countdown replay)', async () => {

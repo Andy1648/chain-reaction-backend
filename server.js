@@ -74,6 +74,7 @@ const {
   clearTurnTimer,
   startTurnTimer,
   startRoomReaper,
+  startHouseRooms,
 } = require('./roomManager');
 // FRENCH RUSH CLASS ROOM: its own store and lifecycle (classRoom.js). Every `class_*` message is
 // routed there and every socket close is reported to it; nothing else here touches it.
@@ -186,7 +187,10 @@ function leaveSpectating(ws) {
   const code = spectatorToRoomCode.get(ws.id);
   if (!code) return;
   spectatorToRoomCode.delete(ws.id);
-  unspectate(getRoom(code), ws.id);
+  const room = getRoom(code);
+  unspectate(room, ws.id);
+  // the players' N WATCHING (room_update.watchers) drops by one
+  if (room) broadcastToRoom(room, buildRoomUpdatePayload(room));
 }
 
 // Per-connection create_room throttle: at most CREATE_LIMIT room creations per
@@ -358,7 +362,7 @@ wss.on('connection', (ws) => {
         // no room membership required, so it doesn't go through
         // getRoomForConnection. Replies straight to the asking socket.
         case 'list_public_rooms': {
-          send(ws, 'public_rooms', { rooms: listPublicRooms({ withLive: payload?.withLive === true }) });
+          send(ws, 'public_rooms', { rooms: listPublicRooms({ withLive: payload?.withLive === true, watchAll: payload?.watchAll === true }) });
           break;
         }
 
@@ -792,7 +796,7 @@ wss.on('connection', (ws) => {
           }
           const code = (payload?.code || '').toUpperCase().trim();
           const name = sanitizeName(payload?.name);
-          const result = spectateRoom(code, ws, name);
+          const result = spectateRoom(code, ws, name, { watchAll: payload?.watchAll === true });
           if (result.error) {
             sendError(ws, humanizeError(result.error), 'spectate_room');
             return;
@@ -802,7 +806,8 @@ wss.on('connection', (ws) => {
           spectatorToRoomCode.set(ws.id, code);
           const room = result.room;
           send(ws, 'room_spectating', { code });
-          send(ws, ...Object.values(buildRoomUpdatePayload(room)));
+          // everyone gets the roster: the watcher its first one, the players their N WATCHING (room_update.watchers)
+          broadcastToRoom(room, buildRoomUpdatePayload(room));
           send(ws, 'game_started', { difficultyKey: room.difficultyKey, gameType: room.game.gameType, spectator: true, watchOnly: true });
           for (const msg of buildSpectateSnapshot(room)) send(ws, ...Object.values(msg));
           break;
@@ -1019,6 +1024,9 @@ server.listen(PORT, () => {
   }
   // Start the single idle-room reaper sweep (deletes dead non-empty lobbies).
   startRoomReaper();
+  // HOUSE ROOMS (houseRooms.js): bot-hosted public rooms while the list is thin. Never under node --test (a suite counts
+  // rooms) and off with HOUSE_ROOMS=0.
+  if (process.env.HOUSE_ROOMS !== '0' && !process.env.NODE_TEST_CONTEXT) startHouseRooms();
   classHub.startSweeper();
 });
 
