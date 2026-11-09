@@ -288,16 +288,19 @@ function getRoom(code) {
 // (nov9: + every T5 mode that can build a snapshot - WORD RACE and MINER; a public room in any other mode is listed
 // with watch: 'unsupported', so the client never offers a SPECTATE that would be refused)
 const SPECTATABLE = new Set(['word-bomb', 'category-blitz']);
-const canWatchType = (gameType) => SPECTATABLE.has(gameType) || !!(t5Modes[gameType] && typeof t5Modes[gameType].spectateSnapshot === 'function');
+// OPT-IN like lobby bots: only a client that sends watchAll (it can draw a Word Race / MINER watch view) is offered them;
+// an older client keeps seeing those live rooms as unwatchable.
+const canWatchType = (gameType, watchAll = true) =>
+  SPECTATABLE.has(gameType) || !!(watchAll && t5Modes[gameType] && typeof t5Modes[gameType].spectateSnapshot === 'function');
 const MAX_SPECTATORS = 20;
 
 /** Watch a PUBLIC room's LIVE game, read-only. Returns { room } or { error }. */
-function spectateRoom(code, connection, name) {
+function spectateRoom(code, connection, name, { watchAll = false } = {}) {
   const room = rooms.get(code);
   if (!room) return { error: 'room_not_found' };
   if (!room.isPublic) return { error: 'room_not_public' };
   if (!isGameLive(room)) return { error: 'not_live' };
-  if (!canWatchType(room.game.gameType)) return { error: 'spectate_unsupported' };
+  if (!canWatchType(room.game.gameType, watchAll)) return { error: 'spectate_unsupported' };
   if (room.players.some((p) => p.id === connection.id)) return { error: 'already_playing' };
   room.spectators = (room.spectators || []).filter((p) => p.id !== connection.id);
   if (room.spectators.length >= MAX_SPECTATORS) return { error: 'spectators_full' };
@@ -347,12 +350,12 @@ function buildSpectateSnapshot(room) {
  * it. No connections/internal fields leak - just the display-safe summary.
  */
 /** Whether a LIVE room can take a watcher, and if not why: 'open' | 'full' | 'unsupported'. */
-function watchState(room) {
-  const watch = !canWatchType(room.game.gameType) ? 'unsupported' : (room.spectators || []).length >= MAX_SPECTATORS ? 'full' : 'open';
+function watchState(room, watchAll) {
+  const watch = !canWatchType(room.game.gameType, watchAll) ? 'unsupported' : (room.spectators || []).length >= MAX_SPECTATORS ? 'full' : 'open';
   return { canSpectate: watch === 'open', watch };
 }
 
-function listPublicRooms({ withLive = false } = {}) {
+function listPublicRooms({ withLive = false, watchAll = false } = {}) {
   const out = [];
   for (const room of rooms.values()) {
     if (!room.isPublic) continue;
@@ -373,7 +376,7 @@ function listPublicRooms({ withLive = false } = {}) {
       gameType: room.gameType,
       status: live ? 'playing' : 'waiting',
       spectators: (room.spectators || []).length,
-      ...(live ? watchState(room) : {}),
+      ...(live ? watchState(room, watchAll) : {}),
       // a lobby counting down to an automatic start (a house room with a human seated): the row can say STARTS IN
       ...(!live && room.houseStartAt ? { startsInMs: Math.max(0, room.houseStartAt - Date.now()) } : {}),
       hostName: host ? host.name : null,

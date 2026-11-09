@@ -163,7 +163,11 @@ test('WORD RACE watch: the snapshot is the race_start, race_go once live, and wh
   assert.equal(prog.payload.word, 'beta');
   assert.ok(snap.some((m) => m.type === 'race_racer_left'));
   const watch = conn();
-  assert.ok(!rm.spectateRoom(room.code, watch, 'WATCHER').error);
+  // an older client (no watchAll) is never offered a race it can't draw
+  assert.equal(rm.listPublicRooms({ withLive: true }).find((x) => x.code === room.code).watch, 'unsupported');
+  assert.equal(rm.spectateRoom(room.code, watch, 'WATCHER').error, 'spectate_unsupported');
+  assert.equal(rm.listPublicRooms({ withLive: true, watchAll: true }).find((x) => x.code === room.code).watch, 'open');
+  assert.ok(!rm.spectateRoom(room.code, watch, 'WATCHER', { watchAll: true }).error);
   assert.equal(rm.listPublicRooms({ withLive: true }).find((x) => x.code === room.code).spectators, 1);
   assert.equal(rm.buildRoomUpdatePayload(room).payload.watchers, 1);
 });

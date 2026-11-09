@@ -359,7 +359,7 @@ wss.on('connection', (ws) => {
         // no room membership required, so it doesn't go through
         // getRoomForConnection. Replies straight to the asking socket.
         case 'list_public_rooms': {
-          send(ws, 'public_rooms', { rooms: listPublicRooms({ withLive: payload?.withLive === true }) });
+          send(ws, 'public_rooms', { rooms: listPublicRooms({ withLive: payload?.withLive === true, watchAll: payload?.watchAll === true }) });
           break;
         }
 
@@ -793,7 +793,7 @@ wss.on('connection', (ws) => {
           }
           const code = (payload?.code || '').toUpperCase().trim();
           const name = sanitizeName(payload?.name);
-          const result = spectateRoom(code, ws, name);
+          const result = spectateRoom(code, ws, name, { watchAll: payload?.watchAll === true });
           if (result.error) {
             sendError(ws, humanizeError(result.error), 'spectate_room');
             return;
