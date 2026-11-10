@@ -39,9 +39,9 @@ function difficultyFor(rebirths, rnd = Math.random) {
   return r < 0.45 ? 'easy' : 'medium';
 }
 
-/** A persona nobody in the room already wears (case-insensitive), or null. */
-function pickPersona(room, rnd = Math.random) {
-  const taken = new Set(room.players.map((p) => String(p.name || '').toLowerCase()));
+/** A persona nobody in the room (nor in `elsewhere`: names seated in other rooms) already wears, or null. */
+function pickPersona(room, rnd = Math.random, elsewhere = null) {
+  const taken = new Set([...room.players.map((p) => String(p.name || '').toLowerCase()), ...(elsewhere || [])]);
   for (let i = 0; i < 40; i += 1) {
     const p = PERSONAS[Math.floor(rnd() * PERSONAS.length)];
     if (p && !taken.has(String(p[0]).toLowerCase())) return p;
@@ -50,9 +50,9 @@ function pickPersona(room, rnd = Math.random) {
 }
 
 /** A lobby bot for this room's mode, wearing a seeded persona. Null when the mode has no bot brain or no name is free. */
-function makeLobbyBot(room, rnd = Math.random) {
+function makeLobbyBot(room, rnd = Math.random, elsewhere = null) {
   const factory = FACTORY[room.gameType];
-  const persona = factory && pickPersona(room, rnd);
+  const persona = factory && pickPersona(room, rnd, elsewhere);
   if (!persona) return null;
   const [name, hero, , rebirths] = persona;
   const bot = factory.createBotPlayer(difficultyFor(rebirths, rnd));
@@ -90,7 +90,7 @@ function tick(room, deps) {
   const want = desiredBots(room, deps);
   let did = 'none';
   if (bots.length < want) {
-    const bot = makeLobbyBot(room, rnd);
+    const bot = makeLobbyBot(room, rnd, deps.takenNames ? deps.takenNames() : null); // never a name seated elsewhere
     if (bot) {
       room.players.push(bot);
       did = 'join';
