@@ -7,7 +7,7 @@
 //     seeded names + heroes). Rooms open at different moments (one per sweep, after a random wait), so a restart never
 //     pops two identical rooms in the same second.
 //   * WAITING WITH NOBODY: it stays small - the host plus at most one more, and now and then someone drifts in or out
-//     (minutes apart). It never sits full of bots waiting for you.
+//     (the first 10-90 s after it opens, then minutes apart). It never sits full of bots waiting for you.
 //   * A HUMAN SITS DOWN: more players drift in, one at a time, 3-12 s apart (never two in the same second), up to the
 //     room's own size (3-5 seats in all, picked per room).
 //   * THE HOST STARTS IT - no countdown on screen, just like a person pressing START: once there is a human and at
@@ -37,6 +37,7 @@ const S = (ms) => Math.max(1, Math.round(ms * SCALE));
 // pacing (ms, before SCALE)
 const OPEN_WAIT = [2000, 20000]; // a sweep that may open a room waits this long first
 const IDLE_CHURN = [60000, 180000]; // an unvisited room: someone drifts in / out this often
+const FIRST_DRIFT = [10000, 90000]; // …and its first drift comes sooner, at its own moment
 const JOIN_GAP = [3000, 12000]; // after a human sits down: the next player arrives this long after the last arrival
 const START_AFTER = [6000, 16000]; // the host starts this long after the room becomes startable…
 const START_MIN_AFTER_HUMAN = 5000; // …and never sooner than this after the latest human sat down
@@ -194,6 +195,8 @@ function tick(deps) {
       created = deps.create(mode);
       if (created) {
         created.houseSize = between(SIZE, rnd);
+        // its own first drift: two fresh rooms never sit at the same count for minutes
+        created.houseChurnAt = now + S(between(FIRST_DRIFT, rnd));
         plan(created, deps);
       }
     }
