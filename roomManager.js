@@ -116,7 +116,15 @@ const MAX_ACTIVE_ROOMS = 500;
 const rooms = new Map(); // roomCode -> room object
 
 // LOBBY BOTS (lobbyBots.js): what the lobby-bot timer needs from the room manager, injected so lobbyBots never imports it
+// every name sitting in ANY room right now (lowercase): a persona is never in two rooms at once (house or lobby bot)
+function namesInRooms() {
+  const out = new Set();
+  for (const room of rooms.values()) for (const p of room.players) out.add(String(p.name || '').toLowerCase());
+  return out;
+}
+
 const lobbyBotDeps = {
+  takenNames: () => namesInRooms(),
   broadcast: (room) => broadcastToRoom(room, buildRoomUpdatePayload(room)),
   maxPlayers: MAX_PLAYERS_PER_ROOM,
   isGameLive: (room) => isGameLive(room),
@@ -130,13 +138,18 @@ const houseDeps = {
   hasRoom: (room) => rooms.get(room.code) === room,
   isGameLive: (room) => isGameLive(room),
   maxPlayers: MAX_PLAYERS_PER_ROOM,
-  create: (gameType, bots) => createHouseRoom(gameType, bots),
+  create: (gameType) => createHouseRoom(gameType),
   destroy: (room) => destroyRoom(room),
   reset: (room) => resetGame(room),
   start: (room) => {
     const res = startGame(room);
     if (res && res.error) logWarn('house_start_failed', { roomCode: room.code, error: res.error });
   },
+  // a persona nobody is wearing in ANY room, for this room's mode
+  makeBot: (room) => lobbyBots.makeLobbyBot(room, Math.random, namesInRooms()),
+  // a bot arriving / drifting off is NOT room activity (touchRoom): an unvisited house room ages out and is replaced
+  broadcast: (room) => broadcastToRoom(room, buildRoomUpdatePayload(room)),
+  state: {},
   onError: (err) => logError('house_room_tick_failed', {}, err),
 };
 const houseRoster = (room) => houseRooms.onRosterChange(room, houseDeps);
@@ -223,21 +236,17 @@ function createRoom(hostConnection, hostName, isPublic = false, opts = {}) {
   return { room };
 }
 
-/** A HOUSE room: public, hosted and seated by `bots` lobby-bot personas, waiting for a human (houseRooms.js). */
-function createHouseRoom(gameType, bots = 2) {
-  const first = lobbyBots.makeLobbyBot({ gameType, players: [] });
-  if (!first) return null;
-  const res = createRoom(first.connection, first.name, true);
+/** A HOUSE room: public, opened by ONE lobby-bot persona (its host) waiting for players (houseRooms.js has the rule). */
+function createHouseRoom(gameType) {
+  const host = lobbyBots.makeLobbyBot({ gameType, players: [] }, Math.random, namesInRooms());
+  if (!host) return null;
+  const res = createRoom(host.connection, host.name, true);
   if (res.error) return null;
   const room = res.room;
   room.house = true;
   room.gameType = gameType;
-  room.players = [first];
-  for (let i = 1; i < bots; i += 1) {
-    const bot = lobbyBots.makeLobbyBot(room);
-    if (bot) room.players.push(bot);
-  }
-  logInfo('house_room_created', { roomCode: room.code, gameType, bots: room.players.length });
+  room.players = [host];
+  logInfo('house_room_created', { roomCode: room.code, gameType });
   return room;
 }
 
@@ -275,7 +284,7 @@ function joinRoom(code, connection, playerName, { allowSpectate = false } = {}) 
   if (!room.players.some((p) => p.id === room.hostId)) room.hostId = (room.players.find((p) => !p.isBot) || room.players[0]).id;
   touchRoom(room); // a join proves the room is alive
   scheduleLobbyBots(room);
-  houseRoster(room); // a house lobby starts counting down once a human sits down
+  houseRoster(room); // a house lobby: more players drift in, and the host starts it (houseRooms.js)
   return { room };
 }
 
@@ -377,8 +386,6 @@ function listPublicRooms({ withLive = false, watchAll = false } = {}) {
       status: live ? 'playing' : 'waiting',
       spectators: (room.spectators || []).length,
       ...(live ? watchState(room, watchAll) : {}),
-      // a lobby counting down to an automatic start (a house room with a human seated): the row can say STARTS IN
-      ...(!live && room.houseStartAt ? { startsInMs: Math.max(0, room.houseStartAt - Date.now()) } : {}),
       hostName: host ? host.name : null,
       ...(host && host.hero ? { hostHero: host.hero } : {}),
     });
@@ -456,8 +463,6 @@ function buildRoomUpdatePayload(room) {
       selectedPacks: room.selectedPacks || null,
       // Category Blitz: host-selected game length (3 / 5 / 10); 3 until set_rounds.
       blitzRounds: room.blitzRounds || 3,
-      // HOUSE ROOMS: the lobby starts on its own this long from now (nobody has to press START)
-      ...(room.houseStartAt && !room.game ? { autoStartInMs: Math.max(0, room.houseStartAt - Date.now()) } : {}),
       // how many are watching a live game (the players' screens can say so)
       watchers: (room.spectators || []).length,
       players: room.players.map((p) => ({
@@ -1246,7 +1251,7 @@ function resetGame(room) {
   // The bot (if the player added one) stays in the roster across a rematch, so
   // they can start again straight away or remove it from the lobby.
   touchRoom(room); // a rematch proves the room is alive
-  houseRoster(room); // a house room back in its lobby counts down again
+  houseRoster(room); // a house room back in its lobby: the rule runs again for whoever stayed
   broadcastToRoom(room, buildRoomUpdatePayload(room));
   broadcastToRoom(room, { type: 'game_reset', payload: {} });
 }
@@ -1326,6 +1331,13 @@ function removePlayer(room, connectionId) {
   // If only bot(s) remain, the lone human left their solo game - don't leave a
   // bot playing by itself. Tear the whole room (and its timers) down.
   if (room.players.every((p) => p.isBot)) {
+    // A HOUSE room outlives its last human, the way a person's room does when a guest leaves: its host is still sitting
+    // there. Mid-game it goes back to its lobby (no bot-only game); waiting, it simply waits (houseRooms.js).
+    if (room.house) {
+      if (isGameLive(room)) resetGame(room);
+      else { houseRoster(room); broadcastToRoom(room, buildRoomUpdatePayload(room)); }
+      return;
+    }
     destroyRoom(room);
     return;
   }
@@ -1340,7 +1352,7 @@ function removePlayer(room, connectionId) {
     room.hostId = (room.players.find((p) => !p.isBot) || room.players[0]).id;
   }
   scheduleLobbyBots(room);
-  houseRoster(room); // the last human out of a counting-down house lobby stops the countdown
+  houseRoster(room); // a human leaving a house lobby: a pending start is re-checked (never without a human)
 
   const game = room.game;
   // STEP 54: a spectator waiting to be dealt in leaves with nothing else to unwind.
