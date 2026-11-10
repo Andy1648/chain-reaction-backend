@@ -24,7 +24,6 @@ async function openHouse(count = 1) {
   assert.ok(houseRooms().length >= count, `opened ${count}`);
   return houseRooms();
 }
-const humans = (room) => room.players.filter((p) => !p.isBot).length;
 
 test.afterEach(() => rm._resetRoomsForTesting());
 
