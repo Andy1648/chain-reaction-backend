@@ -2,6 +2,10 @@
 // like bots") + SPECTATE EVERY LIVE MODE. The room manager, no sockets: fake connections record what they are sent.
 // HOUSE_TIME_SCALE compresses every house delay (x0.005: a 3-12 s join gap is 15-60 ms).
 process.env.HOUSE_TIME_SCALE = '0.005';
+// the public auto-start clock (roomManager syncAutoStart), shrunk the same way: 20 s → 100 ms, +5 s → 25 ms, cap 45 s → 225 ms
+process.env.AUTO_START_BASE_MS = '100';
+process.env.AUTO_START_STEP_MS = '25';
+process.env.AUTO_START_MAX_MS = '225';
 
 const test = require('node:test');
 const assert = require('node:assert/strict');
@@ -49,25 +53,18 @@ test('UNVISITED it stays small: never more than the host + one, drifting slowly'
   assert.equal(rm.getRoom(room.code), room);
 });
 
-test('a HUMAN sits down: players drift in ONE AT A TIME, then the HOST starts it - no countdown anywhere', async () => {
+test('a HUMAN sits down: players drift in ONE AT A TIME, and the room starts on the SAME visible clock as any public room', async () => {
   const [room] = await openHouse(1);
   while (room.players.length > 1) room.players.pop(); // just the host, to watch the whole fill
   const me = conn();
-  const joinedAt = Date.now();
   assert.ok(!rm.joinRoom(room.code, me, 'ANDY').error);
-  for (let i = 0; i < 200 && !room.game; i += 1) await wait(5);
-  assert.ok(room.game, 'the host started it');
-  const started = me.sent.find((m) => m.type === 'game_started');
-  assert.ok(started);
-  // never with fewer than 3, never sooner than 5 s (scaled) after the human sat down
-  assert.ok(room.game.players.length >= H.MIN_TO_START, `${room.game.players.length} players`);
-  assert.ok(started.at - joinedAt >= H.START_MIN_AFTER_HUMAN * K - 2, `started ${started.at - joinedAt}ms after the join`);
+  for (let i = 0; i < 300 && !room.game; i += 1) await wait(5);
+  assert.ok(room.game, 'it started on its own');
+  assert.ok(me.sent.some((m) => m.type === 'game_started'));
+  // the countdown is on the wire, like a real room's
+  assert.ok(me.sent.some((m) => m.type === 'room_update' && m.payload.autoStartInMs > 0), 'a visible STARTS IN');
   // arrivals: one player per roster change, never two in the same moment
-  const counts = [];
-  for (const m of me.sent.filter((x) => x.type === 'room_update')) {
-    assert.equal(m.payload.autoStartInMs, undefined, 'no countdown on room_update');
-    counts.push({ n: m.payload.players.length, at: m.at });
-  }
+  const counts = me.sent.filter((x) => x.type === 'room_update').map((m) => ({ n: m.payload.players.length, at: m.at }));
   const arrivals = counts.filter((c, i) => i > 0 && c.n > counts[i - 1].n);
   for (let i = 0; i < arrivals.length; i += 1) {
     assert.equal(arrivals[i].n - counts[counts.indexOf(arrivals[i]) - 1].n, 1, 'one at a time');
@@ -77,6 +74,7 @@ test('a HUMAN sits down: players drift in ONE AT A TIME, then the HOST starts it
 
 test('a human LEAVES before the start: nothing starts, the room (and its host) stays, waiting again', async () => {
   const [room] = await openHouse(1);
+  while (room.players.length > 1) room.players.pop();
   const me = conn();
   rm.joinRoom(room.code, me, 'ANDY');
   await wait(10);
@@ -85,19 +83,20 @@ test('a human LEAVES before the start: nothing starts, the room (and its host) s
   assert.equal(room.game, null, 'never a game without a human');
   assert.equal(rm.getRoom(room.code), room, 'the room is still listed');
   assert.ok(room.players.length >= 1 && room.players.some((p) => p.id === room.hostId));
-  assert.equal(room.houseStartAt, null);
+  assert.equal(room.autoStartAt, null, 'the clock is gone');
 });
 
-test('TWO humans in one house room play the same game; a human joining inside the start window still makes it', async () => {
+test('TWO humans in one house room play the same game; the second one adds +5 s to the clock', async () => {
   const [room] = await openHouse(1);
   const a = conn();
   rm.joinRoom(room.code, a, 'ANDY');
-  for (let i = 0; i < 100 && !room.houseStartAt; i += 1) await wait(3);
-  assert.ok(room.houseStartAt, 'startable');
+  for (let i = 0; i < 100 && !room.autoStartAt; i += 1) await wait(2);
+  assert.ok(room.autoStartAt, 'counting');
+  const before = room.autoStartAt;
   const b = conn();
-  rm.joinRoom(room.code, b, 'BEA'); // inside the window: the host gives the newcomer a moment
-  assert.ok(room.houseStartAt >= Date.now() + H.START_MIN_AFTER_HUMAN * K - 3, 'never sooner than the minimum after the newcomer');
-  for (let i = 0; i < 200 && !room.game; i += 1) await wait(5);
+  rm.joinRoom(room.code, b, 'BEA');
+  assert.ok(room.autoStartAt > before, 'a later arrival adds time');
+  for (let i = 0; i < 300 && !room.game; i += 1) await wait(5);
   const ids = room.game.players.map((p) => p.id);
   assert.ok(ids.includes(a.id) && ids.includes(b.id), 'both in the game');
 });

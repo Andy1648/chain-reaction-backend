@@ -86,14 +86,9 @@ function nextStep(room, now, deps) {
   } else {
     room.houseJoinAt = null;
   }
-  if (n >= MIN_TO_START) {
-    if (!room.houseStartAt) {
-      room.houseStartAt = Math.max(now + S(between(START_AFTER, rnd)), (room.houseHumanAt || now) + S(START_MIN_AFTER_HUMAN));
-    }
-    steps.push({ at: room.houseStartAt, kind: 'start' });
-  } else {
-    room.houseStartAt = null;
-  }
+  // (nov12) no hidden start: a house room with a human starts by the same VISIBLE auto-start every public room has
+  // (roomManager syncAutoStart - a deadline on room_update, +5 s per arrival), so it never looks different from a real one
+  room.houseStartAt = null;
   if (!steps.length) return null;
   return steps.reduce((a, b) => (b.at < a.at ? b : a));
 }
