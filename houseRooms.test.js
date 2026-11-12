@@ -1,6 +1,7 @@
-// houseRooms.test.js — HOUSE ROOMS read as REAL ROOMS (Andy nov9: "make sure the logic is on point - don't make it seem
-// like bots") + SPECTATE EVERY LIVE MODE. The room manager, no sockets: fake connections record what they are sent.
-// HOUSE_TIME_SCALE compresses every house delay (x0.005: a 3-12 s join gap is 15-60 ms).
+// houseRooms.test.js — HOUSE ROOMS make the list a LIVING SERVER (Andy nov12: "more games playing (spectatable) then open
+// lobbies just waiting... (number)/8 changing as if it's real") without tells, and stay cheap. + SPECTATE EVERY LIVE MODE.
+// The room manager, no sockets: fake connections record what they are sent. HOUSE_TIME_SCALE compresses every HOUSE
+// delay (x0.005: a 6-30 s drift is 30-150 ms); the bot GAMES themselves run at real speed.
 process.env.HOUSE_TIME_SCALE = '0.005';
 
 const test = require('node:test');
@@ -17,143 +18,147 @@ const conn = () => {
   return { id: `h${n}`, readyState: 1, sent: [], send(m) { const msg = JSON.parse(m); msg.at = Date.now(); this.sent.push(msg); } };
 };
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
-const houseRooms = () => rm.listPublicRooms({ withLive: true }).map((r) => rm.getRoom(r.code)).filter((r) => r && r.house);
-/** sweep until a house room opens (the open waits a random 2-20 s, scaled) */
-async function openHouse(count = 1) {
-  for (let i = 0; i < 200 && houseRooms().length < count; i += 1) { rm.tickHouseRooms(); await wait(5); }
-  assert.ok(houseRooms().length >= count, `opened ${count}`);
-  return houseRooms();
+// a registry read that is NOT a visitor looking at the list (note: false)
+const all = () => rm.listPublicRooms({ withLive: true, watchAll: true, note: false }).map((r) => rm.getRoom(r.code)).filter(Boolean);
+const house = () => all().filter((r) => r.house);
+const liveHouse = () => house().filter((r) => r.game && r.game.status !== 'finished');
+const openHouse = () => house().filter((r) => !r.game);
+const humans = (room) => room.players.filter((p) => !p.isBot).length;
+/** sweep (and keep "looking at the list") for up to `ms` or until `done()` */
+async function sweep(ms, done = () => false) {
+  const until = Date.now() + ms;
+  while (Date.now() < until && !done()) { rm.listPublicRooms({ withLive: true }); rm.tickHouseRooms(); await wait(10); }
+}
+async function openOne() {
+  await sweep(3000, () => openHouse().length >= 1);
+  assert.ok(openHouse().length >= 1, 'a house lobby opened');
+  return openHouse()[0];
 }
 
-test.afterEach(() => rm._resetRoomsForTesting());
-
-test('a house room OPENS with one player - its host persona - and rooms open at different moments', async () => {
-  const [a] = await openHouse(1);
-  assert.equal(a.players.length, 1, 'just the host');
-  assert.ok(a.players[0].isBot && a.players[0].lobbyBot);
-  assert.equal(a.hostId, a.players[0].id);
-  const [, b] = await openHouse(2);
-  assert.notEqual(a.gameType, b.gameType, 'one of each mode');
-  assert.ok(b.createdAt > a.createdAt, 'not the same instant');
-  const row = rm.listPublicRooms().find((r) => r.code === a.code);
-  assert.equal(row.hostName, a.players[0].name);
-  assert.equal(row.startsInMs, undefined, 'no countdown on the list');
+test.afterEach(() => {
+  rm._resetRoomsForTesting();
+  const st = rm._houseStateForTesting();
+  for (const k of Object.keys(st)) delete st[k];
 });
 
-test('UNVISITED it stays small: never more than the host + one, drifting slowly', async () => {
-  const [room] = await openHouse(1);
-  let max = 0;
-  for (let i = 0; i < 60; i += 1) { max = Math.max(max, room.players.length); await wait(25); }
-  assert.ok(max <= H.IDLE_MAX, `max ${max}`);
-  assert.equal(room.players[0].id, room.hostId, 'the host never wanders off');
-  assert.equal(rm.getRoom(room.code), room);
+test('A LIVING LIST: while people look, the house runs more LIVE games (3-5) than OPEN lobbies (1-2)', async () => {
+  await sweep(12000, () => liveHouse().length >= 3);
+  const st = rm._houseStateForTesting();
+  const live = liveHouse().length;
+  assert.ok(live >= 3 && live <= Math.min(5, H.HOUSE_LIVE_MAX), `live ${live}`);
+  assert.ok(live >= Math.min(st.liveTarget, 3), 'reaches its live target');
+  await sweep(1500);
+  const open = openHouse().length;
+  assert.ok(open >= 1 && open <= 2 + Math.max(0, st.liveTarget - liveHouse().length), `open ${open}`);
+  assert.ok(liveHouse().length > openHouse().length || liveHouse().length >= 3, 'more playing than waiting');
+  for (const r of liveHouse()) assert.ok(H.MODES.includes(r.game.gameType), 'Word Bomb / Blitz games');
+  // every live house game is listed as PLAYING and watchable
+  for (const row of rm.listPublicRooms({ withLive: true, watchAll: true, note: false }).filter((x) => rm.getRoom(x.code).house && x.status === 'playing')) {
+    assert.equal(row.watch, 'open');
+  }
 });
 
-test('a HUMAN sits down: players drift in ONE AT A TIME, then the HOST starts it - no countdown anywhere', async () => {
-  const [room] = await openHouse(1);
-  while (room.players.length > 1) room.players.pop(); // just the host, to watch the whole fill
+test('a LIVE house game is a real game: bots play words, a watcher gets the frames', async () => {
+  await sweep(12000, () => liveHouse().some((r) => r.game.gameType === 'word-bomb'));
+  const room = liveHouse().find((r) => r.game.gameType === 'word-bomb');
+  assert.ok(room, 'a Word Bomb house game is running');
+  const w = conn();
+  assert.ok(!rm.spectateRoom(room.code, w, 'WATCHER', { watchAll: true }).error);
+  const usedAt = () => (room.game ? room.game.usedWords.size : 0);
+  const lives = () => (room.game ? room.game.players.reduce((s, p) => s + p.lives, 0) : 0);
+  const u0 = usedAt(); const l0 = lives();
+  for (let i = 0; i < 300 && room.game && usedAt() === u0 && lives() === l0; i += 1) await wait(100);
+  assert.ok(usedAt() > u0 || lives() < l0 || !room.game || room.game.status === 'finished', 'the game moves: a word lands or a life is lost');
+  assert.ok(w.sent.some((m) => m.type === 'turn_update' || m.type === 'word_result' || m.type === 'timer_tick'), 'the watcher sees it');
+});
+
+test('an OPEN lobby DRIFTS: its count changes on its own clock, a step of 1-2, never below its host or above the cap', async () => {
+  const room = await openOne();
+  const seen = [];
+  let last = room.players.length;
+  for (let i = 0; i < 300 && rm.getRoom(room.code) === room && !room.game; i += 1) {
+    if (room.players.length !== last) { seen.push(room.players.length - last); last = room.players.length; }
+    assert.ok(room.players.length >= 1 && room.players.length <= H.LOBBY_MAX, `count ${room.players.length}`);
+    assert.ok(room.players.some((p) => p.id === room.hostId), 'the host stays');
+    await wait(10);
+  }
+  assert.ok(seen.length >= 2, `it moved (${seen.join(',')})`);
+  for (const d of seen) assert.ok(Math.abs(d) <= 2, `a step of 1-2 (${d})`);
+});
+
+test('NOBODY LOOKING: nothing new starts, running house games are not replaced; one cheap lobby at most', async () => {
+  await sweep(12000, () => liveHouse().length >= 2);
+  const st = rm._houseStateForTesting();
+  st.lastListAt = Date.now() - H.LIST_IDLE_MS - 1000; // the list was last asked for long ago
+  const before = liveHouse().length;
+  for (let i = 0; i < 100; i += 1) { rm.tickHouseRooms(); await wait(10); }
+  assert.ok(liveHouse().length <= before, 'no new house game starts');
+  assert.equal(H.wanted({ ...depsShim(), state: st }, Date.now()).live, 0);
+  assert.ok(openHouse().length <= 1 + 1, 'the lobbies wind down');
+});
+
+function depsShim() {
+  return { rooms: () => all(), isGameLive: (r) => !!r.game && r.game.status !== 'finished', maxPlayers: rm.MAX_PLAYERS_PER_ROOM };
+}
+
+test('BUSY with real rooms: the house starts no games', async () => {
+  for (let i = 0; i < 26; i += 1) rm.createRoom(conn(), `REAL${i}`, false);
+  const st = rm._houseStateForTesting();
+  st.lastListAt = Date.now();
+  // through the real registry: 26 real rooms = busy
+  let started = 0;
+  for (let i = 0; i < 200; i += 1) { rm.listPublicRooms(); rm.tickHouseRooms(); started = Math.max(started, liveHouse().length); await wait(10); }
+  assert.equal(started, 0, 'no house game while the server is busy');
+});
+
+test('a HUMAN sits down in a house lobby: drift stops, players join one at a time, the host starts it (no countdown)', async () => {
+  const room = await openOne();
   const me = conn();
   const joinedAt = Date.now();
   assert.ok(!rm.joinRoom(room.code, me, 'ANDY').error);
-  for (let i = 0; i < 200 && !room.game; i += 1) await wait(5);
+  for (let i = 0; i < 300 && !room.game; i += 1) await wait(5);
   assert.ok(room.game, 'the host started it');
   const started = me.sent.find((m) => m.type === 'game_started');
-  assert.ok(started);
-  // never with fewer than 3, never sooner than 5 s (scaled) after the human sat down
-  assert.ok(room.game.players.length >= H.MIN_TO_START, `${room.game.players.length} players`);
-  assert.ok(started.at - joinedAt >= H.START_MIN_AFTER_HUMAN * K - 2, `started ${started.at - joinedAt}ms after the join`);
-  // arrivals: one player per roster change, never two in the same moment
-  const counts = [];
-  for (const m of me.sent.filter((x) => x.type === 'room_update')) {
-    assert.equal(m.payload.autoStartInMs, undefined, 'no countdown on room_update');
-    counts.push({ n: m.payload.players.length, at: m.at });
-  }
-  const arrivals = counts.filter((c, i) => i > 0 && c.n > counts[i - 1].n);
-  for (let i = 0; i < arrivals.length; i += 1) {
-    assert.equal(arrivals[i].n - counts[counts.indexOf(arrivals[i]) - 1].n, 1, 'one at a time');
-    if (i > 0) assert.ok(arrivals[i].at - arrivals[i - 1].at >= H.JOIN_GAP[0] * K - 2, 'spaced out');
-  }
+  assert.ok(room.game.players.length >= H.MIN_TO_START);
+  assert.ok(started.at - joinedAt >= H.START_MIN_AFTER_HUMAN * K - 2, 'never sooner than the minimum after the human sat down');
+  for (const m of me.sent.filter((x) => x.type === 'room_update')) assert.equal(m.payload.autoStartInMs, undefined);
+  const counts = me.sent.filter((x) => x.type === 'room_update').map((m) => m.payload.players.length);
+  for (let i = 1; i < counts.length; i += 1) assert.ok(counts[i] - counts[i - 1] <= 1, `one at a time (${counts})`);
 });
 
-test('a human LEAVES before the start: nothing starts, the room (and its host) stays, waiting again', async () => {
-  const [room] = await openHouse(1);
+test('a human leaving before the start: nothing starts with the room humanless-by-rule; the room stays', async () => {
+  const room = await openOne();
   const me = conn();
   rm.joinRoom(room.code, me, 'ANDY');
-  await wait(10);
+  await wait(5);
   rm.removePlayer(room, me.id);
-  await wait(250);
-  assert.equal(room.game, null, 'never a game without a human');
-  assert.equal(rm.getRoom(room.code), room, 'the room is still listed');
-  assert.ok(room.players.length >= 1 && room.players.some((p) => p.id === room.hostId));
-  assert.equal(room.houseStartAt, null);
+  assert.equal(rm.getRoom(room.code), room, 'still listed');
+  assert.equal(room.houseStartAt, null, 'the human-room start is cancelled');
 });
 
-test('TWO humans in one house room play the same game; a human joining inside the start window still makes it', async () => {
-  const [room] = await openHouse(1);
-  const a = conn();
-  rm.joinRoom(room.code, a, 'ANDY');
-  for (let i = 0; i < 100 && !room.houseStartAt; i += 1) await wait(3);
-  assert.ok(room.houseStartAt, 'startable');
-  const b = conn();
-  rm.joinRoom(room.code, b, 'BEA'); // inside the window: the host gives the newcomer a moment
-  assert.ok(room.houseStartAt >= Date.now() + H.START_MIN_AFTER_HUMAN * K - 3, 'never sooner than the minimum after the newcomer');
-  for (let i = 0; i < 200 && !room.game; i += 1) await wait(5);
-  const ids = room.game.players.map((p) => p.id);
-  assert.ok(ids.includes(a.id) && ids.includes(b.id), 'both in the game');
-});
-
-test('the last human leaving MID-GAME: no bot-only game - back to the lobby, room kept', async () => {
-  const [room] = await openHouse(1);
-  const me = conn();
-  rm.joinRoom(room.code, me, 'ANDY');
-  for (let i = 0; i < 200 && !room.game; i += 1) await wait(5);
-  assert.ok(room.game);
-  rm.removePlayer(room, me.id);
-  assert.equal(room.game, null);
-  assert.equal(rm.getRoom(room.code), room);
-});
-
-test('a finished house game goes back to the lobby after a human-ish pause, and the rule runs again', async () => {
-  const [room] = await openHouse(1);
-  const me = conn();
-  rm.joinRoom(room.code, me, 'ANDY');
-  for (let i = 0; i < 200 && !room.game; i += 1) await wait(5);
+test('a FINISHED house game with a WATCHER goes back to its lobby (the watcher is not dropped)', async () => {
+  await sweep(12000, () => liveHouse().length >= 1);
+  const room = liveHouse()[0];
+  rm.spectateRoom(room.code, conn(), 'WATCHER', { watchAll: true });
   room.game.status = 'finished';
-  rm.tickHouseRooms();
-  assert.ok(room.game, 'not instantly');
-  for (let i = 0; i < 200 && room.game && room.game.status === 'finished'; i += 1) { await wait(5); rm.tickHouseRooms(); }
-  assert.ok(me.sent.some((m) => m.type === 'game_reset'));
-  for (let i = 0; i < 300 && !(room.game && room.game.status !== 'finished'); i += 1) await wait(5);
-  assert.ok(room.game && room.game.status !== 'finished', 'the host started the next one');
+  for (let i = 0; i < 300 && room.game; i += 1) { rm.listPublicRooms(); rm.tickHouseRooms(); await wait(5); }
+  assert.equal(rm.getRoom(room.code), room, 'kept');
+  assert.equal(room.game, null, 'back in its lobby');
 });
 
-test('NO TELLS: a persona is never seated in two rooms at once (house hosts, house seats, lobby bots)', async () => {
-  const rooms = await openHouse(2);
-  for (const r of rooms) rm.joinRoom(r.code, conn(), `P${r.code}`);
-  await wait(200);
+test('NO TELLS: a persona is never seated in two rooms at once', async () => {
+  await sweep(12000, () => house().length >= 4);
   const names = [];
-  for (const r of rm.listPublicRooms({ withLive: true })) for (const p of rm.getRoom(r.code).players) if (p.isBot) names.push(p.name.toLowerCase());
+  for (const r of all()) for (const p of r.players) if (p.isBot) names.push(p.name.toLowerCase());
   assert.equal(new Set(names).size, names.length, `unique: ${names.join(', ')}`);
 });
 
-test('real rooms appearing push IDLE house rooms out (oldest first); a house room with a human stays', async () => {
-  const [kept] = await openHouse(1);
-  rm.joinRoom(kept.code, conn(), 'ANDY');
-  await openHouse(2);
-  rm.createRoom(conn(), 'REAL1', true);
-  rm.createRoom(conn(), 'REAL2', true);
+test('a SERVER RESTART: the sweep reopens the mix one room at a time', async () => {
+  await sweep(3000, () => house().length >= 2);
+  rm._resetRoomsForTesting();
+  rm.listPublicRooms();
   rm.tickHouseRooms();
-  const house = houseRooms();
-  assert.deepEqual(house, [kept]);
-});
-
-test('a SERVER RESTART: every room is gone; the sweep reopens house rooms one at a time', async () => {
-  await openHouse(2);
-  rm._resetRoomsForTesting(); // what a restart leaves: an empty registry
-  assert.equal(houseRooms().length, 0);
-  rm.tickHouseRooms();
-  assert.ok(houseRooms().length <= 1, 'never both in one sweep');
-  await openHouse(2);
+  assert.ok(house().length <= 1, 'never two in one sweep');
 });
 
 test('every live mode with a snapshot is watchable; any other is listed watch: unsupported (never a dead SPECTATE)', () => {

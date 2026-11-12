@@ -364,7 +364,8 @@ function watchState(room, watchAll) {
   return { canSpectate: watch === 'open', watch };
 }
 
-function listPublicRooms({ withLive = false, watchAll = false } = {}) {
+function listPublicRooms({ withLive = false, watchAll = false, note = true } = {}) {
+  if (note) houseRooms.noteListed(houseDeps); // someone is looking at the list: the house stays lively (houseRooms.js)
   const out = [];
   for (const room of rooms.values()) {
     if (!room.isPublic) continue;
@@ -1530,6 +1531,7 @@ module.exports = {
   startHouseRooms,
   stopHouseRooms,
   tickHouseRooms: () => houseRooms.tick(houseDeps),
+  _houseStateForTesting: () => houseDeps.state,
   canWatchType,
   joinRoom,
   getRoom,
