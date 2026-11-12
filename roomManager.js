@@ -284,7 +284,8 @@ function joinRoom(code, connection, playerName, { allowSpectate = false } = {}) 
   if (!room.players.some((p) => p.id === room.hostId)) room.hostId = (room.players.find((p) => !p.isBot) || room.players[0]).id;
   touchRoom(room); // a join proves the room is alive
   scheduleLobbyBots(room);
-  houseRoster(room); // a house lobby: more players drift in, and the host starts it (houseRooms.js)
+  houseRoster(room); // a house lobby: more players drift in (houseRooms.js)
+  syncAutoStart(room); // a public lobby's auto-start clock (+5 s per arrival)
   return { room };
 }
 
@@ -387,6 +388,8 @@ function listPublicRooms({ withLive = false, watchAll = false, note = true } = {
       status: live ? 'playing' : 'waiting',
       spectators: (room.spectators || []).length,
       ...(live ? watchState(room, watchAll) : {}),
+      // a lobby counting down to its auto-start: the row says STARTS IN
+      ...(!live && room.autoStartAt ? { startsInMs: Math.max(0, room.autoStartAt - Date.now()) } : {}),
       hostName: host ? host.name : null,
       ...(host && host.hero ? { hostHero: host.hero } : {}),
     });
@@ -451,7 +454,52 @@ function broadcastToRoom(room, message) {
   });
 }
 
+// AUTO-START (Andy nov12: public rooms "sometimes they dont start early enough… they must start after like + 5 sec (for
+// every player joining) after the first"). THE SERVER OWNS THE CLOCK: once a PUBLIC lobby holds 2+ players (at least one
+// of them a human), a deadline is set AUTO_BASE_MS out; every later arrival adds AUTO_STEP_MS, never more than AUTO_MAX_MS
+// from now; dropping below 2 players (or to no humans) cancels it. When it fires the game starts as if the host pressed
+// START (who still can, earlier). Private (code) rooms never auto-start. The deadline rides room_update (autoStartInMs)
+// and the public list (startsInMs); clients only draw it. House rooms with a human follow the same visible rule.
+const AUTO_BASE_MS = Number(process.env.AUTO_START_BASE_MS) || 20000;
+const AUTO_STEP_MS = Number(process.env.AUTO_START_STEP_MS) || 5000;
+const AUTO_MAX_MS = Number(process.env.AUTO_START_MAX_MS) || 45000;
+
+function clearAutoStart(room) {
+  if (room && room.autoStartTimer) clearTimeout(room.autoStartTimer);
+  if (room) { room.autoStartTimer = null; room.autoStartAt = null; }
+}
+
+/** Re-check the auto-start clock against the roster. Idempotent: it only reacts to a change in the head count. */
+function syncAutoStart(room) {
+  if (!room) return;
+  const n = room.players.length;
+  const humans = room.players.filter((p) => !p.isBot).length;
+  const prev = room.autoPrevN || 0;
+  room.autoPrevN = n;
+  if (!room.isPublic || room.game || n < 2 || humans < 1) { clearAutoStart(room); return; }
+  const now = Date.now();
+  if (!room.autoStartAt) room.autoStartAt = now + AUTO_BASE_MS;
+  else if (n > prev) room.autoStartAt = Math.min(room.autoStartAt + AUTO_STEP_MS * (n - prev), now + AUTO_MAX_MS);
+  else return; // same or fewer players (still 2+): the clock runs on
+  if (room.autoStartTimer) clearTimeout(room.autoStartTimer);
+  room.autoStartTimer = setTimeout(() => {
+    room.autoStartTimer = null;
+    room.autoStartAt = null;
+    try {
+      if (rooms.get(room.code) !== room || room.game || !room.isPublic) return;
+      if (room.players.length < 2 || !room.players.some((p) => !p.isBot)) return;
+      const res = startGame(room);
+      if (res && res.error) logWarn('auto_start_failed', { roomCode: room.code, error: res.error });
+      else logInfo('auto_started', { roomCode: room.code, players: room.players.length });
+    } catch (err) {
+      logError('auto_start_failed', { roomCode: room.code }, err);
+    }
+  }, Math.max(0, room.autoStartAt - now));
+  if (room.autoStartTimer.unref) room.autoStartTimer.unref();
+}
+
 function buildRoomUpdatePayload(room) {
+  syncAutoStart(room); // every roster change ends in a room_update: the clock follows the head count (see above)
   return {
     type: 'room_update',
     payload: {
@@ -464,6 +512,8 @@ function buildRoomUpdatePayload(room) {
       selectedPacks: room.selectedPacks || null,
       // Category Blitz: host-selected game length (3 / 5 / 10); 3 until set_rounds.
       blitzRounds: room.blitzRounds || 3,
+      // AUTO-START: this public lobby starts on its own this long from now (the host may still start it earlier)
+      ...(room.autoStartAt && !room.game ? { autoStartInMs: Math.max(0, room.autoStartAt - Date.now()) } : {}),
       // how many are watching a live game (the players' screens can say so)
       watchers: (room.spectators || []).length,
       players: room.players.map((p) => ({
@@ -939,7 +989,7 @@ function maybeScheduleBotMove(room) {
 
 function startGame(room, opts = {}) {
   const result = startGameInner(room, opts);
-  if (!result.error) houseRooms.clearHouseTimer(room);
+  if (!result.error) { houseRooms.clearHouseTimer(room); clearAutoStart(room); room.autoPrevN = 0; }
   scheduleLobbyBots(room); // a live game clears the lobby-bot timer (the bots seated play the game)
   return result;
 }
@@ -1265,6 +1315,7 @@ function resetGame(room) {
 function destroyRoom(room) {
   lobbyBots.clearLobbyBotTimer(room);
   houseRooms.clearHouseTimer(room);
+  clearAutoStart(room);
   // the watchers learn the room is gone (players left / reaped) instead of staring at a frozen game
   if (room.spectators && room.spectators.length) {
     const msg = JSON.stringify({ type: 'room_closed', payload: { code: room.code, reason: 'ended' } });
@@ -1354,6 +1405,7 @@ function removePlayer(room, connectionId) {
   }
   scheduleLobbyBots(room);
   houseRoster(room); // a human leaving a house lobby: a pending start is re-checked (never without a human)
+  syncAutoStart(room); // under 2 players: the auto-start clock cancels
 
   const game = room.game;
   // STEP 54: a spectator waiting to be dealt in leaves with nothing else to unwind.
@@ -1507,6 +1559,7 @@ function _resetRoomsForTesting() {
   for (const room of rooms.values()) {
     lobbyBots.clearLobbyBotTimer(room);
     houseRooms.clearHouseTimer(room);
+    clearAutoStart(room);
     clearTurnTimer(room);
     clearRoundTimer(room);
     clearCountdownTimeout(room);

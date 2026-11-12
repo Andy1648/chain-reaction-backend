@@ -202,8 +202,10 @@ test('listPublicRooms entries expose only the display-safe summary', () => {
 
   const [entry] = listPublicRooms();
   assert.deepEqual(Object.keys(entry).sort(), [
-    'code', 'gameType', 'hostName', 'maxPlayers', 'playerCount', 'spectators', 'status',
+    'code', 'gameType', 'hostName', 'maxPlayers', 'playerCount', 'spectators', 'startsInMs', 'status',
   ]);
+  // two players in a PUBLIC lobby: its auto-start clock is running (nov12) - a number, nothing else about the room
+  assert.ok(entry.startsInMs > 0);
   assert.equal(entry.spectators, 0);
   assert.equal(entry.hostName, 'Host');
   assert.equal(entry.code, pub.code);

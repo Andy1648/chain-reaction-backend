@@ -3,6 +3,10 @@
 // The room manager, no sockets: fake connections record what they are sent. HOUSE_TIME_SCALE compresses every HOUSE
 // delay (x0.005: a 6-30 s drift is 30-150 ms); the bot GAMES themselves run at real speed.
 process.env.HOUSE_TIME_SCALE = '0.005';
+// the public auto-start clock (roomManager syncAutoStart), shrunk the same way: 20 s → 100 ms, +5 s → 25 ms, cap → 225 ms
+process.env.AUTO_START_BASE_MS = '100';
+process.env.AUTO_START_STEP_MS = '25';
+process.env.AUTO_START_MAX_MS = '225';
 
 const test = require('node:test');
 const assert = require('node:assert/strict');
@@ -11,7 +15,6 @@ const rm = require('./roomManager');
 const H = require('./houseRooms');
 const { MODES: T5 } = require('./t5Modes');
 
-const K = 0.005;
 let n = 0;
 const conn = () => {
   n += 1;
@@ -23,7 +26,6 @@ const all = () => rm.listPublicRooms({ withLive: true, watchAll: true, note: fal
 const house = () => all().filter((r) => r.house);
 const liveHouse = () => house().filter((r) => r.game && r.game.status !== 'finished');
 const openHouse = () => house().filter((r) => !r.game);
-const humans = (room) => room.players.filter((p) => !p.isBot).length;
 /** sweep (and keep "looking at the list") for up to `ms` or until `done()` */
 async function sweep(ms, done = () => false) {
   const until = Date.now() + ms;
@@ -74,6 +76,8 @@ test('a LIVE house game is a real game: bots play words, a watcher gets the fram
 
 test('an OPEN lobby DRIFTS: its count changes on its own clock, a step of 1-2, never below its host or above the cap', async () => {
   const room = await openOne();
+  const st = rm._houseStateForTesting();
+  st.liveTarget = 0; st.retargetAt = Date.now() + 1e9; // no game wanted: watch the lobby itself drift
   const seen = [];
   let last = room.players.length;
   for (let i = 0; i < 300 && rm.getRoom(room.code) === room && !room.game; i += 1) {
@@ -111,29 +115,27 @@ test('BUSY with real rooms: the house starts no games', async () => {
   assert.equal(started, 0, 'no house game while the server is busy');
 });
 
-test('a HUMAN sits down in a house lobby: drift stops, players join one at a time, the host starts it (no countdown)', async () => {
+test('a HUMAN sits down in a house lobby: drift stops, players join one at a time, it starts on the SAME visible clock as any public room', async () => {
   const room = await openOne();
   const me = conn();
-  const joinedAt = Date.now();
   assert.ok(!rm.joinRoom(room.code, me, 'ANDY').error);
+  for (let i = 0; i < 100 && room.players.length < 2; i += 1) await wait(5);
+  assert.ok(rm.buildRoomUpdatePayload(room).payload.autoStartInMs > 0, 'a visible STARTS IN, like a real room');
   for (let i = 0; i < 300 && !room.game; i += 1) await wait(5);
-  assert.ok(room.game, 'the host started it');
-  const started = me.sent.find((m) => m.type === 'game_started');
-  assert.ok(room.game.players.length >= H.MIN_TO_START);
-  assert.ok(started.at - joinedAt >= H.START_MIN_AFTER_HUMAN * K - 2, 'never sooner than the minimum after the human sat down');
-  for (const m of me.sent.filter((x) => x.type === 'room_update')) assert.equal(m.payload.autoStartInMs, undefined);
+  assert.ok(room.game, 'it started on its own');
+  assert.ok(room.game.players.some((p) => p.id === me.id), 'with the human in it');
   const counts = me.sent.filter((x) => x.type === 'room_update').map((m) => m.payload.players.length);
   for (let i = 1; i < counts.length; i += 1) assert.ok(counts[i] - counts[i - 1] <= 1, `one at a time (${counts})`);
 });
 
-test('a human leaving before the start: nothing starts with the room humanless-by-rule; the room stays', async () => {
+test('a human leaving before the start: the clock cancels if they were the only human; the room stays', async () => {
   const room = await openOne();
   const me = conn();
   rm.joinRoom(room.code, me, 'ANDY');
   await wait(5);
   rm.removePlayer(room, me.id);
   assert.equal(rm.getRoom(room.code), room, 'still listed');
-  assert.equal(room.houseStartAt, null, 'the human-room start is cancelled');
+  assert.equal(room.autoStartAt, null, 'no clock without a human');
 });
 
 test('a FINISHED house game with a WATCHER goes back to its lobby (the watcher is not dropped)', async () => {
