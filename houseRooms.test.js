@@ -235,3 +235,11 @@ test('MINER watch: miner_start, then the round being dug (real bell) + who locke
   rm.clearRoundTimer(room);
   if (room.roundPauseTimeout) clearTimeout(room.roundPauseTimeout);
 });
+
+test('games ENDING TOGETHER never stack open lobbies: the open target plus ONE next-game lobby, however many are missing', () => {
+  // prod nov12: three games ended in one minute and the list read 2 live / 5 open (one lobby kept per missing game)
+  assert.equal(H.lobbiesFor({ open: 2, live: 5 }, 1), 3);
+  assert.equal(H.lobbiesFor({ open: 1, live: 4 }, 0), 2);
+  assert.equal(H.lobbiesFor({ open: 2, live: 3 }, 3), 2, 'at target: no extra');
+  assert.equal(H.lobbiesFor({ open: 1, live: 3 }, 5), 1, 'over target: no extra');
+});

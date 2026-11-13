@@ -50,6 +50,7 @@ const MOOD = [1, 6]; // the size an unvisited lobby wanders toward
 const MOOD_EVERY = [40000, 150000]; // …which itself wanders this often
 const PATIENCE = [20000, 120000]; // an unvisited lobby starts a game no sooner than this after it opened
 const RESULTS_HOLD = [8000, 20000]; // a finished bot game shows its results this long
+const WARM_PATIENCE = [4000, 20000]; // a lobby that is the next live game waits only this long
 const JOIN_GAP = [3000, 12000]; // after a human sits down: the next player arrives this long after the last arrival
 const START_AFTER = [6000, 16000]; // the host starts this long after the room becomes startable…
 const START_MIN_AFTER_HUMAN = 5000; // …and never sooner than this after the latest human sat down
@@ -251,13 +252,19 @@ function openRoom(deps, now, { warm = false } = {}) {
   if (!room) return null;
   room.houseSize = between(SIZE, rnd);
   room.houseOpenedAt = now;
-  room.housePatience = S(warm ? between([4000, 20000], rnd) : between(PATIENCE, rnd));
+  room.housePatience = S(warm ? between(WARM_PATIENCE, rnd) : between(PATIENCE, rnd));
   // it opens with its host and maybe a friend or two, then drifts on its own clock
   const extra = between([0, 2], rnd);
   for (let i = 0; i < extra; i += 1) addBot(room, deps, now);
   room.houseDriftAt = now + S(between([3000, 20000], rnd));
   plan(room, deps);
   return room;
+}
+
+/** Lobbies to keep open: the open target plus ONE that is about to become a missing live game (never one per missing
+ * game: when several games end together that stacked up open rooms and the list read 2 live / 5 open). */
+function lobbiesFor(want, live) {
+  return want.open + Math.min(1, Math.max(0, want.live - live));
 }
 
 /** One sweep: keep the mix; send finished house games back to the lobby or close them. Returns a summary. */
@@ -274,13 +281,15 @@ function tick(deps) {
     if (now < r.houseAgainAt) continue;
     r.houseAgainAt = null;
     const keep = humansIn(r) > 0 || watchersIn(r) > 0
-      || (want.active && !want.busy && openHouse(deps).length < want.open + Math.max(0, want.live - liveHouse(deps)) && rnd() < 0.5);
-    if (keep) { r.houseOpenedAt = now; r.housePatience = S(between(PATIENCE, rnd)); deps.reset(r); reset += 1; }
+      || (want.active && !want.busy && openHouse(deps).length < lobbiesFor(want, liveHouse(deps)) && rnd() < 0.5);
+    // short of live games: this one is the next to start, so it does not sit out a full patience
+    const short = liveHouse(deps) < want.live;
+    if (keep) { r.houseOpenedAt = now; r.housePatience = S(short ? between(WARM_PATIENCE, rnd) : between(PATIENCE, rnd)); deps.reset(r); reset += 1; }
     else { deps.destroy(r); closed += 1; }
   }
   // OPEN LOBBIES: as many as the open target, plus the ones that will become the live games still missing
   const live = liveHouse(deps);
-  const lobbiesWanted = want.open + Math.max(0, want.live - live);
+  const lobbiesWanted = lobbiesFor(want, live);
   let open = openHouse(deps);
   let dropped = 0;
   for (const r of open.sort((a, b) => (a.houseOpenedAt || 0) - (b.houseOpenedAt || 0))) {
@@ -313,5 +322,5 @@ function startHouseRooms(deps) {
 module.exports = {
   tick, onRosterChange, clearHouseTimer, startHouseRooms, isRealWaiting, nextStep, noteListed, wanted,
   MODES, MIN_TO_START, SIZE, LOBBY_MAX, HOUSE_LIVE_MAX, JOIN_GAP, START_AFTER, START_MIN_AFTER_HUMAN, AGAIN_AFTER,
-  LIST_IDLE_MS,
+  LIST_IDLE_MS, lobbiesFor,
 };
