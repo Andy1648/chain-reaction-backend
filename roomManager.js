@@ -123,8 +123,35 @@ function namesInRooms() {
   return out;
 }
 
+// NO REUSED FACES (nov21): a bot persona seen seated in any room is not dealt into another room for the next hour (a real
+// player is not in three lobbies in one evening). Refreshed whenever names are checked; falls back to "not seated now"
+// only if the persona pool is ever exhausted.
+const RECENT_BOT_NAME_MS = 60 * 60 * 1000;
+const recentBotNames = new Map(); // lowercase name -> last seen seated (ms)
+function namesRecentlyUsed() {
+  const now = Date.now();
+  const out = new Set();
+  for (const room of rooms.values()) {
+    for (const p of room.players) {
+      const name = String(p.name || '').toLowerCase();
+      out.add(name);
+      if (p.isBot) recentBotNames.set(name, now);
+    }
+  }
+  for (const [name, at] of recentBotNames) {
+    if (now - at > RECENT_BOT_NAME_MS) recentBotNames.delete(name);
+    else out.add(name);
+  }
+  return out;
+}
+function makeFreshBot(room) {
+  const bot = lobbyBots.makeLobbyBot(room, Math.random, namesRecentlyUsed()) || lobbyBots.makeLobbyBot(room, Math.random, namesInRooms());
+  if (bot) recentBotNames.set(String(bot.name).toLowerCase(), Date.now());
+  return bot;
+}
+
 const lobbyBotDeps = {
-  takenNames: () => namesInRooms(),
+  takenNames: () => namesRecentlyUsed(),
   broadcast: (room) => broadcastToRoom(room, buildRoomUpdatePayload(room)),
   maxPlayers: MAX_PLAYERS_PER_ROOM,
   isGameLive: (room) => isGameLive(room),
@@ -146,7 +173,7 @@ const houseDeps = {
     if (res && res.error) logWarn('house_start_failed', { roomCode: room.code, error: res.error });
   },
   // a persona nobody is wearing in ANY room, for this room's mode
-  makeBot: (room) => lobbyBots.makeLobbyBot(room, Math.random, namesInRooms()),
+  makeBot: (room) => makeFreshBot(room),
   // a bot arriving / drifting off is NOT room activity (touchRoom): an unvisited house room ages out and is replaced
   broadcast: (room) => broadcastToRoom(room, buildRoomUpdatePayload(room)),
   state: {},
@@ -238,7 +265,7 @@ function createRoom(hostConnection, hostName, isPublic = false, opts = {}) {
 
 /** A HOUSE room: public, opened by ONE lobby-bot persona (its host) waiting for players (houseRooms.js has the rule). */
 function createHouseRoom(gameType) {
-  const host = lobbyBots.makeLobbyBot({ gameType, players: [] }, Math.random, namesInRooms());
+  const host = makeFreshBot({ gameType, players: [] });
   if (!host) return null;
   const res = createRoom(host.connection, host.name, true);
   if (res.error) return null;
@@ -385,7 +412,8 @@ function listPublicRooms({ withLive = false, watchAll = false, note = true } = {
       playerCount: room.players.length,
       maxPlayers: MAX_PLAYERS_PER_ROOM,
       gameType: room.gameType,
-      status: live ? 'playing' : 'waiting',
+      // a game that just ended (results on screen, still joinable for the rematch) is FINISHED, not waiting (FE #741)
+      status: live ? 'playing' : room.game && room.game.status === 'finished' ? 'finished' : 'waiting',
       spectators: (room.spectators || []).length,
       ...(live ? watchState(room, watchAll) : {}),
       // a lobby counting down to its auto-start: the row says STARTS IN
@@ -476,7 +504,8 @@ function syncAutoStart(room) {
   const humans = room.players.filter((p) => !p.isBot).length;
   const prev = room.autoPrevN || 0;
   room.autoPrevN = n;
-  if (!room.isPublic || room.game || n < 2 || humans < 1) { clearAutoStart(room); return; }
+  // a HOUSE lobby runs the same clock with bots only (a real lobby of 2+ always shows STARTS IN; houseRooms.js)
+  if (!room.isPublic || room.game || n < 2 || (humans < 1 && !room.house)) { clearAutoStart(room); return; }
   const now = Date.now();
   if (!room.autoStartAt) room.autoStartAt = now + AUTO_BASE_MS;
   else if (n > prev) room.autoStartAt = Math.min(room.autoStartAt + AUTO_STEP_MS * (n - prev), now + AUTO_MAX_MS);
@@ -487,7 +516,9 @@ function syncAutoStart(room) {
     room.autoStartAt = null;
     try {
       if (rooms.get(room.code) !== room || room.game || !room.isPublic) return;
-      if (room.players.length < 2 || !room.players.some((p) => !p.isBot)) return;
+      if (room.players.length < 2) return;
+      // no human: only a house lobby, and only if the house can run another game (else the lobby breaks up)
+      if (!room.players.some((p) => !p.isBot) && !(room.house && houseRooms.autoStartDue(room, houseDeps))) return;
       const res = startGame(room);
       if (res && res.error) logWarn('auto_start_failed', { roomCode: room.code, error: res.error });
       else logInfo('auto_started', { roomCode: room.code, players: room.players.length });
@@ -1565,6 +1596,7 @@ function _resetRoomsForTesting() {
     clearCountdownTimeout(room);
   }
   rooms.clear();
+  recentBotNames.clear();
 }
 
 let houseInterval = null;
@@ -1585,6 +1617,7 @@ module.exports = {
   stopHouseRooms,
   tickHouseRooms: () => houseRooms.tick(houseDeps),
   _houseStateForTesting: () => houseDeps.state,
+  _houseDepsForTesting: () => houseDeps,
   canWatchType,
   joinRoom,
   getRoom,

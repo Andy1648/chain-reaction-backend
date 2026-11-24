@@ -192,7 +192,7 @@ test('listPublicRooms: public rooms a player can JOIN (waiting / finished, not f
   assert.equal(by[pub.code].status, 'waiting');
   assert.equal(by[playing.code].status, 'playing');
   assert.equal(by[playing.code].canSpectate, true);
-  assert.equal(by[finished.code].status, 'waiting');
+  assert.equal(by[finished.code].status, 'finished', 'a just-ended game is FINISHED (still joinable, FE #741)');
   assert.equal(by[full.code], undefined);
 });
 
