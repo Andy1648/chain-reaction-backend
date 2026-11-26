@@ -25,7 +25,18 @@
 //   class_result {index, outcome, hints} student, once per word ('clean' | 'hinted' | 'miss')
 //   class_leave                         student leaves for good
 // Server → client: class_created {code, hostToken}, class_joined {studentId}, class_state {…},
-//   class_tally {…} (host only, debounced; a host's done snapshot adds summary + per-student totals), class_closed {reason}, class_error {code, message}.
+//   class_tally {…} (host only, debounced; a host's done snapshot adds summary + per-student totals), class_closed {reason}, class_error {code, message},
+//   class_race {…} (everyone, debounced: the TEAM RACE standings mid-word — see below).
+//
+// TEAM RACE (nov26, Andy: "could use a little gamifying … a bit flat and boring rn"). Opt-in per set
+// (set.teams = 2 | 3 | 4; 0 = off). Every student is seated on the smallest team when they join. A team
+// moves along its lane by its POINTS PER PLAYER, so a bigger team never wins by size:
+//   clean answer = 2 points, with hints = 1, a miss = 0
+//   the team CHAIN: every right answer adds a link; at 3 links answers pay ×2, at 6 links ×3 — and ANY
+//   teammate's miss (a no-answer at the reveal included) snaps the chain back to 0
+// The finish line is `goal` points per player (2 per word, ×2 for a held chain): a team can cross it, and
+// the leader at the end of the set wins. Every client gets the same `race` in its snapshot (a student also
+// gets `team`, their own lane), plus a debounced class_race frame while a word is open.
 
 const crypto = require('crypto');
 const { sanitizeName } = require('./security');
@@ -45,6 +56,9 @@ const TALLY_DEBOUNCE_MS = 250;
 const SWEEP_MS = 15 * 1000;
 const TOKEN_RE = /^[A-Za-z0-9_-]{8,64}$/;
 const OUTCOMES = new Set(['clean', 'hinted', 'miss']);
+const TEAM_COUNTS = new Set([2, 3, 4]);
+const RACE_POINTS = { clean: 2, hinted: 1, miss: 0 };
+const chainMult = (links) => (links >= 6 ? 3 : links >= 3 ? 2 : 1);
 const VOICES = new Set(['projector', 'phones', 'off']); // where the word is read aloud
 
 const ERRORS = {
@@ -96,7 +110,75 @@ function createClassHub({ send, now = Date.now, log = () => {} } = {}) {
       mode: cleanSetField(s.mode),
       voice: VOICES.has(s.voice) ? s.voice : 'projector',
       replay: s.replay === true,
+      teams: TEAM_COUNTS.has(s.teams) ? s.teams : 0,
     };
+  }
+
+  // ---- TEAM RACE ----------------------------------------------------------------------------------
+  function newRace(n) {
+    return n ? Array.from({ length: n }, () => ({ pts: 0, chain: 0, best: 0 })) : null;
+  }
+
+  // The smallest team takes the next student (ties → the lowest team number): balanced in join order.
+  function smallestTeam(c) {
+    const sizes = c.race.map(() => 0);
+    for (const s of c.students.values()) if (Number.isInteger(s.team) && s.team < sizes.length) sizes[s.team] += 1;
+    let best = 0;
+    for (let i = 1; i < sizes.length; i += 1) if (sizes[i] < sizes[best]) best = i;
+    return best;
+  }
+
+  // A new set with teams re-deals every seated student round-robin in join order (even teams again).
+  function dealTeams(c) {
+    let i = 0;
+    for (const s of c.students.values()) {
+      s.team = c.race ? i % c.race.length : null;
+      i += 1;
+    }
+  }
+
+  // One answer lands on its team: the chain grows on a right answer, snaps on a miss.
+  function scoreRace(c, s, outcome) {
+    if (!c.race || !Number.isInteger(s.team)) return;
+    const t = c.race[s.team];
+    if (!t) return;
+    if (outcome === 'miss') {
+      t.chain = 0;
+      return;
+    }
+    t.chain += 1;
+    t.best = Math.max(t.best, t.chain);
+    t.pts += RACE_POINTS[outcome] * chainMult(t.chain);
+  }
+
+  function raceOf(c) {
+    if (!c.race) return null;
+    const sizes = c.race.map(() => 0);
+    for (const s of c.students.values()) if (Number.isInteger(s.team) && s.team < sizes.length) sizes[s.team] += 1;
+    const teams = c.race.map((t, id) => ({
+      id,
+      size: sizes[id],
+      pts: t.pts,
+      chain: t.chain,
+      mult: chainMult(t.chain),
+      best: t.best,
+      score: sizes[id] ? Math.round((t.pts / sizes[id]) * 10) / 10 : 0,
+    }));
+    const top = Math.max(...teams.map((t) => t.score));
+    const leaders = top > 0 ? teams.filter((t) => t.score === top).map((t) => t.id) : [];
+    return { teams, goal: c.rows.length * 4, leaders };
+  }
+
+  function scheduleRace(c) {
+    if (!c.race || c.raceTimer) return;
+    c.raceTimer = setTimeout(() => {
+      c.raceTimer = null;
+      if (!classes.has(c.code) || c.phase !== 'word') return;
+      const race = raceOf(c);
+      if (c.host.ws) send(c.host.ws, 'class_race', race);
+      for (const s of c.students.values()) if (s.ws) send(s.ws, 'class_race', race);
+    }, TALLY_DEBOUNCE_MS);
+    if (typeof c.raceTimer.unref === 'function') c.raceTimer.unref();
   }
 
   function cleanSetField(v) {
@@ -187,8 +269,9 @@ function createClassHub({ send, now = Date.now, log = () => {} } = {}) {
       studentCount: c.students.size,
     };
     if (withRows) base.rows = c.rows;
+    if (c.race) base.race = raceOf(c);
     if (role === 'host') {
-      base.roster = liveStudents(c).map((s) => ({ id: s.id, name: s.name, away: !s.ws }));
+      base.roster = liveStudents(c).map((s) => ({ id: s.id, name: s.name, away: !s.ws, ...(c.race ? { team: s.team } : {}) }));
       if (c.phase === 'word' || c.phase === 'review') base.tally = tallyOf(c, c.index);
       if (c.phase === 'done') {
         base.summary = summaryOf(c);
@@ -197,6 +280,7 @@ function createClassHub({ send, now = Date.now, log = () => {} } = {}) {
     } else {
       base.you = student.id;
       base.name = student.name;
+      if (c.race) base.team = student.team;
       base.mine = c.rows.map((_, i) => {
         const r = c.results[i] && c.results[i].get(student.id);
         return r ? r.outcome : null;
@@ -234,6 +318,8 @@ function createClassHub({ send, now = Date.now, log = () => {} } = {}) {
     classes.delete(c.code);
     if (c.tallyTimer) clearTimeout(c.tallyTimer);
     c.tallyTimer = null;
+    if (c.raceTimer) clearTimeout(c.raceTimer);
+    c.raceTimer = null;
     const sockets = [c.host.ws, ...liveStudents(c).map((s) => s.ws)];
     for (const ws of sockets) {
       if (!ws) continue;
@@ -296,7 +382,10 @@ function createClassHub({ send, now = Date.now, log = () => {} } = {}) {
     // Everyone still working when the word closes is logged as a miss.
     const res = c.results[c.index];
     for (const s of c.students.values()) {
-      if (!res.has(s.id)) res.set(s.id, { outcome: 'miss', hints: 0, auto: true });
+      if (!res.has(s.id)) {
+        res.set(s.id, { outcome: 'miss', hints: 0, auto: true });
+        scoreRace(c, s, 'miss'); // a no-answer snaps the team's chain like a wrong one
+      }
     }
     c.phase = 'review';
     broadcastState(c);
@@ -326,6 +415,8 @@ function createClassHub({ send, now = Date.now, log = () => {} } = {}) {
         lastActivity: now(),
         host: { token: crypto.randomBytes(18).toString('base64url'), ws, awaySince: null, name: sanitizeName(p.name, 'Teacher') },
         set: cleanSet(set, rows),
+        race: null,
+        raceTimer: null,
         round: 1,
         rows,
         phase: 'lobby',
@@ -335,6 +426,7 @@ function createClassHub({ send, now = Date.now, log = () => {} } = {}) {
         kicked: new Set(),
         tallyTimer: null,
       };
+      c.race = newRace(c.set.teams);
       bind(ws, { code, role: 'host' });
       classes.set(code, c);
       log('class_created', { classCode: code, words: rows.length });
@@ -354,7 +446,8 @@ function createClassHub({ send, now = Date.now, log = () => {} } = {}) {
       if (existing) return rebindStudent(ws, c, existing);
       if (c.phase === 'done') return err(ws, 'class_over', 'class_join');
       if (c.students.size >= MAX_STUDENTS) return err(ws, 'class_full', 'class_join');
-      const s = { id: crypto.randomBytes(6).toString('hex'), token, name: sanitizeName(p.name, 'Student'), ws, awaySince: null };
+      const s = { id: crypto.randomBytes(6).toString('hex'), token, name: sanitizeName(p.name, 'Student'), ws, awaySince: null, team: null };
+      if (c.race) s.team = smallestTeam(c);
       bind(ws, { code, role: 'student', studentId: s.id });
       c.students.set(s.id, s);
       touch(c);
@@ -427,6 +520,8 @@ function createClassHub({ send, now = Date.now, log = () => {} } = {}) {
       c.phase = 'lobby';
       c.index = 0;
       c.results = [];
+      c.race = newRace(c.set.teams);
+      dealTeams(c);
       touch(c);
       log('class_restarted', { classCode: c.code, round: c.round, words: rows.length });
       // the rows go to everyone again (a new set); seats, names and tokens are kept
@@ -474,6 +569,7 @@ function createClassHub({ send, now = Date.now, log = () => {} } = {}) {
       if (res.has(s.id)) return; // first result wins
       const hints = Number.isInteger(p.hints) && p.hints >= 0 ? Math.min(p.hints, 99) : 0;
       res.set(s.id, { outcome: p.outcome, hints });
+      scoreRace(c, s, p.outcome);
       touch(c);
       // Everyone seated AND connected has answered → reveal on their own. An away student does not
       // hold the class up (they are logged as a miss at the reveal).
@@ -483,6 +579,7 @@ function createClassHub({ send, now = Date.now, log = () => {} } = {}) {
         return;
       }
       scheduleTally(c);
+      scheduleRace(c);
     },
 
     class_leave(ws) {

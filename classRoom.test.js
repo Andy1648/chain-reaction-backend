@@ -389,3 +389,106 @@ test('set.voice defaults to the projector and only takes known values', () => {
   env.hub.handle(h2, 'class_create', { set: { voice: '<script>' }, rows: ROWS });
   assert.equal(env.last(h2, 'class_state').payload.set.voice, 'projector');
 });
+
+// ---- TEAM RACE (nov26) ----
+function raceClass(env, teams = 2, rows = ROWS) {
+  const host = env.sock();
+  env.hub.handle(host, 'class_create', { name: 'Mme Dupont', set: { theme: 'familles', level: 'hard', mode: 'lineup', teams }, rows });
+  return { host, code: env.last(host, 'class_created').payload.code };
+}
+
+test('team race: off by default — no race, no team in any snapshot', () => {
+  const env = setup();
+  const { host, code } = hostWithClass(env);
+  const a = join(env, code, 1);
+  assert.equal(env.last(host, 'class_state').payload.race, undefined);
+  assert.equal(env.last(a, 'class_state').payload.race, undefined);
+  assert.equal(env.last(a, 'class_state').payload.team, undefined);
+  assert.equal(env.last(host, 'class_state').payload.set.teams, 0);
+});
+
+test('team race: students are dealt to the smallest team, a rejoin keeps the seat, names never leak', () => {
+  const env = setup();
+  const { host, code } = raceClass(env, 3);
+  const socks = [1, 2, 3, 4, 5].map((n) => join(env, code, n));
+  const teams = socks.map((ws) => env.last(ws, 'class_state').payload.team);
+  assert.deepEqual(teams, [0, 1, 2, 0, 1]);
+  const hs = env.last(host, 'class_state').payload;
+  assert.deepEqual(hs.roster.map((s) => s.team), [0, 1, 2, 0, 1]);
+  assert.deepEqual(hs.race.teams.map((t) => t.size), [2, 2, 1]);
+  const st = env.last(socks[0], 'class_state').payload;
+  assert.equal(JSON.stringify(st.race).includes('S2'), false, 'a student never sees other names');
+  env.hub.onClose(socks[1]);
+  const back = env.sock();
+  env.hub.handle(back, 'class_rejoin', { code, token: tok(2) });
+  assert.equal(env.last(back, 'class_state').payload.team, 1);
+});
+
+test('team race: points per player, the chain doubles at 3, a miss snaps it, a no-answer at the reveal too', () => {
+  const env = setup();
+  const rows = Array.from({ length: 6 }, (_, i) => ({ word: `mot${i}` }));
+  const { host, code } = raceClass(env, 2, rows);
+  const a = join(env, code, 1); // team 0
+  const b = join(env, code, 2); // team 1
+  const c = join(env, code, 3); // team 0
+  env.hub.handle(host, 'class_start', {});
+  const answer = (ws, index, outcome) => env.hub.handle(ws, 'class_result', { index, outcome, hints: 0 });
+  // word 0: team 0 both clean (chain 1, 2 → 2 + 2), team 1 hinted (1)
+  answer(a, 0, 'clean');
+  answer(c, 0, 'clean');
+  answer(b, 0, 'hinted');
+  let race = env.last(host, 'class_state').payload.race;
+  assert.deepEqual(race.teams.map((t) => [t.pts, t.chain]), [[4, 2], [1, 1]]);
+  assert.deepEqual(race.teams.map((t) => t.score), [2, 1], 'points per player');
+  assert.deepEqual(race.leaders, [0]);
+  assert.equal(race.goal, 24);
+  // word 1: the third link doubles (2×2), then a teammate's miss snaps the chain
+  env.hub.handle(host, 'class_next', {});
+  answer(a, 1, 'clean');
+  answer(c, 1, 'miss');
+  answer(b, 1, 'clean');
+  race = env.last(host, 'class_state').payload.race;
+  assert.deepEqual(race.teams.map((t) => [t.pts, t.chain, t.best]), [[8, 0, 3], [3, 2, 2]]);
+  // word 2: b never answers — the reveal logs a miss and snaps team 1's chain
+  env.hub.handle(host, 'class_next', {});
+  answer(a, 2, 'clean');
+  answer(c, 2, 'clean');
+  env.hub.handle(host, 'class_reveal', {});
+  race = env.last(b, 'class_state').payload.race;
+  assert.equal(race.teams[1].chain, 0);
+  assert.equal(race.teams[0].chain, 2);
+});
+
+test('team race: a debounced class_race reaches every phone while the word is open', () => {
+  const env = setup();
+  const { host, code } = raceClass(env, 2);
+  const a = join(env, code, 1);
+  const b = join(env, code, 2);
+  env.hub.handle(host, 'class_start', {});
+  env.clear(b);
+  env.hub.handle(a, 'class_result', { index: 0, outcome: 'clean', hints: 0 });
+  return new Promise((done) => {
+    setTimeout(() => {
+      const f = env.last(b, 'class_race');
+      assert.ok(f, 'class_race sent to the other student');
+      assert.equal(f.payload.teams[0].pts, 2);
+      assert.ok(env.last(host, 'class_race'));
+      done();
+    }, TALLY_DEBOUNCE_MS + 60);
+  });
+});
+
+test('team race: a new set re-deals the teams evenly and starts the race over; teams can be switched off', () => {
+  const env = setup();
+  const { host, code } = raceClass(env, 2);
+  const socks = [1, 2, 3, 4].map((n) => join(env, code, n));
+  env.hub.handle(host, 'class_start', {});
+  env.hub.handle(socks[0], 'class_result', { index: 0, outcome: 'clean', hints: 0 });
+  env.hub.handle(host, 'class_restart', { set: { teams: 4 }, rows: ROWS });
+  const hs = env.last(host, 'class_state').payload;
+  assert.deepEqual(hs.roster.map((s) => s.team), [0, 1, 2, 3]);
+  assert.ok(hs.race.teams.every((t) => t.pts === 0));
+  env.hub.handle(host, 'class_restart', { set: { teams: 0 }, rows: ROWS });
+  assert.equal(env.last(host, 'class_state').payload.race, undefined);
+  assert.equal(env.last(socks[0], 'class_state').payload.team, undefined);
+});
